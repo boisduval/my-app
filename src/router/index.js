@@ -208,6 +208,11 @@ const routes = [
         path: '/active',
         name: 'active',
         component: () => import(/* webpackChunkName: "Active" */ '../views/UserManagement/Active.vue')
+      },
+      {
+        path: '/loginAbnormal',
+        name: 'loginAbnormal',
+        component: () => import(/* webpackChunkName: "LoginAbnormal" */ '../views/UserManagement/LoginAbnormal.vue')
       }
     ]
   },
