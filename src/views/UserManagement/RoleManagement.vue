@@ -302,19 +302,10 @@
         title="设置角色"
         width="500px"
       >
-        <!-- <el-tree
-          :data="roleTree"
-          show-checkbox
-          node-key="id"
-          ref="tree"
-          highlight-current
-          :props="defaultProps"
-          :default-checked-keys="checked"
-        >
-        </el-tree> -->
-        <v-tree :data="roleTree" checkable multiple show-line></v-tree>
+        <!-- <v-tree :data="roleTree" checkable multiple show-line></v-tree> -->
+        <Tree :data="roleTree" show-checkbox></Tree>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="getCheckedKeys" size="medium" type="primary">
+          <el-button @click="updataRoleMenu" size="medium" type="primary">
             提 交
           </el-button>
           <el-button @click="dialogFormVisible = false" size="medium">
@@ -360,11 +351,7 @@ export default {
       roleTree: [],
       options1: [],
       options2: [],
-      defaultProps: {
-        children: 'children',
-        label: 'title'
-      },
-      checked: []
+      RoleSystemID: ''
     }
   },
   computed: {
@@ -646,18 +633,18 @@ export default {
 
     // 获取权限列表
     getMenuList (row) {
+      this.RoleSystemID = row.SystemID
       var url = '/api/Menu/GetMenuList'
       this.$axios
         .get(url, {
           params: {
             AutoSystemID: this.searchForm.AutoSystemID,
-            RoleSystemID: row.SystemID
+            RoleSystemID: this.RoleSystemID
           }
         })
         .then(res => {
           if (res.data.code === 0) {
             this.roleTree = res.data.data
-            this.setDefaultChecked(this.roleTree)
             this.dialogFormVisible = true
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
@@ -668,21 +655,33 @@ export default {
         })
     },
 
-    // 设置选中
-    setDefaultChecked (arr) {
-      arr.map((el, i) => {
-        if (el.children.length > 0) {
-          el.children.map((item, index) => {
-            if (item.checked) {
-              this.checked.push(item.id)
-            }
-          })
-        }
+    updataRoleMenu () {
+      var arr = this.roleTree.filter(el => {
+        return (
+          el.checked === true ||
+          (el.checked === false && el.indeterminate === true)
+        )
       })
-    },
-
-    getCheckedKeys () {
-      console.log(this.$refs.tree.getCheckedKeys())
+      let obj = {
+        AutoSystemID: this.searchForm.AutoSystemID,
+        RoleSystemID: this.RoleSystemID,
+        data: JSON.stringify(arr)
+      }
+      var url = '/api/Users/UpdataRoleMenu'
+      this.$axios
+        .post(url, obj)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+            this.dialogFormVisible = false
+            this.getData()
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
 }
@@ -745,6 +744,6 @@ export default {
 }
 
 #el-dialog {
-    max-height: 662px;
+  max-height: 662px;
 }
 </style>
