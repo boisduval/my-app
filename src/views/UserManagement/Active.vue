@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>部门信息查询</span>
+            <span>列表查询</span>
           </div>
           <el-form
             :inline="true"
@@ -47,6 +47,173 @@
       </div>
     </el-collapse-transition>
     <!-- 表单结束 -->
+
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>在线用户</span>
+      </div>
+
+      <!-- 表格操作栏开始 -->
+      <div class="table-oper">
+        <el-button
+          type="primary"
+          size="small"
+          @click="getData"
+          class="button-left"
+        >
+          <i class="el-icon-refresh-right"></i>
+          刷新
+        </el-button>
+        <el-button
+          type="primary"
+          size="small"
+          class="button-left"
+          @click="isShow = !isShow"
+        >
+          <i class="el-icon-search"></i>
+          模糊查询
+        </el-button>
+        <el-button class="menu-btn">
+          <i class="fa fa-list"></i>
+          <div class="menu-wrapper">
+            <template v-for="(column, index) in customColumns">
+              <vxe-checkbox
+                v-if="column.property"
+                class="checkbox-item"
+                v-model="column.visible"
+                :key="index"
+                @change="$refs.xTable.refreshColumn()"
+                >{{ column.title }}</vxe-checkbox
+              >
+            </template>
+          </div>
+        </el-button>
+        <el-button class="menu-btn" title="导出" v-popover:export>
+          <i class="fa fa-download"></i>
+        </el-button>
+        <el-button class="menu-btn" @click="printEvent" title="打印">
+          <i class="fa fa-print"></i>
+        </el-button>
+        <!-- 导出操作开始 -->
+        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
+          <ul id="export">
+            <li @click="exportDataEvent">
+              导出为Csv文件
+            </li>
+            <li @click="exportExcel">
+              导出为Excel文件
+            </li>
+          </ul>
+        </el-popover>
+        <!-- 导出操作结束 -->
+      </div>
+      <!-- 表格操作栏结束 -->
+
+      <!-- 表格开始 -->
+      <vxe-table
+        :data="tableData"
+        border
+        :customs.sync="customColumns"
+        ref="xTable"
+        :loading="loading"
+        show-overflow
+        resizable
+        align="center"
+      >
+        <vxe-table-column
+          type="checkbox"
+          width="50"
+          fixed="left"
+        ></vxe-table-column>
+        <vxe-table-column type="index" width="50" title="序号" fixed="left">
+        </vxe-table-column>
+        <vxe-table-column
+          field="AccountNumber"
+          title="登录账号"
+          width="130"
+          sortable
+          show-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="DUser"
+          title="登录名称"
+          width="100"
+          show-overflow
+          sortable
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="HostName"
+          title="IP地址"
+          width="123"
+          sortable
+          show-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="LoginAddress"
+          title="登录地址"
+          width="158"
+          sortable
+          show-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="BrowserType"
+          title="浏览器"
+          width="130"
+          sortable
+          show-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="OSType"
+          title="操作系统"
+          width="130"
+          sortable
+          show-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="LoginTime"
+          title="登录时间"
+          width="178"
+          sortable
+          show-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="ActiveTime"
+          title="活跃时间"
+          width="178"
+          sortable
+          show-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column title="操作" width="250" fixed="right">
+          <template v-slot="{ row }">
+            <el-button size="mini" type="danger" @click="forcedOffline(row)">
+              <i class="el-icon-close"></i>
+              强制下线
+            </el-button>
+          </template>
+        </vxe-table-column>
+      </vxe-table>
+      <!-- 表格结束 -->
+
+      <!-- 分页开始 -->
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="searchForm.page"
+        :page-sizes="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="count"
+      >
+      </el-pagination>
+      <!-- 分页结束 -->
+    </el-card>
   </div>
 </template>
 
@@ -137,6 +304,29 @@ export default {
             this.tableData = res.data.data
             this.count = res.data.count
             this.loading = false
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    // 强制下线
+    forcedOffline (row) {
+      console.log(row)
+      let obj = {
+        AutoSystemID: this.searchForm.AutoSystemID,
+        OfflieSystemID: row.AutoSystemID,
+        Name: row.AccountNumber
+      }
+      var url = '/api/Users/ForcedOffline'
+      this.$axios
+        .post(url, obj)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+            this.getData()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
