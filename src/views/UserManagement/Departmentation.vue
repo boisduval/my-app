@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>角色信息查询</span>
+            <span>部门信息查询</span>
           </div>
           <el-form
             :inline="true"
@@ -14,10 +14,10 @@
             label-width="120px"
             label-position="right"
           >
-            <el-form-item label="角色名称:">
+            <el-form-item label="部门名称:">
               <el-input
                 v-model="searchForm.LikeName"
-                placeholder="请输入角色名称"
+                placeholder="请输入部门名称"
               ></el-input>
             </el-form-item>
             <el-form-item label="描述信息:">
@@ -26,7 +26,7 @@
                 placeholder="请输入描述信息"
               ></el-input>
             </el-form-item>
-            <el-form-item label="日志类型:">
+            <el-form-item label="部门类型:">
               <el-select v-model="searchForm.LikeType">
                 <el-option
                   v-for="(item, index) in options"
@@ -48,7 +48,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>角色信息</span>
+        <span>部门信息</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -144,8 +144,8 @@
         <vxe-table-column type="index" width="50" title="序号" fixed="left">
         </vxe-table-column>
         <vxe-table-column
-          field="Name"
-          title="角色名称"
+          field="buDName"
+          title="部门名称"
           width="200"
           sortable
           show-overflow
@@ -154,42 +154,31 @@
         </vxe-table-column>
         <vxe-table-column
           field="brtRTName"
-          title="角色类型"
-          width="200"
+          title="部门类型"
+          width="250"
           show-overflow
           sortable
         >
         </vxe-table-column>
         <vxe-table-column
-          field="brRDescribe"
-          title="角色信息"
-          width="200"
+          field="buDDescribe"
+          title="描述信息"
+          width="250"
           sortable
           show-overflow
           align="left"
         >
         </vxe-table-column>
         <vxe-table-column
-          field="brRCreationTime"
+          field="buDCreationTime"
           title="创建时间"
-          width="230"
-          sortable
-          show-overflow
-        >
-        </vxe-table-column>
-        <vxe-table-column
-          field="brRUpDataTime"
-          title="更新时间"
-          width="230"
+          width="330"
           sortable
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column title="操作" width="350" fixed="right">
           <template v-slot="{ row }">
-            <el-button size="mini" @click="getMenuList(row)"
-              >设置菜单</el-button
-            >
             <el-button size="mini" @click="editItem(row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="deleteItem(row)"
               >删除</el-button
@@ -216,31 +205,33 @@
         width="35%"
         :close-on-click-modal="false"
         :visible.sync="dialogFormAddVisible"
-        title="添加角色"
+        title="添加部门"
       >
         <el-form label-width="90px" label-position="right" :model="addForm">
-          <el-form-item label="角色名称">
-            <el-input
-              v-model="addForm.Name"
-              placeholder="请输入角色名称"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="角色类型">
-            <el-select v-model="addForm.Type">
-              <el-option
-                v-for="(item, index) in options1"
-                :key="index"
-                :value="item.SystemID"
-                :label="item.Name"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="角色描述">
-            <el-input
-              v-model="addForm.Describe"
-              placeholder="请输入角色描述"
-            ></el-input>
-          </el-form-item>
+          <el-form-item label="部门名称:">
+              <el-input
+                v-model="addForm.Name"
+                placeholder="请输入部门名称"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="部门类型:">
+              <el-select v-model="addForm.Type">
+                <el-option
+                  v-for="(item, index) in options1"
+                  :key="index"
+                  :value="item.SystemID"
+                  :label="item.Name"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="描述信息:">
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 4, maxRows: 8 }"
+                v-model="addForm.Describe"
+                placeholder="请输入描述信息"
+              ></el-input>
+            </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="addHttp" size="medium" type="primary">
@@ -258,16 +249,16 @@
         width="35%"
         :close-on-click-modal="false"
         :visible.sync="dialogFormEditVisible"
-        title="修改角色"
+        title="修改部门"
       >
         <el-form label-width="90px" label-position="right" :model="editForm">
-          <el-form-item label="角色名称">
+          <el-form-item label="部门名称">
             <el-input
               v-model="editForm.Name"
-              placeholder="请输入角色名称"
+              placeholder="请输入部门名称"
             ></el-input>
           </el-form-item>
-          <el-form-item label="角色类型">
+          <el-form-item label="部门类型">
             <el-select v-model="editForm.Type">
               <el-option
                 v-for="(item, index) in options2"
@@ -277,10 +268,10 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="角色描述">
+          <el-form-item label="部门描述">
             <el-input
               v-model="editForm.Describe"
-              placeholder="请输入角色描述"
+              placeholder="请输入部门描述"
             ></el-input>
           </el-form-item>
         </el-form>
@@ -294,27 +285,6 @@
         </div>
       </el-dialog>
       <!-- 编辑表单结束 -->
-
-      <!-- 权限树开始 -->
-      <el-dialog
-        :close-on-click-modal="false"
-        :visible.sync="dialogFormVisible"
-        title="设置角色"
-        width="500px"
-        id="dialog"
-      >
-        <!-- <v-tree :data="roleTree" checkable multiple show-line></v-tree> -->
-        <Tree :data="roleTree" show-checkbox></Tree>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="updataRoleMenu" size="medium" type="primary">
-            提 交
-          </el-button>
-          <el-button @click="dialogFormVisible = false" size="medium">
-            取 消
-          </el-button>
-        </div>
-      </el-dialog>
-      <!-- 权限树结束 -->
     </el-card>
   </div>
 </template>
@@ -336,7 +306,7 @@ export default {
       options: [{ Name: '选择日志类型', SystemID: 0 }],
       tableData: [],
       loading: false,
-      fileName: '角色信息',
+      fileName: '部门信息',
       customColumns: [],
       count: 0,
       addForm: {},
@@ -418,7 +388,7 @@ export default {
     },
     getData () {
       this.loading = true
-      var url = '/api/Users/GetRoleList'
+      var url = '/api/Users/GetDepartmentList'
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
@@ -437,7 +407,7 @@ export default {
 
     // 获取选择列表
     getRoleType () {
-      var url = '/api/Users/GetRoleType'
+      var url = '/api/Users/GetDepartmentType'
       return new Promise((resolve, reject) => {
         this.$axios
           .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}`)
@@ -467,7 +437,7 @@ export default {
     },
 
     addHttp () {
-      var url = '/api/Users/AddRoleInfo'
+      var url = '/api/Users/AddDepartmentInfo'
       this.$axios
         .post(url, this.addForm)
         .then(res => {
@@ -488,13 +458,13 @@ export default {
     // 删除
     deleteItem (row) {
       console.log(row)
-      var url = '/api/Users/DeleteRole'
+      var url = '/api/Users/DeleteDepartment'
       let obj = {
         AutoSystemID: this.searchForm.AutoSystemID,
         data: [
           {
-            SystemID: row.SystemID,
-            Name: row.Name
+            SystemID: row.buSystemID,
+            Name: row.buDName
           }
         ]
       }
@@ -544,8 +514,8 @@ export default {
       }
       for (const item of this.selectedItems) {
         arr.push({
-          Name: item.Name,
-          SystemID: item.SystemID
+          Name: item.buDName,
+          SystemID: item.buSystemID
         })
       }
       this.$confirm(`确定删除吗`, '提示', {
@@ -554,7 +524,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          var url = '/api/Users/DeleteRole'
+          var url = '/api/Users/DeleteDepartment'
           this.$axios
             .post(url, {
               AutoSystemID: this.searchForm.AutoSystemID,
@@ -598,9 +568,9 @@ export default {
           this.options2 = res.data.data
           this.editForm = {
             AutoSystemID: this.searchForm.AutoSystemID,
-            Describe: row.brRDescribe,
-            Name: row.Name,
-            SystemID: row.SystemID,
+            Describe: row.buDDescribe,
+            Name: row.buDName,
+            SystemID: row.buSystemID,
             Type: row.brtSystemID
           }
           this.dialogFormEditVisible = true
@@ -612,7 +582,7 @@ export default {
       }
     },
     editHttp () {
-      var url = '/api/Users/EditRoleInfo'
+      var url = '/api/Users/EditDepartmentInfo'
       this.$axios
         .post(url, this.editForm)
         .then(res => {
@@ -620,59 +590,6 @@ export default {
             this.$message.success(res.data.msg)
             this.editForm = {}
             this.dialogFormEditVisible = false
-            this.getData()
-          } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-
-    // 获取权限列表
-    getMenuList (row) {
-      this.RoleSystemID = row.SystemID
-      var url = '/api/Menu/GetMenuList'
-      this.$axios
-        .get(url, {
-          params: {
-            AutoSystemID: this.searchForm.AutoSystemID,
-            RoleSystemID: this.RoleSystemID
-          }
-        })
-        .then(res => {
-          if (res.data.code === 0) {
-            this.roleTree = res.data.data
-            this.dialogFormVisible = true
-          } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-
-    updataRoleMenu () {
-      var arr = this.roleTree.filter(el => {
-        return (
-          el.checked === true ||
-          (el.checked === false && el.indeterminate === true)
-        )
-      })
-      let obj = {
-        AutoSystemID: this.searchForm.AutoSystemID,
-        RoleSystemID: this.RoleSystemID,
-        data: JSON.stringify(arr)
-      }
-      var url = '/api/Users/UpdataRoleMenu'
-      this.$axios
-        .post(url, obj)
-        .then(res => {
-          if (res.data.code === 0) {
-            this.$message.success(res.data.msg)
-            this.dialogFormVisible = false
             this.getData()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
@@ -742,7 +659,7 @@ export default {
   background-color: #fff;
 }
 
-#dialog .el-dialog {
+#el-dialog {
   max-height: 662px;
 }
 </style>

@@ -5,6 +5,7 @@ import store from './store'
 import axios from './httpConfig/http'
 import VueAxios from 'vue-axios'
 import jquery from 'jquery'
+import './plugins/iview.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/base.css'
@@ -12,7 +13,6 @@ import 'element-ui/lib/theme-chalk/base.css'
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import CsvExportor from 'csv-exportor'
 import Print from './js/print'
-import './assets/css/printstylesheet.css'
 import print from 'print-js'
 
 import md5 from 'js-md5'
@@ -30,16 +30,11 @@ import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title'
 
-import 'vue-beauty/package/style/vue-beauty.min.css'
-import { tree } from 'vue-beauty'
-import './plugins/iview.js'
-
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueAxios, axios)
 Vue.use(Print)
 Vue.use(VXETable)
-Vue.use(tree)
 Vue.component(CollapseTransition.name, CollapseTransition)
 Vue.prototype.$md5 = md5
 Vue.prototype.$axios = axios

@@ -24,7 +24,6 @@
     "view-design": "^4.0.0",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",
-    "vue-beauty": "^2.0.0-beta.19",
     "vue-router": "^3.1.3",
     "vuex": "^3.0.1",
     "vuex-persist": "^2.1.1",

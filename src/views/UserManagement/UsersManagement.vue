@@ -470,7 +470,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -527,8 +527,6 @@ export default {
     this.getData()
   },
   methods: {
-    ...mapMutations('tabs', ['set_detail_label']),
-    ...mapMutations('detail', ['set_dictionaryDataParams']),
     // 每页显示多少条
     handleSizeChange (val) {
       this.searchForm.limit = val

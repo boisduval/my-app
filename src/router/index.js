@@ -198,6 +198,16 @@ const routes = [
         path: '/roleManagement',
         name: 'roleManagement',
         component: () => import(/* webpackChunkName: "RoleManagement" */ '../views/UserManagement/RoleManagement.vue')
+      },
+      {
+        path: '/departmentation',
+        name: 'departmentation',
+        component: () => import(/* webpackChunkName: "Departmentation" */ '../views/UserManagement/Departmentation.vue')
+      },
+      {
+        path: '/active',
+        name: 'active',
+        component: () => import(/* webpackChunkName: "Active" */ '../views/UserManagement/Active.vue')
       }
     ]
   },

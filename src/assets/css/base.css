@@ -230,4 +230,8 @@ div {
   clear: both;
 }
 
+#dialog .el-dialog {
+  max-height: 670px;
+}
+
 

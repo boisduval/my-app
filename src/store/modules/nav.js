@@ -403,7 +403,7 @@ const state = {
           {
             ID: '25',
             MID: '637031848502576736',
-            Href: '/ui/User/Departmentation.aspx',
+            Href: 'departmentation',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '部门划分',
@@ -412,7 +412,7 @@ const state = {
           {
             ID: '49',
             MID: '637031848502576736',
-            Href: '/ui/User/Active.aspx',
+            Href: 'active',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '在线用户',
