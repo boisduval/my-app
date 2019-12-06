@@ -82,7 +82,7 @@ const state = {
           {
             ID: '12',
             MID: '3',
-            Href: '/ui/Equipment/CmdList.aspx',
+            Href: 'cmdList',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '命令流水',
@@ -526,7 +526,7 @@ const state = {
           {
             ID: '38',
             MID: '637031848504872645',
-            Href: '/ui/Menmorandum/Menmorandum_List_OverLoad.aspx',
+            Href: 'MenmorandumListOverLoad',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '已完成备忘',

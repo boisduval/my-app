@@ -75,6 +75,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "StateDetail" */ '../views/StateDetail.vue')
       },
       {
+        path: '/cmdList',
+        name: 'cmdList',
+        component: () => import(/* webpackChunkName: "CmdList" */ '../views/CmdList.vue')
+      },
+      {
         path: '/selfInspection',
         name: 'selfInspection',
         component: () => import(/* webpackChunkName: "SelfInspection" */ '../views/SelfInspection.vue')
@@ -243,6 +248,11 @@ const routes = [
         path: '/menmorandumListWaitLoad',
         name: 'menmorandumListWaitLoad',
         component: () => import(/* webpackChunkName: "MenmorandumListWaitLoad" */ '../views/Menmorandum/MenmorandumListWaitLoad.vue')
+      },
+      {
+        path: '/menmorandumListOverLoad',
+        name: 'menmorandumListOverLoad',
+        component: () => import(/* webpackChunkName: "MenmorandumListOverLoad" */ '../views/Menmorandum/MenmorandumListOverLoad.vue')
       }
     ]
   },

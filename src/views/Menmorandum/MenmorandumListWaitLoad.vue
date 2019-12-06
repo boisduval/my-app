@@ -609,18 +609,6 @@ export default {
               } else if (res.data.code === 1) {
                 this.$message.error(res.data.msg)
               }
-            //   setTimeout(() => {
-            //     this.$message.success("删除成功");
-            //     let totalPage = Math.ceil(
-            //       (this.count - 1) / this.searchForm.limit
-            //     );
-            //     let currentPage =
-            //       this.searchForm.page > totalPage
-            //         ? totalPage
-            //         : this.searchForm.page;
-            //     this.searchForm.page = currentPage < 1 ? 1 : currentPage;
-            //     this.getData();
-            //   }, 100);
             })
             .catch(err => {
               console.error(err)
