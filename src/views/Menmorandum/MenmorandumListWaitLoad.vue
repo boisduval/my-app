@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>异常日志列表查询</span>
+            <span>待备忘信息列表查询</span>
           </div>
           <el-form
             :inline="true"
@@ -24,20 +24,27 @@
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="异常名称:">
-                <el-input
-                v-model="searchForm.LikeType"
-                placeholder="请输入异常名称"
+            <el-form-item label="备忘名称:">
+              <el-input
+                v-model="searchForm.LikeName"
+                placeholder="请输入备忘名称"
               ></el-input>
             </el-form-item>
-            <el-form-item label="异常信息:">
+            <el-form-item label="备忘内容:">
               <el-input
                 v-model="searchForm.LikeMessage"
-                placeholder="请输入异常信息"
+                placeholder="请输入备忘内容"
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
               <el-button
                 type="primary"
                 plain
@@ -77,7 +84,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>异常日志</span>
+        <span>待备忘信息</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -155,44 +162,79 @@
         <vxe-table-column type="index" width="50" title="序号" fixed="left">
         </vxe-table-column>
         <vxe-table-column
-          field="ExcName"
-          title="异常名称"
+          field="Name"
+          title="名称"
           sortable
-          width="120"
+          width="180"
+          align="left"
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="RecordingTime"
-          title="发生时间"
+          field="MWriteTime"
+          title="日期"
           sortable
           width="180"
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="TargetSite"
-          title="异常方法"
+          field="MExpectedOverTime"
+          title="预计完成日期"
           show-overflow
-          width="150"
+          sortable
+          width="180"
         >
         </vxe-table-column>
-        <vxe-table-column field="ExcResult" title="异常编码" sortable width="120">
-        </vxe-table-column>
         <vxe-table-column
-          field="Msg"
-          title="异常信息"
+          field="MInfo"
+          title="内容"
+          sortable
           show-overflow
-          width="615"
+          width="180"
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="WriteTime" title="记录时间" sortable width="200">
-        </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right">
+        <vxe-table-column
+          field="MExpectedStutes"
+          title="是否超时"
+          show-overflow
+          width="180"
+          sortable
+        >
           <template v-slot="{ row }">
-            <el-button plain size="small" @click="toDetail(row)">
-              <i class="el-icon-info">详情</i>
+            <template v-if="row.MExpectedStutes === '无预计'">
+              <el-tag type="info" size="small">{{
+                row.MExpectedStutes
+              }}</el-tag>
+            </template>
+            <template v-else-if="row.MExpectedStutes === '已超时'">
+              <el-tag type="danger" size="small">{{
+                row.MExpectedStutes
+              }}</el-tag>
+            </template>
+            <template v-else>
+              <el-tag type="success" size="small">{{
+                row.MExpectedStutes
+              }}</el-tag>
+            </template>
+          </template>
+        </vxe-table-column>
+        <vxe-table-column title="操作" width="300" fixed="right">
+          <template v-slot="{ row }">
+            <el-button
+              type="success"
+              plain
+              size="mini"
+              @click="finishedItem(row)"
+            >
+              完成
+            </el-button>
+            <el-button plain size="mini">
+              编辑
+            </el-button>
+            <el-button type="danger" size="mini">
+              删除
             </el-button>
           </template>
         </vxe-table-column>
@@ -211,54 +253,50 @@
       </el-pagination>
       <!-- 分页结束 -->
 
-      <!-- 详情开始 -->
-      <Drawer :closable="false" v-model="value4" title="详细信息" draggable>
-        <p :style="pStyle">异常系统</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.SystemName }}
+      <!-- 完成表单开始 -->
+      <el-dialog
+        width="40%"
+        :close-on-click-modal="false"
+        :visible.sync="dialogFormVisible"
+        title="备忘完成"
+      >
+        <el-form
+          label-width="90px"
+          label-position="right"
+          :model="finishedForm"
+        >
+          <el-form-item label="完成时间">
+            <el-input v-model="finishedForm.Time" readonly></el-input>
+          </el-form-item>
+          <el-form-item label="备忘名称">
+            <el-input v-model="finishedForm.Name" readonly></el-input>
+          </el-form-item>
+          <el-form-item label="备忘内容">
+            <el-input
+              type="textarea"
+              v-model="finishedForm.MInfo"
+              readonly
+              :autosize="{ minRows: 4, maxRows: 8 }"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="完成内容">
+            <el-input
+              type="textarea"
+              v-model="finishedForm.Msg"
+              :autosize="{ minRows: 4, maxRows: 8 }"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="finishedHttp" size="medium" type="primary">
+            提 交
+          </el-button>
+          <el-button @click="dialogFormVisible = false" size="medium">
+            取 消
+          </el-button>
         </div>
-        <Divider />
-        <p :style="pStyle">对象名称</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.Source }}
-        </div>
-        <Divider />
-        <p :style="pStyle">异常链接</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.HelpLink }}
-        </div>
-        <Divider />
-        <p :style="pStyle">表示形式</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.StackTrace }}
-        </div>
-        <Divider />
-        <p :style="pStyle">异常方法</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.TargetSite }}
-        </div>
-        <Divider />
-         <p :style="pStyle">异常消息</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.Message }}
-        </div>
-        <Divider />
-         <p :style="pStyle">异常编码</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.HResult }}
-        </div>
-        <Divider />
-         <p :style="pStyle">发生时间</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.WriteTime }}
-        </div>
-        <Divider />
-         <p :style="pStyle">记录时间</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.RecordingTime }}
-        </div>
-      </Drawer>
-      <!-- 详情结束 -->
+      </el-dialog>
+      <!-- 完成表单结束 -->
     </el-card>
   </div>
 </template>
@@ -273,7 +311,7 @@ export default {
         AutoSystemID: '',
         Start: '',
         Stop: '',
-        LikeType: '',
+        LikeName: '',
         LikeMessage: '',
         page: 1,
         limit: 10
@@ -286,15 +324,13 @@ export default {
       loading: false,
       dialogFormVisible: false,
       value: '',
-      detailData: [],
-      activeItem: {},
-      value4: false,
-      pStyle: {
-        fontSize: '14px',
-        color: 'rgba(0,0,0,0.85)',
-        lineHeight: '24px',
-        display: 'block',
-        marginBottom: '16px'
+      finishedForm: {
+        Time: '',
+        AutoSystemID: '',
+        Msg: '',
+        Name: '',
+        SystemID: '',
+        MInfo: ''
       }
     }
   },
@@ -363,7 +399,7 @@ export default {
       this.loading = true
       this.searchForm.Start = moment(this.value[0]).format('YYYY-MM-DD')
       this.searchForm.Stop = moment(this.value[1]).format('YYYY-MM-DD')
-      var url = '/api/Log/GetExceptionLogList'
+      var url = '/api/Memorandum/GetWaitList'
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
@@ -409,19 +445,40 @@ export default {
       this.value = [num, new Date()]
     },
 
-    toDetail (row) {
-      var url = '/api/Log/GetExceptionLogInfo'
+    // 完成
+    finishedItem (row) {
+      console.log(row)
+      // 获取当前时间
+      this.finishedForm.Time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+      this.finishedForm.Name = row.Name
+      this.finishedForm.SystemID = row.SystemID
+      this.finishedForm.Msg = ''
+      this.finishedForm.MInfo = row.MInfo
+      this.dialogFormVisible = true
+    },
+    finishedHttp () {
+      let obj = {
+        AutoSystemID: this.searchForm.AutoSystemID,
+        SystemID: this.finishedForm.SystemID,
+        Name: this.finishedForm.Name,
+        Msg: this.finishedForm.Msg
+      }
+      var url = '/api/Memorandum/SetOverInfo'
       this.$axios
-        .get(url, {
-          params: {
-            AutoSystemID: this.searchForm.AutoSystemID,
-            LogSystemID: row.SystemID
-          }
-        })
+        .post(url, obj)
         .then(res => {
           if (res.data.code === 0) {
-            this.activeItem = res.data.data[0]
-            this.value4 = true
+            this.dialogFormVisible = false
+            this.$message.success(res.data.msg)
+            let totalPage = Math.ceil(
+              (this.count - 1) / this.searchForm.limit
+            )
+            let currentPage =
+                  this.searchForm.page > totalPage
+                    ? totalPage
+                    : this.searchForm.page
+            this.searchForm.page = currentPage < 1 ? 1 : currentPage
+            this.getData()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
