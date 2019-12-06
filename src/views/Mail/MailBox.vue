@@ -5,40 +5,84 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>列表查询</span>
+            <span>收件箱列表查询</span>
           </div>
           <el-form
             :inline="true"
             :model="searchForm"
             class="demo-form-inline"
-            label-width="120px"
+            label-width="80px"
             label-position="right"
           >
-            <el-form-item label="登录账户:">
+            <el-form-item label="重要邮件:">
+              <el-select v-model="searchForm.IsImportance" clearable>
+                <el-option
+                  v-for="(item, index) in options1"
+                  :key="index"
+                  :value="item.value"
+                  :label="item.label"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="状态:">
+              <el-select v-model="searchForm.IsRead">
+                <el-option
+                  v-for="(item, index) in options2"
+                  :key="index"
+                  :value="item.value"
+                  :label="item.label"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="垃圾邮件:">
+              <el-select v-model="searchForm.IsSpam">
+                <el-option
+                  v-for="(item, index) in options3"
+                  :key="index"
+                  :value="item.value"
+                  :label="item.label"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="删除:">
+              <el-select v-model="searchForm.IsDelete">
+                <el-option
+                  v-for="(item, index) in options4"
+                  :key="index"
+                  :value="item.value"
+                  :label="item.label"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="邮件标题:">
               <el-input
-                v-model="searchForm.LikeAccount"
-                placeholder="请输入登录账户"
+                v-model="searchForm.LikeTitle"
+                placeholder="请输入邮件标题"
               ></el-input>
             </el-form-item>
-            <el-form-item label="登录名称:">
+            <el-form-item label="发件人:">
               <el-input
-                v-model="searchForm.LikeName"
-                placeholder="请输入登录名称"
+                v-model="searchForm.LikeFUserName"
+                placeholder="请输入发件人"
               ></el-input>
             </el-form-item>
-            <el-form-item label="主机名称:">
+            <el-form-item label="邮件内容:">
               <el-input
-                v-model="searchForm.LikeHost"
-                placeholder="请输入主机名称"
+                v-model="searchForm.LikeMessage"
+                placeholder="请输入邮件内容"
               ></el-input>
             </el-form-item>
-            <el-form-item label="系统名称:">
-              <el-input
-                v-model="searchForm.LikePlatform"
-                placeholder="请输入系统名称"
-              ></el-input>
+            <el-form-item label="邮件类型:">
+              <el-select v-model="searchForm.IsSend">
+                <el-option
+                  v-for="(item, index) in options5"
+                  :key="index"
+                  :value="item.value"
+                  :label="item.label"
+                ></el-option>
+              </el-select>
             </el-form-item>
-            <el-form-item>
+            <el-form-item label=" ">
               <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
             </el-form-item>
           </el-form>
@@ -47,14 +91,40 @@
       </div>
     </el-collapse-transition>
     <!-- 表单结束 -->
-
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>在线用户</span>
+        <span>登录异常</span>
       </div>
 
       <!-- 表格操作栏开始 -->
       <div class="table-oper">
+        <el-button
+          type="primary"
+          size="small"
+          class="button-left"
+          @click="dialogFormAddVisible = true"
+        >
+          <i class="el-icon-plus"></i>
+          添加
+        </el-button>
+        <el-button
+          type="primary"
+          size="small"
+          class="button-left"
+          @click="$refs.xTree.setAllTreeExpansion(true)"
+        >
+          <i class="el-icon-s-fold"></i>
+          全部展开
+        </el-button>
+        <el-button
+          type="primary"
+          size="small"
+          class="button-left"
+          @click="$refs.xTree.clearTreeExpand()"
+        >
+          <i class="el-icon-s-unfold"></i>
+          全部折叠
+        </el-button>
         <el-button
           type="primary"
           size="small"
@@ -63,15 +133,6 @@
         >
           <i class="el-icon-refresh-right"></i>
           刷新
-        </el-button>
-        <el-button
-          type="primary"
-          size="small"
-          class="button-left"
-          @click="isShow = !isShow"
-        >
-          <i class="el-icon-search"></i>
-          模糊查询
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -82,7 +143,7 @@
                 class="checkbox-item"
                 v-model="column.visible"
                 :key="index"
-                @change="$refs.xTable.refreshColumn()"
+                @change="$refs.xTree.refreshColumn()"
                 >{{ column.title }}</vxe-checkbox
               >
             </template>
@@ -128,75 +189,108 @@
         <vxe-table-column type="index" width="50" title="序号" fixed="left">
         </vxe-table-column>
         <vxe-table-column
-          field="AccountNumber"
-          title="登录账号"
-          width="130"
-          sortable
-          show-overflow
-        >
-        </vxe-table-column>
-        <vxe-table-column
-          field="DUser"
-          title="登录名称"
+          field="SendName"
+          title="发件名称"
           width="100"
-          show-overflow
-          sortable
-        >
-        </vxe-table-column>
-        <vxe-table-column
-          field="HostName"
-          title="IP地址"
-          width="123"
           sortable
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="LoginAddress"
-          title="登录地址"
-          width="158"
+          field="Title"
+          title="邮件标题"
+          width="421"
+          show-overflow
+          align="left"
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="SendTime"
+          title="距离时间"
+          width="100"
           sortable
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="BrowserType"
-          title="浏览器"
+          field="SendDay"
+          title="发件时间"
           width="130"
           sortable
           show-overflow
         >
         </vxe-table-column>
-        <vxe-table-column
-          field="OSType"
-          title="操作系统"
-          width="130"
-          sortable
-          show-overflow
-        >
-        </vxe-table-column>
-        <vxe-table-column
-          field="LoginTime"
-          title="登录时间"
-          width="178"
-          sortable
-          show-overflow
-        >
-        </vxe-table-column>
-        <vxe-table-column
-          field="ActiveTime"
-          title="活跃时间"
-          width="178"
-          sortable
-          show-overflow
-        >
-        </vxe-table-column>
-        <vxe-table-column title="操作" width="250" fixed="right">
+        <vxe-table-column field="IsRead" title="状态" width="100" show-overflow>
           <template v-slot="{ row }">
-            <el-button size="mini" type="danger" @click="forcedOffline(row)">
-              <i class="el-icon-close"></i>
-              强制下线
-            </el-button>
+            <template v-if="row.IsRead === '1'">
+              <el-tag type="success" size="small">已读</el-tag>
+            </template>
+            <template v-else>
+              <el-tag type="warning" size="small">未读</el-tag>
+            </template>
+          </template>
+        </vxe-table-column>
+        <vxe-table-column
+          field="IsImportance"
+          title="重要邮件"
+          width="100"
+          sortable
+          show-overflow
+        >
+          <template v-slot="{ row }">
+            <i-switch
+              true-color="#13ce66"
+              :value="row.IsImportance === '1'"
+            >
+              <span slot="open">是</span>
+              <span slot="close">否</span>
+            </i-switch>
+          </template>
+        </vxe-table-column>
+        <vxe-table-column
+          field="IsSpam"
+          title="垃圾邮件"
+          width="100"
+          sortable
+          show-overflow
+        >
+          <template v-slot="{ row }">
+            <i-switch
+              true-color="#13ce66"
+              :value="row.IsSpam === '1'"
+            >
+              <span slot="open">是</span>
+              <span slot="close">否</span>
+            </i-switch>
+          </template>
+        </vxe-table-column>
+        <vxe-table-column
+          field="IsDelete"
+          title="删除"
+          width="90"
+          sortable
+          show-overflow
+        >
+          <template v-slot="{ row }">
+            <i-switch
+              true-color="#13ce66"
+              :value="row.IsDelete === '1'"
+            >
+              <span slot="open">是</span>
+              <span slot="close">否</span>
+            </i-switch>
+          </template>
+        </vxe-table-column>
+        <vxe-table-column title="操作" width="318" fixed="right">
+          <template v-slot="{ row }">
+              <template v-if="row.IsSend === true">
+                <el-button size="mini">详情</el-button>
+              </template>
+              <template v-else>
+                  <el-button size="mini">详情</el-button>
+                  <el-button size="mini" type="success">回复</el-button>
+                  <el-button size="mini" type="warning">转发</el-button>
+              </template>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -226,17 +320,53 @@ export default {
         AutoSystemID: '',
         page: 1,
         limit: 10,
-        LikeAccount: '',
-        LikeName: '',
-        LikeHost: '',
-        LikePlatform: ''
+        IsSend: false,
+        IsRead: 100,
+        IsImportance: 100,
+        IsSpam: 100,
+        IsDelete: 100,
+        LikeFUserName: '',
+        LikeTitle: '',
+        LikeMessage: ''
       },
       isShow: true,
+      options1: [
+        // 重要邮件
+        { label: '全部', value: 100 },
+        { label: '是', value: 1 },
+        { label: '否', value: 0 }
+      ],
+      options2: [
+        // 状态
+        { label: '全部', value: 100 },
+        { label: '已读', value: 1 },
+        { label: '未读', value: 0 }
+      ],
+      options3: [
+        // 垃圾邮件
+        { label: '全部', value: 100 },
+        { label: '是', value: 1 },
+        { label: '否', value: 0 }
+      ],
+      options4: [
+        // 删除
+        { label: '全部', value: 100 },
+        { label: '已读', value: 1 },
+        { label: '未读', value: 0 }
+      ],
+      options5: [
+        // 邮件类型
+        { label: '收件箱', value: false },
+        { label: '发件箱', value: true }
+      ],
       tableData: [],
       loading: false,
-      fileName: 'export',
+      fileName: '用户信息',
       customColumns: [],
-      count: 0
+      count: 0,
+      addForm: {},
+      dialogFormVisible: false,
+      selectedItems: []
     }
   },
   computed: {
@@ -296,7 +426,7 @@ export default {
     },
     getData () {
       this.loading = true
-      var url = '/api/Users/GetActiveUser'
+      var url = '/api/Mail/GetMailList'
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
@@ -304,29 +434,6 @@ export default {
             this.tableData = res.data.data
             this.count = res.data.count
             this.loading = false
-          } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    // 强制下线
-    forcedOffline (row) {
-      console.log(row)
-      let obj = {
-        AutoSystemID: this.searchForm.AutoSystemID,
-        OfflieSystemID: row.AutoSystemID,
-        Name: row.AccountNumber
-      }
-      var url = '/api/Users/ForcedOffline'
-      this.$axios
-        .post(url, obj)
-        .then(res => {
-          if (res.data.code === 0) {
-            this.$message.success(res.data.msg)
-            this.getData()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }

@@ -432,7 +432,7 @@ const state = {
     },
     {
       ID: '637031848503652954',
-      Href: 'Main.aspx',
+      Href: '/',
       Class: 'fa fa-envelope',
       Text: '站内信箱',
       SOrder: 6000000,
@@ -444,7 +444,7 @@ const state = {
           {
             ID: '27',
             MID: '637031848503652954',
-            Href: '/ui/Mail/MailBox.aspx',
+            Href: 'mailBox',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '站内信',

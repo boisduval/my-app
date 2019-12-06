@@ -40,7 +40,7 @@
           <el-input v-model="searchForm.LikeName" placeholder="请输入参数名称"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="getData" size="medium">查询</el-button>
+          <el-button @click="searchForm.page = 1;getData()" size="medium">查询</el-button>
         </el-form-item>
       </el-form>
       <!-- 表格操作栏开始 -->

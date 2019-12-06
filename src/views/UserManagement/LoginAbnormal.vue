@@ -21,7 +21,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="getData">查询</el-button>
+              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -397,4 +397,67 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.menu-btn {
+  position: relative;
+  /* width: 25px;
+  height: 25px; */
+  float: right;
+}
+
+.button-left {
+  float: left;
+}
+
+.menu-btn:hover .menu-wrapper {
+  display: block;
+}
+
+.menu-wrapper {
+  display: none;
+  position: absolute;
+  width: 150px;
+  top: 16px;
+  right: 0;
+  z-index: 9;
+  background-color: #fff;
+  font-size: 14px;
+  padding: 4px 10px;
+  user-select: none;
+  border: 1px solid #e8eaec;
+  text-align: left;
+}
+
+.checkbox-item {
+  display: block;
+  margin: 4px 0;
+}
+
+.icon-menu {
+  width: 16px;
+  height: 0px;
+  display: inline-block;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 0 2px #606266, 0 0 0 2px #606266, 0 12px 0 2px #606266;
+}
+
+.table-oper .el-button {
+  padding: 8px 10px;
+  margin-left: 5px;
+}
+
+.menu-btn:focus,
+.menu-btn:active {
+  color: #606266;
+  border-color: #dcdfe6;
+  background-color: #fff;
+}
+
+.tree-node-icon {
+  width: 20px;
+}
+
+#left .vxe-cell {
+  text-align: left;
+}
+</style>

@@ -324,7 +324,8 @@ a {
 }
 #login {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  overflow-y: auto;
   background-image: url("../assets/img/backgrounds/1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -338,7 +339,7 @@ a {
 #login h1 {
   color: #fff;
   text-align: center;
-  margin-top: 10px;
+  margin: 10px 0;
   font-size: 38px;
   font-weight: 100;
   line-height: 50px;
@@ -453,6 +454,10 @@ a:focus {
   float: left;
   text-align: center;
   margin-top: 20px;
+}
+
+.welcome {
+  margin: auto 0;
 }
 
 </style>

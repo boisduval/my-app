@@ -213,6 +213,11 @@ const routes = [
         path: '/loginAbnormal',
         name: 'loginAbnormal',
         component: () => import(/* webpackChunkName: "LoginAbnormal" */ '../views/UserManagement/LoginAbnormal.vue')
+      },
+      {
+        path: '/mailBox',
+        name: 'mailBox',
+        component: () => import(/* webpackChunkName: "mailBox" */ '../views/Mail/MailBox.vue')
       }
     ]
   },
