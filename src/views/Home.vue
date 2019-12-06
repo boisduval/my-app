@@ -21,8 +21,8 @@
               <div class="user-ifo" v-show="isShow">
                 <li class="nav-header" id="collapse">
                   <div class="dropdown profile-element">
-                    <el-avatar :size="63" :src="userIfo.ImgPath"></el-avatar>
-                    <el-popover
+                    <el-avatar :size="63" :src="userIfo.ImgPath" @error="errorHandler"></el-avatar>
+                    <!-- <el-popover
                       placement="bottom"
                       title="标题"
                       width="200"
@@ -38,7 +38,32 @@
                           <i class="fa fa-caret-down"></i>
                         </div>
                       </div>
-                    </el-popover>
+                    </el-popover> -->
+                    <div class="information" slot="reference">
+                      <div class="accountNumber">
+                        {{ userIfo.AccountNumber }}
+                      </div>
+                      <el-dropdown @command="handleCommand" class="dUser" trigger="click" placement="bottom-start">
+                        <span class="el-dropdown-link">
+                          {{ userIfo.DUser }}
+                        <i class="fa fa-caret-down"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item command="setAvatar">
+                            修改头像
+                          </el-dropdown-item>
+                          <el-dropdown-item command="userInfo">
+                            个人资料
+                          </el-dropdown-item>
+                          <el-dropdown-item command="a">
+                            联系我们
+                          </el-dropdown-item>
+                          <el-dropdown-item command="a">
+                            收件信箱(0)
+                          </el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </div>
                   </div>
                 </li>
               </div>
@@ -253,6 +278,10 @@ export default {
         .catch(err => {
           console.error(err)
         })
+    },
+
+    handleCommand (command) {
+      this.$message('click on item ' + command)
     }
   }
 }
