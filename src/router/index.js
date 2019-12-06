@@ -218,6 +218,31 @@ const routes = [
         path: '/mailBox',
         name: 'mailBox',
         component: () => import(/* webpackChunkName: "mailBox" */ '../views/Mail/MailBox.vue')
+      },
+      {
+        path: '/users',
+        name: 'users',
+        component: () => import(/* webpackChunkName: "Users" */ '../views/Log/Users.vue')
+      },
+      {
+        path: '/systemLog',
+        name: 'systemLog',
+        component: () => import(/* webpackChunkName: "SystemLog" */ '../views/Log/SystemLog.vue')
+      },
+      {
+        path: '/hardware',
+        name: 'hardware',
+        component: () => import(/* webpackChunkName: "Hardware" */ '../views/Log/Hardware.vue')
+      },
+      {
+        path: '/exception',
+        name: 'exception',
+        component: () => import(/* webpackChunkName: "Exception" */ '../views/Log/Exception.vue')
+      },
+      {
+        path: '/menmorandumListWaitLoad',
+        name: 'menmorandumListWaitLoad',
+        component: () => import(/* webpackChunkName: "MenmorandumListWaitLoad" */ '../views/Menmorandum/MenmorandumListWaitLoad.vue')
       }
     ]
   },

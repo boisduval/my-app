@@ -234,4 +234,7 @@ div {
   max-height: 670px;
 }
 
+.el-date-editor .el-range-separator {
+  width: 10%;
+}
 

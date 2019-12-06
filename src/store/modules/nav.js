@@ -455,7 +455,7 @@ const state = {
     },
     {
       ID: '637031848504354649',
-      Href: 'Main.aspx',
+      Href: '/',
       Class: 'fa fa-bookmark',
       Text: '日志管理',
       SOrder: 7000000,
@@ -467,7 +467,7 @@ const state = {
           {
             ID: '34',
             MID: '637031848504354649',
-            Href: '/ui/Log/Users.aspx',
+            Href: 'users',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '用户日志',
@@ -476,7 +476,7 @@ const state = {
           {
             ID: '35',
             MID: '637031848504354649',
-            Href: '/ui/Log/SystemLog.aspx',
+            Href: 'systemLog',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '系统日志',
@@ -485,7 +485,7 @@ const state = {
           {
             ID: '44',
             MID: '637031848504354649',
-            Href: '/ui/Log/Hardware.aspx',
+            Href: 'hardware',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '硬件日志',
@@ -494,7 +494,7 @@ const state = {
           {
             ID: '46',
             MID: '637031848504354649',
-            Href: '/ui/Log/Exception.aspx',
+            Href: 'exception',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '异常日志',
@@ -517,7 +517,7 @@ const state = {
           {
             ID: '37',
             MID: '637031848504872645',
-            Href: '/ui/Menmorandum/Menmorandum_List_WaitLoad.aspx',
+            Href: 'menmorandumListWaitLoad',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '待完成备忘',
