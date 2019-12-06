@@ -251,14 +251,14 @@
       <el-dialog
         title="修改信息"
         :visible.sync="dialogFormEditVisible"
-        width="50%"
+        width="60%"
         :close-on-click-modal="false"
       >
         <el-form :model="editForm" label-width="90px">
           <el-form-item label="电价标签" prop="VText">
             <el-input v-model="editForm.VText"></el-input>
           </el-form-item>
-          <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="8">
             <el-form-item label="过期时间">
               <el-date-picker
                 v-model="value"
@@ -268,7 +268,7 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="8">
             <el-form-item label="电价时令">
               <el-radio-group v-model="editForm.Summer">
                 <el-radio label="夏令时"></el-radio>
@@ -276,7 +276,7 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="8">
             <el-form-item label="平高峰">
               <el-radio-group v-model="editForm.Climax">
                 <el-radio label="高峰"></el-radio>

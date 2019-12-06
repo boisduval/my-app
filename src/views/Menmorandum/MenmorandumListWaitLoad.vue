@@ -101,6 +101,15 @@
         <el-button
           type="primary"
           size="small"
+          @click="deleteItems"
+          class="button-left"
+        >
+          <i class="el-icon-delete"></i>
+          多选删除
+        </el-button>
+        <el-button
+          type="primary"
+          size="small"
           class="button-left"
           @click="isShow = !isShow"
         >
@@ -230,10 +239,10 @@
             >
               完成
             </el-button>
-            <el-button plain size="mini">
+            <el-button plain size="mini" @click="editItem(row)">
               编辑
             </el-button>
-            <el-button type="danger" size="mini">
+            <el-button type="danger" size="mini" @click="deleteItem(row)">
               删除
             </el-button>
           </template>
@@ -297,6 +306,45 @@
         </div>
       </el-dialog>
       <!-- 完成表单结束 -->
+
+      <!-- 编辑表单开始 -->
+      <el-dialog
+        width="40%"
+        :close-on-click-modal="false"
+        :visible.sync="dialogFormEditVisible"
+        title="修改备忘"
+      >
+        <el-form label-width="90px" label-position="right" :model="editForm">
+          <el-form-item label="完成时间">
+            <el-date-picker
+              v-model="editForm.ExpectedOverTime"
+              type="date"
+              placeholder="选择日期"
+              style="width:100%"
+            >
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="备忘名称">
+            <el-input v-model="editForm.Name"></el-input>
+          </el-form-item>
+          <el-form-item label="备忘内容">
+            <el-input
+              type="textarea"
+              v-model="editForm.Msg"
+              :autosize="{ minRows: 4, maxRows: 8 }"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="editHttp" size="medium" type="primary">
+            提 交
+          </el-button>
+          <el-button @click="dialogFormEditVisible = false" size="medium">
+            取 消
+          </el-button>
+        </div>
+      </el-dialog>
+      <!-- 编辑表单结束 -->
     </el-card>
   </div>
 </template>
@@ -331,7 +379,17 @@ export default {
         Name: '',
         SystemID: '',
         MInfo: ''
-      }
+      },
+      editForm: {
+        AutoSystemID: '',
+        ExpectedOverTime: '',
+        Msg: '',
+        Name: '',
+        SystemID: ''
+      },
+      dialogFormEditVisible: false,
+      value1: '',
+      selectedItems: []
     }
   },
   computed: {
@@ -470,13 +528,11 @@ export default {
           if (res.data.code === 0) {
             this.dialogFormVisible = false
             this.$message.success(res.data.msg)
-            let totalPage = Math.ceil(
-              (this.count - 1) / this.searchForm.limit
-            )
+            let totalPage = Math.ceil((this.count - 1) / this.searchForm.limit)
             let currentPage =
-                  this.searchForm.page > totalPage
-                    ? totalPage
-                    : this.searchForm.page
+              this.searchForm.page > totalPage
+                ? totalPage
+                : this.searchForm.page
             this.searchForm.page = currentPage < 1 ? 1 : currentPage
             this.getData()
           } else if (res.data.code === 1) {
@@ -485,6 +541,151 @@ export default {
         })
         .catch(err => {
           console.error(err)
+        })
+    },
+
+    // 编辑
+    editItem (row) {
+      this.editForm.ExpectedOverTime = moment()
+        .subtract(0, 'days')
+        .format('YYYY-MM-DD')
+      this.editForm.AutoSystemID = this.searchForm.AutoSystemID
+      this.editForm.Name = row.Name
+      this.editForm.Msg = row.MInfo
+      this.editForm.SystemID = row.SystemID
+      this.dialogFormEditVisible = true
+    },
+    editHttp () {
+      var url = '/api/Memorandum/UpdataInfo'
+      this.$axios
+        .post(url, this.editForm)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.dialogFormEditVisible = false
+            this.$message.success(res.data.msg)
+            this.getData()
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 删除
+    deleteItem (row) {
+      console.log(row)
+      var url = '/api/Memorandum/DeleteInfo'
+      let obj = {
+        AutoSystemID: this.searchForm.AutoSystemID,
+        data: [
+          {
+            SystemID: row.SystemID,
+            Name: row.Name
+          }
+        ]
+      }
+      this.$confirm(`确定删除吗`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.$axios
+            .post(url, obj)
+            .then(res => {
+              if (res.data.code === 0) {
+                this.$message.success(res.data.msg)
+                let totalPage = Math.ceil(
+                  (this.count - 1) / this.searchForm.limit
+                )
+                let currentPage =
+                  this.searchForm.page > totalPage
+                    ? totalPage
+                    : this.searchForm.page
+                this.searchForm.page = currentPage < 1 ? 1 : currentPage
+                this.getData()
+              } else if (res.data.code === 1) {
+                this.$message.error(res.data.msg)
+              }
+            //   setTimeout(() => {
+            //     this.$message.success("删除成功");
+            //     let totalPage = Math.ceil(
+            //       (this.count - 1) / this.searchForm.limit
+            //     );
+            //     let currentPage =
+            //       this.searchForm.page > totalPage
+            //         ? totalPage
+            //         : this.searchForm.page;
+            //     this.searchForm.page = currentPage < 1 ? 1 : currentPage;
+            //     this.getData();
+            //   }, 100);
+            })
+            .catch(err => {
+              console.error(err)
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+    },
+
+    // 删除多个
+    deleteItems () {
+      this.selectedItems = this.$refs.xTable.getSelectRecords()
+      var arr = []
+      if (this.selectedItems.length === 0) {
+        this.$message.warning('请选择要删除的用户')
+        return false
+      }
+      for (const item of this.selectedItems) {
+        arr.push({
+          Name: item.Name,
+          SystemID: item.SystemID
+        })
+      }
+      this.$confirm(`确定删除吗`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          var url = '/api/Memorandum/DeleteInfo'
+          this.$axios
+            .post(url, {
+              AutoSystemID: this.searchForm.AutoSystemID,
+              data: arr
+            })
+            .then(res => {
+              if (res.data.code === 0) {
+                this.$message.success('删除成功')
+                let totalPage = Math.ceil(
+                  (this.count - this.selectedItems.length) /
+                    this.searchForm.limit
+                )
+                let currentPage =
+                  this.searchForm.page > totalPage
+                    ? totalPage
+                    : this.searchForm.page
+                this.searchForm.page = currentPage < 1 ? 1 : currentPage
+                this.getData()
+              } else if (res.data.code === 1) {
+                this.$message.error(res.data.msg)
+              }
+            })
+            .catch(err => {
+              console.error(err)
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
     }
   }
