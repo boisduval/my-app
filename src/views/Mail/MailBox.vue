@@ -83,7 +83,14 @@
               </el-select>
             </el-form-item>
             <el-form-item label=" ">
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -241,6 +248,7 @@
             <i-switch
               true-color="#13ce66"
               :value="row.IsImportance === '1'"
+              @on-change="setStatus(row, 'IsImportance')"
             >
               <span slot="open">是</span>
               <span slot="close">否</span>
@@ -258,6 +266,7 @@
             <i-switch
               true-color="#13ce66"
               :value="row.IsSpam === '1'"
+              @on-change="setStatus(row, 'IsSpam')"
             >
               <span slot="open">是</span>
               <span slot="close">否</span>
@@ -275,6 +284,7 @@
             <i-switch
               true-color="#13ce66"
               :value="row.IsDelete === '1'"
+              @on-change="setStatus(row, 'IsDelete')"
             >
               <span slot="open">是</span>
               <span slot="close">否</span>
@@ -283,14 +293,14 @@
         </vxe-table-column>
         <vxe-table-column title="操作" width="318" fixed="right">
           <template v-slot="{ row }">
-              <template v-if="row.IsSend === true">
-                <el-button size="mini">详情</el-button>
-              </template>
-              <template v-else>
-                  <el-button size="mini">详情</el-button>
-                  <el-button size="mini" type="success">回复</el-button>
-                  <el-button size="mini" type="warning">转发</el-button>
-              </template>
+            <template v-if="row.IsSend === '1'">
+              <el-button size="mini" @click="getMailInfo(row)">详情</el-button>
+            </template>
+            <template v-else>
+              <el-button size="mini" @click="getMailInfo(row)">详情</el-button>
+              <el-button size="mini" type="success">回复</el-button>
+              <el-button size="mini" type="warning">转发</el-button>
+            </template>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -307,6 +317,31 @@
       >
       </el-pagination>
       <!-- 分页结束 -->
+
+      <!-- 详情开始 -->
+      <Drawer :closable="false" v-model="value4" title="邮件详情" draggable>
+        <p :style="pStyle">发件人</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.FromUserName }}
+        </div>
+        <Divider />
+        <p :style="pStyle">收件人</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.ToUserName }}
+        </div>
+        <Divider />
+        <p :style="pStyle">邮件标题</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Title }}
+        </div>
+        <Divider />
+        <p :style="pStyle">邮件内容</p>
+        <div class="demo-drawer-profile">
+          <div v-html="activeItem.SendMessage"></div>
+
+        </div>
+      </Drawer>
+      <!-- 详情结束 -->
     </el-card>
   </div>
 </template>
@@ -366,7 +401,17 @@ export default {
       count: 0,
       addForm: {},
       dialogFormVisible: false,
-      selectedItems: []
+      selectedItems: [],
+      mailStatus: {},
+      value4: false,
+      pStyle: {
+        fontSize: '16px',
+        color: 'rgba(0,0,0,0.85)',
+        lineHeight: '24px',
+        display: 'block',
+        marginBottom: '16px'
+      },
+      activeItem: {}
     }
   },
   computed: {
@@ -434,6 +479,61 @@ export default {
             this.tableData = res.data.data
             this.count = res.data.count
             this.loading = false
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 设置状态
+    setStatus (row, name) {
+      var status
+      if (row[name] === '0') status = '1'
+      else if (row[name] === '1') status = '0'
+      let obj = {
+        AutoSystemID: this.searchForm.AutoSystemID,
+        data: [
+          {
+            SystemID: row.SystemID,
+            Name: row.Title,
+            ColumnName: name,
+            Status: parseInt(status)
+          }
+        ]
+      }
+      var url = '/api/Mail/SetMailStatus'
+      this.$axios
+        .post(url, obj)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+            this.getData()
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 邮件详情
+    getMailInfo (row) {
+      var url = '/api/Mail/GetMailInfo'
+      this.$axios
+        .get(url, {
+          params: {
+            AutoSystemID: this.searchForm.AutoSystemID,
+            SystemID: row.SystemID
+          }
+        })
+        .then(res => {
+          if (res.data.code === 0) {
+            this.activeItem = res.data.data
+            this.value4 = true
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
