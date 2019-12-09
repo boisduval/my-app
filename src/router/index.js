@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import ErrorPage from '../views/ErrorPage.vue'
+import ViewUI from 'view-design'
+Vue.use(ViewUI)
 
 Vue.use(VueRouter)
 
@@ -285,6 +287,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   // ...
+  ViewUI.LoadingBar.start()
   if (to.name === 'login') {
     next()
   } else {
@@ -295,6 +298,10 @@ router.beforeEach((to, from, next) => {
       router.push('/login')
     }
   }
+})
+
+router.afterEach(route => {
+  ViewUI.LoadingBar.finish()
 })
 
 export default router
