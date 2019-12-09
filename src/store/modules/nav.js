@@ -227,7 +227,7 @@ const state = {
           {
             ID: '16',
             MID: '5',
-            Href: 'yeerReport',
+            Href: 'yearReport',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '设备年报表',

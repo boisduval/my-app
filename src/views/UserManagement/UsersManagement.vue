@@ -92,6 +92,15 @@
         <el-button
           type="primary"
           size="small"
+          @click="initUserPass"
+          class="button-left"
+        >
+          <i class="el-icon-edit-outline"></i>
+          初始化密码
+        </el-button>
+        <el-button
+          type="primary"
+          size="small"
           class="button-left"
           @click="isShow = !isShow"
         >
@@ -703,7 +712,6 @@ export default {
           arr = arr + item.SystemID + ','
         }
       })
-      console.log(arr)
       this.$confirm(`确定删除吗`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -874,6 +882,55 @@ export default {
         })
         .catch(err => {
           console.error(err)
+        })
+    },
+
+    // 初始化密码
+    initUserPass () {
+      this.selectedItems = this.$refs.xTable.getSelectRecords()
+      var arr = ''
+      if (this.selectedItems.length === 0) {
+        this.$message.warning('至少选择一个用户')
+        return false
+      }
+      this.selectedItems.map((item, index) => {
+        if (index === this.selectedItems.length - 1) {
+          arr += item.SystemID
+        } else {
+          arr = arr + item.SystemID + ','
+        }
+      })
+      this.$confirm(`确定要初始化密码吗? 初始化密码将为123456！`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          var url = '/api/Users/InitUserPass'
+          this.$axios
+            .get(url, {
+              params: {
+                AutoSystemID: this.searchForm.AutoSystemID,
+                UserSystemIDList: arr
+              }
+            })
+            .then(res => {
+              if (res.data.code === 0) {
+                this.$message.success(res.data.msg)
+                this.getData()
+              } else if (res.data.code === 1) {
+                this.$message.error(res.data.msg)
+              }
+            })
+            .catch(err => {
+              console.error(err)
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消初始化'
+          })
         })
     }
   }

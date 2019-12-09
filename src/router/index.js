@@ -140,9 +140,9 @@ const routes = [
         component: () => import(/* webpackChunkName: "StatementMonthReport" */ '../views/Statement/MonthReport.vue')
       },
       {
-        path: '/yeerReport',
-        name: 'yeerReport',
-        component: () => import(/* webpackChunkName: "StatementYeerReport" */ '../views/Statement/YeerReport.vue')
+        path: '/yearReport',
+        name: 'yearReport',
+        component: () => import(/* webpackChunkName: "StatementYearReport" */ '../views/Statement/YearReport.vue')
       },
       {
         path: '/alarmReport',

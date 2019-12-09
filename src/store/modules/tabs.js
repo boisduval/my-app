@@ -27,6 +27,22 @@ const mutations = {
   },
   set_detail_label (state, label) {
     state.detailLabel = label
+  },
+  // 关闭其他选项卡
+  delete_others_tabs (state) {
+    state.openTab = state.openTab.filter((el) => {
+      return el.route === state.activeIndex || el.route === '/main'
+    })
+    console.log(state.openTab)
+  },
+
+  // 关闭全部选项卡
+  delete_all_tabs (state) {
+    state.openTab = [{
+      name: 'main',
+      route: '/main',
+      label: '首页'
+    }]
   }
 
 }

@@ -21,32 +21,24 @@
               <div class="user-ifo" v-show="isShow">
                 <li class="nav-header" id="collapse">
                   <div class="dropdown profile-element">
-                    <el-avatar :size="63" :src="userIfo.ImgPath" @error="errorHandler"></el-avatar>
-                    <!-- <el-popover
-                      placement="bottom"
-                      title="标题"
-                      width="200"
-                      trigger="click"
-                      content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
-                    >
-                      <div class="information" slot="reference">
-                        <div class="accountNumber">
-                          {{ userIfo.AccountNumber }}
-                        </div>
-                        <div class="dUser">
-                          {{ userIfo.DUser }}
-                          <i class="fa fa-caret-down"></i>
-                        </div>
-                      </div>
-                    </el-popover> -->
+                    <el-avatar
+                      :size="63"
+                      :src="userIfo.ImgPath"
+                      @error="errorHandler"
+                    ></el-avatar>
                     <div class="information" slot="reference">
                       <div class="accountNumber">
                         {{ userIfo.AccountNumber }}
                       </div>
-                      <el-dropdown @command="handleCommand" class="dUser" trigger="click" placement="bottom-start">
+                      <el-dropdown
+                        @command="handleCommand"
+                        class="dUser"
+                        trigger="click"
+                        placement="bottom-start"
+                      >
                         <span class="el-dropdown-link">
                           {{ userIfo.DUser }}
-                        <i class="fa fa-caret-down"></i>
+                          <i class="fa fa-caret-down"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
                           <el-dropdown-item command="setAvatar">
@@ -138,6 +130,28 @@
               </el-tab-pane>
             </el-tabs>
           </div>
+          <el-dropdown
+            class="close"
+            style="right:86px;"
+            trigger="click"
+            @command="handleCommand1"
+          >
+            <div>
+              关闭操作
+              <i class="el-icon-caret-bottom"></i>
+            </div>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="others"
+                >关闭其他选项卡</el-dropdown-item
+              >
+              <el-dropdown-item command="all">关闭所有选项卡</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+
+          <div class="close" @click="logout">
+            退出
+            <i class="fa fa-sign-out"></i>
+          </div>
         </div>
         <!-- 标签页结束 -->
 
@@ -152,20 +166,49 @@
         <el-footer>Footer</el-footer>
       </el-container>
     </el-container>
+    <!-- 设置头像开始 -->
+    <my-upload
+      :width="300"
+      :height="300"
+      field="imgBase64"
+      key="0"
+      v-model="show"
+      url="http://sf28090049.wicp.vip:8081//api/Users/UpdataUserICOO"
+      @crop-success="cropSuccess"
+      @crop-upload-success="cropUploadSuccess"
+      @crop-upload-fail="cropUploadFail"
+      img-format="png"
+      :params="params"
+    ></my-upload>
+    <img :src="imgDataUrl" />
+    <!-- 设置头像结束 -->
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-
+import myUpload from 'vue-image-crop-upload'
+import 'babel-polyfill'
 export default {
   data () {
     return {
       isCollapse: false,
       isShow: true,
       show3: true,
-      active: ''
+      active: '',
+      show: false,
+      params: {
+        AutoSystemID: '',
+        imgBase64: ''
+      },
+      headers: {
+        smail: '*_~'
+      },
+      imgDataUrl: '' // the datebase64 url of created image
     }
+  },
+  components: {
+    'my-upload': myUpload
   },
   computed: {
     ...mapState('home', ['userIfo']),
@@ -183,12 +226,15 @@ export default {
 
   created () {
     // this.getMenu()
+    this.params.AutoSystemID = sessionStorage.getItem('AutoSystemID')
   },
   mounted () {
-    this.add_tabs({ route: '/main', name: 'main', label: '首页' })
-    this.set_active_index('/main')
-    if (this.$route.path !== '/' && this.$route.path !== '/main') {
-      this.$router.push('/')
+    if (this.openTab.length === 0) {
+      this.add_tabs({ route: '/main', name: 'main', label: '首页' })
+      this.set_active_index('/main')
+      if (this.$route.path !== '/' && this.$route.path !== '/main') {
+        this.$router.push('/')
+      }
     }
   },
   watch: {
@@ -223,7 +269,9 @@ export default {
       'add_tabs',
       'delete_tabs',
       'set_active_index',
-      'set_detail_label'
+      'set_detail_label',
+      'delete_all_tabs',
+      'delete_others_tabs'
     ]),
     ...mapMutations('nav', ['set_asideItem']),
     handleOpen (key, keyPath) {
@@ -264,6 +312,7 @@ export default {
         // 设置当前激活的路由
         this.set_active_index(this.openTab[this.openTab.length - 1].route)
         this.$router.push({ path: this.activeIndex })
+        console.log(this.openTab)
       }
     },
 
@@ -280,8 +329,58 @@ export default {
         })
     },
 
+    // 头像加载失败返回的方法
+    errorHandler () {
+      return true
+    },
+
     handleCommand (command) {
-      this.$message('click on item ' + command)
+      if (command === 'setAvatar') {
+        this.toggleShow()
+      }
+    },
+    toggleShow () {
+      this.show = !this.show
+    },
+    cropSuccess (imgDataUrl, field) {
+      this.imgDataUrl = imgDataUrl
+      this.params.imgBase64 = imgDataUrl
+    },
+
+    cropUploadSuccess (jsonData, field) {
+      console.log('-------- upload success --------')
+    },
+
+    cropUploadFail (status, field) {
+      console.log('-------- upload fail --------')
+    },
+
+    // 登出
+    logout () {
+      this.$confirm('确定要退出吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          sessionStorage.clear()
+          this.$router.push('login')
+        })
+        .catch(() => {})
+    },
+
+    // 删除所有|其他
+    handleCommand1 (command) {
+      switch (command) {
+        case 'all':
+          this.delete_all_tabs()
+          this.set_active_index('/main')
+          this.$router.push({ path: this.activeIndex })
+          break
+        case 'others':
+          this.delete_others_tabs()
+          break
+      }
     }
   }
 }
@@ -315,6 +414,7 @@ export default {
 
 #home {
   height: 100%;
+  overflow: hidden;
 }
 
 .el-menu {
@@ -378,6 +478,7 @@ export default {
 .tabs {
   background-color: #fafafa;
   padding: 0 35px;
+  padding-right: 201px;
   border-bottom: solid 2px #2f4050;
 }
 
@@ -391,5 +492,24 @@ export default {
   width: 24px;
   text-align: center;
   font-size: 18px;
+}
+
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #999;
+  padding: 0 20px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-left: solid 1px #eee;
+}
+
+.close:hover {
+  color: #777;
+  background: #f2f2f2;
 }
 </style>
