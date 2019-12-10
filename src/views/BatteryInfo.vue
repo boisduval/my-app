@@ -63,6 +63,8 @@
       ref="xTable"
       resizable
       align="center"
+      v-loading="loading"
+      element-loading-background="rgba(0, 0, 0, 0)"
     >
       <vxe-table-column
         type="index"
@@ -128,7 +130,7 @@ export default {
         totalResult: 0,
         limit: 2
       },
-      loading: true,
+      loading: false,
       customColumns: [],
       listHead: [],
       listFilter: [],

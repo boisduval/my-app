@@ -145,7 +145,8 @@
         border
         :customs.sync="customColumns"
         ref="xTable"
-        :loading="loading"
+        v-loading="loading"
+        element-loading-background="rgba(0, 0, 0, 0)"
         show-overflow
         resizable
         align="center"

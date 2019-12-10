@@ -154,9 +154,11 @@ export default {
         tooltip: {
           trigger: 'item',
           formatter: function (params) {
-            if (params.name != '') { // eslint-disable-line
+            // eslint-disable-next-line
+            if (params.name != '') {
               var res = params.name + '<br/>'
-              if (params.data) { // eslint-disable-line
+              if (params.data) {
+                // eslint-disable-line
                 var arrays = params.data.value
                 for (var i = 0; i < arrays.length; i++) {
                   res +=
@@ -262,7 +264,14 @@ export default {
 }
 .left-content,
 .right-content {
-  width: 450px;
+  background: url('../assets/img/cell_left.png') no-repeat;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+  margin-bottom: 1.75rem;
+  padding: 0.75rem 0 0 1.1rem;
+  width: 25.55rem
 }
 
 .center_top {

@@ -119,6 +119,8 @@
         :edit-config="{ trigger: 'manual', mode: 'row' }"
         resizable
         align="center"
+        v-loading="loading"
+        element-loading-background="rgba(0, 0, 0, 0)"
       >
         <vxe-table-column
           type="checkbox"

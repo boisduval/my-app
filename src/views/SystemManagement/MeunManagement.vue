@@ -91,7 +91,8 @@
         :data="treeData"
         :customs.sync="customColumns"
         max-height="600px"
-        :loading="loading"
+        v-loading="loading"
+        element-loading-background="rgba(0, 0, 0, 0)"
       >
         <vxe-table-column
           type="index"

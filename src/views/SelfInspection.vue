@@ -115,7 +115,8 @@
         border
         :customs.sync="customColumns"
         ref="xTable"
-        :loading="loading"
+        v-loading="loading"
+        element-loading-background="rgba(0, 0, 0, 0)"
         :edit-config="{ trigger: 'manual', mode: 'row' }"
         resizable
         align="center"

@@ -117,20 +117,20 @@
         <el-button
           type="primary"
           size="small"
+          @click="deleteItems"
           class="button-left"
-          @click="$refs.xTree.setAllTreeExpansion(true)"
         >
-          <i class="el-icon-s-fold"></i>
-          全部展开
+          <i class="el-icon-delete"></i>
+          彻底删除
         </el-button>
         <el-button
           type="primary"
           size="small"
           class="button-left"
-          @click="$refs.xTree.clearTreeExpand()"
+          @click="isShow = !isShow"
         >
-          <i class="el-icon-s-unfold"></i>
-          全部折叠
+          <i class="el-icon-search"></i>
+          模糊查询
         </el-button>
         <el-button
           type="primary"
@@ -183,7 +183,8 @@
         border
         :customs.sync="customColumns"
         ref="xTable"
-        :loading="loading"
+        v-loading="loading"
+        element-loading-background="rgba(0, 0, 0, 0)"
         show-overflow
         resizable
         align="center"
@@ -800,6 +801,63 @@ export default {
         })
         .catch(err => {
           console.error(err)
+        })
+    },
+
+    // 彻底删除
+    deleteItems () {
+      this.selectedItems = this.$refs.xTable.getSelectRecords()
+      var arr = ''
+      if (this.selectedItems.length === 0) {
+        this.$message.warning('请选择要删除的用户')
+        return false
+      }
+      this.selectedItems.map((item, index) => {
+        if (index === this.selectedItems.length - 1) {
+          arr += item.SystemID
+        } else {
+          arr = arr + item.SystemID + ','
+        }
+      })
+      this.$confirm(`确定删除吗`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          // var url = '/api/Mail/ShiftDeleteMail'
+          // this.$axios
+          //   .post(url, {
+          //     params: {
+          //       AutoSystemID: this.searchForm.AutoSystemID,
+          //       UserSystemIDList: arr
+          //     }
+          //   })
+          //   .then(res => {
+          //     if (res.data.code === 0) {
+          //     } else if (res.data.code === 1) {
+          //       this.$message.error(res.data.msg)
+          //     }
+          //     this.$message.success('删除成功')
+          //     let totalPage = Math.ceil(
+          //       (this.count - this.selectedItems.length) / this.searchForm.limit
+          //     )
+          //     let currentPage =
+          //       this.searchForm.page > totalPage
+          //         ? totalPage
+          //         : this.searchForm.page
+          //     this.searchForm.page = currentPage < 1 ? 1 : currentPage
+          //     this.getData()
+          //   })
+          //   .catch(err => {
+          //     console.error(err)
+          //   })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
     }
   }
