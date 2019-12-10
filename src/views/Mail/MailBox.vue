@@ -109,10 +109,10 @@
           type="primary"
           size="small"
           class="button-left"
-          @click="dialogFormAddVisible = true"
+          @click="getUserList"
         >
           <i class="el-icon-plus"></i>
-          添加
+          写信
         </el-button>
         <el-button
           type="primary"
@@ -338,10 +338,50 @@
         <p :style="pStyle">邮件内容</p>
         <div class="demo-drawer-profile">
           <div v-html="activeItem.SendMessage"></div>
-
         </div>
       </Drawer>
       <!-- 详情结束 -->
+
+      <!-- 写信开始 -->
+      <el-dialog
+        title="写信"
+        width="50%"
+        :close-on-click-modal="false"
+        :visible.sync="dialogFormVisible"
+      >
+        <el-form label-width="80px" label-position="right" :model="sendForm">
+          <el-form-item label="收件人">
+            <el-select
+              v-model="sendForm.ToUserList"
+              multiple
+              placeholder="请选择或直接搜索"
+              clearable
+              filterable
+            >
+              <Button type="text" @click="selectAll">
+                <Icon type="md-done-all" />
+                全选
+              </Button>
+              <Button type="text" @click="invert">
+                <Icon type="md-checkbox" />
+                反选
+              </Button>
+              <el-option
+                v-for="item in options"
+                :key="item.SystemID"
+                :label="item.Name"
+                :value="item.SystemID"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="标题">
+            <el-input v-model="sendForm.Title"></el-input>
+          </el-form-item>
+        </el-form>
+        <Spin size="large" fix v-if="spinShow"></Spin>
+      </el-dialog>
+      <!-- 写信结束 -->
     </el-card>
   </div>
 </template>
@@ -411,7 +451,10 @@ export default {
         display: 'block',
         marginBottom: '16px'
       },
-      activeItem: {}
+      activeItem: {},
+      sendForm: {},
+      options: [],
+      spinShow: false
     }
   },
   computed: {
@@ -541,6 +584,47 @@ export default {
         .catch(err => {
           console.error(err)
         })
+    },
+
+    // 获取收件人列表
+    getUserList () {
+      this.spinShow = true
+      var url = '/api/Mail/GetUserList'
+      this.$axios
+        .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}`)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.options = res.data.data
+            this.spinShow = false
+            this.dialogFormVisible = true
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 全选
+    selectAll () {
+      this.sendForm.ToUserList = []
+      this.options.map(el => {
+        this.sendForm.ToUserList.push(el.SystemID)
+      })
+    },
+
+    // 反选
+    invert () {
+      // 遍历options 找到未被选择的
+      this.options.map(el => {
+        var i = this.sendForm.ToUserList.indexOf(el.SystemID)
+        if (i > -1) {
+          this.sendForm.ToUserList.splice(i, 1)
+        } else {
+          this.sendForm.ToUserList.push(el.SystemID)
+        }
+      })
     }
   }
 }
@@ -608,5 +692,14 @@ export default {
 
 #left .vxe-cell {
   text-align: left;
+}
+
+.ivu-btn {
+  padding: 0 20px;
+  color: #999;
+}
+
+.ivu-btn:hover {
+  color: #57a3f3;
 }
 </style>
