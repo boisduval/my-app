@@ -298,7 +298,7 @@
             </template>
             <template v-else>
               <el-button size="mini" @click="getMailInfo(row)">详情</el-button>
-              <el-button size="mini" type="success">回复</el-button>
+              <el-button size="mini" type="success" @click="replyDialog(row)">回复</el-button>
               <el-button size="mini" type="warning">转发</el-button>
             </template>
           </template>
@@ -404,6 +404,45 @@
         <Spin size="large" fix v-if="spinShow"></Spin>
       </el-dialog>
       <!-- 写信结束 -->
+      <!-- 回复开始 -->
+      <el-dialog
+        title="回复"
+        width="70%"
+        :close-on-click-modal="false"
+        :visible.sync="dialogFormReplyVisible"
+      >
+        <el-form label-width="80px" label-position="right" :model="replyForm">
+          <el-form-item label="收件人">
+            <el-input v-model="replyForm.SendName" readonly></el-input>
+          </el-form-item>
+          <el-form-item label="标题">
+            <el-input v-model="replyForm.Title"></el-input>
+          </el-form-item>
+          <el-form-item label="内容">
+            <quill-editor
+              style="min-height:400px"
+              v-model="replyForm.Msg"
+              ref="myQuillEditor"
+              :options="editorOption"
+              @blur="onEditorBlur($event)"
+              @focus="onEditorFocus($event)"
+              @change="onEditorChange($event)"
+              class="editor"
+            >
+            </quill-editor>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="reply" size="medium" type="primary">
+            提 交
+          </el-button>
+          <el-button @click="dialogFormReplyVisible = false" size="medium">
+            取 消
+          </el-button>
+        </div>
+        <Spin size="large" fix v-if="spinShow"></Spin>
+      </el-dialog>
+      <!-- 回复结束 -->
     </el-card>
   </div>
 </template>
@@ -511,6 +550,14 @@ export default {
         },
         theme: 'snow',
         placeholder: '请输入正文'
+      },
+      dialogFormReplyVisible: false,
+      replyForm: {
+        AutoSystemID: '',
+        Msg: '',
+        Title: '',
+        ToUserList: '',
+        FromUserName: ''
       }
     }
   },
@@ -705,6 +752,47 @@ export default {
             this.$message.success(res.data.msg)
             this.dialogFormVisible = false
             this.sendForm = {}
+            this.getData()
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 回复
+    replyDialog (row) {
+      console.log(row)
+      this.replyForm.SendName = row.SendName
+      this.replyForm.Title = `回复: ${row.Title}`
+      this.dialogFormReplyVisible = true
+      // 获取发件人id
+      var url = 'api/Mail/GetMailInfo'
+      this.$axios
+        .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}&SystemID=${row.SystemID}`)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.replyForm.ToUserList = res.data.data.FromUserSystemID
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    reply () {
+      this.replyForm.AutoSystemID = this.searchForm.AutoSystemID
+      var url = '/api/Mail/SendMail'
+      this.$axios
+        .post(url, this.replyForm)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+            this.dialogFormReplyVisible = false
+            this.replyForm = {}
             this.getData()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
