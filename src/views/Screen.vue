@@ -50,7 +50,6 @@ export default {
       var date = new Date()
       date = date.toLocaleString()
       this.$('#times').text(date)
-      console.log(date)
     },
 
     // 地图
@@ -157,7 +156,7 @@ export default {
           formatter: function (params) {
             if (params.name != '') { // eslint-disable-line
               var res = params.name + '<br/>'
-              if (params.data.value != undefined) { // eslint-disable-line
+              if (params.data) { // eslint-disable-line
                 var arrays = params.data.value
                 for (var i = 0; i < arrays.length; i++) {
                   res +=
