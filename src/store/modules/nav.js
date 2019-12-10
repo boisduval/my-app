@@ -505,7 +505,7 @@ const state = {
     },
     {
       ID: '637031848504872645',
-      Href: 'Main.aspx',
+      Href: '/',
       Class: 'fa fa-edit (alias)',
       Text: '备忘信息',
       SOrder: 8001900,
@@ -526,7 +526,7 @@ const state = {
           {
             ID: '38',
             MID: '637031848504872645',
-            Href: 'MenmorandumListOverLoad',
+            Href: 'menmorandumListOverLoad',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '已完成备忘',

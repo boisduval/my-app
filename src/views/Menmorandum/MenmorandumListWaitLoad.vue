@@ -92,6 +92,15 @@
         <el-button
           type="primary"
           size="small"
+          @click="addItem"
+          class="button-left"
+        >
+          <i class="el-icon-plus"></i>
+          添加
+        </el-button>
+        <el-button
+          type="primary"
+          size="small"
           @click="getData"
           class="button-left"
         >
@@ -346,6 +355,45 @@
         </div>
       </el-dialog>
       <!-- 编辑表单结束 -->
+
+      <!-- 添加表单开始 -->
+      <el-dialog
+        width="40%"
+        :close-on-click-modal="false"
+        :visible.sync="dialogFormAddVisible"
+        title="添加备忘"
+      >
+        <el-form label-width="90px" label-position="right" :model="addForm">
+          <el-form-item label="完成时间">
+            <el-date-picker
+              v-model="addForm.ExpectedOverTime"
+              type="date"
+              placeholder="选择日期"
+              style="width:100%"
+            >
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="备忘名称">
+            <el-input v-model="addForm.Name"></el-input>
+          </el-form-item>
+          <el-form-item label="备忘内容">
+            <el-input
+              type="textarea"
+              v-model="addForm.Msg"
+              :autosize="{ minRows: 4, maxRows: 8 }"
+            ></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addHttp" size="medium" type="primary">
+            提 交
+          </el-button>
+          <el-button @click="dialogFormAddVisible = false" size="medium">
+            取 消
+          </el-button>
+        </div>
+      </el-dialog>
+      <!-- 添加表单结束 -->
     </el-card>
   </div>
 </template>
@@ -390,7 +438,15 @@ export default {
       },
       dialogFormEditVisible: false,
       value1: '',
-      selectedItems: []
+      selectedItems: [],
+      addForm: {
+        AutoSystemID: '',
+        ExpectedOverTime: '',
+        Msg: '',
+        Name: '',
+        SystemID: ''
+      },
+      dialogFormAddVisible: false
     }
   },
   computed: {
@@ -675,6 +731,32 @@ export default {
             type: 'info',
             message: '已取消删除'
           })
+        })
+    },
+
+    // 添加
+    addItem (row) {
+      this.addForm.AutoSystemID = this.searchForm.AutoSystemID
+      this.addForm.Name = row.Name
+      this.addForm.Msg = row.MInfo
+      this.addForm.SystemID = row.SystemID
+      this.dialogFormAddVisible = true
+    },
+    addHttp () {
+      var url = '/api/Memorandum/AddInfo'
+      this.$axios
+        .post(url, this.addForm)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.dialogFormAddVisible = false
+            this.$message.success(res.data.msg)
+            this.getData()
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
         })
     }
   }
