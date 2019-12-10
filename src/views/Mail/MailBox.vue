@@ -345,7 +345,7 @@
       <!-- 写信开始 -->
       <el-dialog
         title="写信"
-        width="50%"
+        width="70%"
         :close-on-click-modal="false"
         :visible.sync="dialogFormVisible"
       >
@@ -378,7 +378,29 @@
           <el-form-item label="标题">
             <el-input v-model="sendForm.Title"></el-input>
           </el-form-item>
+          <el-form-item label="内容">
+            <!-- <div id="editor"></div> -->
+            <quill-editor
+              style="min-height:400px"
+              v-model="sendForm.Msg"
+              ref="myQuillEditor"
+              :options="editorOption"
+              @blur="onEditorBlur($event)"
+              @focus="onEditorFocus($event)"
+              @change="onEditorChange($event)"
+              class="editor"
+            >
+            </quill-editor>
+          </el-form-item>
         </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="sendMail" size="medium" type="primary">
+            提 交
+          </el-button>
+          <el-button @click="dialogFormVisible = false" size="medium">
+            取 消
+          </el-button>
+        </div>
         <Spin size="large" fix v-if="spinShow"></Spin>
       </el-dialog>
       <!-- 写信结束 -->
@@ -388,7 +410,16 @@
 
 <script>
 import { mapState } from 'vuex'
+
+import { quillEditor } from 'vue-quill-editor' // 调用编辑器
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
 export default {
+  components: {
+    quillEditor
+  },
   data () {
     return {
       searchForm: {
@@ -454,11 +485,40 @@ export default {
       activeItem: {},
       sendForm: {},
       options: [],
-      spinShow: false
+      spinShow: false,
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 加粗，斜体，下划线，删除线
+            ['blockquote', 'code-block'], // 引用，代码块
+
+            // [{ header: 1 }, { header: 2 }], // 标题，键值对的形式；1、2表示字体大小
+            [{ list: 'ordered' }, { list: 'bullet' }], // 列表
+            [{ script: 'sub' }, { script: 'super' }], // 上下标
+            [{ indent: '-1' }, { indent: '+1' }], // 缩进
+            [{ direction: 'rtl' }], // 文本方向
+
+            [{ size: ['small', false, 'large', 'huge'] }], // 字体大小
+            // [{ header: [1, 2, 3, 4, 5, 6, false] }], // 几级标题
+
+            [{ color: [] }, { background: [] }], // 字体颜色，字体背景颜色
+            [{ font: [] }], // 字体
+            [{ align: [] }], // 对齐方式
+
+            ['clean'], // 清除字体样式
+            ['image', 'video'] // 上传图片、上传视频
+          ]
+        },
+        theme: 'snow',
+        placeholder: '请输入正文'
+      }
     }
   },
   computed: {
-    ...mapState('table', ['pageSize'])
+    ...mapState('table', ['pageSize']),
+    editor () {
+      return this.$refs.myQuillEditor.quill
+    }
   },
   created () {
     this.searchForm.AutoSystemID = sessionStorage.getItem('AutoSystemID')
@@ -588,6 +648,7 @@ export default {
 
     // 获取收件人列表
     getUserList () {
+      this.dialogFormVisible = true
       this.spinShow = true
       var url = '/api/Mail/GetUserList'
       this.$axios
@@ -596,7 +657,6 @@ export default {
           if (res.data.code === 0) {
             this.options = res.data.data
             this.spinShow = false
-            this.dialogFormVisible = true
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
@@ -625,6 +685,34 @@ export default {
           this.sendForm.ToUserList.push(el.SystemID)
         }
       })
+    },
+
+    onEditorReady (editor) {
+      // 准备编辑器
+    },
+    onEditorBlur () {}, // 失去焦点事件
+    onEditorFocus () {}, // 获得焦点事件
+    onEditorChange () {}, // 内容改变事件
+    // 发送邮件
+    sendMail () {
+      this.sendForm.AutoSystemID = this.searchForm.AutoSystemID
+      this.sendForm.ToUserList = this.sendForm.ToUserList.toString()
+      var url = '/api/Mail/SendMail'
+      this.$axios
+        .post(url, this.sendForm)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+            this.dialogFormVisible = false
+            this.sendForm = {}
+            this.getData()
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
 }
@@ -701,5 +789,12 @@ export default {
 
 .ivu-btn:hover {
   color: #57a3f3;
+}
+
+.ql-container {
+  height: 200px;
+}
+.editor {
+  line-height: 24px;
 }
 </style>
