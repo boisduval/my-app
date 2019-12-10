@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>待备忘信息列表查询</span>
+            <span>备忘信息列表查询</span>
           </div>
           <el-form
             :inline="true"
@@ -84,20 +84,11 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>待备忘信息</span>
+        <span>备忘信息</span>
       </div>
 
       <!-- 表格操作栏开始 -->
       <div class="table-oper">
-        <el-button
-          type="primary"
-          size="small"
-          @click="addItem"
-          class="button-left"
-        >
-          <i class="el-icon-plus"></i>
-          添加
-        </el-button>
         <el-button
           type="primary"
           size="small"
@@ -106,15 +97,6 @@
         >
           <i class="el-icon-refresh-right"></i>
           刷新
-        </el-button>
-        <el-button
-          type="primary"
-          size="small"
-          @click="deleteItems"
-          class="button-left"
-        >
-          <i class="el-icon-delete"></i>
-          多选删除
         </el-button>
         <el-button
           type="primary"
@@ -198,62 +180,26 @@
         >
         </vxe-table-column>
         <vxe-table-column
-          field="MExpectedOverTime"
-          title="预计完成日期"
-          show-overflow
-          sortable
-          width="180"
-        >
-        </vxe-table-column>
-        <vxe-table-column
           field="MInfo"
           title="内容"
           sortable
           show-overflow
-          width="180"
+          width="300"
           align="left"
         >
         </vxe-table-column>
         <vxe-table-column
-          field="MExpectedStutes"
-          title="是否超时"
+          field="MOverTime"
+          title="完成时间"
           show-overflow
-          width="180"
           sortable
+          width="180"
         >
-          <template v-slot="{ row }">
-            <template v-if="row.MExpectedStutes === '无预计'">
-              <el-tag type="info" size="small">{{
-                row.MExpectedStutes
-              }}</el-tag>
-            </template>
-            <template v-else-if="row.MExpectedStutes === '已超时'">
-              <el-tag type="danger" size="small">{{
-                row.MExpectedStutes
-              }}</el-tag>
-            </template>
-            <template v-else>
-              <el-tag type="success" size="small">{{
-                row.MExpectedStutes
-              }}</el-tag>
-            </template>
-          </template>
         </vxe-table-column>
-        <vxe-table-column title="操作" width="300" fixed="right">
+        <vxe-table-column title="操作" width="200" fixed="right">
           <template v-slot="{ row }">
-            <el-button
-              type="success"
-              plain
-              size="mini"
-              @click="finishedItem(row)"
-            >
-              完成
-            </el-button>
-            <el-button plain size="mini" @click="editItem(row)">
-              编辑
-            </el-button>
-            <el-button type="danger" size="mini" @click="deleteItem(row)">
-              删除
+            <el-button plain size="small" @click="toDetail(row)">
+              <i class="el-icon-info">详情</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -272,128 +218,30 @@
       </el-pagination>
       <!-- 分页结束 -->
 
-      <!-- 完成表单开始 -->
-      <el-dialog
-        width="40%"
-        :close-on-click-modal="false"
-        :visible.sync="dialogFormVisible"
-        title="备忘完成"
+      <!-- 详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        title="备忘详情"
+        draggable
+        width="50"
       >
-        <el-form
-          label-width="90px"
-          label-position="right"
-          :model="finishedForm"
-        >
-          <el-form-item label="完成时间">
-            <el-input v-model="finishedForm.Time" readonly></el-input>
-          </el-form-item>
-          <el-form-item label="备忘名称">
-            <el-input v-model="finishedForm.Name" readonly></el-input>
-          </el-form-item>
-          <el-form-item label="备忘内容">
-            <el-input
-              type="textarea"
-              v-model="finishedForm.MInfo"
-              readonly
-              :autosize="{ minRows: 4, maxRows: 8 }"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="完成内容">
-            <el-input
-              type="textarea"
-              v-model="finishedForm.Msg"
-              :autosize="{ minRows: 4, maxRows: 8 }"
-            ></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="finishedHttp" size="medium" type="primary">
-            提 交
-          </el-button>
-          <el-button @click="dialogFormVisible = false" size="medium">
-            取 消
-          </el-button>
+        <p :style="pStyle">备忘名称</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Name }}
         </div>
-      </el-dialog>
-      <!-- 完成表单结束 -->
-
-      <!-- 编辑表单开始 -->
-      <el-dialog
-        width="40%"
-        :close-on-click-modal="false"
-        :visible.sync="dialogFormEditVisible"
-        title="修改备忘"
-      >
-        <el-form label-width="90px" label-position="right" :model="editForm">
-          <el-form-item label="完成时间">
-            <el-date-picker
-              v-model="editForm.ExpectedOverTime"
-              type="date"
-              placeholder="选择日期"
-              style="width:100%"
-            >
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="备忘名称">
-            <el-input v-model="editForm.Name"></el-input>
-          </el-form-item>
-          <el-form-item label="备忘内容">
-            <el-input
-              type="textarea"
-              v-model="editForm.Msg"
-              :autosize="{ minRows: 4, maxRows: 8 }"
-            ></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="editHttp" size="medium" type="primary">
-            提 交
-          </el-button>
-          <el-button @click="dialogFormEditVisible = false" size="medium">
-            取 消
-          </el-button>
+        <Divider />
+        <p :style="pStyle">备忘内容</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.MInfo }}
         </div>
-      </el-dialog>
-      <!-- 编辑表单结束 -->
-
-      <!-- 添加表单开始 -->
-      <el-dialog
-        width="40%"
-        :close-on-click-modal="false"
-        :visible.sync="dialogFormAddVisible"
-        title="添加备忘"
-      >
-        <el-form label-width="90px" label-position="right" :model="addForm">
-          <el-form-item label="完成时间">
-            <el-date-picker
-              v-model="addForm.ExpectedOverTime"
-              type="date"
-              placeholder="选择日期"
-              style="width:100%"
-            >
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="备忘名称">
-            <el-input v-model="addForm.Name"></el-input>
-          </el-form-item>
-          <el-form-item label="备忘内容">
-            <el-input
-              type="textarea"
-              v-model="addForm.Msg"
-              :autosize="{ minRows: 4, maxRows: 8 }"
-            ></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="addHttp" size="medium" type="primary">
-            提 交
-          </el-button>
-          <el-button @click="dialogFormAddVisible = false" size="medium">
-            取 消
-          </el-button>
+        <Divider />
+        <p :style="pStyle">记录时间</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.MWriteTime }}
         </div>
-      </el-dialog>
-      <!-- 添加表单结束 -->
+      </Drawer>
+      <!-- 详情结束 -->
     </el-card>
   </div>
 </template>
@@ -417,36 +265,19 @@ export default {
       count: 0,
       customColumns: [],
       isShow: true,
-      fileName: '日志信息',
+      fileName: '备忘信息',
       loading: false,
-      dialogFormVisible: false,
       value: '',
-      finishedForm: {
-        Time: '',
-        AutoSystemID: '',
-        Msg: '',
-        Name: '',
-        SystemID: '',
-        MInfo: ''
-      },
-      editForm: {
-        AutoSystemID: '',
-        ExpectedOverTime: '',
-        Msg: '',
-        Name: '',
-        SystemID: ''
-      },
-      dialogFormEditVisible: false,
-      value1: '',
-      selectedItems: [],
-      addForm: {
-        AutoSystemID: '',
-        ExpectedOverTime: '',
-        Msg: '',
-        Name: '',
-        SystemID: ''
-      },
-      dialogFormAddVisible: false
+      value4: false,
+      activeItem: '',
+      pStyle: {
+        fontSize: '15px',
+        color: 'rgba(0,0,0,0.85)',
+        lineHeight: '24px',
+        display: 'block',
+        marginBottom: '16px',
+        fontWeight: 500
+      }
     }
   },
   computed: {
@@ -514,7 +345,7 @@ export default {
       this.loading = true
       this.searchForm.Start = moment(this.value[0]).format('YYYY-MM-DD')
       this.searchForm.Stop = moment(this.value[1]).format('YYYY-MM-DD')
-      var url = '/api/Memorandum/GetWaitList'
+      var url = '/api/Memorandum/GetOverList'
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
@@ -560,204 +391,11 @@ export default {
       this.value = [num, new Date()]
     },
 
-    // 完成
-    finishedItem (row) {
+    // 详情
+    toDetail (row) {
       console.log(row)
-      // 获取当前时间
-      this.finishedForm.Time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-      this.finishedForm.Name = row.Name
-      this.finishedForm.SystemID = row.SystemID
-      this.finishedForm.Msg = ''
-      this.finishedForm.MInfo = row.MInfo
-      this.dialogFormVisible = true
-    },
-    finishedHttp () {
-      let obj = {
-        AutoSystemID: this.searchForm.AutoSystemID,
-        SystemID: this.finishedForm.SystemID,
-        Name: this.finishedForm.Name,
-        Msg: this.finishedForm.Msg
-      }
-      var url = '/api/Memorandum/SetOverInfo'
-      this.$axios
-        .post(url, obj)
-        .then(res => {
-          if (res.data.code === 0) {
-            this.dialogFormVisible = false
-            this.$message.success(res.data.msg)
-            let totalPage = Math.ceil((this.count - 1) / this.searchForm.limit)
-            let currentPage =
-              this.searchForm.page > totalPage
-                ? totalPage
-                : this.searchForm.page
-            this.searchForm.page = currentPage < 1 ? 1 : currentPage
-            this.getData()
-          } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-
-    // 编辑
-    editItem (row) {
-      this.editForm.ExpectedOverTime = moment()
-        .subtract(0, 'days')
-        .format('YYYY-MM-DD')
-      this.editForm.AutoSystemID = this.searchForm.AutoSystemID
-      this.editForm.Name = row.Name
-      this.editForm.Msg = row.MInfo
-      this.editForm.SystemID = row.SystemID
-      this.dialogFormEditVisible = true
-    },
-    editHttp () {
-      var url = '/api/Memorandum/UpdataInfo'
-      this.$axios
-        .post(url, this.editForm)
-        .then(res => {
-          if (res.data.code === 0) {
-            this.dialogFormEditVisible = false
-            this.$message.success(res.data.msg)
-            this.getData()
-          } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-
-    // 删除
-    deleteItem (row) {
-      console.log(row)
-      var url = '/api/Memorandum/DeleteInfo'
-      let obj = {
-        AutoSystemID: this.searchForm.AutoSystemID,
-        data: [
-          {
-            SystemID: row.SystemID,
-            Name: row.Name
-          }
-        ]
-      }
-      this.$confirm(`确定删除吗`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          this.$axios
-            .post(url, obj)
-            .then(res => {
-              if (res.data.code === 0) {
-                this.$message.success(res.data.msg)
-                let totalPage = Math.ceil(
-                  (this.count - 1) / this.searchForm.limit
-                )
-                let currentPage =
-                  this.searchForm.page > totalPage
-                    ? totalPage
-                    : this.searchForm.page
-                this.searchForm.page = currentPage < 1 ? 1 : currentPage
-                this.getData()
-              } else if (res.data.code === 1) {
-                this.$message.error(res.data.msg)
-              }
-            })
-            .catch(err => {
-              console.error(err)
-            })
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
-    },
-
-    // 删除多个
-    deleteItems () {
-      this.selectedItems = this.$refs.xTable.getSelectRecords()
-      var arr = []
-      if (this.selectedItems.length === 0) {
-        this.$message.warning('请选择要删除的用户')
-        return false
-      }
-      for (const item of this.selectedItems) {
-        arr.push({
-          Name: item.Name,
-          SystemID: item.SystemID
-        })
-      }
-      this.$confirm(`确定删除吗`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          var url = '/api/Memorandum/DeleteInfo'
-          this.$axios
-            .post(url, {
-              AutoSystemID: this.searchForm.AutoSystemID,
-              data: arr
-            })
-            .then(res => {
-              if (res.data.code === 0) {
-                this.$message.success('删除成功')
-                let totalPage = Math.ceil(
-                  (this.count - this.selectedItems.length) /
-                    this.searchForm.limit
-                )
-                let currentPage =
-                  this.searchForm.page > totalPage
-                    ? totalPage
-                    : this.searchForm.page
-                this.searchForm.page = currentPage < 1 ? 1 : currentPage
-                this.getData()
-              } else if (res.data.code === 1) {
-                this.$message.error(res.data.msg)
-              }
-            })
-            .catch(err => {
-              console.error(err)
-            })
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
-    },
-
-    // 添加
-    addItem (row) {
-      this.addForm.AutoSystemID = this.searchForm.AutoSystemID
-      this.addForm.Name = row.Name
-      this.addForm.Msg = row.MInfo
-      this.addForm.SystemID = row.SystemID
-      this.dialogFormAddVisible = true
-    },
-    addHttp () {
-      var url = '/api/Memorandum/AddInfo'
-      this.$axios
-        .post(url, this.addForm)
-        .then(res => {
-          if (res.data.code === 0) {
-            this.dialogFormAddVisible = false
-            this.$message.success(res.data.msg)
-            this.getData()
-          } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      this.activeItem = row
+      this.value4 = true
     }
   }
 }
