@@ -2,7 +2,6 @@
   <div id="home">
     <el-container>
       <!-- 侧边栏开始 -->
-
       <el-aside style="width:auto;">
         <el-scrollbar style="height:100%">
           <el-menu
@@ -97,6 +96,16 @@
               class="search"
               placeholder="请输入您需要查找的内容......"
             />
+            <el-badge class="item">
+              <el-button
+                size="small"
+                class="mes"
+                title="全屏"
+                @click="buttoncli"
+              >
+                <i class="el-icon-full-screen"></i>
+              </el-button>
+            </el-badge>
             <el-badge :value="2" class="item" type="warning">
               <el-button size="small" class="mes">
                 <i class="el-icon-message-solid"></i>
@@ -189,6 +198,7 @@
 import { mapState, mapMutations } from 'vuex'
 import myUpload from 'vue-image-crop-upload'
 import 'babel-polyfill'
+import screenfull from 'screenfull'
 export default {
   data () {
     return {
@@ -204,7 +214,9 @@ export default {
       headers: {
         smail: '*_~'
       },
-      imgDataUrl: '' // the datebase64 url of created image
+      imgDataUrl: '', // the datebase64 url of created image
+      isFullscreen: false,
+      isFull: false
     }
   },
   components: {
@@ -381,6 +393,20 @@ export default {
           this.delete_others_tabs()
           break
       }
+    },
+
+    // 全屏
+    buttoncli () {
+      console.log(screenfull)
+      if (!screenfull.isEnabled) {
+        // 如果不允许进入全屏，发出不允许提示
+        this.$message({
+          message: '不支持全屏',
+          type: 'warning'
+        })
+        return false
+      }
+      screenfull.toggle()
     }
   }
 }
