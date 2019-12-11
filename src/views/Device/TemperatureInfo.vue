@@ -57,12 +57,12 @@
       <!-- 导出操作结束 -->
     </div>
     <vxe-table
+      align="center"
       :data="tableData"
       border
       :customs.sync="customColumns"
       ref="xTable"
       resizable
-      align="center"
       v-loading="loading"
       element-loading-background="rgba(0, 0, 0, 0)"
       highlight-hover-row
@@ -80,25 +80,27 @@
         fixed="left"
       ></vxe-table-column>
       <vxe-table-column
-        field="BatteryIndex"
-        title="电池序号"
+        field="TempIndex"
+        title="温度序号"
         sortable
-        width="200"
+        show-overflow
+        show-header-overflow
       >
       </vxe-table-column>
-      <vxe-table-column field="Voltage" title="电压" sortable width="200">
-      </vxe-table-column>
-      <vxe-table-column field="IResis" title="内阻" width="200">
-      </vxe-table-column>
-      <vxe-table-column field="SOH" title="SOH" sortable width="200">
-      </vxe-table-column>
-      <vxe-table-column field="SOC" title="SOC" sortable width="200">
+      <vxe-table-column
+        field="Temperature"
+        title="温度值"
+        sortable
+        show-overflow
+        show-header-overflow
+      >
       </vxe-table-column>
       <vxe-table-column
         field="UpdateTime"
         title="更新时间"
         sortable
-        width="200"
+        show-overflow
+        show-header-overflow
       >
       </vxe-table-column>
     </vxe-table>
@@ -106,7 +108,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="tablePage.currentPage"
-      :page-sizes="pageSize"
+      :page-sizes="[2, 4, 8]"
       layout="total, sizes, prev, pager, next, jumper"
       :total="tablePage.totalResult"
       class="pagination"
@@ -124,7 +126,7 @@ export default {
         batterNum: ''
       },
       tableData: [],
-      api: '/api/Devices/GetDevicesBatteryInfoList',
+      api: '/api/Devices/GetDevicesTemperatureInfoList',
       list: [],
       tablePage: {
         currentPage: 1,
@@ -132,19 +134,18 @@ export default {
         totalResult: 0,
         limit: 2
       },
-      loading: false,
+      loading: true,
       customColumns: [],
       listHead: [],
       listFilter: [],
-      fileName: '电池信息'
+      fileName: '温度信息'
     }
   },
   computed: {
-    ...mapState('detail', ['paramsD']),
-    ...mapState('table', ['pageSize'])
+    ...mapState('detail', ['paramsD'])
   },
   mounted () {
-    if (this.paramsD.AutoSystemID && this.paramsD.batterID) {
+    if (this.paramsD.AutoSystemID && this.paramsD.batterId) {
       this.getData()
     }
   },
@@ -156,7 +157,7 @@ export default {
       this.loading = true
       this.$axios
         .get(
-          `${this.api}?AutoSystemID=${this.paramsD.AutoSystemID}&BatteryIDS=${this.paramsD.batterID}&page=${this.tablePage.currentPage}&limit=${this.tablePage.limit}&LikeIndex=${this.formData.batterNum}`
+          `${this.api}?AutoSystemID=${this.paramsD.AutoSystemID}&BatteryIDS=${this.paramsD.batterId}&page=${this.tablePage.currentPage}&limit=${this.tablePage.limit}&LikeIndex=${this.formData.batterNum}`
         )
         .then(res => {
           if (res.data.code === 0) {
@@ -213,7 +214,7 @@ export default {
         }
       }
       require.ensure([], () => {
-        const { export_json_to_excel } = require("../excel/Export2Excel"); // eslint-disable-line
+        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
         const tHeader = this.listHead
         // 上面设置Excel的表格第一行的标题
         const filterVal = this.listFilter
@@ -248,7 +249,6 @@ export default {
 .table-oper {
   height: 40px;
   /* width: 100%; */
-  position: relative;
 }
 .menu-btn {
   position: relative;
@@ -266,6 +266,9 @@ export default {
 }
 .menu-wrapper:hover {
   display: block;
+}
+.table-oper {
+  position: relative;
 }
 
 .menu-wrapper {

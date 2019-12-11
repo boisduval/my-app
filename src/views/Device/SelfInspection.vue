@@ -119,11 +119,12 @@
         element-loading-background="rgba(0, 0, 0, 0)"
         :edit-config="{ trigger: 'manual', mode: 'row' }"
         resizable
+        align="center"
         highlight-hover-row
         highlight-current-row
       >
-        <vxe-table-column type="checkbox" width="50" fixed="left" align="center"></vxe-table-column>
-        <vxe-table-column type="index" width="50" title="序号" fixed="left" align="center">
+        <vxe-table-column type="checkbox" width="50" fixed="left"></vxe-table-column>
+        <vxe-table-column type="index" width="50" title="序号" fixed="left">
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
@@ -156,21 +157,15 @@
           title="设备管理员"
           sortable
           width="150"
-          align="center"
         >
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="350" align="center">
+        <vxe-table-column title="操作" width="100">
           <template v-slot="{ row }">
-            <el-button
-              plain
-              size="small"
-              v-for="(item, index) in detail"
-              :key="index"
-              @click="toDetail(row.SystemID, item.label, row.DIDS, item.path)"
-            >
-              <i class="el-icon-info">{{ item.label }}</i>
+            <el-button size="small" @click="setSelfInspection(row)">
+              <i class="el-icon-edit"></i>
+              召测
             </el-button>
           </template>
         </vxe-table-column>
@@ -211,21 +206,7 @@ export default {
       isShow: true,
       fileName: '设备信息',
       count: 0,
-      loading: false,
-      detail: [
-        {
-          label: '设备详情',
-          path: '/deviceDetail'
-        },
-        {
-          label: '电池详情',
-          path: '/batterDetail'
-        },
-        {
-          label: '状态详情',
-          path: '/stateDetail'
-        }
-      ]
+      loading: false
     }
   },
   methods: {
@@ -265,29 +246,6 @@ export default {
       this.getData()
     },
 
-    toDetail (id, label, batterID, path) {
-      var params = {}
-      params.AutoSystemID = sessionStorage.getItem('AutoSystemID')
-      params.SystemID = id
-      params.batterID = batterID
-      switch (path) {
-        case '/deviceDetail':
-          this.set_paramsD(params)
-          break
-        case '/batterDetail':
-          this.set_paramsB(params)
-          break
-        case '/stateDetail':
-          this.set_paramsS(params)
-          break
-      }
-
-      this.set_detail_label(label)
-      // this.set_params(params)
-      // this.set_batterID(batterID)
-      this.$router.push({ path: path })
-    },
-
     // 打印
     printEvent () {
       this.$refs.xTable.print()
@@ -309,7 +267,7 @@ export default {
         }
       }
       require.ensure([], () => {
-        const { export_json_to_excel } = require("../excel/Export2Excel"); // eslint-disable-line
+        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
         const tHeader = this.listHead
         // 上面设置Excel的表格第一行的标题
         const filterVal = this.listFilter
@@ -321,6 +279,43 @@ export default {
     },
     formatJson (filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => v[j]))
+    },
+
+    // 自动召测
+    setSelfInspection (row) {
+      console.log(row)
+      this.$confirm(`确定召测用户[ ${row.DName} ]吗`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          var url = '/api/Devices/SelfInspection'
+          var IDS = row.DIDS
+          var AutoSystemID = this.formInline.AutoSystemID
+          var Name = row.DName
+          this.$axios.post(url, {
+            IDS: IDS,
+            AutoSystemID: AutoSystemID,
+            Name: Name
+          })
+            .then(res => {
+              if (res.data.code === 0) {
+                this.$message.success(res.data.msg)
+              } else if (res.data.code === 1) {
+                this.$message.error(res.data.msg)
+              }
+            })
+            .catch(err => {
+              console.error(err)
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消召测'
+          })
+        })
     }
   },
 

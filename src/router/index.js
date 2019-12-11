@@ -28,64 +28,64 @@ const routes = [
       {
         path: '/deviceifo',
         name: 'deviceifo',
-        component: () => import(/* webpackChunkName: "deviceifo" */ '../views/DeviceIfo.vue')
+        component: () => import(/* webpackChunkName: "deviceifo" */ '../views/Device/DeviceIfo.vue')
       },
       {
         path: '/deviceManage',
         name: 'deviceManage',
-        component: () => import(/* webpackChunkName: "deviceManage" */ '../views/DeviceManage.vue')
+        component: () => import(/* webpackChunkName: "deviceManage" */ '../views/Device/DeviceManage.vue')
       },
       {
         path: '/deviceDetail',
         name: 'deviceDetail',
-        component: () => import(/* webpackChunkName: "deviceDetail" */ '../views/DeviceDetail.vue'),
+        component: () => import(/* webpackChunkName: "deviceDetail" */ '../views/Device/DeviceDetail.vue'),
         children: [
           {
             path: '',
             name: 'DTUInfo',
-            component: () => import(/* webpackChunkName: "DTUInfo" */ '../views/DTUInfo.vue')
+            component: () => import(/* webpackChunkName: "DTUInfo" */ '../views/Device/DTUInfo.vue')
           },
           {
             path: 'ControllerInfo',
             name: 'ControllerInfo',
-            component: () => import(/* webpackChunkName: "ControllerInfo" */ '../views/ControllerInfo.vue')
+            component: () => import(/* webpackChunkName: "ControllerInfo" */ '../views/Device/ControllerInfo.vue')
           },
           {
             path: 'BmsInfo',
             name: 'BmsInfo',
-            component: () => import(/* webpackChunkName: "BmsInfo" */ '../views/BmsInfo.vue')
+            component: () => import(/* webpackChunkName: "BmsInfo" */ '../views/Device/BmsInfo.vue')
           },
           {
             path: 'BatteryInfo',
             name: 'BatteryInfo',
-            component: () => import(/* webpackChunkName: "BatteryInfo" */ '../views/BatteryInfo.vue')
+            component: () => import(/* webpackChunkName: "BatteryInfo" */ '../views/Device/BatteryInfo.vue')
           },
           {
             path: 'TemperatureInfo',
             name: 'TemperatureInfo',
-            component: () => import(/* webpackChunkName: "TemperatureInfo" */ '../views/TemperatureInfo.vue')
+            component: () => import(/* webpackChunkName: "TemperatureInfo" */ '../views/Device/TemperatureInfo.vue')
           }
         ]
       },
       {
         path: '/batterDetail',
         name: 'batterDetail',
-        component: () => import(/* webpackChunkName: "BatterDetail" */ '../views/BatterDetail.vue')
+        component: () => import(/* webpackChunkName: "BatterDetail" */ '../views/Device/BatterDetail.vue')
       },
       {
         path: '/stateDetail',
         name: 'stateDetail',
-        component: () => import(/* webpackChunkName: "StateDetail" */ '../views/StateDetail.vue')
+        component: () => import(/* webpackChunkName: "StateDetail" */ '../views/Device/StateDetail.vue')
       },
       {
         path: '/cmdList',
         name: 'cmdList',
-        component: () => import(/* webpackChunkName: "CmdList" */ '../views/CmdList.vue')
+        component: () => import(/* webpackChunkName: "CmdList" */ '../views/Device/CmdList.vue')
       },
       {
         path: '/selfInspection',
         name: 'selfInspection',
-        component: () => import(/* webpackChunkName: "SelfInspection" */ '../views/SelfInspection.vue')
+        component: () => import(/* webpackChunkName: "SelfInspection" */ '../views/Device/SelfInspection.vue')
       },
       {
         path: '/batteryType',

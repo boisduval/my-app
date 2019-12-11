@@ -194,7 +194,7 @@ export default {
         }
       }
       require.ensure([], () => {
-        const { export_json_to_excel } = require("../excel/Export2Excel"); // eslint-disable-line
+        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
         const tHeader = this.listHead
         // 上面设置Excel的表格第一行的标题
         const filterVal = this.listFilter

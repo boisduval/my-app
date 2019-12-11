@@ -58,6 +58,15 @@
         <el-button
           type="primary"
           size="small"
+          @click="addItem"
+          class="button-left"
+        >
+          <i class="el-icon-plus"></i>
+          添加
+        </el-button>
+        <el-button
+          type="primary"
+          size="small"
           @click="getData"
           class="button-left"
         >
@@ -117,14 +126,18 @@
         ref="xTable"
         v-loading="loading"
         element-loading-background="rgba(0, 0, 0, 0)"
-        :edit-config="{ trigger: 'manual', mode: 'row' }"
+        show-overflow
         resizable
-        align="center"
         highlight-hover-row
         highlight-current-row
       >
-        <vxe-table-column type="checkbox" width="50" fixed="left"></vxe-table-column>
-        <vxe-table-column type="index" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="checkbox"
+          width="50"
+          fixed="left"
+          align="center"
+        ></vxe-table-column>
+        <vxe-table-column type="index" width="50" title="序号" fixed="left" align="center">
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
@@ -157,16 +170,17 @@
           title="设备管理员"
           sortable
           width="150"
+          align="center"
         >
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="100">
+        <vxe-table-column title="操作" width="150" fixed="right" align="center">
           <template v-slot="{ row }">
-            <el-button size="small" @click="setSelfInspection(row)">
-              <i class="el-icon-edit"></i>
-              召测
-            </el-button>
+            <el-button size="small" @click="showDialog(row)">编辑</el-button>
+            <el-button size="small" type="danger" @click="deleteItem(row)"
+              >删除</el-button
+            >
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -183,6 +197,106 @@
       >
       </el-pagination>
       <!-- 分页结束 -->
+
+      <!-- 编辑表单开始 -->
+      <el-dialog
+        title="修改设备"
+        :visible.sync="dialogFormVisible"
+        :close-on-click-modal="false"
+      >
+        <el-form :model="form">
+          <el-form-item label="ICCID编码" :label-width="formLabelWidth">
+            <el-input v-model="form.ICCID" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="设备编号" :label-width="formLabelWidth">
+            <el-input
+              v-model="form.DeviceIdentifyNumber"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="VIN编码" :label-width="formLabelWidth">
+            <el-input v-model="form.VIN" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="设备名称" :label-width="formLabelWidth">
+            <el-input v-model="form.Name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="设备管理员" :label-width="formLabelWidth">
+            <el-select v-model="form.DManageMentUserID">
+              <el-option
+                v-for="(item, index) in userList"
+                :key="index"
+                :value="item.SystemID"
+                :label="item.Name"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="设备持有人" :label-width="formLabelWidth">
+            <el-select v-model="form.DAffiliationUserID">
+              <el-option
+                v-for="(item, index) in userList"
+                :key="index"
+                :value="item.SystemID"
+                :label="item.Name"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="edit">确 定</el-button>
+        </div>
+      </el-dialog>
+      <!-- 编辑表单结束 -->
+
+      <!-- 添加表单开始 -->
+      <el-dialog
+        title="添加设备"
+        :visible.sync="dialogFormAddVisible"
+        :close-on-click-modal="false"
+      >
+        <el-form :model="formAdd">
+          <el-form-item label="ICCID编码" :label-width="formLabelWidth">
+            <el-input v-model="formAdd.ICCID" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="设备编号" :label-width="formLabelWidth">
+            <el-input
+              v-model="formAdd.DeviceIdentifyNumber"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="VIN编码" :label-width="formLabelWidth">
+            <el-input v-model="formAdd.VIN" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="设备名称" :label-width="formLabelWidth">
+            <el-input v-model="formAdd.Name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="设备管理员" :label-width="formLabelWidth">
+            <el-select v-model="formAdd.DManageMentUserID">
+              <el-option
+                v-for="(item, index) in userList"
+                :key="index"
+                :value="item.SystemID"
+                :label="item.Name"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="设备持有人" :label-width="formLabelWidth">
+            <el-select v-model="formAdd.DAffiliationUserID">
+              <el-option
+                v-for="(item, index) in userList"
+                :key="index"
+                :value="item.SystemID"
+                :label="item.Name"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormAddVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addHttp">确 定</el-button>
+        </div>
+      </el-dialog>
+      <!-- 添加表单结束 -->
     </el-card>
   </div>
 </template>
@@ -206,7 +320,30 @@ export default {
       isShow: true,
       fileName: '设备信息',
       count: 0,
-      loading: false
+      loading: false,
+      dialogFormVisible: false,
+      dialogFormAddVisible: false,
+      form: {
+        AutoSystemID: '',
+        ICCID: '',
+        DeviceIdentifyNumber: '',
+        VIN: '',
+        Name: '',
+        DManageMentUserID: '',
+        DAffiliationUserID: '',
+        SystemID: ''
+      },
+      formLabelWidth: '90px',
+      userList: [],
+      formAdd: {
+        AutoSystemID: '',
+        ICCID: '',
+        DeviceIdentifyNumber: '',
+        VIN: '',
+        Name: '',
+        DManageMentUserID: '',
+        DAffiliationUserID: ''
+      }
     }
   },
   methods: {
@@ -215,6 +352,8 @@ export default {
     getData () {
       this.loading = true
       this.formInline.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+      this.form.AutoSystemID = this.formInline.AutoSystemID
+      this.formAdd.AutoSystemID = this.formInline.AutoSystemID
       this.$axios
         .get(
           `/api/Devices/GetRegistrationEquipmentList?AutoSystemID=${this.formInline.AutoSystemID}&page=${this.formInline.page}&limit=${this.formInline.limit}&ICCID=${this.formInline.ICCID}&IDS=${this.formInline.IDS}&VIN=${this.formInline.VIN}&Name=${this.formInline.Name}`
@@ -267,7 +406,7 @@ export default {
         }
       }
       require.ensure([], () => {
-        const { export_json_to_excel } = require("../excel/Export2Excel"); // eslint-disable-line
+        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
         const tHeader = this.listHead
         // 上面设置Excel的表格第一行的标题
         const filterVal = this.listFilter
@@ -281,27 +420,79 @@ export default {
       return jsonData.map(v => filterVal.map(j => v[j]))
     },
 
-    // 自动召测
-    setSelfInspection (row) {
+    // 显示编辑框
+    showDialog (row) {
+      this.getUserList()
+      this.form.ICCID = row.DICCID
+      this.form.DeviceIdentifyNumber = row.DIDS
+      this.form.VIN = row.DVIN
+      this.form.Name = row.DName
+      this.form.DManageMentUserID = row.DManageMentUserID
+      this.form.DAffiliationUserID = row.DAffiliationUserID
+      this.form.SystemID = row.SystemID
+      this.dialogFormVisible = true
+    },
+
+    // 获取用户列表
+    getUserList () {
+      this.$axios
+        .get(`/api/Mail/GetUserList?AutoSystemID=${this.form.AutoSystemID}`)
+        .then(res => {
+          this.userList = res.data.data
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 编辑
+    edit () {
+      var url = '/api/Devices/UpdataRegistrationEquipment'
+      this.$axios
+        .post(url, this.form)
+        .then(res => {
+          this.dialogFormVisible = false
+          if (res.data.code === 0) {
+            this.$message.success('编辑成功')
+          }
+          this.getData()
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 删除
+    deleteItem (row) {
       console.log(row)
-      this.$confirm(`确定召测用户[ ${row.DName} ]吗`, '提示', {
+      this.$confirm(`是否删除用户[ ${row.DName} ]`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          var url = '/api/Devices/SelfInspection'
-          var IDS = row.DIDS
+          var name = row.DName
+          var id = row.SystemID
           var AutoSystemID = this.formInline.AutoSystemID
-          var Name = row.DName
-          this.$axios.post(url, {
-            IDS: IDS,
-            AutoSystemID: AutoSystemID,
-            Name: Name
-          })
+          var url = '/api/Devices/DeleteRegistrationEquipment'
+          this.$axios
+            .post(url, {
+              AutoSystemID: AutoSystemID,
+              Name: name,
+              SystemID: id
+            })
             .then(res => {
               if (res.data.code === 0) {
                 this.$message.success(res.data.msg)
+                let totalPage = Math.ceil(
+                  (this.count - 1) / this.formInline.limit
+                )
+                let currentPage =
+                  this.formInline.page > totalPage
+                    ? totalPage
+                    : this.formInline.page
+                this.formInline.page = currentPage < 1 ? 1 : currentPage
+                this.getData()
               } else if (res.data.code === 1) {
                 this.$message.error(res.data.msg)
               }
@@ -313,8 +504,32 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消召测'
+            message: '已取消删除'
           })
+        })
+    },
+
+    // 添加
+    addItem () {
+      this.dialogFormAddVisible = true
+      this.getUserList()
+    },
+    addHttp () {
+      var url = '/api/Devices/AddRegistrationEquipment'
+      this.$axios
+        .post(url, this.formAdd)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.formAdd = {}
+            this.$message.success(res.data.msg)
+            this.getData()
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+          this.dialogFormAddVisible = false
+        })
+        .catch(err => {
+          console.error(err)
         })
     }
   },
@@ -336,7 +551,7 @@ export default {
 }
 
 .box-card {
-  line-height: 10px;
+  line-height: 14px;
   font-size: 15px;
   text-align: left;
   /* margin-bottom: 20px; */
@@ -428,5 +643,9 @@ export default {
 
 #export li:hover {
   background-color: #f2f2f2;
+}
+
+.el-dialog {
+  width: 50%;
 }
 </style>
