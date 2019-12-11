@@ -125,6 +125,20 @@ export default {
           tag: '加热功能开关',
           data: [],
           description: '状态'
+        },
+        {
+          label: '干节点1输出电平',
+          name: 'dry1',
+          tag: '干节点1输出电平',
+          data: [],
+          description: '状态'
+        },
+        {
+          label: '干节点2输出电平',
+          name: 'dry2',
+          tag: '干节点2输出电平',
+          data: [],
+          description: '状态'
         }
       ],
       bank: '0',
@@ -135,12 +149,16 @@ export default {
       pRECHARGE_STATE: '',
       pCS_FAULT_RECOVERY: '',
       hEATING_SWITCH: '',
+      dRY_NODE_OUTPUT_1: '',
+      dRY_NODE_OUTPUT_2: '',
       fan: [],
       charger: [],
       discharger: [],
       precharger: [],
       PCS: [],
-      switch: []
+      switch: [],
+      dry1: [],
+      dry2: []
     }
   },
   computed: {
@@ -213,6 +231,8 @@ export default {
           this.dISCHARGE_CONTACTOR_STATUS = res.data.data.dISCHARGE_CONTACTOR_STATUS
           this.pCS_FAULT_RECOVERY = res.data.data.pCS_FAULT_RECOVERY
           this.hEATING_SWITCH = res.data.data.hEATING_SWITCH
+          this.dRY_NODE_OUTPUT_1 = res.data.data.dRY_NODE_OUTPUT_1
+          this.dRY_NODE_OUTPUT_2 = res.data.data.dRY_NODE_OUTPUT_2
           console.log(res.data.data)
           for (var key in this.cHARGING_CONTACTOR_STATUS) {
             if (this.cHARGING_CONTACTOR_STATUS[key]) {
@@ -295,11 +315,39 @@ export default {
             }
           }
 
+          // eslint-disable-next-line
+          for (var key in this.dRY_NODE_OUTPUT_1) {
+            if (this.dRY_NODE_OUTPUT_1[key]) {
+              this.dry1.push({
+                src: require('@/assets/img/Device/electricityon.png')
+              })
+            } else {
+              this.dry1.push({
+                src: require('@/assets/img/Device/electricityoff.png')
+              })
+            }
+          }
+
+          // eslint-disable-next-line
+          for (var key in this.dRY_NODE_OUTPUT_2) {
+            if (this.dRY_NODE_OUTPUT_2[key]) {
+              this.dry2.push({
+                src: require('@/assets/img/Device/electricityon.png')
+              })
+            } else {
+              this.dry2.push({
+                src: require('@/assets/img/Device/electricityoff.png')
+              })
+            }
+          }
+
           this.list[0].data = this.charger
           this.list[1].data = this.discharger
           this.list[2].data = this.precharger
           this.list[3].data = this.PCS
           this.list[4].data = this.switch
+          this.list[5].data = this.dry1
+          this.list[6].data = this.dry2
         })
         .catch(err => {
           console.log(err)
