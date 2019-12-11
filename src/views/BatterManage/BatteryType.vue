@@ -122,6 +122,8 @@
         element-loading-background="rgba(0, 0, 0, 0)"
         show-overflow
         resizable
+        highlight-hover-row
+        highlight-current-row
       >
         <vxe-table-column
           type="checkbox"

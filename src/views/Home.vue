@@ -460,15 +460,16 @@ export default {
 .search {
   width: 200px;
   border: none;
-  background-color: inherit;
+  background-color: #f3f3f4;
   line-height: 30px;
+  height: 30px;
   margin-left: 10px;
   outline: none;
 }
 
 .el-header .mes {
   border: none;
-  background-color: inherit;
+  background-color: #f3f3f4;
   font-size: 20px;
 }
 
@@ -510,6 +511,7 @@ export default {
 
 .tab-box {
   position: relative;
+  height: 40px;
 }
 
 .el-submenu [class^="fa"] {

@@ -65,6 +65,8 @@
       align="center"
       v-loading="loading"
       element-loading-background="rgba(0, 0, 0, 0)"
+      highlight-hover-row
+      highlight-current-row
     >
       <vxe-table-column
         type="index"

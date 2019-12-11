@@ -150,6 +150,8 @@
         show-overflow
         resizable
         align="center"
+        highlight-hover-row
+        highlight-current-row
       >
         <vxe-table-column
           type="checkbox"

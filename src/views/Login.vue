@@ -324,7 +324,7 @@ a {
 }
 #login {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   overflow-y: auto;
   background-image: url("../assets/img/backgrounds/1.jpg");
   background-repeat: no-repeat;
@@ -370,7 +370,9 @@ a {
 
 .box-top {
   display: flex;
+  display: -ms-flexbox;
   justify-content: space-between;
+  /* -ms-flex-pack: justify; */
 }
 
 .box-top .wel-right {
@@ -389,7 +391,9 @@ a {
 
 .link-to {
   display: flex;
+  display: -ms-flexbox;
   justify-content: center;
+  -ms-flex-pack: center;
   flex-wrap: wrap;
   /* margin-top: 20px; */
 }
@@ -457,7 +461,9 @@ a:focus {
 }
 
 .welcome {
-  margin: auto 0;
+  margin: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 </style>
