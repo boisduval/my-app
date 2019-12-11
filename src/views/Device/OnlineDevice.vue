@@ -1,56 +1,8 @@
 <template>
   <div>
-    <!-- 表单开始 -->
-    <el-collapse-transition>
-      <div style="box-sizing:border-box;" v-show="isShow">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>列表查询</span>
-          </div>
-          <el-form
-            :inline="true"
-            :model="searchForm"
-            class="demo-form-inline"
-            label-width="120px"
-            label-position="right"
-          >
-            <el-form-item label="登录账户:">
-              <el-input
-                v-model="searchForm.LikeAccount"
-                placeholder="请输入登录账户"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="登录名称:">
-              <el-input
-                v-model="searchForm.LikeName"
-                placeholder="请输入登录名称"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="主机名称:">
-              <el-input
-                v-model="searchForm.LikeHost"
-                placeholder="请输入主机名称"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="系统名称:">
-              <el-input
-                v-model="searchForm.LikePlatform"
-                placeholder="请输入系统名称"
-              ></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
-        <div style="height:20px;width:100%"></div>
-      </div>
-    </el-collapse-transition>
-    <!-- 表单结束 -->
-
-    <el-card class="box-card">
+      <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>在线用户</span>
+        <span>在线Socket</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -63,15 +15,6 @@
         >
           <i class="el-icon-refresh-right"></i>
           刷新
-        </el-button>
-        <el-button
-          type="primary"
-          size="small"
-          class="button-left"
-          @click="isShow = !isShow"
-        >
-          <i class="el-icon-search"></i>
-          模糊查询
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -131,76 +74,60 @@
         <vxe-table-column type="index" width="50" title="序号" fixed="left">
         </vxe-table-column>
         <vxe-table-column
-          field="AccountNumber"
-          title="登录账号"
-          width="130"
+          field="LocdEndPoint"
+          title="Socket连接的本地总结点"
+          width="200"
           sortable
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="DUser"
-          title="登录名称"
-          width="100"
+          field="RemoteEndPoint"
+          title="Socket远端终结点"
+          width="200"
           show-overflow
           sortable
         >
         </vxe-table-column>
         <vxe-table-column
-          field="HostName"
-          title="IP地址"
-          width="123"
+          field="SendByte"
+          title="发送的总数据量"
+          width="200"
           sortable
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="LoginAddress"
-          title="登录地址"
-          width="158"
+          field="ReceiveByte"
+          title="接收的总数据量"
+          width="180"
           sortable
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="BrowserType"
-          title="浏览器"
-          width="130"
+          field="ReceiveNumber"
+          title="接收数据包的个数"
+          width="180"
           sortable
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="OSType"
-          title="操作系统"
-          width="130"
+          field="ConnectTime"
+          title="建立连接的时间"
+          width="260"
           sortable
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="LoginTime"
-          title="登录时间"
-          width="178"
+          field="UpdataTime"
+          title="收到数据最后更新时间"
+          width="260"
           sortable
           show-overflow
         >
-        </vxe-table-column>
-        <vxe-table-column
-          field="ActiveTime"
-          title="活跃时间"
-          width="178"
-          sortable
-          show-overflow
-        >
-        </vxe-table-column>
-        <vxe-table-column title="操作" width="250" fixed="right">
-          <template v-slot="{ row }">
-            <el-button size="mini" type="danger" @click="forcedOffline(row)">
-              <i class="el-icon-close"></i>
-              强制下线
-            </el-button>
-          </template>
         </vxe-table-column>
       </vxe-table>
       <!-- 表格结束 -->
@@ -228,11 +155,7 @@ export default {
       searchForm: {
         AutoSystemID: '',
         page: 1,
-        limit: 10,
-        LikeAccount: '',
-        LikeName: '',
-        LikeHost: '',
-        LikePlatform: ''
+        limit: 10
       },
       isShow: true,
       tableData: [],
@@ -299,7 +222,7 @@ export default {
     },
     getData () {
       this.loading = true
-      var url = '/api/Users/GetActiveUser'
+      var url = '/api/Devices/GetSocketLinkList'
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
@@ -310,29 +233,6 @@ export default {
             this.$message.error(res.data.msg)
           }
           this.loading = false
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    // 强制下线
-    forcedOffline (row) {
-      console.log(row)
-      let obj = {
-        AutoSystemID: this.searchForm.AutoSystemID,
-        OfflieSystemID: row.AutoSystemID,
-        Name: row.AccountNumber
-      }
-      var url = '/api/Users/ForcedOffline'
-      this.$axios
-        .post(url, obj)
-        .then(res => {
-          if (res.data.code === 0) {
-            this.$message.success(res.data.msg)
-            this.getData()
-          } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
-          }
         })
         .catch(err => {
           console.error(err)
@@ -366,7 +266,7 @@ export default {
 .menu-wrapper {
   display: none;
   position: absolute;
-  width: 150px;
+  min-width: 220px;
   top: 16px;
   right: 0;
   z-index: 9;
@@ -401,13 +301,5 @@ export default {
   color: #606266;
   border-color: #dcdfe6;
   background-color: #fff;
-}
-
-.tree-node-icon {
-  width: 20px;
-}
-
-#left .vxe-cell {
-  text-align: left;
 }
 </style>

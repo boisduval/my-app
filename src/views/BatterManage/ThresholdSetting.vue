@@ -149,7 +149,7 @@
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="1100">
+        <vxe-table-column title="操作" width="500">
           <template v-slot="{ row }">
             <el-button
               plain
@@ -277,22 +277,30 @@ export default {
         {
           label: '电压门限',
           path: 'list1',
-          cardTop: '电压门限信息'
+          cardTop: '电压门限信息',
+          BankAddress1: 0x2790,
+          BankAddress2: 0x7790
         },
         {
           label: '充电一般门限',
           path: 'list2',
-          cardTop: '充电一般门限信息'
+          cardTop: '充电一般门限信息',
+          BankAddress1: 0x279c,
+          BankAddress2: 0x779c
         },
         {
           label: '充电过流门限',
           path: 'list3',
-          cardTop: '充电过流门限信息'
+          cardTop: '充电过流门限信息',
+          BankAddress1: 0x27b6,
+          BankAddress2: 0x77b6
         },
         {
           label: '环境门限',
           path: 'list4',
-          cardTop: '环境门限信息'
+          cardTop: '环境门限信息',
+          BankAddress1: 0x2934,
+          BankAddress2: 0x7934
         }
       ],
       dialogFormVisible: false,
@@ -317,7 +325,7 @@ export default {
         },
         {
           label: '总压过压停机',
-          name: 'sINGLE_OVERVOLTAGE_STOP_THRESHOLD',
+          name: 'tOTAL_OVERVOLTAGE_SHUTDOWN_THRESHOLD',
           value: ''
         },
         {
@@ -338,11 +346,6 @@ export default {
         {
           label: '单体欠停机压',
           name: 'sINGLE_UNIT_UNDER_SHUTDOWN_VOLTAGE_THRESHOLD',
-          value: ''
-        },
-        {
-          label: '单体过压停机',
-          name: 'sINGLE_OVERVOLTAGE_STOP_THRESHOLD',
           value: ''
         },
         {
@@ -639,89 +642,91 @@ export default {
       var arr = []
       for (const el of this.list) {
         switch (el.name) {
-          case ('sINGLE_OVERVOLTAGE_STOP_THRESHOLD',
-          'sINGLE_OVERVOLTAGE_SHUTDOWN_RECOVERY_THRESHOLD',
-          'sINGLE_UNIT_UNDER_VOLTAGE_SHUTDOWN_RECOVERY_THRESHOLD',
-          'sINGLE_UNIT_UNDER_SHUTDOWN_VOLTAGE_THRESHOLD',
-          'sINGLE_UNIT_DIFFERENTIAL_PRESSURE_TOO_HIGH_STOP_THRESHOLD',
-          'mONOMER_DIFFERENTIAL_PRESSURE_TOO_HIGH_SHUTDOWN_RECOVERY_THRESHOLD'):
+          case 'sINGLE_OVERVOLTAGE_STOP_THRESHOLD':
+          case 'sINGLE_OVERVOLTAGE_SHUTDOWN_RECOVERY_THRESHOLD':
+          case 'sINGLE_UNIT_UNDER_VOLTAGE_SHUTDOWN_RECOVERY_THRESHOLD':
+          case 'sINGLE_UNIT_UNDER_SHUTDOWN_VOLTAGE_THRESHOLD':
+          case 'sINGLE_UNIT_DIFFERENTIAL_PRESSURE_TOO_HIGH_STOP_THRESHOLD':
+          case 'mONOMER_DIFFERENTIAL_PRESSURE_TOO_HIGH_SHUTDOWN_RECOVERY_THRESHOLD':
             arr.push(parseFloat(el.value) * 1000)
             break
-          case ('tOTAL_OVERVOLTAGE_SHUTDOWN_THRESHOLD',
-          'tOTAL_VOLTAGE_OVERVOLTAGE_SHUTDOWN_RECOVERY',
-          'mAIN_LOOP_CHARGING_OVERCURRENT_STOP_THRESHOLD',
-          'mAIN_LOOP_CHARGING_OVERCURRENT_SHUTDOWN_RECOVER_THRESHOLD',
-          'tOTAL_VOLTAGE_UNDERVOLTAGE_SHUTDOWN',
-          'tOTAL_VOLTAGE_UNDER_VOLTAGE_SHUTDOWN_RECOVERY',
-          'mAIN_LOOP_DISCHARGE_OVERCURRENT_STOP_THRESHOLD',
-          'mAIN_LOOP_DISCHARGE_OVER_CURRENT_SHUTDOWN_THRESHOLD',
-          'tHE_TOTAL_VOLTAGE_DIFFERENTIAL_IS_TOO_HIGH_TO_STOP_THE_MACHINE',
-          'tOTAL_VOLTAGE_DIFFERENTIAL_TOO_HIGH_SHUTDOWN_RECOVERY_THRESHOLD'):
-            arr.push(parseFloat(el.value) * 10)
+          case 'tOTAL_OVERVOLTAGE_SHUTDOWN_THRESHOLD':
+          case 'tOTAL_VOLTAGE_OVERVOLTAGE_SHUTDOWN_RECOVERY':
+          case 'mAIN_LOOP_CHARGING_OVERCURRENT_STOP_THRESHOLD':
+          case 'mAIN_LOOP_CHARGING_OVERCURRENT_SHUTDOWN_RECOVER_THRESHOLD':
+          case 'tOTAL_VOLTAGE_UNDERVOLTAGE_SHUTDOWN':
+          case 'tOTAL_VOLTAGE_UNDER_VOLTAGE_SHUTDOWN_RECOVERY':
+          case 'mAIN_LOOP_DISCHARGE_OVERCURRENT_STOP_THRESHOLD':
+          case 'mAIN_LOOP_DISCHARGE_OVER_CURRENT_SHUTDOWN_THRESHOLD':
+          case 'tHE_TOTAL_VOLTAGE_DIFFERENTIAL_IS_TOO_HIGH_TO_STOP_THE_MACHINE':
+          case 'tOTAL_VOLTAGE_DIFFERENTIAL_TOO_HIGH_SHUTDOWN_RECOVERY_THRESHOLD':
+            arr.push(el.value * 10)
             break
-          case ('cHARGING_TEMPERATURE_TOO_HIGH_STOP_THRESHOLD',
-          'cHARGING_TEMPERATURE_TOO_LOW_STOP_THRESHOLD',
-          'lOW_CHARGING_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD',
-          'eXCESSIVE_CHARGING_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD',
-          'eXCESSIVE_POWER_TEMPERATURE_SHUTDOWN_THRESHOLD',
-          'aMBIENT_TEMPERATURE_TOO_HIGH_STOP_THRESHOLD',
-          'aMBIENT_TEMPERATURE_TOO_HIGH_SHUTDOWN_RECOVERY_THRESHOLD',
-          'aMBIENT_TEMPERATURE_TOO_LOW_STOP_THRESHOLD',
-          'aMBIENT_TEMPERATURE_TOO_LOW_SHUTDOWN_RECOVERY_THRESHOLD'):
+          case 'cHARGING_TEMPERATURE_TOO_HIGH_STOP_THRESHOLD':
+          case 'cHARGING_TEMPERATURE_TOO_LOW_STOP_THRESHOLD':
+          case 'lOW_CHARGING_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD':
+          case 'eXCESSIVE_CHARGING_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD':
+          case 'eXCESSIVE_POWER_TEMPERATURE_SHUTDOWN_THRESHOLD':
+          case 'aMBIENT_TEMPERATURE_TOO_HIGH_STOP_THRESHOLD':
+          case 'aMBIENT_TEMPERATURE_TOO_HIGH_SHUTDOWN_RECOVERY_THRESHOLD':
+          case 'aMBIENT_TEMPERATURE_TOO_LOW_STOP_THRESHOLD':
+          case 'aMBIENT_TEMPERATURE_TOO_LOW_SHUTDOWN_RECOVERY_THRESHOLD':
             arr.push((parseFloat(el.value) + 60) * 10)
             break
-          case ('sOC_TOO_LOW_STOP_THRESHOLD',
-          'sOC_TOO_LOW_SHUTDOWN_RECOVERY_THRESHOLD'):
+          case 'sOC_TOO_LOW_STOP_THRESHOLD':
+          case 'sOC_TOO_LOW_SHUTDOWN_RECOVERY_THRESHOLD':
             arr.push(parseFloat(el.value) * 1)
             break
-          case ('cHARGING_OVERCURRENT_THREE_STAGE_SHUTDOWN_PROTECTION_THRESHOLD',
-          'cHARGING_OVERCURRENT_THREE_STAGE_SHUTDOWN_RECOVERY_THRESHOLD',
-          'dISCHARGE_OVERCURRENT_THREE_STAGE_SHUTDOWN_PROTECTION_THRESHOLD',
-          'dISCHARGE_OVERCURRENT_THREE_STAGE_SHUTDOWN_RECOVERY_THRESHOLD'):
+          case 'cHARGING_OVERCURRENT_THREE_STAGE_SHUTDOWN_PROTECTION_THRESHOLD':
+          case 'cHARGING_OVERCURRENT_THREE_STAGE_SHUTDOWN_RECOVERY_THRESHOLD':
+          case 'dISCHARGE_OVERCURRENT_THREE_STAGE_SHUTDOWN_PROTECTION_THRESHOLD':
+          case 'dISCHARGE_OVERCURRENT_THREE_STAGE_SHUTDOWN_RECOVERY_THRESHOLD':
             arr.push(parseFloat(el.value) * 10 + 0x8000)
             break
-          case ('eXCESSIVE_POWER_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD',
-          'dISCHARGE_OVER_TEMPERATURE_STOP_THRESHOLD',
-          'dISCHARGE_OVER_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD',
-          'dISCHARGE_UNDERTEMPERATURE_SHUTDOWN_THRESHOLD',
-          'dISCHARGE_UNDERTEMPERATURE_SHOTDOWN_RECOVERY_THRESHOLD',
-          'hIGH_TEMPERATURE_DIFFERENCE_STOP_THRESHOLD',
-          'hIGH_TEMPERATURE_DIFFERENCE_DOWNTIME_RECOVERY_THRESHOLD'):
+          case 'eXCESSIVE_POWER_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD':
+          case 'dISCHARGE_OVER_TEMPERATURE_STOP_THRESHOLD':
+          case 'dISCHARGE_OVER_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD':
+          case 'dISCHARGE_UNDERTEMPERATURE_SHUTDOWN_THRESHOLD':
+          case 'dISCHARGE_UNDERTEMPERATURE_SHOTDOWN_RECOVERY_THRESHOLD':
+          case 'hIGH_TEMPERATURE_DIFFERENCE_STOP_THRESHOLD':
+          case 'hIGH_TEMPERATURE_DIFFERENCE_DOWNTIME_RECOVERY_THRESHOLD':
             arr.push((parseFloat(el.value) + 60) * 1)
             break
-          case ('iNSULATION_FAILURE_STOP_THRESHOLD',
-          'iNSULATION_FAILURE_SHUTDOWN_RECOVERY_THRESHOLD'):
+          case 'iNSULATION_FAILURE_STOP_THRESHOLD':
+          case 'iNSULATION_FAILURE_SHUTDOWN_RECOVERY_THRESHOLD':
             arr.push(parseFloat(el.value) * 1)
             break
         }
         console.log(arr)
       }
       //   let CheckedStatus = 0;
-      //   var BankAddres = 10117;
-      //   var url = "/api/Command/Write";
+      var BankAddress
+      var url = '/api/Command/Write'
       //   for (const el of this.stateList) {
       //     if (el.value) {
       //       CheckedStatus = CheckedStatus | el.num;
       //     }
       //   }
-      //   // eslint-disable-next-line
-      //   if (this.formList.BankIndex == 1) BankAddres = 0x7785;
-      //   else BankAddres = 0x2785;
-      //   this.$axios
-      //     .post(url, {
-      //       AutoSystemID: this.formList.AutoSystemID,
-      //       data: {
-      //         Address: BankAddres,
-      //         IDS: this.formList.BatteryIDS,
-      //         Data: [CheckedStatus]
-      //       }
-      //     })
-      //     .then(res => {
-      //       console.log(res);
-      //     })
-      //     .catch(err => {
-      //       console.error(err);
-      //     });
+      // eslint-disable-next-line
+      if (this.formList.BankIndex == 0) BankAddress = this.activeDialog.BankAddress1;
+      else BankAddress = this.activeDialog.BankAddress2
+      var obj = {
+        Address: BankAddress,
+        IDS: this.formList.BatteryIDS,
+        Data: arr
+      }
+      obj = JSON.stringify(obj)
+      this.$axios
+        .post(url, {
+          AutoSystemID: this.formList.AutoSystemID,
+          data: obj
+        })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   },
 

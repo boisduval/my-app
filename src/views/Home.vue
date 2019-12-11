@@ -165,14 +165,23 @@
         <!-- 标签页结束 -->
 
         <el-main>
-          <keep-alive
-            ><transition name="slide-fade" mode="out-in">
-              <router-view></router-view
-            ></transition>
+          <transition name="slide-fade" mode="out-in">
+          <keep-alive>
+            <!-- <transition name="slide-fade" mode="out-in"> -->
+              <router-view></router-view>
+            <!-- </transition> -->
           </keep-alive>
+          </transition>
         </el-main>
 
-        <el-footer>Footer</el-footer>
+        <el-footer style="height:40px;">
+          <div class="footer">
+             © {{footerInfo.SystemYear}}
+             <span class="alink" @click="$router.push('/')">
+                {{footerInfo.SystemText}}
+             </span>
+          </div>
+        </el-footer>
       </el-container>
     </el-container>
     <!-- 设置头像开始 -->
@@ -216,7 +225,8 @@ export default {
       },
       imgDataUrl: '', // the datebase64 url of created image
       isFullscreen: false,
-      isFull: false
+      isFull: false,
+      footerInfo: ''
     }
   },
   components: {
@@ -238,6 +248,7 @@ export default {
 
   created () {
     // this.getMenu()
+    this.getFooterInfo()
     this.params.AutoSystemID = sessionStorage.getItem('AutoSystemID')
   },
   mounted () {
@@ -407,6 +418,19 @@ export default {
         return false
       }
       screenfull.toggle()
+    },
+
+    // 获取底部信息
+    getFooterInfo () {
+      var AutoSystemID = sessionStorage.getItem('AutoSystemID')
+      this.$axios
+        .get(`/api/Ablut/SystemConfig?AutoSystemID=${AutoSystemID}`)
+        .then(res => {
+          this.footerInfo = res.data.data
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
 }
@@ -539,5 +563,23 @@ export default {
 .close:hover {
   color: #777;
   background: #f2f2f2;
+}
+
+.el-submenu .el-menu-item {
+  height: 45px;
+  line-height: 45px;
+}
+
+.footer {
+  line-height: 40px;
+  float: right;
+}
+
+.alink {
+  cursor: pointer;
+  color: #409eff;
+}
+.alink:hover {
+  color: #999;
 }
 </style>

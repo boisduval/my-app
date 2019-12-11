@@ -88,6 +88,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "SelfInspection" */ '../views/Device/SelfInspection.vue')
       },
       {
+        path: '/onlineDevice',
+        name: 'onlineDevice',
+        component: () => import(/* webpackChunkName: "OnlineDevice" */ '../views/Device/OnlineDevice.vue')
+      },
+      {
         path: '/batteryType',
         name: 'batteryType',
         component: () => import(/* webpackChunkName: "BatterManageBatteryType" */ '../views/BatterManage/BatteryType.vue')

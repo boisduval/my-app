@@ -96,6 +96,15 @@ const state = {
             DataIndex: '1000',
             Text: '自动召测',
             Use: true
+          },
+          {
+            ID: '13',
+            MID: '3',
+            Href: 'onlineDevice',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '在线设备',
+            Use: true
           }
         ]
       }
