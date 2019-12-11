@@ -106,7 +106,8 @@
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
-          <div class="menu-wrapper">
+        </el-button>
+        <div class="menu-wrapper">
             <template v-for="(column, index) in customColumns">
               <vxe-checkbox
                 v-if="column.property"
@@ -118,7 +119,6 @@
               >
             </template>
           </div>
-        </el-button>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -572,8 +572,14 @@ export default {
   float: left;
 }
 
-.menu-btn:hover .menu-wrapper {
+.menu-btn:hover+.menu-wrapper {
   display: block;
+}
+.menu-wrapper:hover {
+  display: block;
+}
+.table-oper {
+  position: relative;
 }
 
 .menu-wrapper {

@@ -307,7 +307,6 @@ export default {
         returnCitySN === undefined
       ) {
         this.$.getScript('http://pv.sohu.com/cityjson?ie=utf-8', function () {
-          console.log('ok')
         })
       }
       this.bro()
@@ -461,9 +460,7 @@ a:focus {
 }
 
 .welcome {
-  margin: auto;
-  margin-left: 0;
-  margin-right: 0;
+  margin: 20px 0;
 }
 
 </style>

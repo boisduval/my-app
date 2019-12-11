@@ -24,7 +24,8 @@
       </el-button>
       <el-button class="menu-btn">
         <i class="fa fa-list"></i>
-        <div class="menu-wrapper">
+      </el-button>
+      <div class="menu-wrapper">
           <template v-for="(column, index) in customColumns">
             <vxe-checkbox
               v-if="column.property"
@@ -36,7 +37,6 @@
             >
           </template>
         </div>
-      </el-button>
       <el-button class="menu-btn" title="导出" v-popover:export>
         <i class="fa fa-download"></i>
       </el-button>
@@ -248,6 +248,7 @@ export default {
 .table-oper {
   height: 40px;
   /* width: 100%; */
+  position: relative;
 }
 .menu-btn {
   position: relative;
@@ -260,7 +261,10 @@ export default {
   float: left;
 }
 
-.menu-btn:hover .menu-wrapper {
+.menu-btn:hover+.menu-wrapper {
+  display: block;
+}
+.menu-wrapper:hover {
   display: block;
 }
 
@@ -320,13 +324,5 @@ export default {
 
 #export li:hover {
   background-color: #f2f2f2;
-}
-
-.el-form {
-  /* border-bottom: 1px solid #e8eaec; */
-}
-
-.el-form-item {
-  /* margin-bottom: 0; */
 }
 </style>

@@ -77,7 +77,8 @@
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
-          <div class="menu-wrapper">
+        </el-button>
+        <div class="menu-wrapper">
             <template v-for="(column, index) in customColumns">
               <vxe-checkbox
                 v-if="column.property"
@@ -85,11 +86,10 @@
                 v-model="column.visible"
                 :key="index"
                 @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
+                >{{ column.title }}
+              </vxe-checkbox>
             </template>
           </div>
-        </el-button>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -862,7 +862,10 @@ export default {
   float: left;
 }
 
-.menu-btn:hover .menu-wrapper {
+.menu-btn:hover+.menu-wrapper {
+  display: block;
+}
+.menu-wrapper:hover {
   display: block;
 }
 
@@ -872,7 +875,7 @@ export default {
   width: 150px;
   top: 16px;
   right: 0;
-  z-index: 9;
+  z-index: 1000;
   background-color: #fff;
   font-size: 14px;
   padding: 4px 10px;
@@ -899,6 +902,9 @@ export default {
   margin-left: 5px;
 }
 
+.table-oper {
+  position: relative;
+}
 .menu-btn:focus,
 .menu-btn:active {
   color: #606266;
