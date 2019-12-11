@@ -29,6 +29,7 @@ import 'echarts/lib/chart/bar'
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title'
+import 'babel-polyfill'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

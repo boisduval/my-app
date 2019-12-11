@@ -10,5 +10,6 @@ module.exports = {
         jQuery: 'jquery'
       })
     ]
-  }
+  },
+  transpileDependencies: ['vuex-persist']
 }

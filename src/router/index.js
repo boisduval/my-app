@@ -18,7 +18,7 @@ const routes = [
       {
         path: '/main',
         name: 'main',
-        component: () => import(/* webpackChunkName: "main" */ '../views/Main.vue')
+        component: () => import(/* webpackChunkName: "mainPage" */ '../views/Main.vue')
       },
       {
         path: '/screen',

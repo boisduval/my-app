@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="screen">
     <div class="dataTable">
       <div class="topTitle">
         开放式平台
@@ -31,7 +31,6 @@ export default {
     }
   },
   created () {
-    this.$('.el-main').css({ margin: '0', padding: '0' })
     this.interval = setInterval(() => {
       this.getDate()
     }, 1000)
@@ -290,5 +289,9 @@ export default {
   .right-content {
     flex: auto;
   }
+}
+#screen {
+  margin: -20px;
+  padding: 0;
 }
 </style>
