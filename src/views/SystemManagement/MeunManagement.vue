@@ -360,7 +360,7 @@ export default {
     }
   },
   created () {
-    this.searchForm.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+    this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
     this.getData()
   },
   methods: {

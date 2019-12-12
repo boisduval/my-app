@@ -280,14 +280,13 @@ export default {
       this.$axios
         .post('/api/Users/UserLogin', this.data)
         .then(res => {
-          console.log(res)
           if (res.data.code === 1) {
             this.data.MD5Pass = ''
             this.$message.error(res.data.msg)
-            sessionStorage.clear()
+            // localStorage.clear()
           } else if (res.data.code === 0) {
             this.setUserIfo(res.data.data)
-            sessionStorage.setItem(
+            localStorage.setItem(
               'AutoSystemID',
               res.data.data.UserAutoSystemID
             )

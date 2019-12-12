@@ -534,7 +534,7 @@ export default {
     ...mapState('table', ['pageSize'])
   },
   async created () {
-    this.searchForm.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+    this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
     try {
       let res = await this.getBatteryList()
       this.options = res.data.data

@@ -301,7 +301,7 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'login') {
     next()
   } else {
-    var AutoSystemID = sessionStorage.getItem('AutoSystemID')
+    var AutoSystemID = localStorage.getItem('AutoSystemID')
     if (AutoSystemID) {
       next()
     } else {

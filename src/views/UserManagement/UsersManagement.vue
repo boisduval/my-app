@@ -534,7 +534,7 @@ export default {
     ...mapState('table', ['pageSize'])
   },
   created () {
-    this.searchForm.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+    this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
     this.searchForm.limit = this.pageSize[0]
     this.getData()
   },

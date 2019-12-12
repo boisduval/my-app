@@ -357,7 +357,7 @@ export default {
       .subtract(0, 'days')
       .format('YYYY-MM-DD')
     this.value = [today, today]
-    this.searchForm.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+    this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
     this.searchForm.limit = this.pageSize[0]
     this.getData()
   },

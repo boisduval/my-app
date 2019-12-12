@@ -621,7 +621,7 @@ export default {
     ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
-      this.formInline.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+      this.formInline.AutoSystemID = localStorage.getItem('AutoSystemID')
       this.form.AutoSystemID = this.formInline.AutoSystemID
       this.formAdd.AutoSystemID = this.formInline.AutoSystemID
       this.$axios
@@ -693,7 +693,7 @@ export default {
     // 显示编辑框
     showDialog (row) {
       this.form = row
-      this.form.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+      this.form.AutoSystemID = localStorage.getItem('AutoSystemID')
       this.dialogFormVisible = true
       this.getBatteryMaterial()
     },

@@ -363,7 +363,7 @@ export default {
   },
   async created () {
     try {
-      this.searchForm.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+      this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
       this.searchForm.limit = this.pageSize[0]
       let res = await this.getRoleType()
       this.options = [{ Name: '选择日志类型', SystemID: 0 }, ...res.data.data]

@@ -237,7 +237,7 @@ export default {
     ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
-      this.formInline.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+      this.formInline.AutoSystemID = localStorage.getItem('AutoSystemID')
       this.$axios
         .get(
           `/api/Devices/GetRegistrationEquipmentList?AutoSystemID=${this.formInline.AutoSystemID}&page=${this.formInline.page}&limit=${this.formInline.limit}&ICCID=${this.formInline.ICCID}&IDS=${this.formInline.IDS}&VIN=${this.formInline.VIN}&Name=${this.formInline.Name}`
@@ -271,7 +271,7 @@ export default {
 
     toDetail (id, label, batterID, path) {
       var params = {}
-      params.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+      params.AutoSystemID = localStorage.getItem('AutoSystemID')
       params.SystemID = id
       params.batterID = batterID
       switch (path) {

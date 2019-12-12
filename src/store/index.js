@@ -6,7 +6,7 @@ import modules from './modules'
 Vue.use(Vuex)
 
 const vuexLocal = new VuexPersistence({
-  storage: window.sessionStorage,
+  storage: window.localStorage,
   reducer (val) {
     return {
       // 只储存state中的user

@@ -251,7 +251,7 @@ export default {
   created () {
     // this.getMenu()
     this.getFooterInfo()
-    this.params.AutoSystemID = sessionStorage.getItem('AutoSystemID')
+    this.params.AutoSystemID = localStorage.getItem('AutoSystemID')
   },
   mounted () {
     if (this.openTab.length === 0) {
@@ -263,17 +263,15 @@ export default {
     }
   },
   beforeDestroy () {
-    if (this.$route.name !== 'errorPage') {
-      var url = '/api/Users/UserLogout'
-      this.$axios
-        .post(url, {
-          AutoSystemID: this.params.AutoSystemID
-        })
-        .then(res => {})
-        .catch(err => {
-          console.error(err)
-        })
-    }
+    var url = '/api/Users/UserLogout'
+    this.$axios
+      .post(url, {
+        AutoSystemID: this.params.AutoSystemID
+      })
+      .then(res => {})
+      .catch(err => {
+        console.error(err)
+      })
   },
 
   watch: {
@@ -356,7 +354,7 @@ export default {
 
     // 获取菜单列表
     getMenu () {
-      var AutoSystemID = sessionStorage.getItem('AutoSystemID')
+      var AutoSystemID = localStorage.getItem('AutoSystemID')
       this.$axios
         .get(`/api/Menu/GetMenuList?AutoSystemID=${AutoSystemID}`)
         .then(res => {
@@ -410,7 +408,7 @@ export default {
               if (res.data.code === 0) {
                 this.$message.success(res.data.msg)
                 setTimeout(() => {
-                  sessionStorage.clear()
+                  localStorage.clear()
                   this.$router.push('login')
                 }, 1000)
               } else if (res.data.code === 1) {
@@ -454,7 +452,7 @@ export default {
 
     // 获取底部信息
     getFooterInfo () {
-      var AutoSystemID = sessionStorage.getItem('AutoSystemID')
+      var AutoSystemID = localStorage.getItem('AutoSystemID')
       this.$axios
         .get(`/api/Ablut/SystemConfig?AutoSystemID=${AutoSystemID}`)
         .then(res => {
