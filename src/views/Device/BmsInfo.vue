@@ -149,13 +149,13 @@ export default {
           if (res.data.code === 0) {
             this.tableData = res.data.data
             this.tablePage.totalResult = res.data.count
-            this.loading = false
             this.$refs.xTable.reloadCustoms([])
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
             this.$message.warning(res.data.msg)
           }
+          this.loading = false
         })
         .catch(err => {
           console.error(err)

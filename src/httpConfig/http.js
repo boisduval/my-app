@@ -20,7 +20,7 @@ axios.interceptors.response.use(
       //      window.location.href='http://login.com'
       return response
     } else {
-      // eslint-disable-next-line eqeqeq
+      // eslint-disable-next-line
       if (response.data.code == 2) {
         Message.error(response.data.msg)
         sessionStorage.clear()
@@ -28,6 +28,12 @@ axios.interceptors.response.use(
       } else if (response.data.code === 3) {
         Message.warning(response.data.msg)
         return response
+      } else if (response.data.code === 4) {
+        Message.error(response.data.msg)
+        setTimeout(() => {
+          sessionStorage.clear()
+          window.location.href = '/login'
+        }, 1000)
       } else {
         // Message.error(response.data.msg)
         return response

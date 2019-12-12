@@ -285,7 +285,7 @@ export default {
             this.data.MD5Pass = ''
             this.$message.error(res.data.msg)
             sessionStorage.clear()
-          } else {
+          } else if (res.data.code === 0) {
             this.setUserIfo(res.data.data)
             sessionStorage.setItem(
               'AutoSystemID',

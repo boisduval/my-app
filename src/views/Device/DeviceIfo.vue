@@ -161,7 +161,7 @@
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="350" align="center">
+        <vxe-table-column title="操作" width="400" align="center">
           <template v-slot="{ row }">
             <el-button
               plain
@@ -224,12 +224,16 @@ export default {
         {
           label: '状态详情',
           path: '/stateDetail'
+        },
+        {
+          label: '功能详情',
+          path: '/funcInfo'
         }
       ]
     }
   },
   methods: {
-    ...mapMutations('detail', ['set_paramsD', 'set_paramsB', 'set_paramsS']),
+    ...mapMutations('detail', ['set_paramsD', 'set_paramsB', 'set_paramsS', 'set_paramsF']),
     ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
@@ -279,6 +283,9 @@ export default {
           break
         case '/stateDetail':
           this.set_paramsS(params)
+          break
+        case '/funcInfo':
+          this.set_paramsF(params)
           break
       }
 

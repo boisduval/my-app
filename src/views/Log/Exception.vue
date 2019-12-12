@@ -25,7 +25,7 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item label="异常名称:">
-                <el-input
+              <el-input
                 v-model="searchForm.LikeType"
                 placeholder="请输入异常名称"
               ></el-input>
@@ -37,7 +37,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
               <el-button
                 type="primary"
                 plain
@@ -104,17 +111,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -180,7 +187,12 @@
           width="150"
         >
         </vxe-table-column>
-        <vxe-table-column field="ExcResult" title="异常编码" sortable width="120">
+        <vxe-table-column
+          field="ExcResult"
+          title="异常编码"
+          sortable
+          width="120"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="Msg"
@@ -190,7 +202,12 @@
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="WriteTime" title="记录时间" sortable width="200">
+        <vxe-table-column
+          field="WriteTime"
+          title="记录时间"
+          sortable
+          width="200"
+        >
         </vxe-table-column>
         <vxe-table-column title="操作" width="200" fixed="right">
           <template v-slot="{ row }">
@@ -215,7 +232,13 @@
       <!-- 分页结束 -->
 
       <!-- 详情开始 -->
-      <Drawer :closable="false" v-model="value4" title="详细信息" draggable>
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        title="详细信息"
+        draggable
+        width="50"
+      >
         <p :style="pStyle">异常系统</p>
         <div class="demo-drawer-profile">
           {{ activeItem.SystemName }}
@@ -232,8 +255,7 @@
         </div>
         <Divider />
         <p :style="pStyle">表示形式</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.StackTrace }}
+        <div class="demo-drawer-profile" v-html="activeItem.StackTrace">
         </div>
         <Divider />
         <p :style="pStyle">异常方法</p>
@@ -241,22 +263,22 @@
           {{ activeItem.TargetSite }}
         </div>
         <Divider />
-         <p :style="pStyle">异常消息</p>
+        <p :style="pStyle">异常消息</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Message }}
         </div>
         <Divider />
-         <p :style="pStyle">异常编码</p>
+        <p :style="pStyle">异常编码</p>
         <div class="demo-drawer-profile">
           {{ activeItem.HResult }}
         </div>
         <Divider />
-         <p :style="pStyle">发生时间</p>
+        <p :style="pStyle">发生时间</p>
         <div class="demo-drawer-profile">
           {{ activeItem.WriteTime }}
         </div>
         <Divider />
-         <p :style="pStyle">记录时间</p>
+        <p :style="pStyle">记录时间</p>
         <div class="demo-drawer-profile">
           {{ activeItem.RecordingTime }}
         </div>
@@ -449,7 +471,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

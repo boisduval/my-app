@@ -392,7 +392,7 @@ export default {
         },
         {
           label: '充电温度过低停机恢复',
-          name: 'sINGLE_OVERVOLTAGE_STOP_THRESHOLD',
+          name: 'lOW_CHARGING_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
@@ -697,16 +697,9 @@ export default {
             arr.push(parseFloat(el.value) * 1)
             break
         }
-        console.log(arr)
       }
-      //   let CheckedStatus = 0;
       var BankAddress
       var url = '/api/Command/Write'
-      //   for (const el of this.stateList) {
-      //     if (el.value) {
-      //       CheckedStatus = CheckedStatus | el.num;
-      //     }
-      //   }
       // eslint-disable-next-line
       if (this.formList.BankIndex == 0) BankAddress = this.activeDialog.BankAddress1;
       else BankAddress = this.activeDialog.BankAddress2

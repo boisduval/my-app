@@ -246,3 +246,10 @@ div {
   height: 45px;
   line-height: 45px;
 }
+.vxe-table {
+  line-height: 23px;
+}
+.el-submenu .el-menu-item {
+  height: 45px;
+  line-height: 45px;
+}

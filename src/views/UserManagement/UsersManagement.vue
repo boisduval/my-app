@@ -878,10 +878,12 @@ export default {
             this.$message.success(res.data.msg)
             this.editForm = {}
             this.dialogFormEditVisible = false
-            this.getData()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
+          setTimeout(() => {
+            this.getData()
+          }, 500)
         })
         .catch(err => {
           console.error(err)

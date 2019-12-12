@@ -166,20 +166,20 @@
 
         <el-main>
           <transition name="slide-fade" mode="out-in">
-          <keep-alive>
-            <!-- <transition name="slide-fade" mode="out-in"> -->
+            <keep-alive>
+              <!-- <transition name="slide-fade" mode="out-in"> -->
               <router-view></router-view>
-            <!-- </transition> -->
-          </keep-alive>
+              <!-- </transition> -->
+            </keep-alive>
           </transition>
         </el-main>
 
         <el-footer style="height:40px;">
           <div class="footer">
-             © {{footerInfo.SystemYear}}
-             <span class="alink" @click="$router.push('/')">
-                {{footerInfo.SystemText}}
-             </span>
+            © {{ footerInfo.SystemYear }}
+            <span class="alink" @click="$router.push('/')">
+              {{ footerInfo.SystemText }}
+            </span>
           </div>
         </el-footer>
       </el-container>
@@ -226,7 +226,9 @@ export default {
       imgDataUrl: '', // the datebase64 url of created image
       isFullscreen: false,
       isFull: false,
-      footerInfo: ''
+      footerInfo: '',
+      beforeUnload_time: '',
+      gap_time: ''
     }
   },
   components: {
@@ -260,6 +262,20 @@ export default {
       }
     }
   },
+  beforeDestroy () {
+    if (this.$route.name !== 'errorPage') {
+      var url = '/api/Users/UserLogout'
+      this.$axios
+        .post(url, {
+          AutoSystemID: this.params.AutoSystemID
+        })
+        .then(res => {})
+        .catch(err => {
+          console.error(err)
+        })
+    }
+  },
+
   watch: {
     $route (to, from) {
       var name = to.path.split('/')[1]
@@ -286,7 +302,6 @@ export default {
       }
     }
   },
-
   methods: {
     ...mapMutations('tabs', [
       'add_tabs',
@@ -386,8 +401,25 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          sessionStorage.clear()
-          this.$router.push('login')
+          var url = '/api/Users/UserLogout'
+          this.$axios
+            .post(url, {
+              AutoSystemID: this.params.AutoSystemID
+            })
+            .then(res => {
+              if (res.data.code === 0) {
+                this.$message.success(res.data.msg)
+                setTimeout(() => {
+                  sessionStorage.clear()
+                  this.$router.push('login')
+                }, 1000)
+              } else if (res.data.code === 1) {
+                this.$message.error(res.data.msg)
+              }
+            })
+            .catch(err => {
+              console.error(err)
+            })
         })
         .catch(() => {})
     },

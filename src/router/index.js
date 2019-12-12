@@ -78,6 +78,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "StateDetail" */ '../views/Device/StateDetail.vue')
       },
       {
+        path: '/funcInfo',
+        name: 'funcInfo',
+        component: () => import(/* webpackChunkName: "FuncInfo" */ '../views/Device/FuncInfo.vue')
+      },
+      {
         path: '/cmdList',
         name: 'cmdList',
         component: () => import(/* webpackChunkName: "CmdList" */ '../views/Device/CmdList.vue')
