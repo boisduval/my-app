@@ -182,7 +182,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="formInline.page"
-        :page-sizes="[2, 4, 8]"
+        :page-sizes="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="count"
       >
@@ -193,7 +193,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -330,8 +330,11 @@ export default {
       return jsonData.map(v => filterVal.map(j => v[j]))
     }
   },
-
+  computed: {
+    ...mapState('table', ['pageSize'])
+  },
   created () {
+    this.formInline.limit = this.pageSize[0]
     this.getData()
   }
 }

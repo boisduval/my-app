@@ -339,10 +339,10 @@ export default {
           if (res.data.code === 0) {
             this.tableData = res.data.data
             this.count = res.data.count
-            this.loading = false
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
+          this.loading = false
         })
         .catch(err => {
           console.error(err)

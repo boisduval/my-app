@@ -134,7 +134,7 @@ export default {
         totalResult: 0,
         limit: 2
       },
-      loading: true,
+      loading: false,
       customColumns: [],
       listHead: [],
       listFilter: [],

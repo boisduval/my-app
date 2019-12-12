@@ -122,7 +122,7 @@ export default {
         totalResult: 0,
         limit: 1
       },
-      loading: true,
+      loading: false,
       customColumns: [],
       listHead: [],
       listFilter: [],

@@ -144,6 +144,7 @@ export default {
     ...mapState('table', ['pageSize'])
   },
   mounted () {
+    this.tablePage.limit = this.pageSize[0]
     if (this.paramsD.AutoSystemID && this.paramsD.batterID) {
       this.getData()
     }
@@ -166,14 +167,13 @@ export default {
               this.tableData = []
             }
             this.tablePage.totalResult = res.data.count
-            this.loading = false
             this.$refs.xTable.reloadCustoms([])
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
             this.$message.warning(res.data.msg)
           }
-
+          this.loading = false
           // this.formData.batterNum = ''
         })
         .catch(err => {

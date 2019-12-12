@@ -105,7 +105,7 @@
             >
             </vxe-table-column>
             <vxe-table-column
-              :field="'BATTER_BIT_'+ (index+1)"
+              :field="'BATTER_BIT_' + (index + 1)"
               :title="bitInfo[index]"
               sortable
               v-for="(item, index) in aLARM_SWITCH_STATUS_ARRAY"
@@ -125,7 +125,103 @@
           <!-- 表格结束 -->
         </el-tab-pane>
         <el-tab-pane label="保护功能" name="protect">
-          保护
+          <!-- 表格操作栏开始 -->
+          <div class="table-oper">
+            <el-button
+              type="primary"
+              size="small"
+              @click="getData(paramsF)"
+              class="button-left"
+            >
+              <i class="el-icon-refresh-right"></i>
+              刷新
+            </el-button>
+            <el-button class="menu-btn">
+              <i class="fa fa-list"></i>
+            </el-button>
+            <div class="menu-wrapper">
+              <template v-for="(column, index) in customColumns">
+                <vxe-checkbox
+                  v-if="column.property"
+                  class="checkbox-item"
+                  v-model="column.visible"
+                  :key="index"
+                  @change="$refs.xTable.refreshColumn()"
+                  >{{ column.title }}</vxe-checkbox
+                >
+              </template>
+            </div>
+            <el-button class="menu-btn" title="导出" v-popover:export>
+              <i class="fa fa-download"></i>
+            </el-button>
+            <el-button class="menu-btn" @click="printEvent" title="打印">
+              <i class="fa fa-print"></i>
+            </el-button>
+            <!-- 导出操作开始 -->
+            <el-popover
+              ref="export"
+              placement="bottom"
+              width="100"
+              trigger="hover"
+            >
+              <ul id="export">
+                <li @click="exportDataEvent">
+                  导出为Csv文件
+                </li>
+                <li @click="exportExcel">
+                  导出为Excel文件
+                </li>
+              </ul>
+            </el-popover>
+            <!-- 导出操作结束 -->
+          </div>
+          <!-- 表格操作栏结束 -->
+          <!-- 表格开始 -->
+          <vxe-table
+            :data="pROTECT_SWITCH_STATUS_ARRAY"
+            border
+            :customs.sync="customColumns"
+            ref="xTable"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0)"
+            resizable
+            highlight-hover-row
+            highlight-current-row
+            align="center"
+          >
+            <vxe-table-column
+              type="checkbox"
+              width="50"
+              fixed="left"
+              align="center"
+            ></vxe-table-column>
+            <vxe-table-column
+              type="index"
+              width="50"
+              title="序号"
+              fixed="left"
+              align="center"
+            >
+            </vxe-table-column>
+            <vxe-table-column
+              :field="'BATTER_BIT_' + (index + 1)"
+              :title="bitInfo[index]"
+              sortable
+              v-for="(item, index) in aLARM_SWITCH_STATUS_ARRAY"
+              :index="index"
+              :key="index"
+            >
+              <template v-slot="{ row }">
+                <template v-if="row[index]">
+                  <el-tag type="success" size="mini">是</el-tag>
+                </template>
+                <template v-else>
+                  <el-tag type="danger" size="mini">否</el-tag>
+                </template>
+              </template>
+            </vxe-table-column>
+          </vxe-table>
+          <!-- 表格结束 -->
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -160,6 +256,11 @@ export default {
         this.getData(this.paramsF)
       },
       deep: true
+    },
+    bank: {
+      handler (newName, oldName) {
+        this.getData(this.paramsF)
+      }
     }
   },
   mounted () {
@@ -207,18 +308,22 @@ export default {
       return jsonData.map(v => filterVal.map(j => v[j]))
     },
     getData (params) {
+      this.loading = true
       var url = '/api/Chart/GetBatteryBankCTRLParaCharts'
       this.$axios
         .get(
           `${url}?AutoSystemID=${params.AutoSystemID}&BatteryIDS=${params.batterID}&BankIndex=${this.bank}`
         )
         .then(res => {
-          // console.log(res)
-          this.aLARM_SWITCH_STATUS_ARRAY =
-            res.data.data.aLARM_SWITCH_STATUS_ARRAY
-          this.pROTECT_SWITCH_STATUS_ARRAY =
-            res.data.data.pROTECT_SWITCH_STATUS_ARRAY
-          console.log(res.data.data)
+          if (res.data.code === 0) {
+            this.aLARM_SWITCH_STATUS_ARRAY =
+              res.data.data.aLARM_SWITCH_STATUS_ARRAY
+            this.pROTECT_SWITCH_STATUS_ARRAY =
+              res.data.data.pROTECT_SWITCH_STATUS_ARRAY
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+          this.loading = false
         })
         .catch(err => {
           console.error(err)

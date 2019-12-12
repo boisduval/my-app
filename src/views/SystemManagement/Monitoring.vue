@@ -181,7 +181,6 @@ export default {
         AutoSystemID: '',
         page: 1,
         limit: 10,
-        status: 1,
         LikeName: ''
       },
       list: [
@@ -190,20 +189,8 @@ export default {
           name: 'Monitor/GetMySQLMonitor'
         },
         {
-          label: 'SOH实时状态',
-          name: 'GetBatterySingleSOHInformationBar3DCharts'
-        },
-        {
-          label: '内阻实时状态',
-          name: 'GetBatterySingleResistanceInformationBar3DCharts'
-        },
-        {
-          label: '电压实时状态',
-          name: 'GetBatterySingleVoltageInformationBar3DCharts'
-        },
-        {
-          label: '温度实时状态',
-          name: 'GetBatterySingleTemperatureInformationBar3DCharts'
+          label: 'MongoDB数据库',
+          name: 'Monitor/GetMongoDBServiceMonitor'
         }
       ],
       activeName: 'Monitor/GetMySQLMonitor'
@@ -267,7 +254,7 @@ export default {
     },
     getData () {
       this.loading = true
-      var url = '/api/Monitor/GetMySQLMonitor'
+      var url = '/api/' + this.activeName
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
@@ -302,6 +289,9 @@ export default {
         .catch(err => {
           console.error(err)
         })
+    },
+    handleClick () {
+      this.getData()
     }
   }
 }
