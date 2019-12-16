@@ -200,6 +200,15 @@ const state = {
             DataIndex: '1000',
             Text: '电池告警',
             Use: true
+          },
+          {
+            ID: '637084863136927728',
+            MID: '637084646010653918',
+            Href: 'batteryState',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '电池状态',
+            Use: true
           }
         ]
       }

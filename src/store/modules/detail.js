@@ -29,6 +29,11 @@ const state = {
     SystemID: '',
     batterID: ''
   },
+  paramsSC: {
+    AutoSystemID: '',
+    SystemID: '',
+    batterID: ''
+  },
   dictionaryDataParams: {
     KeySystemID: ''
   }
@@ -64,6 +69,11 @@ const mutations = {
     state.paramsVA.AutoSystemID = params['AutoSystemID']
     state.paramsVA.SystemID = params['SystemID']
     state.paramsVA.batterID = params['batterID']
+  },
+  set_paramsSC (state, params) {
+    state.paramsSC.AutoSystemID = params['AutoSystemID']
+    state.paramsSC.SystemID = params['SystemID']
+    state.paramsSC.batterID = params['batterID']
   },
   set_dictionaryDataParams (state, params) {
     state.dictionaryDataParams.KeySystemID = params

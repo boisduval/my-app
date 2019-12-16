@@ -238,6 +238,24 @@ const routes = [
         }
       },
       {
+        path: '/batteryState',
+        name: 'batteryState',
+        component: () => import(/* webpackChunkName: "BatterManageBatteryState" */ '../views/BatterManage/BatteryState.vue'),
+
+        meta: {
+          keepAlive: true // 需要缓存
+        }
+      },
+      {
+        path: '/selfCheck',
+        name: 'selfCheck',
+        component: () => import(/* webpackChunkName: "BatterManageSelfCheck" */ '../views/BatterManage/SelfCheck.vue'),
+
+        meta: {
+          keepAlive: false // 不需要缓存
+        }
+      },
+      {
         path: '/dayReport',
         name: 'dayReport',
         component: () => import(/* webpackChunkName: "StatementDayReport" */ '../views/Statement/DayReport.vue'),

@@ -154,7 +154,7 @@
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="300">
         </vxe-table-column>
-        <vxe-table-column title="操作" width='350'>
+        <vxe-table-column title="操作" width='300'>
           <template v-slot="{ row }">
             <el-button
               plain
@@ -207,12 +207,8 @@ export default {
       loading: false,
       detail: [
         {
-          label: '电池报警',
-          path: '/firstAlarm'
-        },
-        {
-          label: '报警电压',
-          path: '/vAlarm'
+          label: '主控自检状态',
+          path: '/selfCheck'
         }
       ],
       dialogFormVisible: false,
@@ -228,7 +224,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('detail', ['set_paramsFA', 'set_paramsVA']),
+    ...mapMutations('detail', ['set_paramsSC']),
     ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
@@ -306,11 +302,8 @@ export default {
       params.SystemID = id
       params.batterID = batterID
       switch (path) {
-        case '/firstAlarm':
-          this.set_paramsFA(params)
-          break
-        case '/vAlarm':
-          this.set_paramsVA(params)
+        case '/selfCheck':
+          this.set_paramsSC(params)
           break
       }
       this.set_detail_label(label)
