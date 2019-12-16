@@ -138,6 +138,21 @@ const routes = [
         component: () => import(/* webpackChunkName: "BatterManageWorkThreshold" */ '../views/BatterManage/WorkThreshold.vue')
       },
       {
+        path: '/batteryAlarm',
+        name: 'batteryAlarm',
+        component: () => import(/* webpackChunkName: "BatterManageBatteryAlarm" */ '../views/BatterManage/BatteryAlarm.vue')
+      },
+      {
+        path: '/firstAlarm',
+        name: 'firstAlarm',
+        component: () => import(/* webpackChunkName: "BatterManageFirstAlarm" */ '../views/BatterManage/FirstAlarm.vue')
+      },
+      {
+        path: '/vAlarm',
+        name: 'vAlarm',
+        component: () => import(/* webpackChunkName: "BatterManageVAlarm" */ '../views/BatterManage/VAlarm.vue')
+      },
+      {
         path: '/dayReport',
         name: 'dayReport',
         component: () => import(/* webpackChunkName: "StatementDayReport" */ '../views/Statement/DayReport.vue')

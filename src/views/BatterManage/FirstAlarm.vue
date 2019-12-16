@@ -25,16 +25,16 @@
     <el-card class="box-card">
       <!-- 详细信息 -->
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="告警功能" name="alarm">
+        <el-tab-pane label="电池一级报警" name="firstAlarm">
         </el-tab-pane>
-        <el-tab-pane label="保护功能" name="protect">
+        <el-tab-pane label="电池二级报警" name="secondAlarm">
         </el-tab-pane>
         <!-- 表格操作栏开始 -->
           <div class="table-oper">
             <el-button
               type="primary"
               size="small"
-              @click="getData(paramsF)"
+              @click="getData(paramsFA)"
               class="button-left"
             >
               <i class="el-icon-refresh-right"></i>
@@ -135,10 +135,10 @@ export default {
     return {
       baseIfo: [],
       data: {},
-      activeName: 'alarm',
+      activeName: 'firstAlarm',
       bank: '0',
-      aLARM_SWITCH_STATUS_ARRAY: [],
-      pROTECT_SWITCH_STATUS_ARRAY: [],
+      bATTERY_FIRST_ALARM_MESSAGE: [],
+      bATTERY_SECONDARY_ALARM_MESSAGE: [],
       bitInfo: [],
       customColumns: [],
       loading: false,
@@ -148,29 +148,29 @@ export default {
     }
   },
   computed: {
-    ...mapState('detail', ['paramsF'])
+    ...mapState('detail', ['paramsFA'])
   },
   watch: {
-    paramsF: {
+    paramsFA: {
       handler (newName, oldName) {
         this.data = {}
         this.baseIfo = []
-        this.getDetail(this.api, this.paramsF)
-        this.getData(this.paramsF)
+        this.getDetail(this.api, this.paramsFA)
+        this.getData(this.paramsFA)
       },
       deep: true
     },
     bank: {
       handler (newName, oldName) {
-        this.getData(this.paramsF)
+        this.getData(this.paramsFA)
       }
     }
   },
   mounted () {
-    if (this.paramsF.AutoSystemID && this.paramsF.batterID) {
-      this.getDetail(this.api, this.paramsF)
-      this.getData(this.paramsF)
-      this.activeArray = this.aLARM_SWITCH_STATUS_ARRAY
+    if (this.paramsFA.AutoSystemID && this.paramsFA.batterID) {
+      this.getDetail(this.api, this.paramsFA)
+      this.getData(this.paramsFA)
+      this.activeArray = this.bATTERY_FIRST_ALARM_MESSAGE
     }
   },
   methods: {
@@ -211,18 +211,18 @@ export default {
     getData (params) {
       var AutoSystemID = localStorage.getItem('AutoSystemID')
       this.loading = true
-      var url = '/api/Chart/GetBatteryBankCTRLParaCharts'
+      var url = '/api/Chart/GetBatteryBankCRITICALStateCharts'
       this.$axios
         .get(
           `${url}?AutoSystemID=${AutoSystemID}&BatteryIDS=${params.batterID}&BankIndex=${this.bank}`
         )
         .then(res => {
           if (res.data.code === 0) {
-            this.aLARM_SWITCH_STATUS_ARRAY =
-              res.data.data.aLARM_SWITCH_STATUS_ARRAY
-            this.pROTECT_SWITCH_STATUS_ARRAY =
-              res.data.data.pROTECT_SWITCH_STATUS_ARRAY
-            this.activeArray = this.aLARM_SWITCH_STATUS_ARRAY
+            this.bATTERY_FIRST_ALARM_MESSAGE =
+              res.data.data.bATTERY_FIRST_ALARM_MESSAGE
+            this.bATTERY_SECONDARY_ALARM_MESSAGE =
+              res.data.data.bATTERY_SECONDARY_ALARM_MESSAGE
+            this.activeArray = this.bATTERY_FIRST_ALARM_MESSAGE
             this.setData()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
@@ -275,10 +275,10 @@ export default {
     handleClick (tab, event) {
       // this.getData()
       console.log(tab)
-      if (tab.name === 'protect') {
-        this.activeArray = this.pROTECT_SWITCH_STATUS_ARRAY
-      } else {
-        this.activeArray = this.aLARM_SWITCH_STATUS_ARRAY
+      if (tab === 'firstAlarm') {
+        this.activeArray = this.bATTERY_SECONDARY_ALARM_MESSAGE
+      } else if (tab === 'secondAlarm') {
+        this.activeArray = this.bATTERY_FIRST_ALARM_MESSAGE
       }
     },
 
@@ -293,11 +293,11 @@ export default {
         '充电温度过高',
         '充电温度过低',
         'SOC过低',
-        '充电过流三级（无效）',
+        '充电过流三级',
         '功率温度过高',
         '环境温度过高',
         '环境温度过低',
-        '放电过流三级（无效）',
+        '放电过流三级',
         '放电温度过高',
         '放电温度过低'
       ]
