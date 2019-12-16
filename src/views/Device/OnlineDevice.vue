@@ -106,8 +106,24 @@
         >
         </vxe-table-column>
         <vxe-table-column
+          field="SendNumber"
+          title="发送数据包的个数"
+          width="180"
+          sortable
+          show-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
           field="ReceiveNumber"
           title="接收数据包的个数"
+          width="180"
+          sortable
+          show-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="PacketLossProbability"
+          title="丢包率"
           width="180"
           sortable
           show-overflow

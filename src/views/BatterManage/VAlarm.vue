@@ -25,8 +25,9 @@
     <el-card class="box-card">
       <!-- 详细信息 -->
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="电池电压" name="volAlarm"> </el-tab-pane>
-        <el-tab-pane label="电压信息" name="overVolAlarm"> </el-tab-pane>
+        <el-tab-pane label="电压信息" name="volAlarm"> </el-tab-pane>
+        <el-tab-pane label="温度信息" name="temperatureAlarm"> </el-tab-pane>
+        <el-tab-pane label="其他信息" name="othersAlarm"> </el-tab-pane>
         <!-- <el-tab-pane label="电池二级报警" name="secondAlarm"> </el-tab-pane> -->
         <!-- 表格操作栏开始 -->
         <div class="table-oper">
@@ -93,7 +94,7 @@
           align="center"
         >
           <vxe-table-column
-            v-for="(config, index) in tableColumn"
+            v-for="(config, index) in volColumn"
             :key="index"
             v-bind="config"
           >
@@ -114,12 +115,7 @@ export default {
       data: {},
       activeName: 'volAlarm',
       bank: '0',
-      bATTERY_FIRST_ALARM_MESSAGE: [],
-      bATTERY_SECONDARY_ALARM_MESSAGE: [],
       volInfo: [],
-      overVolInfo: [],
-      ampereInfo: [],
-      powerInfo: [],
       temperatureInfo: [],
       othersInfo: [],
       customColumns: [],
@@ -127,18 +123,12 @@ export default {
       api: '/api/Devices/GetRegistrationEquipment',
       tableColumn: [],
       volColumn: [],
-      overVolColumn: [],
-      ampereColumn: [],
-      powerColumn: [],
       temperatureColumn: [],
       othersColumn: [],
       activeArray: [],
-      volData: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-      overVolData: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-      ampereData: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-      powerData: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-      temperatureData: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-      othersData: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+      volData: [],
+      temperatureData: [],
+      othersData: []
     }
   },
   computed: {
@@ -164,10 +154,8 @@ export default {
     if (this.paramsVA.AutoSystemID && this.paramsVA.batterID) {
       this.getDetail(this.api, this.paramsVA)
       this.getData(this.paramsVA)
+      this.isShow()
     }
-  },
-  mounted () {
-    this.setData()
   },
   methods: {
     // 打印
@@ -215,59 +203,41 @@ export default {
           `${url}?AutoSystemID=${AutoSystemID}&BatteryIDS=${params.batterID}&BankIndex=${this.bank}`
         )
         .then(res => {
+          this.setData()
           if (res.data.code === 0) {
-            var data = res.data.data
-            for (const key in data) {
-              //   console.log(data[key])
-              if (data.hasOwnProperty(key)) {
-                switch (key) {
-                  case 'nUMBER_OF_HIGHEST_VOLTAGE_BATTERY_WHEN_ALARMING':
-                  case 'tHE_HIGHEST_VOLTAGE_WHEN_ALARMING':
-                  case 'nUMBER_OF_HIGHEST_VOLTAGE_BATTERY_WHEN_SHUT_DOWN':
-                  case 'mAXIMUM_VOLTAGE_VALUE_WHEN_STOPPED':
-                  case 'mINIMUM_VOLTAGE_BATTERY_NUMBER_WHEN_ALARM':
-                  case 'mINIMUM_VOLTAGE_WHEN_ALARMING':
-                  case 'mINIMUM_VOLTAGE_BATTERY_NUMBER_WHEN_SHUT_DOWN':
-                  case 'mINIMUM_VOLTAGE_VALUE_WHEN_SHUTDOWN':
-                    data[key].forEach((item, i) => {
-                      this.volData[i][key] = item
-                    })
-                    break
-                  case 'tHE_VOLTAGE_VALUE_WHEN_THE_BATTERY_OVERVOLTAGE_ALARM':
-                  case 'tHE_VOLTAGE_VALUE_WHEN_THE_BATTERY_OVERVOLTAGE_STOPS':
-                  case 'vOLTAGE_VALUE_WHEN_BATTERY_UNDERVOLTAGE_ALARM':
-                  case 'tHE_VOLTAGE_VALUE_WHEN_THE_BATTERY_IS_SHUT_DOWN':
-                  case 'tOTAL_DIFFERENTIAL_PRESSURE_HIGH_WARNING_VALUE':
-                  case 'tOTAL_DIFFERENTIAL_PRESSURE_HIGH_STOP_VALUE':
-                  case 'wARNING_VALUE_OF_MONOMER_PRESSURE_DIFFERENCE_HEIGHT':
-                  case 'sINGLE_UNIT_DIFFERENTIAL_PRESSURE_HIGH_STOP_VALUE':
-                    data[key].forEach((item, i) => {
-                      this.overVolData[i][key] = item
-                    })
-                    break
-                  case 'tHE_VALUE_OF_THE_CURRENT_WHEN_THE_BATTERY_OVERCHARGE_ALARM':
-                  case 'tHE_VALUE_OF_CURRENT_WHEN_THE_BATTERY_OVERCHARGES_AND_STOPS':
-                  case 'bATTERY_DISCHARGE_OVERCURRENT_ALARM_WHEN_THE_CURRENT_VALUE':
-                  case 'tHE_CURRENT_VALUE_WHEN_THE_BATTERY_DISCHARGE_OVERCURRENT_STOPS':
-                  case 'iNSULATION_TOO_SMALL_ALARM_VALUE':
-                  case 'iNSULATION_TOO_SMALL_STOP_VALUE':
-                    data[key].forEach((item, i) => {
-                      this.ampereData[i][key] = item
-                    })
-                    break
-                }
+            // var data = res.data.data
+            this.data = res.data.data
+            // 设置电压数据
+            this.volData = []
+            this.volInfo.forEach((item, i) => {
+              this.volData.push({ name: item.value })
+              if (this.data.hasOwnProperty(item.key)) {
+                this.data[item.key].forEach((val, index) => {
+                  this.volData[i]['index' + index] = val
+                })
               }
-            }
-            switch (this.activeName) {
-              case 'volAlarm':
-                this.activeArray = this.volData
-                this.tableColumn = this.volColumn
-                break
-              case 'overVolAlarm':
-                this.activeArray = this.overVolData
-                this.tableColumn = this.overVolColumn
-                break
-            }
+            })
+            // 设置温度数据
+            this.temperatureData = []
+            this.temperatureInfo.forEach((item, i) => {
+              this.temperatureData.push({ name: item.value })
+              if (this.data.hasOwnProperty(item.key)) {
+                this.data[item.key].forEach((val, index) => {
+                  this.temperatureData[i]['index' + index] = val
+                })
+              }
+            })
+            // 设置其他数据
+            this.othersData = []
+            this.othersInfo.forEach((item, i) => {
+              this.othersData.push({ name: item.value })
+              if (this.data.hasOwnProperty(item.key)) {
+                this.data[item.key].forEach((val, index) => {
+                  this.othersData[i]['index' + index] = val
+                })
+              }
+            })
+            this.isShow()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
@@ -318,25 +288,13 @@ export default {
     },
 
     handleClick (tab, event) {
-      this.getData(this.paramsVA)
-    //   console.log(tab)
-    //   if (tab.name === 'volAlarm') {
-    //     this.tableColumn = this.volColumn
-    //     this.activeArray = this.volData
-    //   } else if (tab.name === 'overVolAlarm') {
-    //     this.tableColumn = this.overVolColumn
-    //     this.activeArray = this.overVolData
-    //   }
+      this.isShow()
     },
 
     setData () {
       this.volColumn = [
-        { type: 'checkbox', width: 50, fixed: 'left', title: '序号' },
-        { type: 'index', width: 50, fixed: 'left' }
-      ]
-      this.overVolColumn = [
-        { type: 'checkbox', width: 50, fixed: 'left', title: '序号' },
-        { type: 'index', width: 50, fixed: 'left' }
+        { type: 'checkbox', width: 50, fixed: 'left' },
+        { type: 'index', width: 50, fixed: 'left', title: '序号' }
       ]
       this.volInfo = [
         {
@@ -370,13 +328,7 @@ export default {
         {
           key: 'mINIMUM_VOLTAGE_VALUE_WHEN_SHUTDOWN',
           value: '停机时最低电压值'
-        }
-      ]
-      this.volInfo.forEach((item, i) => {
-        this.volColumn.push({ field: item.key, title: item.value, width: 180 })
-      })
-
-      this.overVolInfo = [
+        },
         {
           key: 'tHE_VOLTAGE_VALUE_WHEN_THE_BATTERY_OVERVOLTAGE_ALARM',
           value: '电池组过压报警时电压值'
@@ -394,7 +346,15 @@ export default {
           value: '电池组欠压停机时电压值'
         },
         {
-          key: 'tOTAL_DIFFERENTIAL_PRESSURE_HIGH_WARNING_VALUE',
+          key: 'wARNING_VALUE_OF_MONOMER_PRESSURE_DIFFERENCE_HEIGHT',
+          value: '单体压差高告警值'
+        },
+        {
+          key: 'tHE_VOLTAGE_VALUE_WHEN_THE_BATTERY_IS_SHUT_DOWN',
+          value: '单体压差高停机值'
+        },
+        {
+          key: 'wARNING_VALUE_OF_MONOMER_PRESSURE_DIFFERENCE_HEIGHT',
           value: '总压差高告警值'
         },
         {
@@ -402,15 +362,125 @@ export default {
           value: '总压差高停机值'
         }
       ]
-      this.overVolInfo.forEach((item, i) => {
-        this.overVolColumn.push({
-          field: item.key,
-          title: item.value,
-          width: 180
-        })
+      this.temperatureInfo = [
+        {
+          key: 'nUMBER_OF_HIGHEST_BATTERY_TEMPERATURE_POINT_WHEN_ALARMING',
+          value: '报警时最高电池温度点编号'
+        },
+        {
+          key: 'tHE_HIGHEST_BATTERY_TEMPERATURE_WHEN_ALARMING',
+          value: '报警时最高电池温度值'
+        },
+        {
+          key: 'nUMBER_OF_HIGHEST_BATTERY_TEMPERATURE_POINT_WHEN_SHUT_DOWN',
+          value: '停机时最高电池温度点编号'
+        },
+        {
+          key: 'mAXIMUM_BATTERY_TEMPERATURE_WHEN_SHUT_DOWN',
+          value: '停机时最高电池温度值'
+        },
+        {
+          key: 'nUMBER_OF_LOWEST_BATTERY_TEMPERATURE_POINT_WHEN_ALARMING',
+          value: '报警时最低电池温度点编号'
+        },
+        {
+          key: 'mINIMUM_BATTERY_TEMPERATURE_WHEN_ALARMING',
+          value: '报警时最低电池温度值'
+        },
+        {
+          key: 'mINIMUM_BATTERY_TEMPERATURE_POINT_NUMBER_WHEN_SHUT_DOWN',
+          value: '停机时最低电池温度点编号'
+        },
+        {
+          key: 'mINIMUM_BATTERY_TEMPERATURE_WHEN_SHUT_DOWN',
+          value: '停机时最低电池温度值'
+        },
+        {
+          key: 'nUMBER_OF_THE_HIGHEST_POWER_TEMPERATURE_POINT_WHEN_ALARMING',
+          value: '报警时最高功率温度点编号'
+        },
+        {
+          key: 'mAXIMUM_POWER_TEMPERATURE_WHEN_ALARMING',
+          value: '报警时最高功率温度值'
+        },
+        {
+          key: 'nUMBER_OF_HIGHEST_POWER_TEMPERATURE_POINT_WHEN_SHUTDOWN',
+          value: '停机时最高功率温度点编号'
+        },
+        {
+          key: 'mAXIMUM_POWER_TEMPERATURE_VALUE_DURING_SHUTDOWN',
+          value: '停机时最高功率温度值'
+        },
+        {
+          key: 'hIGH_TEMPERATURE_DIFFERENCE_ALARM_VALUE_OF_SINGLE_UNIT',
+          value: '单体温差高告警值'
+        },
+        {
+          key: 'sINGLE_TEMPERATURE_DIFFERENCE_HIGH_STOP_VALUE',
+          value: '单体温差高停机值'
+        }
+      ]
+      this.othersInfo = [
+        {
+          key: 'oPERATING_STATE_OF_THIS_BRANCH',
+          value: '本支路运行状态'
+        },
+        {
+          key: 'eQUIPMENT_FAULT_ALARM_MESSAGE',
+          value: '设备故障报警信息'
+        },
+        {
+          key: 'tHE_VALUE_OF_THE_CURRENT_WHEN_THE_BATTERY_OVERCHARGE_ALARM',
+          value: '电池充电过流报警时电流值'
+        },
+        {
+          key: 'tHE_VALUE_OF_CURRENT_WHEN_THE_BATTERY_OVERCHARGES_AND_STOPS',
+          value: '电池充电过流停机时电流值'
+        },
+        {
+          key: 'bATTERY_DISCHARGE_OVERCURRENT_ALARM_WHEN_THE_CURRENT_VALUE',
+          value: '电池放电过流报警时电流值'
+        },
+        {
+          key: 'tHE_CURRENT_VALUE_WHEN_THE_BATTERY_DISCHARGE_OVERCURRENT_STOPS',
+          value: '电池放电过流停机时电流值'
+        },
+        {
+          key: 'iNSULATION_TOO_SMALL_ALARM_VALUE',
+          value: '绝缘过小告警阻值'
+        },
+        {
+          key: 'iNSULATION_TOO_SMALL_STOP_VALUE',
+          value: '绝缘过小停机阻值'
+        }
+      ]
+      this.volColumn.push({
+        field: 'name',
+        title: '名称',
+        width: 250,
+        align: 'left'
       })
-
-      this.tableColumn = this.volColumn
+      for (let index = 0; index < 12; index++) {
+        this.volColumn.push({
+          field: 'index' + index,
+          title: '第' + index + '簇',
+          width: 100
+        })
+      }
+    },
+    // 判断页面
+    isShow () {
+      switch (this.activeName) {
+        case 'volAlarm':
+          this.activeArray = this.volData
+          break
+        case 'temperatureAlarm':
+          this.activeArray = this.temperatureData
+          break
+        case 'othersAlarm':
+          this.activeArray = this.othersData
+          break
+      }
     }
   }
 }

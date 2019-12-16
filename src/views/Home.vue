@@ -166,11 +166,14 @@
 
         <el-main>
           <transition name="slide-fade" mode="out-in">
-            <keep-alive>
-              <!-- <transition name="slide-fade" mode="out-in"> -->
-              <router-view></router-view>
-              <!-- </transition> -->
-            </keep-alive>
+            <div>
+              <keep-alive>
+                <!-- <transition name="slide-fade" mode="out-in"> -->
+                <router-view v-if="$route.meta.keepAlive"></router-view>
+                <!-- </transition> -->
+              </keep-alive>
+              <router-view v-if="!$route.meta.keepAlive"></router-view>
+            </div>
           </transition>
         </el-main>
 
@@ -261,17 +264,6 @@ export default {
         this.$router.push('/')
       }
     }
-  },
-  beforeDestroy () {
-    var url = '/api/Users/UserLogout'
-    this.$axios
-      .post(url, {
-        AutoSystemID: this.params.AutoSystemID
-      })
-      .then(res => {})
-      .catch(err => {
-        console.error(err)
-      })
   },
 
   watch: {

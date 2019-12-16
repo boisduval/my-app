@@ -171,6 +171,7 @@ export default {
       this.getDetail(this.api, this.paramsFA)
       this.getData(this.paramsFA)
       this.activeArray = this.bATTERY_FIRST_ALARM_MESSAGE
+      this.setData()
     }
   },
   methods: {
