@@ -116,6 +116,7 @@
                 </template>
               </template>
             </vxe-table-column>
+
           </vxe-table>
           <!-- 表格结束 -->
     </el-card>
@@ -132,7 +133,6 @@ export default {
       activeName: 'firstAlarm',
       bank: '0',
       mAIN_CONTROL_SELF_CHECK_STATUS: [],
-      bitInfo: [],
       customColumns: [],
       loading: false,
       api: '/api/Devices/GetRegistrationEquipment',
@@ -262,18 +262,11 @@ export default {
     },
 
     setData () {
-      this.bitInfo = [
-        'EEPROM故障',
-        '主控ID越界',
-        'PCS待机失败',
-        'FLASH自检状态 '
-
-      ]
       this.tableColumn = [
-        { filed: 'EEPROM_ERRCODE', title: 'EEPROM故障' },
-        { filed: 'MASTER_ID_OUT_OF_BOUNDS', title: '主控ID越界' },
-        { filed: 'PCS_STANDBY_FAILED', title: 'PCS待机失败' },
-        { filed: 'FLASH_SELF_CHECK_STATUS', title: 'FLASH自检状态' }
+        { field: 'EEPROM_ERRCODE', title: 'EEPROM故障' },
+        { field: 'MASTER_ID_OUT_OF_BOUNDS', title: '主控ID越界' },
+        { field: 'PCS_STANDBY_FAILED', title: 'PCS待机失败' },
+        { field: 'FLASH_SELF_CHECK_STATUS', title: 'FLASH自检状态' }
       ]
     }
   }
@@ -291,5 +284,65 @@ export default {
 
 .el-card:nth-last-child(1) {
   margin-top: 20px;
+}
+.menu-btn {
+  position: relative;
+  /* width: 25px;
+  height: 25px; */
+  float: right;
+}
+
+.button-left {
+  float: left;
+}
+
+.menu-btn:hover + .menu-wrapper {
+  display: block;
+}
+.menu-wrapper:hover {
+  display: block;
+}
+.table-oper {
+  position: relative;
+}
+
+.menu-wrapper {
+  display: none;
+  position: absolute;
+  width: 150px;
+  top: 16px;
+  right: 0;
+  z-index: 9;
+  background-color: #fff;
+  font-size: 14px;
+  padding: 4px 10px;
+  user-select: none;
+  border: 1px solid #e8eaec;
+  text-align: left;
+}
+
+.checkbox-item {
+  display: block;
+  margin: 4px 0;
+}
+
+.icon-menu {
+  width: 16px;
+  height: 0px;
+  display: inline-block;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 0 2px #606266, 0 0 0 2px #606266, 0 12px 0 2px #606266;
+}
+
+.table-oper .el-button {
+  padding: 8px 10px;
+  margin-left: 5px;
+}
+
+.menu-btn:focus,
+.menu-btn:active {
+  color: #606266;
+  border-color: #dcdfe6;
+  background-color: #fff;
 }
 </style>

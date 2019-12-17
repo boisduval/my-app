@@ -138,23 +138,23 @@
           field="DIDS"
           title="设备ID字符串"
           sortable
-          width="400"
+          width="300"
           show-overflow
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="200">
+        <vxe-table-column field="DName" title="设备名称" sortable width="180">
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
           title="设备管理员"
           sortable
-          width="200"
+          width="180"
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="300">
+        <vxe-table-column field="DTime" title="登记时间" sortable width="200">
         </vxe-table-column>
-        <vxe-table-column title="操作" width='300'>
+        <vxe-table-column title="操作" width="600">
           <template v-slot="{ row }">
             <el-button
               plain
@@ -164,6 +164,18 @@
               @click="toDetail(row.SystemID, item.label, row.DIDS, item.path)"
             >
               <i class="el-icon-info">{{ item.label }}</i>
+            </el-button>
+            <el-button plain size="mini" @click="getDetailData(row, 'index1')">
+              <i class="el-icon-info">硬件信息</i>
+            </el-button>
+            <el-button plain size="mini" @click="getDetailData(row, 'index2')">
+              <i class="el-icon-info">停机信息</i>
+            </el-button>
+            <el-button plain size="mini" @click="getDetailData(row, 'index3')">
+              <i class="el-icon-info">告警信息</i>
+            </el-button>
+            <el-button plain size="mini" @click="getDetailData(row, 'index4')">
+              <i class="el-icon-info">其他信息</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -181,6 +193,439 @@
       >
       </el-pagination>
       <!-- 分页结束 -->
+      <!-- 硬件详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="dialogFormVisible"
+        title="硬件信息"
+        draggable
+        width="30"
+      >
+        <p :style="pStyle">设备Bank</p>
+        <div class="demo-drawer-profile">
+          <el-select v-model="bank" @change="handleSelect">
+            <el-option label="Bank1" value="0"></el-option>
+            <el-option label="Bank2" value="1"></el-option>
+          </el-select>
+        </div>
+        <Divider />
+        <p :style="pStyle">项目编号</p>
+        <div class="demo-drawer-profile">
+          {{ this.data.iTEM_SERIAL_NUMBER }}
+        </div>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">主版本号</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tHE_MAJOR_VERSION_NUMBER }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">子版本号</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tHE_CHILD_VERSION_NUMBER }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">修正版本号</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.rEVISION_NUMBER }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">硬件主版本号</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.hARDWARE_MAJOR_VERSION_NUMBER }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">硬件子版本号</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.hARDWARE_SUBVERSION_NUMBER }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">bootloader主版本号</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.bOOTLOADER_MAIN_VERSION_NUMBER }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">Bootloader子版本号</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.bOOTLOADER_SUBVERSION_NUMBER }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">Bootloader修正版本号</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.bOOTLOADER_REVISION_NUMBER }}
+            </div>
+          </el-col>
+        </el-row>
+      </Drawer>
+      <!-- 硬件详情结束 -->
+      <!-- 停机详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="dialogFormVisible1"
+        title="停机信息"
+        draggable
+        width="30"
+      >
+        <p :style="pStyle">设备Bank</p>
+        <div class="demo-drawer-profile">
+          <el-select v-model="bank" @change="handleSelect">
+            <el-option label="Bank1" value="0"></el-option>
+            <el-option label="Bank2" value="1"></el-option>
+          </el-select>
+        </div>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">单体过压停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.sINGLE_OVERVOLTAGE_SHUTDOWN_TIMES }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">电池过压停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_BATTERY_OVERVOLTAGE_SHUTDOWNS }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">电池充电过流停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_BATTERY_OVERCURRENT_SHUTDOWN }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">单体欠压停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.sINGLE_UNIT_UNDERVOLTAGE_SHUTDOWN_TIMES }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">电池欠压停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.bATTERY_UNDERVOLTAGE_SHUTDOWN_TIMES }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">电池放电过流停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_BATTERY_DISCHARGE_OVERCURRENT_SHUTDOWN }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">电池过温停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_BATTERY_OVERTEMPERATURE_SHUTDOWNS }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">电池欠温停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.uNDERTEMPERATURE_BATTERY_DOWNTIME }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">功率过温停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.pOWER_OVERTEMPERATURE_SHUTDOWN_TIMES }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">单体之间压差过大停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tHE_PRESSURE_DIFFERENCE_BETWEEN_THE_MONOMERS_IS_TOO_LARGE }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">绝缘电阻值过小停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tHE_NUMBER_OF_TIMES_WHEN_THE_INSULATION_RESISTANCE_VALUE_IS_TOO_SMALL }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">总压差过大停机次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tHE_TOTAL_PRESSURE_DIFFERENCE_IS_TOO_LARGE_SHUTDOWN_TIMES }}
+            </div>
+          </el-col>
+        </el-row>
+      </Drawer>
+      <!-- 停机详情结束 -->
+      <!-- 告警详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="dialogFormVisible2"
+        title="告警信息"
+        draggable
+        width="30"
+      >
+        <p :style="pStyle">设备Bank</p>
+        <div class="demo-drawer-profile">
+          <el-select v-model="bank" @change="handleSelect">
+            <el-option label="Bank1" value="0"></el-option>
+            <el-option label="Bank2" value="1"></el-option>
+          </el-select>
+        </div>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">单体过压告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.sINGLE_OVERVOLTAGE_ALARM_NUMBER }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">电池过压告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_BATTERY_OVERVOLTAGE_ALARM }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">电池充电过流告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_BATTERY_OVERCURRENT_ALARM }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">单体欠压告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_SINGLE_UNDERVOLTAGE_ALARM }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">电池欠压告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.bATTERY_UNDERVOLTAGE_ALARM_NUMBER }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">电池放电过流告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.aLARM_NUMBER_OF_BATTERY_DISCHARGE_OVERCURRENT }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">电池过温告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_BATTERY_OVERTEMPERATURE_ALARM }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">电池欠温告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.bATTERY_UNDERTEMPERATURE_ALARM_NUMBER }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">功率过温告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.pOWER_OVERTEMPERATURE_ALARM_NUMBER }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">单体之间压差过大告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.eXCESSIVE_ALARM_TIMES_OF_PRESSURE_DIFFERENCE_BETWEEN_UNITS }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">绝缘电阻值过小告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.iNSULATION_RESISTANCE_VALUE_TOO_SMALL_ALARM_TIMES }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">总压差过大告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tOTAL_PRESSURE_DIFFERENTIAL_EXCESSIVE_ALARM_NUMBER }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">环境温度过高告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.aLARM_TIMES_OF_EXCESSIVE_AMBIENT_TEMPERATURE }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">环境温度过低告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_ALARMS_FOR_LOW_AMBIENT_TEMPERATURE }}
+            </div>
+          </el-col>
+        </el-row>
+      </Drawer>
+      <!-- 告警详情结束 -->
+      <!-- 其他详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="dialogFormVisible3"
+        title="告警信息"
+        draggable
+        width="30"
+      >
+        <p :style="pStyle">设备Bank</p>
+        <div class="demo-drawer-profile">
+          <el-select v-model="bank" @change="handleSelect">
+            <el-option label="Bank1" value="0"></el-option>
+            <el-option label="Bank2" value="1"></el-option>
+          </el-select>
+        </div>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">电池循环次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.bATTERY_CYCLE }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">电池总容量</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tOTAL_BATTERY_CAPACITY }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">系统运行时间</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.sYSTEM_RUNNING_TIME }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">最近一次充电容量(0.01Ah)</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.lAST_CHARGE_CAPACITY }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">最近一次充电结束时间(秒)</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tHE_LAST_TIME_A_CHARGE_WAS_COMPLETED }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">最近一次放电结束时间(秒)</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.eND_TIME_OF_LAST_DISCHARGE }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">环境温度过高保护次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_TIMES_THE_AMBIENT_TEMPERATURE_IS_TOO_HIGH }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">环境温度过低保护次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tHE_NUMBER_OF_TIMES_THE_AMBIENT_TEMPERATURE_IS_TOO_LOW }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">功率过温告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.pOWER_OVERTEMPERATURE_ALARM_NUMBER }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">单体之间压差过大告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.eXCESSIVE_ALARM_TIMES_OF_PRESSURE_DIFFERENCE_BETWEEN_UNITS }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">绝缘电阻值过小告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.iNSULATION_RESISTANCE_VALUE_TOO_SMALL_ALARM_TIMES }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">总压差过大告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.tOTAL_PRESSURE_DIFFERENTIAL_EXCESSIVE_ALARM_NUMBER }}
+            </div>
+          </el-col>
+        </el-row>
+        <Divider />
+        <el-row>
+          <el-col :span="14">
+            <p :style="pStyle">环境温度过高告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.aLARM_TIMES_OF_EXCESSIVE_AMBIENT_TEMPERATURE }}
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <p :style="pStyle">环境温度过低告警次数</p>
+            <div class="demo-drawer-profile">
+              {{ this.data.nUMBER_OF_ALARMS_FOR_LOW_AMBIENT_TEMPERATURE }}
+            </div>
+          </el-col>
+        </el-row>
+      </Drawer>
+      <!-- 其他详情结束 -->
     </el-card>
   </div>
 </template>
@@ -211,7 +656,6 @@ export default {
           path: '/selfCheck'
         }
       ],
-      dialogFormVisible: false,
       activeDialog: '',
       formList: {
         AutoSystemID: '',
@@ -220,7 +664,21 @@ export default {
         DName: ''
       },
       formData: {},
-      value: true
+      value: true,
+      pStyle: {
+        fontSize: '14px',
+        color: 'rgba(0,0,0,0.85)',
+        lineHeight: '24px',
+        display: 'block',
+        marginBottom: '16px'
+      },
+      data: [],
+      bank: '0',
+      dialogFormVisible: false,
+      dialogFormVisible1: false,
+      dialogFormVisible2: false,
+      dialogFormVisible3: false,
+      SystemID: ''
     }
   },
   methods: {
@@ -310,6 +768,175 @@ export default {
       // this.set_params(params)
       // this.set_batterID(batterID)
       this.$router.push({ path: path })
+    },
+
+    // 获取详情
+    getDetailData (row, index) {
+      switch (index) {
+        case 'index1':
+          this.dialogFormVisible = true
+          break
+        case 'index2':
+          this.dialogFormVisible1 = true
+          break
+        case 'index3':
+          this.dialogFormVisible2 = true
+          break
+        case 'index4':
+          this.dialogFormVisible3 = true
+          break
+      }
+      this.SystemID = row.SystemID
+      this.bank = '0'
+      this.data = {
+        bATTERY_CYCLE: 0,
+        tOTAL_BATTERY_CAPACITY: 0.0,
+        sYSTEM_RUNNING_TIME: 0,
+        mAIN_CONTROL_SELF_CHECK_STATUS: [
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          },
+          {
+            EEPROM_ERRCODE: false,
+            MASTER_ID_OUT_OF_BOUNDS: false,
+            PCS_STANDBY_FAILED: false,
+            FLASH_SELF_CHECK_STATUS: false
+          }
+        ],
+        iTEM_SERIAL_NUMBER: 0,
+        tHE_MAJOR_VERSION_NUMBER: 0,
+        tHE_CHILD_VERSION_NUMBER: 0,
+        rEVISION_NUMBER: 0,
+        hARDWARE_MAJOR_VERSION_NUMBER: 0,
+        hARDWARE_SUBVERSION_NUMBER: 0,
+        bOOTLOADER_MAIN_VERSION_NUMBER: 0,
+        bOOTLOADER_SUBVERSION_NUMBER: 0,
+        bOOTLOADER_REVISION_NUMBER: 0,
+        lAST_CHARGE_CAPACITY: 0.0,
+        tHE_LAST_TIME_A_CHARGE_WAS_COMPLETED: 0,
+        eND_TIME_OF_LAST_DISCHARGE: 0,
+        sINGLE_OVERVOLTAGE_SHUTDOWN_TIMES: 0,
+        nUMBER_OF_BATTERY_OVERVOLTAGE_SHUTDOWNS: 0,
+        nUMBER_OF_BATTERY_OVERCURRENT_SHUTDOWN: 0,
+        sINGLE_UNIT_UNDERVOLTAGE_SHUTDOWN_TIMES: 0,
+        bATTERY_UNDERVOLTAGE_SHUTDOWN_TIMES: 0,
+        nUMBER_OF_BATTERY_DISCHARGE_OVERCURRENT_SHUTDOWN: 0,
+        nUMBER_OF_BATTERY_OVERTEMPERATURE_SHUTDOWNS: 0,
+        uNDERTEMPERATURE_BATTERY_DOWNTIME: 0,
+        sINGLE_OVERVOLTAGE_ALARM_NUMBER: 0,
+        nUMBER_OF_BATTERY_OVERVOLTAGE_ALARM: 0,
+        nUMBER_OF_BATTERY_OVERCURRENT_ALARM: 0,
+        nUMBER_OF_SINGLE_UNDERVOLTAGE_ALARM: 0,
+        bATTERY_UNDERVOLTAGE_ALARM_NUMBER: 0,
+        aLARM_NUMBER_OF_BATTERY_DISCHARGE_OVERCURRENT: 0,
+        nUMBER_OF_BATTERY_OVERTEMPERATURE_ALARM: 0,
+        bATTERY_UNDERTEMPERATURE_ALARM_NUMBER: 0,
+        pOWER_OVERTEMPERATURE_SHUTDOWN_TIMES: 0,
+        pOWER_OVERTEMPERATURE_ALARM_NUMBER: 0,
+        eXCESSIVE_ALARM_TIMES_OF_PRESSURE_DIFFERENCE_BETWEEN_UNITS: 0,
+        tHE_PRESSURE_DIFFERENCE_BETWEEN_THE_MONOMERS_IS_TOO_LARGE: 0,
+        iNSULATION_RESISTANCE_VALUE_TOO_SMALL_ALARM_TIMES: 0,
+        tHE_NUMBER_OF_TIMES_WHEN_THE_INSULATION_RESISTANCE_VALUE_IS_TOO_SMALL: 0,
+        tOTAL_PRESSURE_DIFFERENTIAL_EXCESSIVE_ALARM_NUMBER: 0,
+        tHE_TOTAL_PRESSURE_DIFFERENCE_IS_TOO_LARGE_SHUTDOWN_TIMES: 0,
+        aLARM_TIMES_OF_EXCESSIVE_AMBIENT_TEMPERATURE: 0,
+        nUMBER_OF_TIMES_THE_AMBIENT_TEMPERATURE_IS_TOO_HIGH: 0,
+        nUMBER_OF_ALARMS_FOR_LOW_AMBIENT_TEMPERATURE: 0,
+        tHE_NUMBER_OF_TIMES_THE_AMBIENT_TEMPERATURE_IS_TOO_LOW: 0,
+        bANK_INDEX: 1,
+        rACK_INDEX: 0,
+        cELL_INDEX: 1,
+        BANK_WORN_PARA_NUMBER: 1600,
+        BANK_WORN_PARA_STARTADDRESS: 65535
+      }
+    },
+
+    getDataHttp () {
+      var AutoSystemID = localStorage.getItem('AutoSystemID')
+      this.loading = true
+      var url = '/api/Chart/GetBatteryBankCLUSTERStateCharts'
+      this.$axios
+        .get(
+          `${url}?AutoSystemID=${AutoSystemID}&BatteryIDS=${this.SystemID}&BankIndex=${this.bank}`
+        )
+        .then(res => {
+          if (res.data.code === 0) {
+            this.data = res.data.data
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+          this.loading = false
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    handleSelect () {
+      this.getDataHttp()
     }
   },
 
