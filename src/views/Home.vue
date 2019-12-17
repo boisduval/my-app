@@ -106,13 +106,13 @@
                 <i class="el-icon-full-screen"></i>
               </el-button>
             </el-badge>
-            <el-badge :value="2" class="item" type="warning">
-              <el-button size="small" class="mes">
+            <el-badge :value="AlarmCount" class="item" type="warning">
+              <el-button size="small" class="mes" @click="$router.push('/alarmRealTime')">
                 <i class="el-icon-message-solid"></i>
               </el-button>
             </el-badge>
-            <el-badge :value="12" class="item">
-              <el-button size="small" class="mes">
+            <el-badge :value="UnReadCount" class="item">
+              <el-button size="small" class="mes" @click="$router.push('/mailBox')">
                 <i class="el-icon-message"></i>
               </el-button>
             </el-badge>
@@ -231,7 +231,9 @@ export default {
       isFull: false,
       footerInfo: '',
       beforeUnload_time: '',
-      gap_time: ''
+      gap_time: '',
+      AlarmCount: '',
+      UnReadCount: ''
     }
   },
   components: {
@@ -255,6 +257,7 @@ export default {
     // this.getMenu()
     this.getFooterInfo()
     this.params.AutoSystemID = localStorage.getItem('AutoSystemID')
+    this.getMsgNum()
   },
   mounted () {
     if (this.openTab.length === 0) {
@@ -449,6 +452,22 @@ export default {
         .get(`/api/Ablut/SystemConfig?AutoSystemID=${AutoSystemID}`)
         .then(res => {
           this.footerInfo = res.data.data
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 获取消息数
+    getMsgNum () {
+      var AutoSystemID = this.params.AutoSystemID
+      this.$axios
+        .get(`api/Ablut/MainMessageInfo?AutoSystemID=${AutoSystemID}`)
+        .then(res => {
+          if (res.data.hasOwnProperty('data')) {
+            this.AlarmCount = res.data.data.AlarmCount
+            this.UnReadCount = res.data.data.UnReadCount
+          }
         })
         .catch(err => {
           console.error(err)

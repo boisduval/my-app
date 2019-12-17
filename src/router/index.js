@@ -54,7 +54,7 @@ const routes = [
         name: 'deviceDetail',
         component: () => import(/* webpackChunkName: "deviceDetail" */ '../views/Device/DeviceDetail.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 不需要被缓存
         },
         children: [
           {
@@ -62,7 +62,7 @@ const routes = [
             name: 'DTUInfo',
             component: () => import(/* webpackChunkName: "DTUInfo" */ '../views/Device/DTUInfo.vue'),
             meta: {
-              keepAlive: true // 需要被缓存
+              keepAlive: false // 不需要被缓存
             }
           },
           {
@@ -70,7 +70,7 @@ const routes = [
             name: 'ControllerInfo',
             component: () => import(/* webpackChunkName: "ControllerInfo" */ '../views/Device/ControllerInfo.vue'),
             meta: {
-              keepAlive: true // 需要被缓存
+              keepAlive: false // 不需要被缓存
             }
           },
           {
@@ -78,7 +78,7 @@ const routes = [
             name: 'BmsInfo',
             component: () => import(/* webpackChunkName: "BmsInfo" */ '../views/Device/BmsInfo.vue'),
             meta: {
-              keepAlive: true // 需要被缓存
+              keepAlive: false // 不需要被缓存
             }
           },
           {
@@ -86,7 +86,7 @@ const routes = [
             name: 'BatteryInfo',
             component: () => import(/* webpackChunkName: "BatteryInfo" */ '../views/Device/BatteryInfo.vue'),
             meta: {
-              keepAlive: true // 需要被缓存
+              keepAlive: false // 不需要被缓存
             }
           },
           {
@@ -94,7 +94,7 @@ const routes = [
             name: 'TemperatureInfo',
             component: () => import(/* webpackChunkName: "TemperatureInfo" */ '../views/Device/TemperatureInfo.vue'),
             meta: {
-              keepAlive: true // 需要被缓存
+              keepAlive: false // 不需要被缓存
             }
           }
         ]
