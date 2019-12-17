@@ -92,6 +92,7 @@
             highlight-hover-row
             highlight-current-row
             align="center"
+            :seq-config="{seqMethod: seqMethod}"
           >
             <vxe-table-column
               type="checkbox"
@@ -101,7 +102,7 @@
             ></vxe-table-column>
             <vxe-table-column
               type="seq"
-              width="50"
+              width="80"
               title="序号"
               fixed="left"
               align="center"
@@ -306,6 +307,9 @@ export default {
         var key = 'BATTER_BIT_' + (i + 1)
         this.tableColumn.push({ field: key, title: this.bitInfo[i], width: 100 })
       }
+    },
+    seqMethod ({ rowIndex }) {
+      return '第' + (rowIndex + 1) + '簇'
     }
   }
 }

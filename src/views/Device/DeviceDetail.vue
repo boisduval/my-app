@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -55,13 +55,29 @@ export default {
           label: 'BMS信息',
           name: 'BmsInfo'
         },
+        // {
+        //   label: '电池信息',
+        //   name: 'BatteryInfo'
+        // },
+        // {
+        //   label: '温度信息',
+        //   name: 'TemperatureInfo'
+        // }
         {
-          label: '电池信息',
-          name: 'BatteryInfo'
+          label: '设备信息',
+          name: 'EquipmentInfo'
         },
         {
-          label: '温度信息',
-          name: 'TemperatureInfo'
+          label: '网络参数',
+          name: 'NetworkParams'
+        },
+        {
+          label: '拓展参数',
+          name: 'ExpandParams'
+        },
+        {
+          label: '串口参数',
+          name: 'SerialParams'
         }
       ]
     }
@@ -83,13 +99,12 @@ export default {
     }
   },
   mounted () {
-    this.activeName = 'DTUInfo'
+    this.$router.push({ name: this.activeName })
     if (this.paramsD.AutoSystemID && this.paramsD.SystemID) {
       this.getDetail(this.api, this.paramsD)
     }
   },
   methods: {
-    ...mapMutations('detail', ['set_paramsD']),
     getDetail (api, params) {
       this.$axios
         .get(

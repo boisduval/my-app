@@ -81,18 +81,50 @@ const routes = [
               keepAlive: false // 不需要被缓存
             }
           },
+          // {
+          //   path: 'BatteryInfo',
+          //   name: 'BatteryInfo',
+          //   component: () => import(/* webpackChunkName: "BatteryInfo" */ '../views/Device/BatteryInfo.vue'),
+          //   meta: {
+          //     keepAlive: false // 不需要被缓存
+          //   }
+          // },
+          // {
+          //   path: 'TemperatureInfo',
+          //   name: 'TemperatureInfo',
+          //   component: () => import(/* webpackChunkName: "TemperatureInfo" */ '../views/Device/TemperatureInfo.vue'),
+          //   meta: {
+          //     keepAlive: false // 不需要被缓存
+          //   }
+          // },
           {
-            path: 'BatteryInfo',
-            name: 'BatteryInfo',
-            component: () => import(/* webpackChunkName: "BatteryInfo" */ '../views/Device/BatteryInfo.vue'),
+            path: 'EquipmentInfo',
+            name: 'EquipmentInfo',
+            component: () => import(/* webpackChunkName: "EquipmentInfo" */ '../views/Device/EquipmentInfo.vue'),
             meta: {
               keepAlive: false // 不需要被缓存
             }
           },
           {
-            path: 'TemperatureInfo',
-            name: 'TemperatureInfo',
-            component: () => import(/* webpackChunkName: "TemperatureInfo" */ '../views/Device/TemperatureInfo.vue'),
+            path: 'NetworkParams',
+            name: 'NetworkParams',
+            component: () => import(/* webpackChunkName: "NetworkParams" */ '../views/Device/NetworkParams.vue'),
+            meta: {
+              keepAlive: false // 不需要被缓存
+            }
+          },
+          {
+            path: 'ExpandParams',
+            name: 'ExpandParams',
+            component: () => import(/* webpackChunkName: "ExpandParams" */ '../views/Device/ExpandParams.vue'),
+            meta: {
+              keepAlive: false // 不需要被缓存
+            }
+          },
+          {
+            path: 'SerialParams',
+            name: 'SerialParams',
+            component: () => import(/* webpackChunkName: "SerialParams" */ '../views/Device/SerialParams.vue'),
             meta: {
               keepAlive: false // 不需要被缓存
             }
