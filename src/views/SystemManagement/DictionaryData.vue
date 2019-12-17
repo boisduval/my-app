@@ -143,7 +143,7 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="index" width="50" title="序号" fixed="left">
+        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
         </vxe-table-column>
         <vxe-table-column field="Text" title="字典标签" sortable show-overflow>
         </vxe-table-column>

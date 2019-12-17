@@ -57,7 +57,7 @@
       highlight-current-row
     >
       <vxe-table-column
-        type="index"
+        type="seq"
         title="序号"
         width="50"
         fixed="left"
