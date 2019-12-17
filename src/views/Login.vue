@@ -61,7 +61,7 @@
 
     <!-- 底部信息 -->
     <div class="footerifo">
-      版权所有 ©2018-2020 浙江衡睿科技有限公司
+      版权所有 ©{{ footerInfo.SystemYear }} 浙江衡睿科技有限公司
       <br />技术支持电话：000-00000000 <br />设为主页
     </div>
   </div>
@@ -110,7 +110,8 @@ export default {
       temp1: '',
       broName2: '',
       broName1: '',
-      userAgent: ''
+      userAgent: '',
+      footerInfo: ''
     }
   },
   methods: {
@@ -296,6 +297,18 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    // 获取底部信息
+    getFooterInfo () {
+      var AutoSystemID = '0'
+      this.$axios
+        .get(`/api/Ablut/SystemConfig?AutoSystemID=${AutoSystemID}`)
+        .then(res => {
+          this.footerInfo = res.data.data
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   },
   created () {
@@ -311,6 +324,7 @@ export default {
       this.bro()
       this.getIPs()
       this.data.ClientInfo.Platform = this.detectOS()
+      this.getFooterInfo()
     }, 500)
   }
 }
