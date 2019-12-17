@@ -788,6 +788,7 @@ export default {
       }
       this.SystemID = row.SystemID
       this.bank = '0'
+      // this.getDetailData()
       this.data = {
         bATTERY_CYCLE: 0,
         tOTAL_BATTERY_CAPACITY: 0.0,

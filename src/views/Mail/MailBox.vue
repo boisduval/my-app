@@ -15,7 +15,7 @@
             label-position="right"
           >
             <el-form-item label="重要邮件:">
-              <el-select v-model="searchForm.IsImportance" clearable>
+              <el-select v-model="searchForm.IsImportance">
                 <el-option
                   v-for="(item, index) in options1"
                   :key="index"
