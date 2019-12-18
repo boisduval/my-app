@@ -78,6 +78,18 @@ export default {
         {
           label: '串口参数',
           name: 'SerialParams'
+        },
+        {
+          label: '挂载参数',
+          name: 'MountedParams'
+        },
+        {
+          label: '预设置电池参数',
+          name: 'PreBatteryParams'
+        },
+        {
+          label: '电池参数',
+          name: 'BatteryParams'
         }
       ]
     }

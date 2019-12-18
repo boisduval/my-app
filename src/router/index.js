@@ -128,6 +128,30 @@ const routes = [
             meta: {
               keepAlive: false // 不需要被缓存
             }
+          },
+          {
+            path: 'MountedParams',
+            name: 'MountedParams',
+            component: () => import(/* webpackChunkName: "MountedParams" */ '../views/Device/MountedParams.vue'),
+            meta: {
+              keepAlive: false // 不需要被缓存
+            }
+          },
+          {
+            path: 'PreBatteryParams',
+            name: 'PreBatteryParams',
+            component: () => import(/* webpackChunkName: "PreBatteryParams" */ '../views/Device/PreBatteryParams.vue'),
+            meta: {
+              keepAlive: false // 不需要被缓存
+            }
+          },
+          {
+            path: 'BatteryParams',
+            name: 'BatteryParams',
+            component: () => import(/* webpackChunkName: "BatteryParams" */ '../views/Device/BatteryParams.vue'),
+            meta: {
+              keepAlive: false // 不需要被缓存
+            }
           }
         ]
       },
