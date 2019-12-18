@@ -5,13 +5,13 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>命令流水列表查询</span>
+            <span>注册流水列表查询</span>
           </div>
           <el-form
             :inline="true"
             :model="searchForm"
             class="demo-form-inline"
-            label-width="80px"
+            label-width="90px"
             label-position="right"
           >
             <el-form-item label="范围选择:">
@@ -24,16 +24,16 @@
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="命令参数:">
+            <el-form-item label="设备编码:">
               <el-input
-                v-model="searchForm.Parameter"
-                placeholder="请输入命令参数"
+                v-model="searchForm.IdentifyNumber"
+                placeholder="请输入设备编码"
               ></el-input>
             </el-form-item>
-            <el-form-item label="命令类型:">
+            <el-form-item label="ICCID编号:">
               <el-input
-                v-model="searchForm.CmdType"
-                placeholder="请输入命令类型"
+                v-model="searchForm.ICCID"
+                placeholder="请输入ICCID编号"
               ></el-input>
             </el-form-item>
             <el-form-item>
@@ -84,7 +84,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>命令流水</span>
+        <span>注册流水</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -165,28 +165,31 @@
         <vxe-table-column type="seq" width="50" title="序号" fixed="left">
         </vxe-table-column>
         <vxe-table-column
-          field="UserName"
-          title="账户名称"
+          field="SystemID"
+          title="系统ID"
           sortable
-          width="150"
+          width="320"
           show-overflow
-          align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="CommandType" title="命令类型" width="150" sortable align="left">
-        </vxe-table-column>
-        <vxe-table-column
-          field="FunctionName"
-          title="方法名称"
+        <!-- <vxe-table-column field="Index" title="设备注册序号" width="150" sortable>
+        </vxe-table-column> -->
+        <!-- <vxe-table-column
+          field="ICCID"
+          title="ICCID编码"
           sortable
           width="240"
         >
+        </vxe-table-column> -->
+        <vxe-table-column field="DeviceID" title="设备唯一识别号" sortable width="320">
         </vxe-table-column>
-        <vxe-table-column field="Parameter" title="命令参数" sortable show-overflow show-header-overflow align="left">
+        <!-- <vxe-table-column field="DType" title="设备注册类型" sortable width="180">
+        </vxe-table-column> -->
+         <vxe-table-column field="Text" title="名称" sortable width="320">
         </vxe-table-column>
-        <vxe-table-column field="RecordingTime" title="记录时间" sortable width="280">
+         <vxe-table-column field="RegistrationTime" title="最新注册时间" sortable width="320">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right">
+        <vxe-table-column title="操作" width="250" fixed="right">
           <template v-slot="{ row }">
             <el-button plain size="small" @click="toDetail(row)">
               <i class="el-icon-info">详情</i>
@@ -211,19 +214,19 @@
       <!-- 详情Dialog开始 -->
       <!-- 详情开始 -->
       <Drawer :closable="false" v-model="value4" title="详细信息" draggable width="30">
-        <p :style="pStyle">账户名称</p>
+        <p :style="pStyle">ICCID编码</p>
         <div class="demo-drawer-profile">
-          {{ activeItem.UserName }}
+          {{ activeItem.ICCID }}
         </div>
         <Divider />
-        <p :style="pStyle">对象名称</p>
+        <p :style="pStyle">设备注册类型</p>
         <div class="demo-drawer-profile">
-          {{ activeItem.CommandType }}
+          {{ activeItem.DType }}
         </div>
         <Divider />
-        <p :style="pStyle">方法名称</p>
+        <p :style="pStyle">设备注册序号</p>
         <div class="demo-drawer-profile">
-          {{ activeItem.FunctionName }}
+          {{ activeItem.Index }}
         </div>
       </Drawer>
       <!-- 详情结束 -->
@@ -242,8 +245,8 @@ export default {
         AutoSystemID: '',
         Start: '',
         Stop: '',
-        CmdType: '',
-        Parameter: '',
+        IdentifyNumber: '',
+        ICCID: '',
         page: 1,
         limit: 10
       },
@@ -251,7 +254,7 @@ export default {
       count: 0,
       customColumns: [],
       isShow: true,
-      fileName: '命令流水',
+      fileName: '注册流水',
       loading: false,
       dialogFormVisible: false,
       value: '',
@@ -332,7 +335,7 @@ export default {
       this.loading = true
       this.searchForm.Start = moment(this.value[0]).format('YYYY-MM-DD')
       this.searchForm.Stop = moment(this.value[1]).format('YYYY-MM-DD')
-      var url = '/api/Devices/GetCommandListing'
+      var url = '/api/Devices/GetRegisterListing'
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
@@ -352,9 +355,9 @@ export default {
     // 详情
     toDetail (row) {
       console.log(row)
-      this.activeItem.UserName = row.UserName
-      this.activeItem.CommandType = row.CommandType
-      this.activeItem.FunctionName = row.FunctionName
+      this.activeItem.ICCID = row.ICCID
+      this.activeItem.Index = row.Index
+      this.activeItem.DType = row.DType
       this.value4 = true
     },
 

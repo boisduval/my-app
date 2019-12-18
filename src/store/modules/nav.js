@@ -73,7 +73,7 @@ const state = {
           {
             ID: '10',
             MID: '3',
-            Href: '/ui/Equipment/LoginList.aspx',
+            Href: 'register',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '注册流水',

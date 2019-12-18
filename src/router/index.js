@@ -164,6 +164,14 @@ const routes = [
         }
       },
       {
+        path: '/register',
+        name: 'register',
+        component: () => import(/* webpackChunkName: "Register" */ '../views/Device/Register.vue'),
+        meta: {
+          keepAlive: true // 需要被缓存
+        }
+      },
+      {
         path: '/selfInspection',
         name: 'selfInspection',
         component: () => import(/* webpackChunkName: "SelfInspection" */ '../views/Device/SelfInspection.vue'),
