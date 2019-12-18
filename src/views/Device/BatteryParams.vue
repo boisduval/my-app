@@ -1,5 +1,11 @@
 <template>
   <div>
+    <el-form style="margin-top:10px">
+      <el-form-item label="电池组数量" label-width="150px" style="width:25%">
+        <el-input :value="data.bATTERY_NUMBER" :readonly="true"></el-input>
+      </el-form-item>
+    </el-form>
+    <Divider />
     <el-form>
       <el-form-item label="电池组1簇数量" label-width="150px" style="width:25%">
         <el-input :value="data.bATTERY_PACK_1_CLUSTER" :readonly="true"></el-input>

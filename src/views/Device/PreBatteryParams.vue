@@ -1,5 +1,11 @@
 <template>
   <div>
+    <el-form style="margin-top:10px">
+      <el-form-item label="预设置电池组数量" label-width="150px" style="width:25%">
+        <el-input :value="data.pRE_SET_NUMBER_OF_BATTERY_PACKS" :readonly="true"></el-input>
+      </el-form-item>
+    </el-form>
+    <Divider />
     <el-form>
       <el-form-item label="预设置电池组1簇数量" label-width="150px" style="width:25%">
         <el-input :value="data.pRE_SET_NUMBER_OF_BATTERY_BANK_1" :readonly="true"></el-input>

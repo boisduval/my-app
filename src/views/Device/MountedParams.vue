@@ -1,33 +1,30 @@
 <template>
   <div>
-    <el-form>
-      <el-form-item label="预设置电池组1簇数量" label-width="150px" style="width:25%">
-        <el-input :value="data.pRE_SET_NUMBER_OF_BATTERY_BANK_1" :readonly="true"></el-input>
-      </el-form-item>
+    <el-form class="clearfix">
       <el-col
         :span="6"
-        v-for="(item, index) in data.nUMBER_OF_12_TUFTS_IN_BANK_1"
-        :key="index"
-        :index="index"
       >
-          <el-form-item :label="'第'+(index+1)+'簇电芯数量'" label-width="150px">
-            <el-input :value="item" :readonly="true"></el-input>
+          <el-form-item label="UPS数量" label-width="150px">
+            <el-input :value="data.uPS_NUMBER" :readonly="true"></el-input>
+          </el-form-item>
+      </el-col>
+      <el-col
+        :span="6"
+      >
+          <el-form-item label="PCS数量" label-width="150px">
+            <el-input :value="data.pCS_NUMBER" :readonly="true"></el-input>
           </el-form-item>
       </el-col>
     </el-form>
-    <Divider />
     <el-form>
-      <el-form-item label="预设置电池组2簇数量" label-width="150px" style="width:25%">
-        <el-input :value="data.pRE_SET_NUMBER_OF_BATTERY_BANK_2" :readonly="true"></el-input>
-      </el-form-item>
       <el-col
         :span="6"
-        v-for="(item, index) in data.nUMBER_OF_12_TUFTS_IN_BANK_2"
+        v-for="(item, index) in EInfo"
         :key="index"
         :index="index"
       >
-          <el-form-item :label="'第'+(index+1)+'簇电芯数量'" label-width="150px">
-            <el-input :value="item" :readonly="true"></el-input>
+          <el-form-item :label="item.label" label-width="150px">
+            <el-input :value="item.value" :readonly="true"></el-input>
           </el-form-item>
       </el-col>
     </el-form>
@@ -206,25 +203,58 @@ export default {
               pRESETS_THE_MOUNTING_STATE_OF_PHOTOVOLTAIC_EQUIPMENT: false,
               pRE_SET_THE_WIND_POWER_EQUIPMENT_MOUNT_STATE: false
             }
-            this.data['dMS_UART_PARA_INFOs'].forEach((el, i) => {
-              var label = 'UART' + (i + 1) + '_BAUD'
-              this.EInfo.push({
-                label: label,
-                value: el['dMS_UART_BAUD']
-              })
-              this.EInfo.push({
-                label: '数据位',
-                value: el['dMS_UART_PROTOCOL']['dATA_BITS']
-              })
-              this.EInfo.push({
-                label: '停止位',
-                value: el['dMS_UART_PROTOCOL']['sTOP_BITS']
-              })
-              this.EInfo.push({
-                label: '奇偶校验位',
-                value: el['dMS_UART_PROTOCOL']['pARITY']
-              })
-            })
+            for (var key in this.data) {
+              switch (key) {
+                case 'pRESETS_THE_UPS_DEVICE_MOUNT_STATE':
+                  this.EInfo.push({
+                    label: 'UPS设备挂载状态',
+                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRESETS_THE_PCS_DEVICE_MOUNT_STATE':
+                  this.EInfo.push({
+                    label: 'PCS设备挂载状态',
+                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRESETS_THE_GENERATOR_EQUIPMENT_MOUNT_STATE':
+                  this.EInfo.push({
+                    label: '发电机设备挂载状态',
+                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRESETS_THE_LINKAGE_MODULE_MOUNT_STATE':
+                  this.EInfo.push({
+                    label: '联动模块挂载状态',
+                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRE_SET_FIRE_SYSTEM_MOUNT_STATUS':
+                  this.EInfo.push({
+                    label: '消防系统挂载状态',
+                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRESETS_THE_MOUNTING_STATE_OF_PHOTOVOLTAIC_EQUIPMENT':
+                  this.EInfo.push({
+                    label: '光伏设备挂载状态',
+                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRE_SET_THE_WIND_POWER_EQUIPMENT_MOUNT_STATE':
+                  this.EInfo.push({
+                    label: '风能设备挂载状态',
+                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRESETS_THE_BATTERY_PACK_EQUIPMENT_MOUNT_STATE':
+                  this.EInfo.push({
+                    label: '电池组设备挂载状态',
+                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+              }
+            }
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
@@ -339,34 +369,52 @@ export default {
             }
             for (var key in data) {
               switch (key) {
-                case 'tHE_MAC_ADDRESS':
+                case 'pRESETS_THE_UPS_DEVICE_MOUNT_STATE':
                   this.EInfo.push({
-                    label: 'MAC地址',
-                    value: data[key]
+                    label: 'UPS设备挂载状态',
+                    value: data[key] === true ? '已挂载' : '未挂载'
                   })
                   break
-                case 'lOCAL_DHCP_ON_STATUS':
+                case 'pRESETS_THE_PCS_DEVICE_MOUNT_STATE':
                   this.EInfo.push({
-                    label: '本地DHCP开启状态',
-                    value: data[key]
+                    label: 'PCS设备挂载状态',
+                    value: data[key] === true ? '已挂载' : '未挂载'
                   })
                   break
-                case 'dNS_DOMAIN_NAME_OPEN_STATE':
+                case 'pRESETS_THE_GENERATOR_EQUIPMENT_MOUNT_STATE':
                   this.EInfo.push({
-                    label: 'DNS域名开启状态',
-                    value: data[key]
+                    label: '发电机设备挂载状态',
+                    value: data[key] === true ? '已挂载' : '未挂载'
                   })
                   break
-                case 'dNS_DOMAIN_NAME_FETCH_STATUS':
+                case 'pRESETS_THE_LINKAGE_MODULE_MOUNT_STATE':
                   this.EInfo.push({
-                    label: 'DNS域名获取状态',
-                    value: data[key]
+                    label: '联动模块挂载状态',
+                    value: data[key] === true ? '已挂载' : '未挂载'
                   })
                   break
-                case 'eXTEND_IP_ENABLED_STATUS':
+                case 'pRE_SET_FIRE_SYSTEM_MOUNT_STATUS':
                   this.EInfo.push({
-                    label: '扩展IP开启状态',
-                    value: data[key]
+                    label: '消防系统挂载状态',
+                    value: data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRESETS_THE_MOUNTING_STATE_OF_PHOTOVOLTAIC_EQUIPMENT':
+                  this.EInfo.push({
+                    label: '光伏设备挂载状态',
+                    value: data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRE_SET_THE_WIND_POWER_EQUIPMENT_MOUNT_STATE':
+                  this.EInfo.push({
+                    label: '风能设备挂载状态',
+                    value: data[key] === true ? '已挂载' : '未挂载'
+                  })
+                  break
+                case 'pRESETS_THE_BATTERY_PACK_EQUIPMENT_MOUNT_STATE':
+                  this.EInfo.push({
+                    label: '电池组设备挂载状态',
+                    value: data[key] === true ? '已挂载' : '未挂载'
                   })
                   break
               }
