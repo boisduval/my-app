@@ -420,8 +420,26 @@ const routes = [
         name: 'perFormance',
         component: () => import(/* webpackChunkName: "SystemManagementPerFormance" */ '../views/SystemManagement/PerFormance.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
-        }
+          keepAlive: false // 需要被缓存
+        },
+        children: [
+          {
+            path: 'HistoryMonitor',
+            name: 'HistoryMonitor',
+            component: () => import(/* webpackChunkName: "HistoryMonitor" */ '../views/SystemManagement/HistoryMonitor.vue'),
+            meta: {
+              keepAlive: false // 不需要被缓存
+            }
+          },
+          {
+            path: '',
+            name: 'RealtimeMonitor',
+            component: () => import(/* webpackChunkName: "RealtimeMonitor" */ '../views/SystemManagement/RealtimeMonitor.vue'),
+            meta: {
+              keepAlive: false // 不需要被缓存
+            }
+          }
+        ]
       },
       {
         path: '/helpList',

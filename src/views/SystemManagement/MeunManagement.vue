@@ -5,8 +5,10 @@
         <span>菜单列表</span>
       </div>
       <!-- 表格操作栏开始 -->
-      <div class="table-oper">
-        <el-button
+      <!-- 表格操作栏结束 -->
+      <vxe-toolbar :data="tableData" :export="tableExport" custom class="table-oper">
+        <template v-slot:buttons>
+          <el-button
           type="primary"
           size="small"
           class="button-left"
@@ -42,47 +44,15 @@
           <i class="el-icon-refresh-right"></i>
           刷新
         </el-button>
-        <el-button class="menu-btn">
-          <i class="fa fa-list"></i>
-        </el-button>
-        <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTree.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" title="导出" v-popover:export>
-          <i class="fa fa-download"></i>
-        </el-button>
-        <el-button class="menu-btn" @click="printEvent" title="打印">
-          <i class="fa fa-print"></i>
-        </el-button>
-        <!-- 导出操作开始 -->
-        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
-          <ul id="export">
-            <li @click="exportDataEvent">
-              导出为Csv文件
-            </li>
-            <li @click="exportExcel">
-              导出为Excel文件
-            </li>
-          </ul>
-        </el-popover>
-        <!-- 导出操作结束 -->
-      </div>
-      <!-- 表格操作栏结束 -->
+        </template>
+      </vxe-toolbar>
       <vxe-table
         id="left"
         border
         resizable
         show-overflow
         ref="xTree"
+        row-id="id"
         :tree-config="{
           children: 'children',
           iconOpen: 'fa fa-minus-circle',
@@ -103,7 +73,7 @@
           fixed="left"
           align="center"
         ></vxe-table-column>
-        <vxe-table-column title="资源名称" tree-node width="180">
+        <vxe-table-column title="资源名称" tree-node width="180" field="permissionName">
           <template v-slot="{ row }">
             <span>
               <template v-if="row.children && row.children.length">
@@ -356,7 +326,13 @@ export default {
         Text: '',
         SOrder: ''
       },
-      dialogFormEditChildVisible: false
+      dialogFormEditChildVisible: false,
+      tableExport: {
+        // 默认选中类型
+        type: 'xlsx',
+        // 自定义类型
+        types: ['xlsx', 'csv']
+      }
     }
   },
   created () {
@@ -364,40 +340,6 @@ export default {
     this.getData()
   },
   methods: {
-    // 打印
-    printEvent () {
-      this.$refs.xTree.print({ original: true, isHeader: false })
-    },
-
-    // 导出csv
-    exportDataEvent () {
-      this.$refs.xTree.exportData({ type: 'csv' })
-    },
-
-    // 导出excel
-    exportExcel () {
-      this.listHead = []
-      this.listFilter = []
-      for (var i = 2; i < this.customColumns.length - 1; i++) {
-        if (this.customColumns[i].visible) {
-          this.listFilter.push(this.customColumns[i].property)
-          this.listHead.push(this.customColumns[i].title)
-        }
-      }
-      require.ensure([], () => {
-        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
-        const tHeader = this.listHead
-        // 上面设置Excel的表格第一行的标题
-        const filterVal = this.listFilter
-        // 上面的index、nickName、name是tableData里对象的属性
-        const list = this.tableData // 把data里的tableData存到list
-        const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
-      })
-    },
-    formatJson (filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
-    },
     getData () {
       this.loading = true
       var url = '/api/Menu/GetEidtMenuList'

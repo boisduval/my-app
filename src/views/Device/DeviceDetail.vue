@@ -26,9 +26,7 @@
         >
         </el-tab-pane>
       </el-tabs>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <router-view></router-view>
     </el-card>
   </div>
 </template>

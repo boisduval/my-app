@@ -278,6 +278,9 @@ export default {
       var label = this.$refs[to.name]
         ? this.$refs[to.name][0].$el.innerText
         : this.detailLabel
+      if (to.fullPath === '/perFormance') {
+        label = '系统性能'
+      }
       this.set_detail_label('')
       let flag = false
       for (let item of this.openTab) {
