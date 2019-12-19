@@ -1,5 +1,28 @@
 <template>
   <div>
+    <el-card class="box-card">
+      <el-form inline>
+        <el-form-item label="起始时间">
+          <el-date-picker
+            v-model="value1"
+            type="datetime"
+            placeholder="选择日期时间"
+            :clearable="false"
+            @change="setSearchTime"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label=" " label-width="60px">
+          <el-radio-group v-model="time" size="mini" @change="setSearchTime">
+            <el-radio-button label="1">1小时</el-radio-button>
+            <el-radio-button label="6">6小时</el-radio-button>
+            <el-radio-button label="12">12小时</el-radio-button>
+            <el-radio-button label="24">24小时</el-radio-button>
+            <el-radio-button label="48">48小时</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+    </el-card>
     <el-row :gutter="20">
       <el-col :span="12">
         <el-card class="box-card">
@@ -28,6 +51,7 @@
 </template>
 
 <script>
+let moment = require('moment')
 export default {
   data () {
     return {
@@ -36,39 +60,44 @@ export default {
       series: [],
       AutoSystemID: '',
       data: [],
-      CPUDPCTime: [],
-      CPUInterruptTime: [],
-      CPUPrivilegedTime: [],
-      CPUProcessorTime: [],
+      MEMAvailable: [],
+      MEMCommited: [],
+      MEMCommitedPerc: [],
+      MEMCached: [],
       SamplingTime: [],
-      interval: '',
-      myChart: '',
-      myChart1: ''
+      Start: '',
+      Stop: '',
+      value1: '',
+      value2: '',
+      time: '1'
     }
   },
   created () {
+    var today = moment()
+      .subtract(0, 'days')
+      .format('YYYY-MM-DD')
+    today = today + 'T00:00:00'
+    this.value1 = new Date(today)
+    this.value2 = new Date(this.value1.getTime() + 3600 * 1000 * 1)
     this.AutoSystemID = localStorage.getItem('AutoSystemID')
     this.getData()
-    this.interval = setInterval(() => {
-      console.log('ok')
-      this.getData()
-    }, 3000)
-    this.$once('hook:beforeDestroy', () => {
-      clearInterval(this.interval)
-    })
   },
   methods: {
     getData () {
-      this.CPUDPCTime = []
-      this.CPUInterruptTime = []
-      this.CPUPrivilegedTime = []
-      this.CPUProcessorTime = []
+      this.MEMAvailable = []
+      this.MEMCommitedPerc = []
+      this.MEMCached = []
+      this.MEMCommited = []
       this.SamplingTime = []
-      var url = '/api/Monitor/GetSystemMonitorInfo'
+      this.Start = moment(this.value1).format('YYYY-MM-DDTHH:mm:ss')
+      this.Stop = moment(this.value2).format('YYYY-MM-DDTHH:mm:ss')
+      var url = '/api/Monitor/GetSystemParamsInfo'
       this.$axios
         .get(url, {
           params: {
-            AutoSystemID: this.AutoSystemID
+            AutoSystemID: this.AutoSystemID,
+            Start: this.Start,
+            Stop: this.Stop
           }
         })
         .then(res => {
@@ -92,8 +121,8 @@ export default {
           if (el.hasOwnProperty(key) && this.hasOwnProperty(key)) {
             if (key === 'SamplingTime') {
               var time = el[key].split('.')[0]
-              // time = time.replace('T', '\n')
-              time = time.split('T')[1]
+              time = time.replace('T', '\n')
+              //   time = time.split('T')[1]
               this[key].push(time)
             } else {
               this[key].push(el[key])
@@ -101,6 +130,12 @@ export default {
           }
         }
       })
+    },
+
+    // 选择时间
+    setSearchTime () {
+      this.value2 = new Date(this.value1.getTime() + 3600 * 1000 * this.time)
+      this.getData()
     },
 
     getEcharts () {
@@ -111,13 +146,27 @@ export default {
           trigger: 'axis'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '60',
+          right: '80',
+          bottom: '50',
           containLabel: true
         },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 65,
+            end: 85
+          },
+          {
+            type: 'inside',
+            realtime: true,
+            start: 65,
+            end: 85
+          }
+        ],
         title: {
-          text: '处理器Cpu时间'
+          text: '可用内存'
         },
         toolbox: {
           feature: {
@@ -135,9 +184,9 @@ export default {
         },
         series: [
           {
-            name: '处理器Cpu时间',
+            name: '可用内存',
             type: 'line',
-            data: this.CPUProcessorTime
+            data: this.MEMAvailable
           }
         ]
       })
@@ -149,13 +198,27 @@ export default {
           trigger: 'axis'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '60',
+          right: '80',
+          bottom: '50',
           containLabel: true
         },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 65,
+            end: 85
+          },
+          {
+            type: 'inside',
+            realtime: true,
+            start: 65,
+            end: 85
+          }
+        ],
         title: {
-          text: 'Cpu特权时间'
+          text: '通用内存'
         },
         toolbox: {
           feature: {
@@ -173,9 +236,9 @@ export default {
         },
         series: [
           {
-            name: 'Cpu特权时间',
+            name: '通用内存',
             type: 'line',
-            data: this.CPUPrivilegedTime
+            data: this.MEMCommited
           }
         ]
       })
@@ -184,16 +247,43 @@ export default {
       var myChart2 = this.$echarts.init(document.getElementById('myChart2'))
       myChart2.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '60',
+          right: '80',
+          bottom: '50',
           containLabel: true
         },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 65,
+            end: 85
+          },
+          {
+            type: 'inside',
+            realtime: true,
+            start: 65,
+            end: 85
+          }
+        ],
         title: {
-          text: 'Cpu中断时间'
+          text: '内存使用比例'
         },
         toolbox: {
           feature: {
@@ -207,13 +297,17 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          },
+          max: 100
         },
         series: [
           {
-            name: 'Cpu中断时间',
+            name: '内存使用比例',
             type: 'line',
-            data: this.CPUPrivilegedTime
+            data: this.MEMCommitedPerc
           }
         ]
       })
@@ -225,13 +319,27 @@ export default {
           trigger: 'axis'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '60',
+          right: '80',
+          bottom: '50',
           containLabel: true
         },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 65,
+            end: 85
+          },
+          {
+            type: 'inside',
+            realtime: true,
+            start: 65,
+            end: 85
+          }
+        ],
         title: {
-          text: 'Cpu DPC时间'
+          text: '内存缓存'
         },
         toolbox: {
           feature: {
@@ -249,9 +357,9 @@ export default {
         },
         series: [
           {
-            name: 'Cpu DPC时间',
+            name: '内存缓存',
             type: 'line',
-            data: this.CPUDPCTime
+            data: this.MEMCached
           }
         ]
       })
@@ -269,4 +377,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-form-item {
+  margin-bottom: 0;
+}
+</style>

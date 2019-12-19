@@ -592,6 +592,54 @@ const routes = [
         meta: {
           keepAlive: false // 不需要被缓存
         }
+      },
+      {
+        path: '/CPUHistoryMonitor',
+        name: 'CPUHistoryMonitor',
+        component: () => import(/* webpackChunkName: "CPUHistoryMonitor" */ '../views/HistoryMonitor/CPUHistoryMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/diskHistoryMonitor',
+        name: 'diskHistoryMonitor',
+        component: () => import(/* webpackChunkName: "DiskHistoryMonitor" */ '../views/HistoryMonitor/DiskHistoryMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/memoryHistoryMonitor',
+        name: 'memoryHistoryMonitor',
+        component: () => import(/* webpackChunkName: "MemoryHistoryMonitor" */ '../views/HistoryMonitor/MemoryHistoryMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/othersHistoryMonitor',
+        name: 'othersHistoryMonitor',
+        component: () => import(/* webpackChunkName: "OthersHistoryMonitor" */ '../views/HistoryMonitor/OthersHistoryMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/networkHistoryMonitor',
+        name: 'networkHistoryMonitor',
+        component: () => import(/* webpackChunkName: "NetworkHistoryMonitor" */ '../views/HistoryMonitor/NetworkHistoryMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/systemHistoryMonitor',
+        name: 'systemHistoryMonitor',
+        component: () => import(/* webpackChunkName: "SystemHistoryMonitor" */ '../views/HistoryMonitor/SystemHistoryMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
       }
     ]
   },

@@ -1,6 +1,29 @@
 <template>
   <div>
-    <el-row :gutter="20">
+    <el-card class="box-card">
+      <el-form inline>
+        <el-form-item label="起始时间">
+          <el-date-picker
+            v-model="value1"
+            type="datetime"
+            placeholder="选择日期时间"
+            :clearable="false"
+            @change="setSearchTime"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label=" " label-width="30px">
+          <el-radio-group v-model="time" size="mini" @change="setSearchTime">
+            <el-radio-button label="1">1小时</el-radio-button>
+            <el-radio-button label="6">6小时</el-radio-button>
+            <el-radio-button label="12">12小时</el-radio-button>
+            <el-radio-button label="24">24小时</el-radio-button>
+            <el-radio-button label="48">48小时</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+    </el-card>
+    <el-row :gutter="20" style="margin-top:20px">
       <el-col :span="12">
         <el-card class="box-card">
           <div id="myChart" style="height:350px"></div>
@@ -28,6 +51,7 @@
 </template>
 
 <script>
+let moment = require('moment')
 export default {
   data () {
     return {
@@ -41,21 +65,22 @@ export default {
       CPUPrivilegedTime: [],
       CPUProcessorTime: [],
       SamplingTime: [],
-      interval: '',
-      myChart: '',
-      myChart1: ''
+      Start: '',
+      Stop: '',
+      value1: '',
+      value2: '',
+      time: '1'
     }
   },
   created () {
     this.AutoSystemID = localStorage.getItem('AutoSystemID')
+    var today = moment()
+      .subtract(0, 'days')
+      .format('YYYY-MM-DD')
+    today = today + 'T00:00:00'
+    this.value1 = new Date(today)
+    this.value2 = new Date(this.value1.getTime() + 3600 * 1000 * 1)
     this.getData()
-    this.interval = setInterval(() => {
-      console.log('ok')
-      this.getData()
-    }, 3000)
-    this.$once('hook:beforeDestroy', () => {
-      clearInterval(this.interval)
-    })
   },
   methods: {
     getData () {
@@ -64,11 +89,15 @@ export default {
       this.CPUPrivilegedTime = []
       this.CPUProcessorTime = []
       this.SamplingTime = []
-      var url = '/api/Monitor/GetSystemMonitorInfo'
+      this.Start = moment(this.value1).format('YYYY-MM-DDTHH:mm:ss')
+      this.Stop = moment(this.value2).format('YYYY-MM-DDTHH:mm:ss')
+      var url = '/api/Monitor/GetSystemParamsInfo'
       this.$axios
         .get(url, {
           params: {
-            AutoSystemID: this.AutoSystemID
+            AutoSystemID: this.AutoSystemID,
+            Start: this.Start,
+            Stop: this.Stop
           }
         })
         .then(res => {
@@ -92,8 +121,8 @@ export default {
           if (el.hasOwnProperty(key) && this.hasOwnProperty(key)) {
             if (key === 'SamplingTime') {
               var time = el[key].split('.')[0]
-              // time = time.replace('T', '\n')
-              time = time.split('T')[1]
+              time = time.replace('T', '\n')
+              //   time = time.split('T')[1]
               this[key].push(time)
             } else {
               this[key].push(el[key])
@@ -101,6 +130,12 @@ export default {
           }
         }
       })
+    },
+
+    // 选择时间
+    setSearchTime () {
+      this.value2 = new Date(this.value1.getTime() + 3600 * 1000 * this.time)
+      this.getData()
     },
 
     getEcharts () {
@@ -111,11 +146,25 @@ export default {
           trigger: 'axis'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '60',
+          right: '80',
+          bottom: '50',
           containLabel: true
         },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 65,
+            end: 85
+          },
+          {
+            type: 'inside',
+            realtime: true,
+            start: 65,
+            end: 85
+          }
+        ],
         title: {
           text: '处理器Cpu时间'
         },
@@ -149,11 +198,25 @@ export default {
           trigger: 'axis'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '60',
+          right: '80',
+          bottom: '50',
           containLabel: true
         },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 65,
+            end: 85
+          },
+          {
+            type: 'inside',
+            realtime: true,
+            start: 65,
+            end: 85
+          }
+        ],
         title: {
           text: 'Cpu特权时间'
         },
@@ -187,11 +250,25 @@ export default {
           trigger: 'axis'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '60',
+          right: '80',
+          bottom: '50',
           containLabel: true
         },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 65,
+            end: 85
+          },
+          {
+            type: 'inside',
+            realtime: true,
+            start: 65,
+            end: 85
+          }
+        ],
         title: {
           text: 'Cpu中断时间'
         },
@@ -225,11 +302,25 @@ export default {
           trigger: 'axis'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: '60',
+          right: '80',
+          bottom: '50',
           containLabel: true
         },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 65,
+            end: 85
+          },
+          {
+            type: 'inside',
+            realtime: true,
+            start: 65,
+            end: 85
+          }
+        ],
         title: {
           text: 'Cpu DPC时间'
         },
@@ -269,4 +360,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-form-item {
+  margin-bottom: 0;
+}
+</style>

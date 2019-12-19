@@ -455,6 +455,7 @@ export default {
         .get(`/api/Ablut/SystemConfig?AutoSystemID=${AutoSystemID}`)
         .then(res => {
           this.footerInfo = res.data.data
+          document.title = this.footerInfo.SystemText
         })
         .catch(err => {
           console.error(err)

@@ -401,7 +401,7 @@ const state = {
     {
       ID: '8',
       Href: '/',
-      Class: 'fa fa-cogs',
+      Class: 'fa fa-dashboard',
       Text: '实时监控',
       SOrder: 4000000,
       ShowNum: '0',
@@ -461,6 +461,74 @@ const state = {
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '其他信息监控',
+            Use: true
+          }
+        ]
+      }
+    },
+    {
+      ID: '9',
+      Href: '/',
+      Class: 'fa fa-line-chart',
+      Text: '历史监控',
+      SOrder: 4000000,
+      ShowNum: '0',
+      Use: true,
+      LeveList: {
+        Count: 6,
+        List: [
+          {
+            ID: '21',
+            MID: '8',
+            Href: 'CPUHistoryMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'CPU历史监控',
+            Use: true
+          },
+          {
+            ID: '50',
+            MID: '8',
+            Href: 'memoryHistoryMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '内存历史监控',
+            Use: true
+          },
+          {
+            ID: '39',
+            MID: '8',
+            Href: 'networkHistoryMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '网络历史监控',
+            Use: true
+          },
+          {
+            ID: '39',
+            MID: '8',
+            Href: 'diskHistoryMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '磁盘历史监控',
+            Use: true
+          },
+          {
+            ID: '39',
+            MID: '8',
+            Href: 'systemHistoryMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '系统历史监控',
+            Use: true
+          },
+          {
+            ID: '638043082846143531',
+            MID: '8',
+            Href: 'othersHistoryMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '其他信息历史监控',
             Use: true
           }
         ]
