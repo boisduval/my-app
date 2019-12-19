@@ -1,17 +1,29 @@
 <template>
   <div>
-    <el-col :span="12">
-      <div id="myChart" style="height:400px"></div>
-    </el-col>
-    <el-col :span="12">
-      <div id="myChart1" style="height:400px"></div>
-    </el-col>
-    <el-col :span="12">
-      <div id="myChart2" style="height:400px"></div>
-    </el-col>
-    <el-col :span="12">
-      <div id="myChart3" style="height:400px"></div>
-    </el-col>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-card class="box-card">
+          <div id="myChart" style="height:350px"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div id="myChart1" style="height:350px"></div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20" style="margin-top:20px">
+      <el-col :span="12">
+        <el-card class="box-card">
+          <div id="myChart2" style="height:350px"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div id="myChart3" style="height:350px"></div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -24,32 +36,11 @@ export default {
       series: [],
       AutoSystemID: '',
       data: [],
-      CONTENTSwitches: [],
       CPUDPCTime: [],
       CPUInterruptTime: [],
       CPUPrivilegedTime: [],
       CPUProcessorTime: [],
-      DISCQueueLengh: [],
-      DISKAverageTimeRead: [],
-      DISKAverageTimeWrite: [],
-      DISKRead: [],
-      DISKTime: [],
-      DISKWrite: [],
-      HANDLECountCounter: [],
-      MEMAvailable: [],
-      MEMCached: [],
-      MEMCommitLimit: [],
-      MEMCommited: [],
-      MEMCommitedPerc: [],
-      MEMPoolNonPaged: [],
-      MEMPoolPaged: [],
-      NetTrafficReceive: [],
-      NetTrafficSend: [],
-      PageFile: [],
-      ProcessorQueueLengh: [],
-      SYSTEMCalls: [],
       SamplingTime: [],
-      THREADCount: [],
       interval: '',
       myChart: '',
       myChart1: ''
@@ -68,35 +59,11 @@ export default {
   },
   methods: {
     getData () {
-      // if (this.myChart !== '') {
-      //   this.myChart.clear()
-      // }
-      this.CONTENTSwitches = []
       this.CPUDPCTime = []
       this.CPUInterruptTime = []
       this.CPUPrivilegedTime = []
       this.CPUProcessorTime = []
-      this.DISCQueueLengh = []
-      this.DISKAverageTimeRead = []
-      this.DISKAverageTimeWrite = []
-      this.DISKRead = []
-      this.DISKTime = []
-      this.DISKWrite = []
-      this.HANDLECountCounter = []
-      this.MEMAvailable = []
-      this.MEMCached = []
-      this.MEMCommitLimit = []
-      this.MEMCommited = []
-      this.MEMCommitedPerc = []
-      this.MEMPoolNonPaged = []
-      this.MEMPoolPaged = []
-      this.NetTrafficReceive = []
-      this.NetTrafficSend = []
-      this.PageFile = []
-      this.ProcessorQueueLengh = []
-      this.SYSTEMCalls = []
       this.SamplingTime = []
-      this.THREADCount = []
       var url = '/api/Monitor/GetSystemMonitorInfo'
       this.$axios
         .get(url, {
@@ -142,20 +109,19 @@ export default {
       myChart.setOption({
         tooltip: {
           trigger: 'axis',
-          position: function (pt) {
-            return [pt[0], '10%']
-          },
           formatter (value) {
             let str = value[0].name + '<br/>'
             value.forEach(item => {
-              str += item.marker + item.seriesName + ': ' + item.data + '%' + '<br/>'
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
             })
             return str
           }
-        },
-        legend: {
-          // data: ['处理器Cpu时间', 'Cpu特权时间', 'Cpu中断时间', 'Cpu DPC时间']
-          data: ['处理器Cpu时间']
         },
         grid: {
           left: '3%',
@@ -164,7 +130,7 @@ export default {
           containLabel: true
         },
         title: {
-          text: 'CPU监控'
+          text: '处理器Cpu时间'
         },
         toolbox: {
           feature: {
@@ -189,43 +155,27 @@ export default {
             type: 'line',
             data: this.CPUProcessorTime
           }
-          // {
-          //   name: 'Cpu特权时间',
-          //   type: 'line',
-          //   data: this.CPUPrivilegedTime
-          // },
-          // {
-          //   name: 'Cpu中断时间',
-          //   type: 'line',
-          //   data: this.CPUPrivilegedTime
-          // },
-          // {
-          //   name: 'Cpu DPC时间',
-          //   type: 'line',
-          //   data: this.CPUDPCTime
-          // }
         ]
       })
 
-      // 第二个图
+      // 第2个图
       var myChart1 = this.$echarts.init(document.getElementById('myChart1'))
       myChart1.setOption({
         tooltip: {
           trigger: 'axis',
-          position: function (pt) {
-            return [pt[0], '10%']
-          },
           formatter (value) {
             let str = value[0].name + '<br/>'
             value.forEach(item => {
-              str += item.marker + item.seriesName + ': ' + item.data + '%' + '<br/>'
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
             })
             return str
           }
-        },
-        legend: {
-          // data: ['可用内存', '通用内存', '最大内存', '内存使用比例']
-          data: ['内存使用比例']
         },
         grid: {
           left: '3%',
@@ -234,7 +184,7 @@ export default {
           containLabel: true
         },
         title: {
-          text: '内存监控'
+          text: 'Cpu特权时间'
         },
         toolbox: {
           feature: {
@@ -249,47 +199,37 @@ export default {
         yAxis: {
           type: 'value',
           boundaryGap: [0, '100%'],
-          max: 100,
           axisLabel: {
             formatter: '{value} (%)'
           }
         },
         series: [
-          // {
-          //   name: '可用内存',
-          //   type: 'line',
-          //   data: this.MEMAvailable
-          // },
-          // {
-          //   name: '通用内存',
-          //   type: 'line',
-          //   data: this.MEMCommited
-          // },
-          // {
-          //   name: '最大内存',
-          //   type: 'line',
-          //   data: this.MEMCommitLimit
-          // },
           {
-            name: '内存使用比例',
+            name: 'Cpu特权时间',
             type: 'line',
-            data: this.MEMCommitedPerc
+            data: this.CPUPrivilegedTime
           }
         ]
       })
 
-      // 第三个图
+      // 第3个图
       var myChart2 = this.$echarts.init(document.getElementById('myChart2'))
       myChart2.setOption({
         tooltip: {
           trigger: 'axis',
-          position: function (pt) {
-            return [pt[0], '10%']
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
           }
-        },
-        legend: {
-          // data: ['可用内存', '通用内存', '最大内存', '内存使用比例']
-          data: ['网络流量发送', '网络流量接收']
         },
         grid: {
           left: '3%',
@@ -298,7 +238,7 @@ export default {
           containLabel: true
         },
         title: {
-          text: '网络监控'
+          text: 'Cpu中断时间'
         },
         toolbox: {
           feature: {
@@ -312,33 +252,70 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
         },
         series: [
-          // {
-          //   name: '可用内存',
-          //   type: 'line',
-          //   data: this.MEMAvailable
-          // },
-          // {
-          //   name: '通用内存',
-          //   type: 'line',
-          //   data: this.MEMCommited
-          // },
-          // {
-          //   name: '最大内存',
-          //   type: 'line',
-          //   data: this.MEMCommitLimit
-          // },
           {
-            name: '网络流量发送',
+            name: 'Cpu中断时间',
             type: 'line',
-            data: this.NetTrafficSend
-          },
+            data: this.CPUPrivilegedTime
+          }
+        ]
+      })
+
+      // 第4个图
+      var myChart3 = this.$echarts.init(document.getElementById('myChart3'))
+      myChart3.setOption({
+        tooltip: {
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        title: {
+          text: 'Cpu DPC时间'
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: this.SamplingTime
+        },
+        yAxis: {
+          type: 'value',
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
+        },
+        series: [
           {
-            name: '网络流量接收',
+            name: 'Cpu DPC时间',
             type: 'line',
-            data: this.NetTrafficReceive
+            data: this.CPUDPCTime
           }
         ]
       })
@@ -348,6 +325,7 @@ export default {
           myChart.resize()
           myChart1.resize()
           myChart2.resize()
+          myChart3.resize()
         }
       }, 200)
     }

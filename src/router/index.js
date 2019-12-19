@@ -544,6 +544,54 @@ const routes = [
         meta: {
           keepAlive: true // 需要被缓存
         }
+      },
+      {
+        path: '/CPUMonitor',
+        name: 'CPUMonitor',
+        component: () => import(/* webpackChunkName: "CPUMonitor" */ '../views/RealtimeMonitor/CPUMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/diskMonitor',
+        name: 'diskMonitor',
+        component: () => import(/* webpackChunkName: "DiskMonitor" */ '../views/RealtimeMonitor/DiskMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/memoryMonitor',
+        name: 'memoryMonitor',
+        component: () => import(/* webpackChunkName: "MemoryMonitor" */ '../views/RealtimeMonitor/MemoryMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/othersMonitor',
+        name: 'othersMonitor',
+        component: () => import(/* webpackChunkName: "OthersMonitor" */ '../views/RealtimeMonitor/OthersMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/networkMonitor',
+        name: 'networkMonitor',
+        component: () => import(/* webpackChunkName: "NetworkMonitor" */ '../views/RealtimeMonitor/NetworkMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/systemMonitor',
+        name: 'systemMonitor',
+        component: () => import(/* webpackChunkName: "SystemMonitor" */ '../views/RealtimeMonitor/SystemMonitor.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
       }
     ]
   },

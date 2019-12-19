@@ -399,6 +399,74 @@ const state = {
       }
     },
     {
+      ID: '8',
+      Href: '/',
+      Class: 'fa fa-cogs',
+      Text: '实时监控',
+      SOrder: 4000000,
+      ShowNum: '0',
+      Use: true,
+      LeveList: {
+        Count: 6,
+        List: [
+          {
+            ID: '21',
+            MID: '8',
+            Href: 'CPUMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'CPU监控',
+            Use: true
+          },
+          {
+            ID: '50',
+            MID: '8',
+            Href: 'memoryMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '内存监控',
+            Use: true
+          },
+          {
+            ID: '39',
+            MID: '8',
+            Href: 'networkMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '网络监控',
+            Use: true
+          },
+          {
+            ID: '39',
+            MID: '8',
+            Href: 'diskMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '磁盘监控',
+            Use: true
+          },
+          {
+            ID: '39',
+            MID: '8',
+            Href: 'systemMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '系统监控',
+            Use: true
+          },
+          {
+            ID: '638043082846143531',
+            MID: '8',
+            Href: 'othersMonitor',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '其他信息监控',
+            Use: true
+          }
+        ]
+      }
+    },
+    {
       ID: '637031848502576736',
       Href: '/',
       Class: 'fa fa-group (alias)',
