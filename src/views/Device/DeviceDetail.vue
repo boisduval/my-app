@@ -39,20 +39,20 @@ export default {
       baseIfo: [],
       api: '/api/Devices/GetRegistrationEquipment',
       data: {},
-      activeName: 'DTUInfo',
+      activeName: 'EquipmentInfo',
       list: [
-        {
-          label: 'DTU信息',
-          name: 'DTUInfo'
-        },
-        {
-          label: '控制器信息',
-          name: 'ControllerInfo'
-        },
-        {
-          label: 'BMS信息',
-          name: 'BmsInfo'
-        },
+        // {
+        //   label: 'DTU信息',
+        //   name: 'DTUInfo'
+        // },
+        // {
+        //   label: '控制器信息',
+        //   name: 'ControllerInfo'
+        // },
+        // {
+        //   label: 'BMS信息',
+        //   name: 'BmsInfo'
+        // },
         // {
         //   label: '电池信息',
         //   name: 'BatteryInfo'

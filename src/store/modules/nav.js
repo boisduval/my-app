@@ -46,7 +46,7 @@ const state = {
           {
             ID: '7',
             MID: '3',
-            Href: '/ui/Device/DeviceConfig.aspx',
+            Href: 'deviceParams',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '设备参数',

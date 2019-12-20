@@ -143,7 +143,7 @@
           field="DICCID"
           title="ICCID"
           sortable
-          width="200"
+          width="250"
           show-overflow
         >
         </vxe-table-column>
@@ -151,7 +151,7 @@
           field="DIDS"
           title="设备ID字符串"
           sortable
-          width="200"
+          width="250"
           show-overflow
         >
         </vxe-table-column>
@@ -159,7 +159,7 @@
           field="DVIN"
           title="VIN码"
           sortable
-          width="180"
+          width="250"
           show-overflow
         >
         </vxe-table-column>
@@ -170,12 +170,12 @@
           title="设备管理员"
           sortable
           width="150"
-          align="center"
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="150" fixed="right" align="center">
+        <vxe-table-column title="操作" width="200" fixed="right" align="center">
           <template v-slot="{ row }">
             <el-button size="small" @click="showDialog(row)">编辑</el-button>
             <el-button size="small" type="danger" @click="deleteItem(row)"

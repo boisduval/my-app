@@ -179,7 +179,9 @@
           field="FunctionName"
           title="方法名称"
           sortable
-          width="240"
+          width="300"
+          align="left"
+          show-overflow
         >
         </vxe-table-column>
         <vxe-table-column field="Parameter" title="命令参数" sortable show-overflow show-header-overflow align="left">

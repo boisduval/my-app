@@ -20,7 +20,7 @@ const routes = [
         name: 'main',
         component: () => import(/* webpackChunkName: "mainPage" */ '../views/Main.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
 
@@ -29,7 +29,7 @@ const routes = [
         name: 'screen',
         component: () => import(/* webpackChunkName: "screen" */ '../views/Screen.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
 
@@ -38,7 +38,15 @@ const routes = [
         name: 'deviceifo',
         component: () => import(/* webpackChunkName: "deviceifo" */ '../views/Device/DeviceIfo.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
+        path: '/deviceParams',
+        name: 'deviceParams',
+        component: () => import(/* webpackChunkName: "DeviceParams" */ '../views/Device/DeviceParams.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -46,7 +54,7 @@ const routes = [
         name: 'deviceManage',
         component: () => import(/* webpackChunkName: "deviceManage" */ '../views/Device/DeviceManage.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -57,30 +65,30 @@ const routes = [
           keepAlive: false // 不需要被缓存
         },
         children: [
-          {
-            path: '',
-            name: 'DTUInfo',
-            component: () => import(/* webpackChunkName: "DTUInfo" */ '../views/Device/DTUInfo.vue'),
-            meta: {
-              keepAlive: false // 不需要被缓存
-            }
-          },
-          {
-            path: 'ControllerInfo',
-            name: 'ControllerInfo',
-            component: () => import(/* webpackChunkName: "ControllerInfo" */ '../views/Device/ControllerInfo.vue'),
-            meta: {
-              keepAlive: false // 不需要被缓存
-            }
-          },
-          {
-            path: 'BmsInfo',
-            name: 'BmsInfo',
-            component: () => import(/* webpackChunkName: "BmsInfo" */ '../views/Device/BmsInfo.vue'),
-            meta: {
-              keepAlive: false // 不需要被缓存
-            }
-          },
+          // {
+          //   path: '',
+          //   name: 'DTUInfo',
+          //   component: () => import(/* webpackChunkName: "DTUInfo" */ '../views/Device/DTUInfo.vue'),
+          //   meta: {
+          //     keepAlive: false // 不需要被缓存
+          //   }
+          // },
+          // {
+          //   path: 'ControllerInfo',
+          //   name: 'ControllerInfo',
+          //   component: () => import(/* webpackChunkName: "ControllerInfo" */ '../views/Device/ControllerInfo.vue'),
+          //   meta: {
+          //     keepAlive: false // 不需要被缓存
+          //   }
+          // },
+          // {
+          //   path: 'BmsInfo',
+          //   name: 'BmsInfo',
+          //   component: () => import(/* webpackChunkName: "BmsInfo" */ '../views/Device/BmsInfo.vue'),
+          //   meta: {
+          //     keepAlive: false // 不需要被缓存
+          //   }
+          // },
           // {
           //   path: 'BatteryInfo',
           //   name: 'BatteryInfo',
@@ -98,7 +106,7 @@ const routes = [
           //   }
           // },
           {
-            path: 'EquipmentInfo',
+            path: '',
             name: 'EquipmentInfo',
             component: () => import(/* webpackChunkName: "EquipmentInfo" */ '../views/Device/EquipmentInfo.vue'),
             meta: {
@@ -160,7 +168,7 @@ const routes = [
         name: 'batterDetail',
         component: () => import(/* webpackChunkName: "BatterDetail" */ '../views/Device/BatterDetail.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -168,7 +176,7 @@ const routes = [
         name: 'stateDetail',
         component: () => import(/* webpackChunkName: "StateDetail" */ '../views/Device/StateDetail.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -176,7 +184,7 @@ const routes = [
         name: 'funcInfo',
         component: () => import(/* webpackChunkName: "FuncInfo" */ '../views/Device/FuncInfo.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -184,7 +192,7 @@ const routes = [
         name: 'cmdList',
         component: () => import(/* webpackChunkName: "CmdList" */ '../views/Device/CmdList.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -192,7 +200,7 @@ const routes = [
         name: 'register',
         component: () => import(/* webpackChunkName: "Register" */ '../views/Device/Register.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -200,7 +208,7 @@ const routes = [
         name: 'selfInspection',
         component: () => import(/* webpackChunkName: "SelfInspection" */ '../views/Device/SelfInspection.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -208,7 +216,7 @@ const routes = [
         name: 'onlineDevice',
         component: () => import(/* webpackChunkName: "OnlineDevice" */ '../views/Device/OnlineDevice.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -216,7 +224,7 @@ const routes = [
         name: 'batteryType',
         component: () => import(/* webpackChunkName: "BatterManageBatteryType" */ '../views/BatterManage/BatteryType.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -224,7 +232,7 @@ const routes = [
         name: 'batterManage',
         component: () => import(/* webpackChunkName: "BatterManageBatterManage" */ '../views/BatterManage/BatterManage.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -232,7 +240,7 @@ const routes = [
         name: 'batterInfo',
         component: () => import(/* webpackChunkName: "BatterManageBatterInfo" */ '../views/BatterManage/BatterInfo.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -240,7 +248,7 @@ const routes = [
         name: 'temperatureManage',
         component: () => import(/* webpackChunkName: "BatterManageTemperatureManage" */ '../views/BatterManage/TemperatureManage.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -248,7 +256,7 @@ const routes = [
         name: 'temperatureInfo',
         component: () => import(/* webpackChunkName: "BatterManageTemperatureInfo" */ '../views/BatterManage/TemperatureInfo.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -256,7 +264,7 @@ const routes = [
         name: 'systemControl',
         component: () => import(/* webpackChunkName: "BatterManageSystemControl" */ '../views/BatterManage/SystemControl.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -264,7 +272,7 @@ const routes = [
         name: 'thresholdSetting',
         component: () => import(/* webpackChunkName: "BatterManageThresholdSetting" */ '../views/BatterManage/ThresholdSetting.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -272,7 +280,7 @@ const routes = [
         name: 'workThreshold',
         component: () => import(/* webpackChunkName: "BatterManageWorkThreshold" */ '../views/BatterManage/WorkThreshold.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -280,7 +288,7 @@ const routes = [
         name: 'batteryAlarm',
         component: () => import(/* webpackChunkName: "BatterManageBatteryAlarm" */ '../views/BatterManage/BatteryAlarm.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -307,7 +315,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "BatterManageBatteryState" */ '../views/BatterManage/BatteryState.vue'),
 
         meta: {
-          keepAlive: true // 需要缓存
+          keepAlive: false // 需要缓存
         }
       },
       {
@@ -324,7 +332,7 @@ const routes = [
         name: 'dayReport',
         component: () => import(/* webpackChunkName: "StatementDayReport" */ '../views/Statement/DayReport.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -332,7 +340,7 @@ const routes = [
         name: 'weekReport',
         component: () => import(/* webpackChunkName: "StatementWeekReport" */ '../views/Statement/WeekReport.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -340,7 +348,7 @@ const routes = [
         name: 'monthReport',
         component: () => import(/* webpackChunkName: "StatementMonthReport" */ '../views/Statement/MonthReport.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -348,7 +356,7 @@ const routes = [
         name: 'yearReport',
         component: () => import(/* webpackChunkName: "StatementYearReport" */ '../views/Statement/YearReport.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -356,7 +364,7 @@ const routes = [
         name: 'alarmReport',
         component: () => import(/* webpackChunkName: "StatementAlarmReport" */ '../views/Statement/AlarmReport.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -364,7 +372,7 @@ const routes = [
         name: 'alarmRealTime',
         component: () => import(/* webpackChunkName: "AlarmAlarmRealTime" */ '../views/Alarm/AlarmRealTime.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -372,7 +380,7 @@ const routes = [
         name: 'alarmhistory',
         component: () => import(/* webpackChunkName: "AlarmAlarmhistory" */ '../views/Alarm/Alarmhistory.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -380,7 +388,7 @@ const routes = [
         name: 'peakAndValleyPrice',
         component: () => import(/* webpackChunkName: "SystemManagementPeakAndValleyPrice" */ '../views/SystemManagement/PeakAndValleyPrice.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -388,7 +396,7 @@ const routes = [
         name: 'meunManagement',
         component: () => import(/* webpackChunkName: "SystemManagementMeunManagement" */ '../views/SystemManagement/MeunManagement.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -396,7 +404,7 @@ const routes = [
         name: 'dicSystem',
         component: () => import(/* webpackChunkName: "SystemManagementDicSystem" */ '../views/SystemManagement/DicSystem.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -412,7 +420,7 @@ const routes = [
         name: 'monitoring',
         component: () => import(/* webpackChunkName: "SystemManagementMonitoring" */ '../views/SystemManagement/Monitoring.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -446,7 +454,7 @@ const routes = [
         name: 'helpList',
         component: () => import(/* webpackChunkName: "SystemManagementHelpList" */ '../views/SystemManagement/HelpList.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -454,7 +462,7 @@ const routes = [
         name: 'usersManagement',
         component: () => import(/* webpackChunkName: "UsersManagement" */ '../views/UserManagement/UsersManagement.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -462,7 +470,7 @@ const routes = [
         name: 'roleManagement',
         component: () => import(/* webpackChunkName: "RoleManagement" */ '../views/UserManagement/RoleManagement.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -470,7 +478,7 @@ const routes = [
         name: 'departmentation',
         component: () => import(/* webpackChunkName: "Departmentation" */ '../views/UserManagement/Departmentation.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -478,7 +486,7 @@ const routes = [
         name: 'active',
         component: () => import(/* webpackChunkName: "Active" */ '../views/UserManagement/Active.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -486,7 +494,7 @@ const routes = [
         name: 'loginAbnormal',
         component: () => import(/* webpackChunkName: "LoginAbnormal" */ '../views/UserManagement/LoginAbnormal.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -494,7 +502,7 @@ const routes = [
         name: 'mailBox',
         component: () => import(/* webpackChunkName: "mailBox" */ '../views/Mail/MailBox.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -502,7 +510,7 @@ const routes = [
         name: 'users',
         component: () => import(/* webpackChunkName: "Users" */ '../views/Log/Users.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -510,7 +518,7 @@ const routes = [
         name: 'systemLog',
         component: () => import(/* webpackChunkName: "SystemLog" */ '../views/Log/SystemLog.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -518,7 +526,7 @@ const routes = [
         name: 'hardware',
         component: () => import(/* webpackChunkName: "Hardware" */ '../views/Log/Hardware.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -526,7 +534,7 @@ const routes = [
         name: 'exception',
         component: () => import(/* webpackChunkName: "Exception" */ '../views/Log/Exception.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -534,7 +542,7 @@ const routes = [
         name: 'menmorandumListWaitLoad',
         component: () => import(/* webpackChunkName: "MenmorandumListWaitLoad" */ '../views/Menmorandum/MenmorandumListWaitLoad.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {
@@ -542,7 +550,7 @@ const routes = [
         name: 'menmorandumListOverLoad',
         component: () => import(/* webpackChunkName: "MenmorandumListOverLoad" */ '../views/Menmorandum/MenmorandumListOverLoad.vue'),
         meta: {
-          keepAlive: true // 需要被缓存
+          keepAlive: false // 需要被缓存
         }
       },
       {

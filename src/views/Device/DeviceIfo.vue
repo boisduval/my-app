@@ -129,7 +129,7 @@
           field="DICCID"
           title="ICCID"
           sortable
-          width="200"
+          width="250"
           show-overflow
         >
         </vxe-table-column>
@@ -137,7 +137,7 @@
           field="DIDS"
           title="设备ID字符串"
           sortable
-          width="200"
+          width="250"
           show-overflow
         >
         </vxe-table-column>
@@ -145,7 +145,7 @@
           field="DVIN"
           title="VIN码"
           sortable
-          width="180"
+          width="250"
           show-overflow
         >
         </vxe-table-column>

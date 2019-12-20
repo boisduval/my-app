@@ -86,7 +86,7 @@
           <vxe-table-column
             field="DeviceID"
             title="设备ID"
-            width="200"
+            width="300"
             sortable
             show-overflow
           >

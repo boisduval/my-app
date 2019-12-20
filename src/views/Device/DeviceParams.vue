@@ -9,38 +9,45 @@
           </div>
           <el-form
             :inline="true"
-            :model="formInline"
+            :model="searchForm"
             class="demo-form-inline"
             label-width="90px"
             label-position="left"
           >
             <el-form-item label="ICCID编号:">
               <el-input
-                v-model="formInline.ICCID"
+                v-model="searchForm.ICCID"
                 placeholder="请输入ICCID编号"
               ></el-input>
             </el-form-item>
             <el-form-item label="设备编号:">
               <el-input
-                v-model="formInline.IDS"
+                v-model="searchForm.IDS"
                 placeholder="请输入设备编号"
               ></el-input>
             </el-form-item>
             <el-form-item label="VIN编码:">
               <el-input
-                v-model="formInline.VIN"
+                v-model="searchForm.VIN"
                 placeholder="请输入VIN编码"
               ></el-input>
             </el-form-item>
             <el-form-item label="设备名称:">
               <el-input
-                v-model="formInline.Name"
+                v-model="searchForm.Name"
                 placeholder="请输入设备名称"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
             <el-form-item>
-              <el-button type="primary" @click="formInline.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -77,17 +84,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -119,12 +126,22 @@
         element-loading-background="rgba(0, 0, 0, 0)"
         :edit-config="{ trigger: 'manual', mode: 'row' }"
         resizable
-        align="center"
         highlight-hover-row
         highlight-current-row
       >
-        <vxe-table-column type="checkbox" width="50" fixed="left"></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="checkbox"
+          width="50"
+          fixed="left"
+          align="center"
+        ></vxe-table-column>
+        <vxe-table-column
+          type="seq"
+          width="50"
+          title="序号"
+          fixed="left"
+          align="center"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
@@ -157,15 +174,18 @@
           title="设备管理员"
           sortable
           width="150"
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="150">
+        <vxe-table-column title="操作" width="300" align="center">
           <template v-slot="{ row }">
-            <el-button size="small" @click="setSelfInspection(row)">
-              <i class="el-icon-edit"></i>
-              召测
+            <el-button plain size="small" @click="updateSystemTime(row)">
+              更新系统时间
+            </el-button>
+            <el-button plain size="small" @click="DMSReset(row)">
+              设备软重启
             </el-button>
           </template>
         </vxe-table-column>
@@ -176,8 +196,8 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="formInline.page"
-        :page-sizes="[2, 4, 8]"
+        :current-page="searchForm.page"
+        :page-sizes="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="count"
       >
@@ -188,11 +208,11 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      formInline: {
+      searchForm: {
         page: 1,
         limit: 2,
         ICCID: '',
@@ -209,15 +229,16 @@ export default {
       loading: false
     }
   },
+  computed: {
+    ...mapState('table', ['pageSize'])
+  },
   methods: {
-    ...mapMutations('detail', ['set_paramsD', 'set_paramsB', 'set_paramsS']),
-    ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
-      this.formInline.AutoSystemID = localStorage.getItem('AutoSystemID')
+      this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
       this.$axios
         .get(
-          `/api/Devices/GetRegistrationEquipmentList?AutoSystemID=${this.formInline.AutoSystemID}&page=${this.formInline.page}&limit=${this.formInline.limit}&ICCID=${this.formInline.ICCID}&IDS=${this.formInline.IDS}&VIN=${this.formInline.VIN}&Name=${this.formInline.Name}`
+          `/api/Devices/GetRegistrationEquipmentList?AutoSystemID=${this.searchForm.AutoSystemID}&page=${this.searchForm.page}&limit=${this.searchForm.limit}&ICCID=${this.searchForm.ICCID}&IDS=${this.searchForm.IDS}&VIN=${this.searchForm.VIN}&Name=${this.searchForm.Name}`
         )
         .then(res => {
           if (res.data.data) {
@@ -236,13 +257,13 @@ export default {
 
     // 每页显示多少条
     handleSizeChange (val) {
-      this.formInline.limit = val
+      this.searchForm.limit = val
       this.getData()
     },
 
     // 当前页
     handleCurrentChange (val) {
-      this.formInline.page = val
+      this.searchForm.page = val
       this.getData()
     },
 
@@ -281,24 +302,25 @@ export default {
       return jsonData.map(v => filterVal.map(j => v[j]))
     },
 
-    // 自动召测
-    setSelfInspection (row) {
-      console.log(row)
-      this.$confirm(`确定召测用户[ ${row.DName} ]吗`, '提示', {
+    // 更新系统时间
+    updateSystemTime (row) {
+      this.$confirm('确定要更新系统时间吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          var url = '/api/Devices/SelfInspection'
-          var IDS = row.DIDS
-          var AutoSystemID = this.formInline.AutoSystemID
-          var Name = row.DName
-          this.$axios.post(url, {
-            IDS: IDS,
-            AutoSystemID: AutoSystemID,
-            Name: Name
-          })
+          console.log(row)
+          var url = '/api/Command/DMSSetSystemTime'
+          var obj = {
+            AutoSystemID: this.searchForm.AutoSystemID,
+            data: {
+              Address: 0,
+              IDS: row.DICCID,
+              Data: [0]
+            }
+          }
+          this.$axios.post(url, obj)
             .then(res => {
               if (res.data.code === 0) {
                 this.$message.success(res.data.msg)
@@ -313,13 +335,50 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消召测'
+            message: '已取消删除'
+          })
+        })
+    },
+
+    // 设备软重启
+    DMSReset (row) {
+      this.$confirm('设备将会软重启,确定要继续吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          var url = '/api/Command/DMSReset'
+          var obj = {
+            AutoSystemID: this.searchForm.AutoSystemID,
+            data: {
+              Address: 0,
+              IDS: row.DICCID,
+              Data: [0]
+            }
+          }
+          this.$axios.post(url, obj)
+            .then(res => {
+              if (res.data.code === 0) {
+                this.$message.success(res.data.msg)
+              } else if (res.data.code === 1) {
+                this.$message.error(res.data.msg)
+              }
+            })
+            .catch(err => {
+              console.error(err)
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
           })
         })
     }
   },
-
   created () {
+    this.searchForm.limit = this.pageSize[0]
     this.getData()
   }
 }
@@ -362,7 +421,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {
