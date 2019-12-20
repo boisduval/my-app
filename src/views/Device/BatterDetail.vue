@@ -10,11 +10,12 @@
           v-for="(item, index) in baseIfo"
           :key="index"
           :label="item.label"
+          style="width:400px"
         >
-          <el-input :value="item.value" :readonly="true"></el-input>
+          <el-input :value="item.value" :readonly="true" style="width:250px"></el-input>
         </el-form-item>
-        <el-form-item label="设备Bank">
-          <el-select v-model="bank">
+        <el-form-item label="设备Bank" style="width:400px">
+          <el-select v-model="bank" style="width:250px">
             <el-option label="Bank1" value="0"></el-option>
             <el-option label="Bank2" value="1"></el-option>
           </el-select>

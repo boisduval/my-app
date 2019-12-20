@@ -7,11 +7,12 @@
       </div>
       <el-form label-width="80px" :inline="true">
         <el-form-item
+          style="width:400px"
           v-for="(item, index) in baseIfo"
           :key="index"
           :label="item.label"
         >
-          <el-input :value="item.value" :readonly="true"></el-input>
+          <el-input :value="item.value" :readonly="true" style="width:250px"></el-input>
         </el-form-item>
       </el-form>
     </el-card>
