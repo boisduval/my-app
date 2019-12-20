@@ -151,7 +151,11 @@ export default {
           {
             name: '读硬盘速度',
             type: 'line',
-            data: this.DISKRead
+            data: this.DISKRead,
+            smooth: true,
+            itemStyle: {
+              color: '#7CB5EC'
+            }
           }
         ]
       })
@@ -189,7 +193,11 @@ export default {
           {
             name: '写硬盘速度',
             type: 'line',
-            data: this.DISKWrite
+            data: this.DISKWrite,
+            smooth: true,
+            itemStyle: {
+              color: '#FF9655'
+            }
           }
         ]
       })
@@ -227,7 +235,11 @@ export default {
           {
             name: '磁盘平均读取时间',
             type: 'line',
-            data: this.DISKAverageTimeRead
+            data: this.DISKAverageTimeRead,
+            smooth: true,
+            itemStyle: {
+              color: '#69F9C4'
+            }
           }
         ]
       })
@@ -265,7 +277,11 @@ export default {
           {
             name: '磁盘平均写入时间',
             type: 'line',
-            data: this.DISKAverageTimeWrite
+            data: this.DISKAverageTimeWrite,
+            smooth: true,
+            itemStyle: {
+              color: '#d48265'
+            }
           }
         ]
       })
@@ -303,7 +319,11 @@ export default {
           {
             name: '硬盘队列长度',
             type: 'line',
-            data: this.DISCQueueLengh
+            data: this.DISCQueueLengh,
+            smooth: true,
+            itemStyle: {
+              color: '#24CBE5'
+            }
           }
         ]
       })
@@ -341,7 +361,11 @@ export default {
           {
             name: '磁盘时间',
             type: 'line',
-            data: this.DISKTime
+            data: this.DISKTime,
+            smooth: true,
+            itemStyle: {
+              color: '#64E572'
+            }
           }
         ]
       })

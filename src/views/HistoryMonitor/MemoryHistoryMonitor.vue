@@ -69,7 +69,7 @@ export default {
       Stop: '',
       value1: '',
       value2: '',
-      time: '1'
+      time: '24'
     }
   },
   created () {
@@ -186,7 +186,11 @@ export default {
           {
             name: '可用内存',
             type: 'line',
-            data: this.MEMAvailable
+            data: this.MEMAvailable,
+            smooth: true,
+            itemStyle: {
+              color: '#7CB5EC'
+            }
           }
         ]
       })
@@ -238,7 +242,11 @@ export default {
           {
             name: '通用内存',
             type: 'line',
-            data: this.MEMCommited
+            data: this.MEMCommited,
+            smooth: true,
+            itemStyle: {
+              color: '#FF9655'
+            }
           }
         ]
       })
@@ -307,7 +315,11 @@ export default {
           {
             name: '内存使用比例',
             type: 'line',
-            data: this.MEMCommitedPerc
+            data: this.MEMCommitedPerc,
+            smooth: true,
+            itemStyle: {
+              color: '#69F9C4'
+            }
           }
         ]
       })
@@ -359,7 +371,11 @@ export default {
           {
             name: '内存缓存',
             type: 'line',
-            data: this.MEMCached
+            data: this.MEMCached,
+            smooth: true,
+            itemStyle: {
+              color: '#d48265'
+            }
           }
         ]
       })

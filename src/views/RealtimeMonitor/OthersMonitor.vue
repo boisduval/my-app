@@ -137,7 +137,11 @@ export default {
           {
             name: '内存池分页',
             type: 'line',
-            data: this.MEMPoolPaged
+            data: this.MEMPoolPaged,
+            smooth: true,
+            itemStyle: {
+              color: '#7CB5EC'
+            }
           }
         ]
       })
@@ -175,7 +179,11 @@ export default {
           {
             name: '内存池未分页',
             type: 'line',
-            data: this.MEMPoolNonPaged
+            data: this.MEMPoolNonPaged,
+            smooth: true,
+            itemStyle: {
+              color: '#FF9655'
+            }
           }
         ]
       })
@@ -226,7 +234,11 @@ export default {
           {
             name: '页面文件',
             type: 'line',
-            data: this.PageFile
+            data: this.PageFile,
+            smooth: true,
+            itemStyle: {
+              color: '#69F9C4'
+            }
           }
         ]
       })
@@ -264,7 +276,11 @@ export default {
           {
             name: '内容切换',
             type: 'line',
-            data: this.CONTENTSwitches
+            data: this.CONTENTSwitches,
+            smooth: true,
+            itemStyle: {
+              color: '#d48265'
+            }
           }
         ]
       })

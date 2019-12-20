@@ -121,7 +121,11 @@ export default {
           {
             name: '网络流量发送',
             type: 'line',
-            data: this.NetTrafficSend
+            data: this.NetTrafficSend,
+            smooth: true,
+            itemStyle: {
+              color: '#7CB5EC'
+            }
           }
         ]
       })
@@ -159,7 +163,11 @@ export default {
           {
             name: '网络流量接收',
             type: 'line',
-            data: this.NetTrafficReceive
+            data: this.NetTrafficReceive,
+            smooth: true,
+            itemStyle: {
+              color: '#69F9C4'
+            }
           }
         ]
       })

@@ -69,7 +69,7 @@ export default {
       Stop: '',
       value1: '',
       value2: '',
-      time: '1'
+      time: '24'
     }
   },
   created () {
@@ -186,7 +186,11 @@ export default {
           {
             name: '处理器Cpu时间',
             type: 'line',
-            data: this.CPUProcessorTime
+            data: this.CPUProcessorTime,
+            smooth: true,
+            itemStyle: {
+              color: '#7CB5EC'
+            }
           }
         ]
       })
@@ -238,7 +242,11 @@ export default {
           {
             name: 'Cpu特权时间',
             type: 'line',
-            data: this.CPUPrivilegedTime
+            data: this.CPUPrivilegedTime,
+            smooth: true,
+            itemStyle: {
+              color: '#FF9655'
+            }
           }
         ]
       })
@@ -290,7 +298,11 @@ export default {
           {
             name: 'Cpu中断时间',
             type: 'line',
-            data: this.CPUPrivilegedTime
+            data: this.CPUPrivilegedTime,
+            smooth: true,
+            itemStyle: {
+              color: '#69F9C4'
+            }
           }
         ]
       })
@@ -342,7 +354,11 @@ export default {
           {
             name: 'Cpu DPC时间',
             type: 'line',
-            data: this.CPUDPCTime
+            data: this.CPUDPCTime,
+            smooth: true,
+            itemStyle: {
+              color: '#d48265'
+            }
           }
         ]
       })

@@ -108,7 +108,20 @@ export default {
       var myChart = this.$echarts.init(document.getElementById('myChart'))
       myChart.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
         },
         grid: {
           left: '3%',
@@ -131,22 +144,43 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
         },
         series: [
           {
             name: '处理器Cpu时间',
             type: 'line',
-            data: this.CPUProcessorTime
+            data: this.CPUProcessorTime,
+            smooth: true,
+            itemStyle: {
+              color: '#7CB5EC'
+            }
           }
-        ]
+        ],
+        animationEasing: 'bounceInOut'
       })
 
       // 第2个图
       var myChart1 = this.$echarts.init(document.getElementById('myChart1'))
       myChart1.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
         },
         grid: {
           left: '3%',
@@ -169,22 +203,43 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
         },
         series: [
           {
             name: 'Cpu特权时间',
             type: 'line',
-            data: this.CPUPrivilegedTime
+            data: this.CPUPrivilegedTime,
+            smooth: true,
+            itemStyle: {
+              color: '#FF9655'
+            }
           }
-        ]
+        ],
+        animationEasing: 'bounceInOut'
       })
 
       // 第3个图
       var myChart2 = this.$echarts.init(document.getElementById('myChart2'))
       myChart2.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
         },
         grid: {
           left: '3%',
@@ -207,22 +262,43 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
         },
         series: [
           {
             name: 'Cpu中断时间',
             type: 'line',
-            data: this.CPUPrivilegedTime
+            data: this.CPUPrivilegedTime,
+            smooth: true,
+            itemStyle: {
+              color: '#69F9C4'
+            }
           }
-        ]
+        ],
+        animationEasing: 'bounceInOut'
       })
 
       // 第4个图
       var myChart3 = this.$echarts.init(document.getElementById('myChart3'))
       myChart3.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
         },
         grid: {
           left: '3%',
@@ -245,15 +321,23 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
         },
         series: [
           {
             name: 'Cpu DPC时间',
             type: 'line',
-            data: this.CPUDPCTime
+            data: this.CPUDPCTime,
+            smooth: true,
+            itemStyle: {
+              color: '#d48265'
+            }
           }
-        ]
+        ],
+        animationEasing: 'bounceInOut'
       })
 
       setTimeout(function () {

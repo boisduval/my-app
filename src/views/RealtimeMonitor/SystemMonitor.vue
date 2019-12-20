@@ -137,7 +137,11 @@ export default {
           {
             name: '系统句柄数',
             type: 'line',
-            data: this.HANDLECountCounter
+            data: this.HANDLECountCounter,
+            smooth: true,
+            itemStyle: {
+              color: '#7CB5EC'
+            }
           }
         ]
       })
@@ -175,7 +179,11 @@ export default {
           {
             name: '系统线程数',
             type: 'line',
-            data: this.THREADCount
+            data: this.THREADCount,
+            smooth: true,
+            itemStyle: {
+              color: '#FF9655'
+            }
           }
         ]
       })
@@ -226,7 +234,11 @@ export default {
           {
             name: '系统调用',
             type: 'line',
-            data: this.SYSTEMCalls
+            data: this.SYSTEMCalls,
+            smooth: true,
+            itemStyle: {
+              color: '#69F9C4'
+            }
           }
         ]
       })
@@ -264,7 +276,11 @@ export default {
           {
             name: '系统队列长度',
             type: 'line',
-            data: this.ProcessorQueueLengh
+            data: this.ProcessorQueueLengh,
+            smooth: true,
+            itemStyle: {
+              color: '#d48265'
+            }
           }
         ]
       })
