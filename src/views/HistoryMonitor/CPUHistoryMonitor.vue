@@ -79,8 +79,7 @@ export default {
       .format('YYYY-MM-DD')
     today = today + 'T00:00:00'
     this.value1 = new Date(today)
-    this.value2 = new Date(this.value1.getTime() + 3600 * 1000 * 1)
-    this.getData()
+    this.setSearchTime()
   },
   methods: {
     getData () {
@@ -143,7 +142,20 @@ export default {
       var myChart = this.$echarts.init(document.getElementById('myChart'))
       myChart.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
         },
         grid: {
           left: '60',
@@ -180,7 +192,10 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
         },
         series: [
           {
@@ -199,7 +214,20 @@ export default {
       var myChart1 = this.$echarts.init(document.getElementById('myChart1'))
       myChart1.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
         },
         grid: {
           left: '60',
@@ -236,7 +264,10 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
         },
         series: [
           {
@@ -255,7 +286,20 @@ export default {
       var myChart2 = this.$echarts.init(document.getElementById('myChart2'))
       myChart2.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
         },
         grid: {
           left: '60',
@@ -292,7 +336,10 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
         },
         series: [
           {
@@ -311,7 +358,20 @@ export default {
       var myChart3 = this.$echarts.init(document.getElementById('myChart3'))
       myChart3.setOption({
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          formatter (value) {
+            let str = value[0].name + '<br/>'
+            value.forEach(item => {
+              str +=
+                item.marker +
+                item.seriesName +
+                ': ' +
+                item.data +
+                '%' +
+                '<br/>'
+            })
+            return str
+          }
         },
         grid: {
           left: '60',
@@ -348,7 +408,10 @@ export default {
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          axisLabel: {
+            formatter: '{value} (%)'
+          }
         },
         series: [
           {

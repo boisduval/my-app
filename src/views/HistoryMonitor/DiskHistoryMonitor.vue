@@ -90,9 +90,8 @@ export default {
       .format('YYYY-MM-DD')
     today = today + 'T00:00:00'
     this.value1 = new Date(today)
-    this.value2 = new Date(this.value1.getTime() + 3600 * 1000 * 1)
     this.AutoSystemID = localStorage.getItem('AutoSystemID')
-    this.getData()
+    this.setSearchTime()
   },
   methods: {
     getData () {
