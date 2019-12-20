@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form label-width="130px">
+    <el-form label-width="140px">
       <el-form-item
         v-for="(item, index) in EInfo"
         :key="index"
@@ -46,7 +46,7 @@ export default {
                 case 'eXTEND_IP_CAPABILITIES_TO_ENABLE':
                   this.EInfo.push({
                     label: '扩展IP功能使能',
-                    value: this.data[key]
+                    value: this.data[key].toString()
                   })
                   break
                 case 'eXTENDED_IP_ON':
@@ -132,21 +132,24 @@ export default {
                   })
                   break
                 case 'lOCAL_DHCP_ON_STATUS':
+                  var state = data[key] ? '开启' : '关闭'
                   this.EInfo.push({
                     label: '本地DHCP开启状态',
-                    value: data[key]
+                    value: state
                   })
                   break
                 case 'dNS_DOMAIN_NAME_OPEN_STATE':
+                  var state1 = data[key] ? '开启' : '关闭'
                   this.EInfo.push({
                     label: 'DNS域名开启状态',
-                    value: data[key]
+                    value: state1
                   })
                   break
                 case 'dNS_DOMAIN_NAME_FETCH_STATUS':
+                  var state2 = data[key] ? '已获取' : '未获取'
                   this.EInfo.push({
                     label: 'DNS域名获取状态',
-                    value: data[key]
+                    value: state2
                   })
                   break
                 case 'eXTEND_IP_ENABLED_STATUS':

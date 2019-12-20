@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form label-width="120px">
+    <el-form label-width="140px">
       <el-form-item
         v-for="(item, index) in EInfo"
         :key="index"
@@ -92,6 +92,39 @@ export default {
                 case 'rEAD_RTC_TIME':
                   this.EInfo.push({
                     label: 'RTC时间',
+                    value: data[key]
+                  })
+                  break
+                case 'tHE_MAC_ADDRESS':
+                  this.EInfo.push({
+                    label: 'MAC地址',
+                    value: data[key]
+                  })
+                  break
+                case 'lOCAL_DHCP_ON_STATUS':
+                  var state = data[key] ? '开启' : '关闭'
+                  this.EInfo.push({
+                    label: '本地DHCP开启状态',
+                    value: state
+                  })
+                  break
+                case 'dNS_DOMAIN_NAME_OPEN_STATE':
+                  var state1 = data[key] ? '开启' : '关闭'
+                  this.EInfo.push({
+                    label: 'DNS域名开启状态',
+                    value: state1
+                  })
+                  break
+                case 'dNS_DOMAIN_NAME_FETCH_STATUS':
+                  var state2 = data[key] ? '已获取' : '未获取'
+                  this.EInfo.push({
+                    label: 'DNS域名获取状态',
+                    value: state2
+                  })
+                  break
+                case 'eXTEND_IP_ENABLED_STATUS':
+                  this.EInfo.push({
+                    label: '扩展IP开启状态',
                     value: data[key]
                   })
                   break
