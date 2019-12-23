@@ -25,6 +25,7 @@
                 <el-input
                   v-model="data.AccountNumber"
                   placeholder="账户"
+                  autofocus
                 ></el-input>
               </el-form-item>
               <el-form-item>
@@ -33,6 +34,7 @@
                   placeholder="密码"
                   type="password"
                   autocomplete="off"
+                  @keyup.enter.native="login"
                 ></el-input>
               </el-form-item>
               <el-button type="primary" style="width:100%" @click="login"
