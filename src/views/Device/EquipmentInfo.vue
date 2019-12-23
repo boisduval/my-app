@@ -33,49 +33,100 @@ export default {
     }
   },
   methods: {
-    getEInfo (api, params) {
-      this.$axios
-        .get(
-          `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
-        )
-        .then(res => {
-          if (res.data.code === 0) {
-            this.data = res.data.data
-            for (var key in this.data) {
-              switch (key) {
-                case 'dMS_DEVICE_ID':
-                  this.EInfo.push({
-                    label: 'DMS设备ID',
-                    value: this.data[key]
-                  })
-                  break
-                case 'dMS_PROJECT_NUMBER':
-                  this.EInfo.push({
-                    label: '项目编号',
-                    value: this.data[key]
-                  })
-                  break
-              }
+    async getEInfo (api, params) {
+      try {
+        let res = await (() => {
+          return new Promise((resolve, reject) => {
+            this.$axios
+              .get(
+                `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
+              )
+              .then(res => {
+                resolve(res)
+              })
+              .catch(err => {
+                reject(err)
+              })
+          })
+        })
+        if (res.data.code === 0) {
+          this.data = res.data.data
+          for (var key in this.data) {
+            switch (key) {
+              case 'dMS_DEVICE_ID':
+                this.EInfo.push({
+                  label: 'DMS设备ID',
+                  value: this.data[key]
+                })
+                break
+              case 'dMS_PROJECT_NUMBER':
+                this.EInfo.push({
+                  label: '项目编号',
+                  value: this.data[key]
+                })
+                break
             }
-          } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
-          } else if (res.data.code === 3) {
-            this.$message.warning(res.data.msg)
           }
-          if (res.data.code !== 0) {
-            this.EInfo.push({
-              label: 'DMS设备ID',
-              value: ''
-            })
-            this.EInfo.push({
-              label: '项目编号',
-              value: ''
-            })
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
+        } else if (res.data.code === 1) {
+          this.$message.error(res.data.msg)
+        } else if (res.data.code === 3) {
+          this.$message.warning(res.data.msg)
+        }
+        if (res.data.code !== 0) {
+          this.EInfo.push({
+            label: 'DMS设备ID',
+            value: ''
+          })
+          this.EInfo.push({
+            label: '项目编号',
+            value: ''
+          })
+        }
+      } catch (err) {
+        console.log(err)
+      }
+      // this.$axios
+      //   .get(
+      //     `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
+      //   )
+      //   .then(res => {
+      //     if (res.data.code === 0) {
+      //       this.data = res.data.data;
+      //       for (var key in this.data) {
+      //         switch (key) {
+      //           case "dMS_DEVICE_ID":
+      //             this.EInfo.push({
+      //               label: "DMS设备ID",
+      //               value: this.data[key]
+      //             });
+      //             break;
+      //           case "dMS_PROJECT_NUMBER":
+      //             this.EInfo.push({
+      //               label: "项目编号",
+      //               value: this.data[key]
+      //             });
+      //             break;
+      //         }
+      //       }
+      //     } else if (res.data.code === 1) {
+      //       this.$message.error(res.data.msg);
+      //     } else if (res.data.code === 3) {
+      //       this.$message.warning(res.data.msg);
+      //     }
+      //     if (res.data.code !== 0) {
+      //       this.EInfo.push({
+      //         label: "DMS设备ID",
+      //         value: ""
+      //       });
+      //       this.EInfo.push({
+      //         label: "项目编号",
+      //         value: ""
+      //       });
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.error(err);
+      //   });
     },
     getEInfo1 (api, params) {
       this.$axios
