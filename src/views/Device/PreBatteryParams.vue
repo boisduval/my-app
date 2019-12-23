@@ -65,12 +65,21 @@ export default {
           `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
         )
         .then(res => {
-          if (res) {
+          if (res.data.code === 0) {
             this.data = res.data.data
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
             this.$message.warning(res.data.msg)
+          }
+          if (res.data.code !== 0) {
+            this.data = {
+              pRE_SET_NUMBER_OF_BATTERY_PACKS: '',
+              pRE_SET_NUMBER_OF_BATTERY_BANK_1: '',
+              pRE_SET_NUMBER_OF_BATTERY_BANK_2: '',
+              nUMBER_OF_12_TUFTS_IN_BANK_1: ['', '', '', '', '', '', '', '', '', '', '', ''],
+              nUMBER_OF_12_TUFTS_IN_BANK_2: ['', '', '', '', '', '', '', '', '', '', '', '']
+            }
           }
         })
         .catch(err => {

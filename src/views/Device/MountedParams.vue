@@ -52,83 +52,13 @@ export default {
     }
   },
   methods: {
-    // getEInfo (api, params) {
-    //   this.$axios
-    //     .get(
-    //       `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
-    //     )
-    //     .then(res => {
-    //       if (res) {
-    //         this.data = res.data.data
-    //         for (var key in this.data) {
-    //           switch (key) {
-    //             case 'pRESETS_THE_UPS_DEVICE_MOUNT_STATE':
-    //               this.EInfo.push({
-    //                 label: 'UPS设备挂载状态',
-    //                 value: this.data[key] === true ? '已挂载' : '未挂载'
-    //               })
-    //               break
-    //             case 'pRESETS_THE_PCS_DEVICE_MOUNT_STATE':
-    //               this.EInfo.push({
-    //                 label: 'PCS设备挂载状态',
-    //                 value: this.data[key] === true ? '已挂载' : '未挂载'
-    //               })
-    //               break
-    //             case 'pRESETS_THE_GENERATOR_EQUIPMENT_MOUNT_STATE':
-    //               this.EInfo.push({
-    //                 label: '发电机设备挂载状态',
-    //                 value: this.data[key] === true ? '已挂载' : '未挂载'
-    //               })
-    //               break
-    //             case 'pRESETS_THE_LINKAGE_MODULE_MOUNT_STATE':
-    //               this.EInfo.push({
-    //                 label: '联动模块挂载状态',
-    //                 value: this.data[key] === true ? '已挂载' : '未挂载'
-    //               })
-    //               break
-    //             case 'pRE_SET_FIRE_SYSTEM_MOUNT_STATUS':
-    //               this.EInfo.push({
-    //                 label: '消防系统挂载状态',
-    //                 value: this.data[key] === true ? '已挂载' : '未挂载'
-    //               })
-    //               break
-    //             case 'pRESETS_THE_MOUNTING_STATE_OF_PHOTOVOLTAIC_EQUIPMENT':
-    //               this.EInfo.push({
-    //                 label: '光伏设备挂载状态',
-    //                 value: this.data[key] === true ? '已挂载' : '未挂载'
-    //               })
-    //               break
-    //             case 'pRE_SET_THE_WIND_POWER_EQUIPMENT_MOUNT_STATE':
-    //               this.EInfo.push({
-    //                 label: '风能设备挂载状态',
-    //                 value: this.data[key] === true ? '已挂载' : '未挂载'
-    //               })
-    //               break
-    //             case 'pRESETS_THE_BATTERY_PACK_EQUIPMENT_MOUNT_STATE':
-    //               this.EInfo.push({
-    //                 label: '电池组设备挂载状态',
-    //                 value: this.data[key] === true ? '已挂载' : '未挂载'
-    //               })
-    //               break
-    //           }
-    //         }
-    //       } else if (res.data.code === 1) {
-    //         this.$message.error(res.data.msg)
-    //       } else if (res.data.code === 3) {
-    //         this.$message.warning(res.data.msg)
-    //       }
-    //     })
-    //     .catch(err => {
-    //       console.error(err)
-    //     })
-    // },
     getEInfo1 (api, params) {
       this.$axios
         .get(
           `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
         )
         .then(res => {
-          if (res) {
+          if (res.data.code === 0) {
             this.data = res.data.data
             for (var key in this.data) {
               switch (key) {
@@ -186,6 +116,40 @@ export default {
             // this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
             // this.$message.warning(res.data.msg)
+          }
+          if (res.data.code !== 0) {
+            this.EInfo.push({
+              label: 'UPS设备挂载状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'PCS设备挂载状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '发电机设备挂载状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '联动模块挂载状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '消防系统挂载状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '光伏设备挂载状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '风能设备挂载状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '电池组设备挂载状态',
+              value: ''
+            })
           }
         })
         .catch(err => {

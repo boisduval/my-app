@@ -39,7 +39,7 @@ export default {
           `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
         )
         .then(res => {
-          if (res) {
+          if (res.data.code === 0) {
             this.data = res.data.data
             for (var key in this.data) {
               switch (key) {
@@ -62,6 +62,16 @@ export default {
           } else if (res.data.code === 3) {
             this.$message.warning(res.data.msg)
           }
+          if (res.data.code !== 0) {
+            this.EInfo.push({
+              label: 'DMS设备ID',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '项目编号',
+              value: ''
+            })
+          }
         })
         .catch(err => {
           console.error(err)
@@ -73,7 +83,7 @@ export default {
           `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
         )
         .then(res => {
-          if (res) {
+          if (res.data.code === 0) {
             var data = res.data.data
             for (var key in data) {
               switch (key) {
@@ -134,6 +144,48 @@ export default {
             // this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
             // this.$message.warning(res.data.msg)
+          }
+          if (res.data.code !== 0) {
+            this.EInfo.push({
+              label: 'DMS硬件版本号',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'DMS固件版本号',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'RTC时间',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'MAC地址',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '本地DHCP开启状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'DNS域名开启状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '本地DHCP开启状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'DNS域名开启状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'DNS域名获取状态',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展IP开启状态',
+              value: ''
+            })
           }
         })
         .catch(err => {

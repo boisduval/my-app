@@ -29,7 +29,6 @@ export default {
   mounted () {
     if (this.paramsD.AutoSystemID && this.paramsD.SystemID) {
       this.getEInfo(this.api, this.paramsD)
-      this.getEInfo1(this.api1, this.paramsD)
     }
   },
   methods: {
@@ -39,7 +38,7 @@ export default {
           `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
         )
         .then(res => {
-          if (res) {
+          if (res.data.code === 0) {
             this.data = res.data.data
             for (var key in this.data) {
               switch (key) {
@@ -110,60 +109,47 @@ export default {
           } else if (res.data.code === 3) {
             this.$message.warning(res.data.msg)
           }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    getEInfo1 (api, params) {
-      this.$axios
-        .get(
-          `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
-        )
-        .then(res => {
-          if (res) {
-            var data = res.data.data
-            for (var key in data) {
-              switch (key) {
-                case 'tHE_MAC_ADDRESS':
-                  this.EInfo.push({
-                    label: 'MAC地址',
-                    value: data[key]
-                  })
-                  break
-                case 'lOCAL_DHCP_ON_STATUS':
-                  var state = data[key] ? '开启' : '关闭'
-                  this.EInfo.push({
-                    label: '本地DHCP开启状态',
-                    value: state
-                  })
-                  break
-                case 'dNS_DOMAIN_NAME_OPEN_STATE':
-                  var state1 = data[key] ? '开启' : '关闭'
-                  this.EInfo.push({
-                    label: 'DNS域名开启状态',
-                    value: state1
-                  })
-                  break
-                case 'dNS_DOMAIN_NAME_FETCH_STATUS':
-                  var state2 = data[key] ? '已获取' : '未获取'
-                  this.EInfo.push({
-                    label: 'DNS域名获取状态',
-                    value: state2
-                  })
-                  break
-                case 'eXTEND_IP_ENABLED_STATUS':
-                  this.EInfo.push({
-                    label: '扩展IP开启状态',
-                    value: data[key]
-                  })
-                  break
-              }
-            }
-          } else if (res.data.code === 1) {
-            // this.$message.error(res.data.msg)
-          } else if (res.data.code === 3) {
-            // this.$message.warning(res.data.msg)
+          if (res.data.code !== 0) {
+            this.EInfo.push({
+              label: '扩展IP功能使能',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展IP开启',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展IP_1',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展端口PORT_1',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展IP_2',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展端口PORT_2',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展IP_3',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展端口PORT_3',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展IP_4',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '扩展端口PORT_4',
+              value: ''
+            })
           }
         })
         .catch(err => {

@@ -72,6 +72,15 @@ export default {
           } else if (res.data.code === 3) {
             this.$message.warning(res.data.msg)
           }
+          if (res.data.code !== 0) {
+            this.data = {
+              bATTERY_NUMBER: '',
+              bATTERY_PACK_1_CLUSTER: '',
+              bATTERY_PACK_2_CLUSTER: '',
+              tHE_NUMBER_OF_12_CLUSTERS_OF_CELLS_IN_BATTERY_PACK_1: ['', '', '', '', '', '', '', '', '', '', '', ''],
+              tHE_NUMBER_OF_12_CLUSTERS_OF_CELLS_IN_BATTERY_PACK_2: ['', '', '', '', '', '', '', '', '', '', '', '']
+            }
+          }
         })
         .catch(err => {
           console.error(err)

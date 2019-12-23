@@ -38,7 +38,7 @@ export default {
           `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
         )
         .then(res => {
-          if (res) {
+          if (res.data.code === 0) {
             this.data = res.data.data
             for (var key in this.data) {
               switch (key) {
@@ -120,6 +120,56 @@ export default {
             this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
             this.$message.warning(res.data.msg)
+          }
+          if (res.data.code !== 0) {
+            this.EInfo.push({
+              label: '本地IP协议类型',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '本地IP获取方式',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '本地客户端端口号',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '本地静态IP地址',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '本地子网掩码',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '本地网关地址',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '服务端IP获取方式',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '服务端端口',
+              value: ''
+            })
+            this.EInfo.push({
+              label: '服务端静态IP',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'DNS域名',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'DNS1地址',
+              value: ''
+            })
+            this.EInfo.push({
+              label: 'DNS2地址',
+              value: ''
+            })
           }
         })
         .catch(err => {

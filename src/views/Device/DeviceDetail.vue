@@ -7,7 +7,7 @@
       </div>
       <el-form label-width="80px" :inline="true">
         <el-form-item
-          style="width:400px"
+          style="width:350px"
           v-for="(item, index) in baseIfo"
           :key="index"
           :label="item.label"
@@ -135,12 +135,6 @@ export default {
               case 'DICCID':
                 this.baseIfo.push({
                   label: 'ICCID编号',
-                  value: this.data[key]
-                })
-                break
-              case 'DVIN':
-                this.baseIfo.push({
-                  label: 'VIN编号',
                   value: this.data[key]
                 })
                 break

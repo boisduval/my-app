@@ -35,7 +35,7 @@ export default {
           `${api}?AutoSystemID=${params.AutoSystemID}&DeviceDIDS=${params.batterID}`
         )
         .then(res => {
-          if (res) {
+          if (res.data.code === 0) {
             this.data = res.data.data
             this.data['dMS_UART_PARA_INFOs'].forEach((el, i) => {
               var label = 'UART' + (i + 1) + '_BAUD'
@@ -60,6 +60,27 @@ export default {
             this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
             this.$message.warning(res.data.msg)
+          }
+          if (res.data.code !== 0) {
+            for (let i = 0; i < 8; i++) {
+              var label = 'UART' + (i + 1) + '_BAUD'
+              this.EInfo.push({
+                label: label,
+                value: ''
+              })
+              this.EInfo.push({
+                label: '数据位',
+                value: ''
+              })
+              this.EInfo.push({
+                label: '停止位',
+                value: ''
+              })
+              this.EInfo.push({
+                label: '奇偶校验位',
+                value: ''
+              })
+            }
           }
         })
         .catch(err => {
