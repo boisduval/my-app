@@ -145,17 +145,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTree.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTree.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -301,7 +301,9 @@
             </template>
             <template v-else>
               <el-button size="mini" @click="getMailInfo(row)">详情</el-button>
-              <el-button size="mini" type="success" @click="replyDialog(row)">回复</el-button>
+              <el-button size="mini" type="success" @click="replyDialog(row)"
+                >回复</el-button
+              >
               <el-button size="mini" type="warning">转发</el-button>
             </template>
           </template>
@@ -322,7 +324,13 @@
       <!-- 分页结束 -->
 
       <!-- 详情开始 -->
-      <Drawer :closable="false" v-model="value4" title="邮件详情" draggable width="50">
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        title="邮件详情"
+        draggable
+        width="50"
+      >
         <p :style="pStyle">发件人</p>
         <div class="demo-drawer-profile">
           {{ activeItem.FromUserName }}
@@ -353,50 +361,55 @@
         :visible.sync="dialogFormVisible"
       >
         <div style="height:500px;overflow:auto">
-          <el-form label-width="80px" label-position="right" :model="sendForm" style="padding-right:20px">
-          <el-form-item label="收件人">
-            <el-select
-              v-model="sendForm.ToUserList"
-              multiple
-              placeholder="请选择或直接搜索"
-              clearable
-              filterable
-            >
-              <Button type="text" @click="selectAll">
-                <Icon type="md-done-all" />
-                全选
-              </Button>
-              <Button type="text" @click="invert">
-                <Icon type="md-checkbox" />
-                反选
-              </Button>
-              <el-option
-                v-for="item in options"
-                :key="item.SystemID"
-                :label="item.Name"
-                :value="item.SystemID"
+          <el-form
+            label-width="80px"
+            label-position="right"
+            :model="sendForm"
+            style="padding-right:20px"
+          >
+            <el-form-item label="收件人">
+              <el-select
+                v-model="sendForm.ToUserList"
+                multiple
+                placeholder="请选择或直接搜索"
+                clearable
+                filterable
               >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="标题">
-            <el-input v-model="sendForm.Title"></el-input>
-          </el-form-item>
-          <el-form-item label="内容">
-            <!-- <div id="editor"></div> -->
-            <quill-editor
-              style="min-height:400px"
-              v-model="sendForm.Msg"
-              ref="myQuillEditor"
-              :options="editorOption"
-              @blur="onEditorBlur($event)"
-              @focus="onEditorFocus($event)"
-              @change="onEditorChange($event)"
-              class="editor"
-            >
-            </quill-editor>
-          </el-form-item>
-        </el-form>
+                <Button type="text" @click="selectAll">
+                  <Icon type="md-done-all" />
+                  全选
+                </Button>
+                <Button type="text" @click="invert">
+                  <Icon type="md-checkbox" />
+                  反选
+                </Button>
+                <el-option
+                  v-for="item in options"
+                  :key="item.SystemID"
+                  :label="item.Name"
+                  :value="item.SystemID"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="标题">
+              <el-input v-model="sendForm.Title"></el-input>
+            </el-form-item>
+            <el-form-item label="内容">
+              <!-- <div id="editor"></div> -->
+              <quill-editor
+                style="min-height:400px"
+                v-model="sendForm.Msg"
+                ref="myQuillEditor"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @change="onEditorChange($event)"
+                class="editor"
+              >
+              </quill-editor>
+            </el-form-item>
+          </el-form>
         </div>
 
         <div slot="footer" class="dialog-footer">
@@ -418,27 +431,32 @@
         :visible.sync="dialogFormReplyVisible"
       >
         <div style="height:500px;overflow:auto">
-         <el-form label-width="80px" label-position="right" :model="replyForm" style="padding-right:20px">
-          <el-form-item label="收件人">
-            <el-input v-model="replyForm.SendName" readonly></el-input>
-          </el-form-item>
-          <el-form-item label="标题">
-            <el-input v-model="replyForm.Title"></el-input>
-          </el-form-item>
-          <el-form-item label="内容">
-            <quill-editor
-              style="min-height:400px"
-              v-model="replyForm.Msg"
-              ref="myQuillEditor"
-              :options="editorOption"
-              @blur="onEditorBlur($event)"
-              @focus="onEditorFocus($event)"
-              @change="onEditorChange($event)"
-              class="editor"
-            >
-            </quill-editor>
-          </el-form-item>
-        </el-form>
+          <el-form
+            label-width="80px"
+            label-position="right"
+            :model="replyForm"
+            style="padding-right:20px"
+          >
+            <el-form-item label="收件人">
+              <el-input v-model="replyForm.SendName" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="标题">
+              <el-input v-model="replyForm.Title"></el-input>
+            </el-form-item>
+            <el-form-item label="内容">
+              <quill-editor
+                style="min-height:400px"
+                v-model="replyForm.Msg"
+                ref="myQuillEditor"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @change="onEditorChange($event)"
+                class="editor"
+              >
+              </quill-editor>
+            </el-form-item>
+          </el-form>
         </div>
 
         <div slot="footer" class="dialog-footer">
@@ -780,7 +798,9 @@ export default {
       // 获取发件人id
       var url = 'api/Mail/GetMailInfo'
       this.$axios
-        .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}&SystemID=${row.SystemID}`)
+        .get(
+          `${url}?AutoSystemID=${this.searchForm.AutoSystemID}&SystemID=${row.SystemID}`
+        )
         .then(res => {
           if (res.data.code === 0) {
             this.replyForm.ToUserList = res.data.data.FromUserSystemID
@@ -815,51 +835,49 @@ export default {
     // 彻底删除
     deleteItems () {
       this.selectedItems = this.$refs.xTable.getSelectRecords()
-      var arr = ''
+      var arr = []
       if (this.selectedItems.length === 0) {
         this.$message.warning('请选择要删除的用户')
         return false
       }
       this.selectedItems.map((item, index) => {
-        if (index === this.selectedItems.length - 1) {
-          arr += item.SystemID
-        } else {
-          arr = arr + item.SystemID + ','
-        }
+        arr.push({
+          SystemID: item.SystemID
+        })
       })
+      console.log(this.selectedItems)
       this.$confirm(`确定删除吗`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          // var url = '/api/Mail/ShiftDeleteMail'
-          // this.$axios
-          //   .post(url, {
-          //     params: {
-          //       AutoSystemID: this.searchForm.AutoSystemID,
-          //       UserSystemIDList: arr
-          //     }
-          //   })
-          //   .then(res => {
-          //     if (res.data.code === 0) {
-          //     } else if (res.data.code === 1) {
-          //       this.$message.error(res.data.msg)
-          //     }
-          //     this.$message.success('删除成功')
-          //     let totalPage = Math.ceil(
-          //       (this.count - this.selectedItems.length) / this.searchForm.limit
-          //     )
-          //     let currentPage =
-          //       this.searchForm.page > totalPage
-          //         ? totalPage
-          //         : this.searchForm.page
-          //     this.searchForm.page = currentPage < 1 ? 1 : currentPage
-          //     this.getData()
-          //   })
-          //   .catch(err => {
-          //     console.error(err)
-          //   })
+          var url = '/api/Mail/ShiftDeleteMail'
+          this.$axios
+            .post(url, {
+              AutoSystemID: this.searchForm.AutoSystemID,
+              data: arr
+            })
+            .then(res => {
+              if (res.data.code === 0) {
+                this.$message.success(res.data.msg)
+                let totalPage = Math.ceil(
+                  (this.count - this.selectedItems.length) /
+                    this.searchForm.limit
+                )
+                let currentPage =
+                  this.searchForm.page > totalPage
+                    ? totalPage
+                    : this.searchForm.page
+                this.searchForm.page = currentPage < 1 ? 1 : currentPage
+                this.getData()
+              } else if (res.data.code === 1) {
+                this.$message.error(res.data.msg)
+              }
+            })
+            .catch(err => {
+              console.error(err)
+            })
         })
         .catch(() => {
           this.$message({
@@ -884,7 +902,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {
