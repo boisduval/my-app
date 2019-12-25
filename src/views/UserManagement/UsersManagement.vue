@@ -376,7 +376,8 @@
         :visible.sync="dialogFormEditVisible"
         title="修改用户"
       >
-        <el-form
+        <div style="max-height:500px;overflow:auto">
+          <el-form
           label-width="90px"
           label-position="right"
           :model="editForm"
@@ -443,6 +444,8 @@
             ></el-input>
           </el-form-item>
         </el-form>
+        </div>
+
         <div slot="footer" class="dialog-footer">
           <el-button @click="editHttp" size="medium" type="primary">
             提 交

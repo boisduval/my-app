@@ -306,8 +306,9 @@
         width="500px"
         id="dialog"
       >
-        <!-- <v-tree :data="roleTree" checkable multiple show-line></v-tree> -->
-        <Tree :data="roleTree" show-checkbox></Tree>
+        <div style="max-height:500px;overflow:auto">
+          <Tree :data="roleTree" show-checkbox></Tree>
+        </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="updataRoleMenu" size="medium" type="primary">
             提 交

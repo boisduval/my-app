@@ -322,7 +322,7 @@
       <!-- 分页结束 -->
 
       <!-- 详情开始 -->
-      <Drawer :closable="false" v-model="value4" title="邮件详情" draggable>
+      <Drawer :closable="false" v-model="value4" title="邮件详情" draggable width="50">
         <p :style="pStyle">发件人</p>
         <div class="demo-drawer-profile">
           {{ activeItem.FromUserName }}
@@ -352,7 +352,8 @@
         :close-on-click-modal="false"
         :visible.sync="dialogFormVisible"
       >
-        <el-form label-width="80px" label-position="right" :model="sendForm">
+        <div style="height:500px;overflow:auto">
+          <el-form label-width="80px" label-position="right" :model="sendForm" style="padding-right:20px">
           <el-form-item label="收件人">
             <el-select
               v-model="sendForm.ToUserList"
@@ -396,6 +397,8 @@
             </quill-editor>
           </el-form-item>
         </el-form>
+        </div>
+
         <div slot="footer" class="dialog-footer">
           <el-button @click="sendMail" size="medium" type="primary">
             提 交
@@ -414,7 +417,8 @@
         :close-on-click-modal="false"
         :visible.sync="dialogFormReplyVisible"
       >
-        <el-form label-width="80px" label-position="right" :model="replyForm">
+        <div style="height:500px;overflow:auto">
+         <el-form label-width="80px" label-position="right" :model="replyForm" style="padding-right:20px">
           <el-form-item label="收件人">
             <el-input v-model="replyForm.SendName" readonly></el-input>
           </el-form-item>
@@ -435,6 +439,8 @@
             </quill-editor>
           </el-form-item>
         </el-form>
+        </div>
+
         <div slot="footer" class="dialog-footer">
           <el-button @click="reply" size="medium" type="primary">
             提 交
