@@ -314,8 +314,6 @@ export default {
           break
       }
       this.set_detail_label(label)
-      // this.set_params(params)
-      // this.set_batterID(batterID)
       this.$router.push({ path: path })
     }
   },
@@ -334,8 +332,6 @@ export default {
 <style scoped>
 .menu-btn {
   position: relative;
-  /* width: 25px;
-  height: 25px; */
   float: right;
 }
 

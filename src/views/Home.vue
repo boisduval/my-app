@@ -498,7 +498,6 @@ export default {
   background-color: #f3f3f4;
   color: #333;
   text-align: center;
-  line-height: 160px;
   padding-top: 20px;
   overflow-x: hidden;
 }

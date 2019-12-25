@@ -788,7 +788,7 @@ export default {
       }
       this.SystemID = row.SystemID
       this.bank = '0'
-      this.getDetailData()
+      this.getDataHttp()
     },
 
     getDataHttp () {

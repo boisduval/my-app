@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <h1>开放式系统平台</h1>
+    <h1>{{ footerInfo.SystemText }}</h1>
     <!-- 登录表单 -->
     <el-row
       :gutter="10"
@@ -64,7 +64,7 @@
     <!-- 底部信息 -->
     <div class="footerifo">
       版权所有 ©{{ footerInfo.SystemYear }} 浙江衡睿科技有限公司
-      <br />技术支持电话：000-00000000 <br />设为主页
+      <br />技术支持电话：000-00000000 <br />
     </div>
   </div>
 </template>
@@ -321,8 +321,7 @@ export default {
         returnCitySN === '' ||
         returnCitySN === undefined
       ) {
-        this.$.getScript('http://pv.sohu.com/cityjson?ie=utf-8', function () {
-        })
+        this.$.getScript('http://pv.sohu.com/cityjson?ie=utf-8', function () {})
       }
       this.bro()
       this.getIPs()
@@ -478,5 +477,4 @@ a:focus {
 .welcome {
   margin: 20px 0;
 }
-
 </style>

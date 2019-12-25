@@ -185,7 +185,8 @@
         :title="activeDialog.title"
         :visible.sync="dialogFormVisible"
       >
-        <el-card class="box-card">
+        <div style="height:400px;overflow:auto">
+          <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>设备信息</span>
           </div>
@@ -213,7 +214,6 @@
             </el-form-item>
           </el-form>
         </el-card>
-
         <el-card class="box-card" style="margin-top:20px">
           <div slot="header" class="clearfix">
             <span>{{ activeDialog.cardTop }}</span>
@@ -238,6 +238,7 @@
             </el-form-item>
           </el-form>
         </el-card>
+        </div>
       </el-dialog>
       <!-- 详情Dialog结束 -->
     </el-card>

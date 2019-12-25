@@ -40,7 +40,14 @@
             </el-form-item>
             <!-- <br> -->
             <el-form-item>
-              <el-button type="primary" @click="formInline.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  formInline.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -77,17 +84,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -184,69 +191,74 @@
         :title="activeDialog.label"
         :visible.sync="dialogFormVisible"
       >
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>设备信息</span>
-          </div>
-          <el-form
-            :inline="false"
-            :model="formList"
-            class="demo-form-inline"
-            label-width="90px"
-            label-position="right"
-          >
-            <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-              <el-form-item label="设备编号:">
-                <el-input
-                  :readonly="true"
-                  v-model="formList.BatteryIDS"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-
-            <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-              <el-form-item label="设备名称:">
-                <el-input :readonly="true" v-model="formList.DName"></el-input>
-              </el-form-item>
-            </el-col>
-
-            <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-              <el-form-item label="设备Bank">
-                <el-select
-                  v-model="formList.BankIndex"
-                  @change="getBatteryBankCTRLParaCharts"
-                >
-                  <el-option label="Bank1" value="0"></el-option>
-                  <el-option label="Bank2" value="1"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-form>
-        </el-card>
-
-        <el-card class="box-card" style="margin-top:20px">
-          <div slot="header" class="clearfix">
-            <span>{{ activeDialog.cardTop }}</span>
-          </div>
-          <el-form label-width="170px" label-position="left">
-            <el-form-item
-              v-for="(item, index) in list"
-              :key="index"
-              :label="item.label"
+        <div style="height:500px;overflow:auto">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span>设备信息</span>
+            </div>
+            <el-form
+              :inline="false"
+              :model="formList"
+              class="demo-form-inline"
+              label-width="90px"
+              label-position="right"
             >
-              <el-input v-model="item.value"></el-input>
-            </el-form-item>
-            <el-form-item style="float:right;margin-top:20px;">
-              <el-button type="primary" @click="submit">提交</el-button>
-              <el-button type="primary" @click="getBatteryBankCTRLParaCharts"
-                >刷新</el-button
+              <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+                <el-form-item label="设备编号:">
+                  <el-input
+                    :readonly="true"
+                    v-model="formList.BatteryIDS"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+                <el-form-item label="设备名称:">
+                  <el-input
+                    :readonly="true"
+                    v-model="formList.DName"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+                <el-form-item label="设备Bank">
+                  <el-select
+                    v-model="formList.BankIndex"
+                    @change="getBatteryBankCTRLParaCharts"
+                  >
+                    <el-option label="Bank1" value="0"></el-option>
+                    <el-option label="Bank2" value="1"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-form>
+          </el-card>
+
+          <el-card class="box-card" style="margin-top:20px">
+            <div slot="header" class="clearfix">
+              <span>{{ activeDialog.cardTop }}</span>
+            </div>
+            <el-form label-width="170px" label-position="left">
+              <el-form-item
+                v-for="(item, index) in list"
+                :key="index"
+                :label="item.label"
               >
-              <el-button type="primary" @click="dialogFormVisible = false"
-                >取消</el-button
-              >
-            </el-form-item>
-          </el-form>
-        </el-card>
+                <el-input v-model="item.value"></el-input>
+              </el-form-item>
+            </el-form>
+          </el-card>
+        </div>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="submit">提交</el-button>
+          <el-button type="primary" @click="getBatteryBankCTRLParaCharts"
+            >刷新</el-button
+          >
+          <el-button type="primary" @click="dialogFormVisible = false"
+            >取消</el-button
+          >
+        </div>
       </el-dialog>
       <!-- 详情Dialog结束 -->
     </el-card>
@@ -701,7 +713,8 @@ export default {
       var BankAddress
       var url = '/api/Command/Write'
       // eslint-disable-next-line
-      if (this.formList.BankIndex == 0) BankAddress = this.activeDialog.BankAddress1;
+      if (this.formList.BankIndex == 0)
+        BankAddress = this.activeDialog.BankAddress1
       else BankAddress = this.activeDialog.BankAddress2
       var obj = {
         Address: BankAddress,
@@ -746,7 +759,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

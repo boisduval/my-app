@@ -477,6 +477,11 @@ export default {
           }
         }
       })
+      setTimeout(function () {
+        window.onresize = function () {
+          myChart.resize()
+        }
+      }, 200)
     }
   }
 }

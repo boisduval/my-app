@@ -879,11 +879,6 @@ export default {
         }
       })
     }
-
-    // // 获取选中
-    // getSelectEvent () {
-    //   this.selectedItems = this.$refs.xTable.getSelectRecords()
-    // }
   }
 }
 </script>

@@ -109,7 +109,7 @@ div {
 }
 
 /* 让el-dialog滚动 */
-.el-dialog {
+/* .el-dialog {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -123,7 +123,7 @@ div {
 
 .el-dialog__body {
   overflow: auto;
-}
+} */
 /* 让el-dialog滚动 */
 
 .box-card {
