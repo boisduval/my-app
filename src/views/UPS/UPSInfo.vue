@@ -161,7 +161,7 @@
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="400" align="center">
+        <vxe-table-column title="操作" width="440" align="center">
           <template v-slot="{ row }">
             <el-button
               plain
@@ -218,18 +218,22 @@ export default {
           path: '/upsStandardStateQuantity'
         },
         {
-          label: '拓展状态量',
+          label: '扩展状态量',
           path: '/upsExtendedStateQuantity'
         },
         {
           label: '标准模拟量',
           path: '/upsStandardAnalogQuery'
+        },
+        {
+          label: '扩展模拟量',
+          path: '/upsExtendedAnalogQuery'
         }
       ]
     }
   },
   methods: {
-    ...mapMutations('upsdetail', ['set_paramsSSG', 'set_paramsESG', 'set_paramsSAG', 'set_paramsF']),
+    ...mapMutations('upsdetail', ['set_paramsSSG', 'set_paramsESG', 'set_paramsSAG', 'set_paramsEAG']),
     ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
@@ -279,6 +283,9 @@ export default {
           break
         case '/upsStandardAnalogQuery':
           this.set_paramsSAG(params)
+          break
+        case '/upsExtendedAnalogQuery':
+          this.set_paramsEAG(params)
           break
       }
 

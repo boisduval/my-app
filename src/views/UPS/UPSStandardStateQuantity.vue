@@ -366,6 +366,10 @@ export default {
                 value: ''
               },
               {
+                label: '电池即将耗尽',
+                value: ''
+              },
+              {
                 label: '温度异常',
                 value: ''
               },

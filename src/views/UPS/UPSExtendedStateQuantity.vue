@@ -554,6 +554,10 @@ export default {
                 value: ''
               },
               {
+                label: '旁路频率欠频',
+                value: ''
+              },
+              {
                 label: '旁路缺相',
                 value: ''
               },
