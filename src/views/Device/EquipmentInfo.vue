@@ -35,7 +35,7 @@ export default {
   methods: {
     async getEInfo (api, params) {
       try {
-        let res = await (() => {
+        let res = await ((() => {
           return new Promise((resolve, reject) => {
             this.$axios
               .get(
@@ -48,7 +48,7 @@ export default {
                 reject(err)
               })
           })
-        })
+        })())
         if (res.data.code === 0) {
           this.data = res.data.data
           for (var key in this.data) {

@@ -282,7 +282,17 @@ const state = {
       Use: true,
       LeveList: {
         Count: 0,
-        List: []
+        List: [
+          {
+            ID: '18',
+            MID: '6',
+            Href: 'upsInfo',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'UPS信息',
+            Use: true
+          }
+        ]
       }
     },
     {

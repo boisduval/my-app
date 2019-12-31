@@ -436,7 +436,6 @@ export default {
 
     // 全屏
     buttoncli () {
-      console.log(screenfull)
       if (!screenfull.isEnabled) {
         // 如果不允许进入全屏，发出不允许提示
         this.$message({

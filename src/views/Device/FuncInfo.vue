@@ -15,7 +15,7 @@
         >
           <el-input :value="item.value" :readonly="true" style="width:250px"></el-input>
         </el-form-item>
-        <el-form-item label="设备Bank" style="width:400px">
+        <el-form-item label="设备Bank" style="width:350px">
           <el-select v-model="bank" style="width:250px">
             <el-option label="Bank1" value="0"></el-option>
             <el-option label="Bank2" value="1"></el-option>
@@ -251,12 +251,6 @@ export default {
               case 'DICCID':
                 this.baseIfo.push({
                   label: 'ICCID编号',
-                  value: this.data[key]
-                })
-                break
-              case 'DVIN':
-                this.baseIfo.push({
-                  label: 'VIN编码',
                   value: this.data[key]
                 })
                 break

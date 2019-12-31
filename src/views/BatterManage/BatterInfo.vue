@@ -436,7 +436,7 @@ export default {
           splitLine: {
             show: false
           },
-          min: 2400,
+          min: 0,
           max: 4000,
           name: '(mv)'
         },

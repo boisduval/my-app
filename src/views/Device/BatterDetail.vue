@@ -10,7 +10,7 @@
           v-for="(item, index) in baseIfo"
           :key="index"
           :label="item.label"
-          style="width:400px"
+          style="width:350px"
         >
           <el-input :value="item.value" :readonly="true" style="width:250px"></el-input>
         </el-form-item>
@@ -106,12 +106,6 @@ export default {
               case 'DICCID':
                 this.baseIfo.push({
                   label: 'ICCID编号',
-                  value: this.data[key]
-                })
-                break
-              case 'DVIN':
-                this.baseIfo.push({
-                  label: 'VIN编号',
                   value: this.data[key]
                 })
                 break

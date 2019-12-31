@@ -648,6 +648,22 @@ const routes = [
         meta: {
           keepAlive: false // 不需要被缓存
         }
+      },
+      {
+        path: '/upsInfo',
+        name: 'upsInfo',
+        component: () => import(/* webpackChunkName: "UPSInfo" */ '../views/UPS/UPSInfo.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/upsStandardStateQuantity',
+        name: 'upsStandardStateQuantity',
+        component: () => import(/* webpackChunkName: "UPSStandardStateQuantity" */ '../views/UPS/UPSStandardStateQuantity.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
       }
     ]
   },
