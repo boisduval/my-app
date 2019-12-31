@@ -664,6 +664,14 @@ const routes = [
         meta: {
           keepAlive: false // 不需要被缓存
         }
+      },
+      {
+        path: '/upsExtendedStateQuantity',
+        name: 'upsExtendedStateQuantity',
+        component: () => import(/* webpackChunkName: "UPSExtendedStateQuantity" */ '../views/UPS/UPSExtendedStateQuantity.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
       }
     ]
   },

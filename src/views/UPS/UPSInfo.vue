@@ -216,12 +216,16 @@ export default {
         {
           label: '标准状态量',
           path: '/upsStandardStateQuantity'
+        },
+        {
+          label: '拓展状态量',
+          path: '/upsExtendedStateQuantity'
         }
       ]
     }
   },
   methods: {
-    ...mapMutations('upsdetail', ['set_paramsSG', 'set_paramsB', 'set_paramsS', 'set_paramsF']),
+    ...mapMutations('upsdetail', ['set_paramsSSG', 'set_paramsESG', 'set_paramsS', 'set_paramsF']),
     ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
@@ -264,7 +268,10 @@ export default {
       params.batterID = batterID
       switch (path) {
         case '/upsStandardStateQuantity':
-          this.set_paramsSG(params)
+          this.set_paramsSSG(params)
+          break
+        case '/upsExtendedStateQuantity':
+          this.set_paramsESG(params)
           break
       }
 

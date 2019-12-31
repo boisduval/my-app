@@ -52,19 +52,19 @@ export default {
     }
   },
   computed: {
-    ...mapState('upsdetail', ['paramsSG'])
+    ...mapState('upsdetail', ['paramsSSG'])
   },
   mounted () {
-    if (this.paramsSG.AutoSystemID && this.paramsSG.SystemID) {
-      this.getDetail(this.api, this.paramsSG)
+    if (this.paramsSSG.AutoSystemID && this.paramsSSG.SystemID) {
+      this.getDetail(this.api, this.paramsSSG)
     }
 
-    if (this.paramsSG.AutoSystemID && this.paramsSG.batterID) {
-      this.getInfo(this.paramsSG)
+    if (this.paramsSSG.AutoSystemID && this.paramsSSG.batterID) {
+      this.getInfo(this.paramsSSG)
     }
   },
   methods: {
-    ...mapMutations('upsdetail', ['set_paramsSG']),
+    ...mapMutations('upsdetail', ['set_paramsSSG']),
     getDetail (api, params) {
       this.$axios
         .get(
@@ -523,7 +523,7 @@ export default {
   watch: {
     bank: {
       handler (newName, oldName) {
-        this.getInfo(this.paramsSG)
+        this.getInfo(this.paramsSSG)
       }
     }
   }
