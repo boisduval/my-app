@@ -8,6 +8,11 @@ const state = {
     AutoSystemID: '',
     SystemID: '',
     batterID: ''
+  },
+  paramsSAG: {
+    AutoSystemID: '',
+    SystemID: '',
+    batterID: ''
   }
 }
 
@@ -21,6 +26,11 @@ const mutations = {
     state.paramsESG.AutoSystemID = params['AutoSystemID']
     state.paramsESG.SystemID = params['SystemID']
     state.paramsESG.batterID = params['batterID']
+  },
+  set_paramsSAG (state, params) {
+    state.paramsSAG.AutoSystemID = params['AutoSystemID']
+    state.paramsSAG.SystemID = params['SystemID']
+    state.paramsSAG.batterID = params['batterID']
   }
 }
 

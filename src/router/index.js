@@ -672,6 +672,14 @@ const routes = [
         meta: {
           keepAlive: false // 不需要被缓存
         }
+      },
+      {
+        path: '/upsStandardAnalogQuery',
+        name: 'upsStandardAnalogQuery',
+        component: () => import(/* webpackChunkName: "UPSStandardAnalogQuery" */ '../views/UPS/UPSStandardAnalogQuery.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
       }
     ]
   },

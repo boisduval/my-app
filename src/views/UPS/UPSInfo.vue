@@ -220,12 +220,16 @@ export default {
         {
           label: '拓展状态量',
           path: '/upsExtendedStateQuantity'
+        },
+        {
+          label: '标准模拟量',
+          path: '/upsStandardAnalogQuery'
         }
       ]
     }
   },
   methods: {
-    ...mapMutations('upsdetail', ['set_paramsSSG', 'set_paramsESG', 'set_paramsS', 'set_paramsF']),
+    ...mapMutations('upsdetail', ['set_paramsSSG', 'set_paramsESG', 'set_paramsSAG', 'set_paramsF']),
     ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
@@ -272,6 +276,9 @@ export default {
           break
         case '/upsExtendedStateQuantity':
           this.set_paramsESG(params)
+          break
+        case '/upsStandardAnalogQuery':
+          this.set_paramsSAG(params)
           break
       }
 
