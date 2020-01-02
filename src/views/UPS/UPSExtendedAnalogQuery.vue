@@ -253,10 +253,62 @@ export default {
                     })
                     break
                   case 'sYSTEM_RUNNING_STATE':
-                    this.dataArr.push({
-                      label: '系统运行状态',
-                      value: data[key] + ''
-                    })
+                    switch (data[key]) {
+                      case 0:
+                        this.dataArr.push({
+                          label: '系统运行状态',
+                          value: '关机'
+                        })
+                        break
+                      case 1:
+                        this.dataArr.push({
+                          label: '系统运行状态',
+                          value: '旁路'
+                        })
+                        break
+                      case 2:
+                        this.dataArr.push({
+                          label: '系统运行状态',
+                          value: '逆变'
+                        })
+                        break
+                      case 3:
+                        this.dataArr.push({
+                          label: '系统运行状态',
+                          value: '维护旁路'
+                        })
+                        break
+                      case 4:
+                        this.dataArr.push({
+                          label: '系统运行状态',
+                          value: '故障'
+                        })
+                        break
+                      case 5:
+                        this.dataArr.push({
+                          label: '系统运行状态',
+                          value: 'ECO供电'
+                        })
+                        break
+                      case 6:
+                        this.dataArr.push({
+                          label: '系统运行状态',
+                          value: 'EPO'
+                        })
+                        break
+                      case 7:
+                        this.dataArr.push({
+                          label: '系统运行状态',
+                          value: '待机'
+                        })
+                        break
+                      case 8:
+                        this.dataArr.push({
+                          label: '系统运行状态',
+                          value: '调试模式'
+                        })
+                        break
+                    }
                     break
                   case 'hMI_SOFTWARE_VERSION':
                     this.dataArr.push({

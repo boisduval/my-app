@@ -29,7 +29,7 @@
     <el-card class="box-card">
       <el-form label-width="160px">
         <el-col :span="6" v-for="(item, index) in dataArr" :key="index">
-          <el-form-item :label="item.label">
+          <el-form-item :label="item.label" :class="item.warn?'warn':''">
             <el-input v-model="item.value" readonly></el-input>
           </el-form-item>
         </el-col>
@@ -112,343 +112,400 @@ export default {
                   case 'aBNORMAL_AMPLITUDE':
                     this.dataArr.push({
                       label: '市电幅值异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'mAINS_VOLTAGE':
                     this.dataArr.push({
                       label: '市电欠压',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_POWER_FREQUENCY':
                     this.dataArr.push({
                       label: '市电频率异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'mAINS_POWER_FREQUENCY_UNDERFREQUENCY':
                     this.dataArr.push({
                       label: '市电频率欠频',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tHE_MAINS_LACKS':
                     this.dataArr.push({
                       label: '市电缺相',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tHE_MAINS_VOLTAGE_IS_UNBALANCED':
                     this.dataArr.push({
                       label: '市电电压不平衡',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_ELECTRICAL_PHASE_SEQUENCE':
                     this.dataArr.push({
                       label: '市电相序异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'mAINS_POWER':
                     this.dataArr.push({
                       label: '市电掉电',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_FUSE_OF_POWER_SUPPLY':
                     this.dataArr.push({
                       label: '市电保险丝异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'iNPUT_CIRCUIT_ANOMALY':
                     this.dataArr.push({
                       label: '输入回路异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_CELLS':
                     this.dataArr.push({
                       label: '电池异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bATTERY_OVER_VOLTAGE':
                     this.dataArr.push({
                       label: '电池过压',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_BATTERY_CIRCUIT':
                     this.dataArr.push({
                       label: '电池回路异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tHE_BATTERY_POLARITY_IS_REVERSED':
                     this.dataArr.push({
                       label: '电池极性接反',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bATTERY_DONT_ANSWER':
                     this.dataArr.push({
                       label: '电池未接',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_BATTERY_TEMPERATURE':
                     this.dataArr.push({
                       label: '电池温度异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_BATTERY_FUSE':
                     this.dataArr.push({
                       label: '电池保险丝异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'oVERCHARGE_BATTERY_WARNING':
                     this.dataArr.push({
                       label: '电池过充告警',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bATTERY_OVERCHARGE_PROTECTION':
                     this.dataArr.push({
                       label: '电池过充保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_BATTERY_CHARGING':
                     this.dataArr.push({
                       label: '电池充电异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bATTERY_IGBT_C_PROTECTION':
                     this.dataArr.push({
                       label: '电池IGBT C级保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tHE_BYPASS_OVERVOLTAGE':
                     this.dataArr.push({
                       label: '旁路过压',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tHE_BYPASS_UNDERVOLTAGE':
                     this.dataArr.push({
                       label: '旁路欠压',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bYPASS_FREQUENCY_OVERFREQUENCY':
                     this.dataArr.push({
                       label: '旁路频率过频',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bYPASS_FREQUENCY_UNDERFREQUENCY':
                     this.dataArr.push({
                       label: '旁路频率欠频',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tHE_BYPASS_LACKS':
                     this.dataArr.push({
                       label: '旁路缺相',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_BYPASS_PHASE_SEQUENCE':
                     this.dataArr.push({
                       label: '旁路相序异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bYPASSED_BY_ELECTRICITY':
                     this.dataArr.push({
                       label: '旁路掉电',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_BYPASS_FUSE':
                     this.dataArr.push({
                       label: '旁路保险丝异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bYPASS_OVERLOAD_PROTECTION':
                     this.dataArr.push({
                       label: '旁路过载保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tHE_BYPASS_VOLTAGE_IS_UNBALANCED':
                     this.dataArr.push({
                       label: '旁路电压不平衡',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_BYPASS_CIRCUIT':
                     this.dataArr.push({
                       label: '旁路回路异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bYPASS_OVERHEAT_PROTECTION':
                     this.dataArr.push({
                       label: '旁路过温保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_OUTPUT_CIRCUIT':
                     this.dataArr.push({
                       label: '输出回路异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'oUTPUT_FUSE_ABNORMAL':
                     this.dataArr.push({
                       label: '输出保险丝异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'oUTPUT_OVERVOLTAGE_PROTECTION':
                     this.dataArr.push({
                       label: '输出过压保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'oUTPUT_LOW_VOLTAGE_PROTECTION':
                     this.dataArr.push({
                       label: '输出低压保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'iNTERNAL_COMMUNICATION_FAILURE':
                     this.dataArr.push({
                       label: '内部通讯故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'pFC_POWER_LIMIT_WARNING':
                     this.dataArr.push({
                       label: 'PFC限功率告警',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'eCO_FAULT':
                     this.dataArr.push({
                       label: 'ECO故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'rECTIFIER_PROTECTION':
                     this.dataArr.push({
                       label: '整流器保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'iNVERTER_PROTECTION':
                     this.dataArr.push({
                       label: '逆变器保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'iNVERTER_OVERVOLTAGE':
                     this.dataArr.push({
                       label: '逆变过压',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'iNVERTER_UNDER_VOLTAGE':
                     this.dataArr.push({
                       label: '逆变欠压',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'iNVERTER_SHORT_CIRCUIT_PROTECTION':
                     this.dataArr.push({
                       label: '逆变短路保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'iNVERTER_OVERLOAD_PROTECTION':
                     this.dataArr.push({
                       label: '逆变过载保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'iNVERT_OVERTEMPERATURE_PROTECTION':
                     this.dataArr.push({
                       label: '逆变过温保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_INVERTER_FUSE':
                     this.dataArr.push({
                       label: '逆变保险丝异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'sOVEREIGN_FAULT':
                     this.dataArr.push({
                       label: '主权故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'pARALLEL_CONNECTION_1_FAULT':
                     this.dataArr.push({
                       label: '并联线1故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'pARALLEL_CONNECTION_2_FAULT':
                     this.dataArr.push({
                       label: '并联线2故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'pOWER_ON_PARAMETERS_DO_NOT_MATCH':
                     this.dataArr.push({
                       label: '上电参数不匹配',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'sYNCHRONOUS_SOVEREIGN_FAULT':
                     this.dataArr.push({
                       label: '同步主权故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'vALID_VALUE_SOVEREIGN_FAULT':
                     this.dataArr.push({
                       label: '有效值主权故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'pARALLEL_COMMUNICATION_FAULT':
                     this.dataArr.push({
                       label: '并联通讯故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_PARALLEL_LINE':
                     this.dataArr.push({
                       label: '并机线异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'nO_REDUNDANCY_IN_PARALLEL_OPERATION':
                     this.dataArr.push({
                       label: '并机无冗余',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                 }
@@ -717,5 +774,9 @@ export default {
 
 .el-card:nth-last-child(1) {
   margin-top: 20px;
+}
+
+.warn /deep/ .el-input__inner {
+  color: #F56C6C;
 }
 </style>

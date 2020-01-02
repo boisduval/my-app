@@ -109,10 +109,32 @@ export default {
               if (data.hasOwnProperty(key)) {
                 switch (key) {
                   case 'bATTERY_PERFORMANCE_STATE':
-                    this.dataArr.push({
-                      label: '电池性能状态',
-                      value: data[key] + ''
-                    })
+                    switch (data[key]) {
+                      case 0:
+                        this.dataArr.push({
+                          label: '电池性能状态',
+                          value: '未知'
+                        })
+                        break
+                      case 1:
+                        this.dataArr.push({
+                          label: '电池性能状态',
+                          value: '正常'
+                        })
+                        break
+                      case 2:
+                        this.dataArr.push({
+                          label: '电池性能状态',
+                          value: '容量低'
+                        })
+                        break
+                      case 3:
+                        this.dataArr.push({
+                          label: '电池性能状态',
+                          value: '耗尽'
+                        })
+                        break
+                    }
                     break
                   case 'bATTERY_DISCHARGE_DURATION':
                     this.dataArr.push({
@@ -121,10 +143,17 @@ export default {
                     })
                     break
                   case 'rEMAINING_BATTERY_LIFE':
-                    this.dataArr.push({
-                      label: '电池剩余供电时间',
-                      value: data[key] + ''
-                    })
+                    if (data[key] === 0xFFFF) {
+                      this.dataArr.push({
+                        label: '电池剩余供电时间',
+                        value: '计算中'
+                      })
+                    } else {
+                      this.dataArr.push({
+                        label: '电池剩余供电时间',
+                        value: data[key] + ''
+                      })
+                    }
                     break
                   case 'rESIDUAL_BATTERY_CAPACITY':
                     this.dataArr.push({
@@ -145,10 +174,17 @@ export default {
                     })
                     break
                   case 'bATTERY_TEMPERATURE':
-                    this.dataArr.push({
-                      label: '电池温度',
-                      value: data[key] + ''
-                    })
+                    if (data[key] === 0x8000) {
+                      this.dataArr.push({
+                        label: '电池温度',
+                        value: '温度传感器未接'
+                      })
+                    } else {
+                      this.dataArr.push({
+                        label: '电池温度',
+                        value: data[key] + ''
+                      })
+                    }
                     break
                   case 'nUMBER_OF_INPUT_PHASE':
                     this.dataArr.push({
@@ -223,10 +259,38 @@ export default {
                     })
                     break
                   case 'oUTPUT_MODE':
-                    this.dataArr.push({
-                      label: '输出工作方式',
-                      value: data[key] + ''
-                    })
+                    switch (data[key]) {
+                      case 0:
+                        this.dataArr.push({
+                          label: '输出工作方式',
+                          value: '其他输出'
+                        })
+                        break
+                      case 1:
+                        this.dataArr.push({
+                          label: '输出工作方式',
+                          value: '无输出'
+                        })
+                        break
+                      case 2:
+                        this.dataArr.push({
+                          label: '输出工作方式',
+                          value: '市电'
+                        })
+                        break
+                      case 3:
+                        this.dataArr.push({
+                          label: '输出工作方式',
+                          value: '旁路'
+                        })
+                        break
+                      case 4:
+                        this.dataArr.push({
+                          label: '输出工作方式',
+                          value: '电池'
+                        })
+                        break
+                    }
                     break
                   case 'tHE_OUTPUT_FREQUENCY':
                     this.dataArr.push({
@@ -379,10 +443,44 @@ export default {
                     })
                     break
                   case 'tHE_TEST_RESULTS':
-                    this.dataArr.push({
-                      label: '测试结果',
-                      value: data[key] + ''
-                    })
+                    switch (data[key]) {
+                      case 0:
+                        this.dataArr.push({
+                          label: '测试结果',
+                          value: '测试通过'
+                        })
+                        break
+                      case 1:
+                        this.dataArr.push({
+                          label: '测试结果',
+                          value: '告警'
+                        })
+                        break
+                      case 2:
+                        this.dataArr.push({
+                          label: '测试结果',
+                          value: '故障'
+                        })
+                        break
+                      case 3:
+                        this.dataArr.push({
+                          label: '测试结果',
+                          value: '中止'
+                        })
+                        break
+                      case 4:
+                        this.dataArr.push({
+                          label: '测试结果',
+                          value: '测试中'
+                        })
+                        break
+                      case 5:
+                        this.dataArr.push({
+                          label: '测试结果',
+                          value: '待测试'
+                        })
+                        break
+                    }
                     break
                   case 'tEST_DURATION':
                     this.dataArr.push({
@@ -391,10 +489,32 @@ export default {
                     })
                     break
                   case 'bATTERY_RUNNING_STATE':
-                    this.dataArr.push({
-                      label: '电池运行状态',
-                      value: data[key] + ''
-                    })
+                    switch (data[key]) {
+                      case 0:
+                        this.dataArr.push({
+                          label: '电池运行状态',
+                          value: '放电'
+                        })
+                        break
+                      case 1:
+                        this.dataArr.push({
+                          label: '电池运行状态',
+                          value: '均充'
+                        })
+                        break
+                      case 2:
+                        this.dataArr.push({
+                          label: '电池运行状态',
+                          value: '浮充'
+                        })
+                        break
+                      case 3:
+                        this.dataArr.push({
+                          label: '电池运行状态',
+                          value: '未知'
+                        })
+                        break
+                    }
                     break
                   case 'tHE_BATTERY_SECTION_NUMBER':
                     this.dataArr.push({
@@ -421,10 +541,17 @@ export default {
                     })
                     break
                   case 'tHE_ENVIRONMENT_TEMPERATURE':
-                    this.dataArr.push({
-                      label: '环境温度',
-                      value: data[key] + ''
-                    })
+                    if (data[key] === 0x8000) {
+                      this.dataArr.push({
+                        label: '环境温度',
+                        value: '温度传感器未接'
+                      })
+                    } else {
+                      this.dataArr.push({
+                        label: '环境温度',
+                        value: data[key] + ''
+                      })
+                    }
                     break
                   case 'wORK_SYSTEM':
                     this.dataArr.push({
@@ -773,7 +900,6 @@ export default {
                 label: 'Ups软件版本',
                 value: ''
               }
-
             ]
             if (res.data.code === 1) {
               this.$message.error(res.data.msg)

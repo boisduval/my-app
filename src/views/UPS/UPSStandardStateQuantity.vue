@@ -29,7 +29,7 @@
     <el-card class="box-card">
       <el-form label-width="160px">
         <el-col :span="6" v-for="(item, index) in dataArr" :key="index">
-          <el-form-item :label="item.label">
+          <el-form-item :label="item.label" :class="item.warn?'warn':''">
             <el-input v-model="item.value" readonly></el-input>
           </el-form-item>
         </el-col>
@@ -111,151 +111,176 @@ export default {
                   case 'bATTERY_TO_BE_REPLACED':
                     this.dataArr.push({
                       label: '电池需更换',
-                      value: data[key] ? '需更换' : '正常'
+                      value: data[key] ? '需更换' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bATTERY_INVERSION':
                     this.dataArr.push({
                       label: '电池逆变状态',
-                      value: data[key] ? '逆变' : '非逆变'
+                      value: data[key] ? '逆变' : '非逆变',
+                      warn: data[key]
                     })
                     break
                   case 'lOW_BATTERY_CAPACITY':
                     this.dataArr.push({
                       label: '电池容量低',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tHE_BATTERY_IS_RUNNING_OUT':
                     this.dataArr.push({
                       label: '电池即将耗尽',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tEMPERATURE_ANOMALY':
                     this.dataArr.push({
                       label: '温度异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'gRID_ABNORMAL':
                     this.dataArr.push({
                       label: '市电异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_OUTPUT':
                     this.dataArr.push({
                       label: '输出异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'oUTPUT_OVERLOAD':
                     this.dataArr.push({
                       label: '输出过载',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'bYPASS_OUTPUT_STATUS':
                     this.dataArr.push({
                       label: '旁路输出状态',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'tHE_BYPASS_ABNORMAL':
                     this.dataArr.push({
                       label: '旁路异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'cLOSE_THE_OUTPUT':
                     this.dataArr.push({
                       label: '关闭输出',
-                      value: data[key] ? '是' : '否'
+                      value: data[key] ? '是' : '否',
+                      warn: data[key]
                     })
                     break
                   case 'rEMOTE_DEVICE_SHUTDOWN':
                     this.dataArr.push({
                       label: '远程设备关机',
-                      value: data[key] ? '是' : '否'
+                      value: data[key] ? '是' : '否',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_CHARGER':
                     this.dataArr.push({
                       label: '充电器异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'sYSTEM_NO_OUTPUT':
                     this.dataArr.push({
                       label: '系统无输出',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'eQUIPMENT_SHUTDOWN':
                     this.dataArr.push({
                       label: '设备关机',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'fAN_FAULT':
                     this.dataArr.push({
                       label: '风机故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'fUSE_FAILURE':
                     this.dataArr.push({
                       label: '保险丝故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'uPS_GENERAL_FAULT':
                     this.dataArr.push({
                       label: 'UPS通用故障',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'uPS_DETECTION_FAILURE':
                     this.dataArr.push({
                       label: 'UPS检测失败',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_COMMUNICATION':
                     this.dataArr.push({
                       label: '通信异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'wAITING_FOR_POWER_TO_RESTORE':
                     this.dataArr.push({
                       label: '等待市电恢复',
-                      value: data[key] ? '有效' : '无效'
+                      value: data[key] ? '有效' : '无效',
+                      warn: data[key]
                     })
                     break
                   case 'dELAYED_SHUTDOWN':
                     this.dataArr.push({
                       label: '延时关机中',
-                      value: data[key] ? '有效' : '无效'
+                      value: data[key] ? '有效' : '无效',
+                      warn: data[key]
                     })
                     break
                   case 'pOWER_OFF_IN_5_SECONDS':
                     this.dataArr.push({
                       label: '5秒内即将关机',
-                      value: data[key] ? '有效' : '无效'
+                      value: data[key] ? '有效' : '无效',
+                      warn: data[key]
                     })
                     break
                   case 'bATTERY_TEST':
                     this.dataArr.push({
                       label: '电池测试中',
-                      value: data[key] ? '测试中' : '未测试'
+                      value: data[key] ? '测试中' : '未测试',
+                      warn: data[key]
                     })
                     break
                   case 'bATTERY_UNDERVOLTAGE_PROTECTION':
                     this.dataArr.push({
                       label: '电池欠压保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'UPS_TYPE':
@@ -265,87 +290,101 @@ export default {
                     })
                     break
                   case 'oN_OFF_STATE':
-                    this.dataArr.push({
+                    this.data[key].dataArr.push({
                       label: '开关机状态',
-                      value: data[key] ? '开机' : '关机'
+                      value: data[key] ? '开机' : '关机',
+                      warn: data[key]
                     })
                     break
                   case 'bUZZER_STATUS':
                     this.dataArr.push({
                       label: '蜂鸣器状态',
-                      value: data[key] ? '开启' : '关闭'
+                      value: data[key] ? '开启' : '关闭',
+                      warn: data[key]
                     })
                     break
                   case 'rECTIFIER_ANOMALY':
                     this.dataArr.push({
                       label: '整流器异常',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'rECTIFIER_OPERATING_STATE':
                     this.dataArr.push({
                       label: '整流器运行状态',
-                      value: data[key] ? '运行中' : '未工作'
+                      value: data[key] ? '运行中' : '未工作',
+                      warn: data[key]
                     })
                     break
                   case 'iNVERTER_OPERATING_STATE':
                     this.dataArr.push({
                       label: '逆变器运行状态',
-                      value: data[key] ? '运行中' : '未工作'
+                      value: data[key] ? '运行中' : '未工作',
+                      warn: data[key]
                     })
                     break
                   case 'sTATIC_BYPASS_SWITCH_STATE':
                     this.dataArr.push({
                       label: '静态旁路开关状态',
-                      value: data[key] ? '逆变端' : '旁路端'
+                      value: data[key] ? '逆变端' : '旁路端',
+                      warn: data[key]
                     })
                     break
                   case 'mANUAL_BYPASS_OPEN':
                     this.dataArr.push({
                       label: '手动旁路空开状态',
-                      value: data[key] ? '闭合' : '断开'
+                      value: data[key] ? '闭合' : '断开',
+                      warn: data[key]
                     })
                     break
                   case 'oUTPUT_SHORT_CIRCUIT_STOP':
                     this.dataArr.push({
                       label: ' 输出短路停机',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'oVERHEATING_DOWNTIME':
                     this.dataArr.push({
                       label: '过热停机',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'aBNORMAL_SHUTDOWN_OF_INVERTER_OUTPUT_VOLTAGE':
                     this.dataArr.push({
                       label: '逆变输出电压异常停机',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'oVERLOAD_PROTECTION':
                     this.dataArr.push({
                       label: '过载保护',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'mANUAL_BYPASS_SHUTDOWN':
                     this.dataArr.push({
                       label: '手动旁路闭合停机',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'DC_INPUT_OVER_SHUTDOWN':
                     this.dataArr.push({
                       label: '直流输入过高停机',
-                      value: data[key] ? '异常' : '正常'
+                      value: data[key] ? '异常' : '正常',
+                      warn: data[key]
                     })
                     break
                   case 'ePO':
                     this.dataArr.push({
                       label: 'EPO状态',
-                      value: data[key] ? '开启' : '关闭'
+                      value: data[key] ? '开启' : '关闭',
+                      warn: data[key]
                     })
                     break
                 }
@@ -545,5 +584,8 @@ export default {
 
 .el-card:nth-last-child(1) {
   margin-top: 20px;
+}
+.warn /deep/ .el-input__inner {
+  color: #F56C6C;
 }
 </style>
