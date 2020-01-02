@@ -80,24 +80,18 @@ export default {
     }
   },
   created () {
-    this.getData()
+    this.getBatterySummaryStateTvpbc()
+    this.getBatterySummaryStateMmv()
+    this.getBatterySummaryStateDbp()
+    this.getBatterySummaryStateTvd()
+    this.getBatterySummaryStateSvsv()
     this.getBatterySummaryStateTbv()
   },
   methods: {
     ...mapMutations('statedetail', ['set_paramsTvpbc']),
-    getData () {
-      for (let i = 1; i <= this.url.length; i++) {
-        this.getBatterySummaryState(
-          this.url[i - 1],
-          this['xAxis' + i],
-          this['legend' + i],
-          this['series' + i]
-        )
-      }
-    },
-    getBatterySummaryState (url, xAxis, legend, series) {
+    getBatterySummaryStateTvpbc () {
       this.$axios
-        .get(url, {
+        .get(this.url[0], {
           params: {
             AutoSystemID: this.paramsTvpbc.AutoSystemID,
             BatteryIDS: this.paramsTvpbc.batterID,
@@ -107,18 +101,138 @@ export default {
         .then(res => {
           if (res.data.code === 0) {
             let data = res.data.data
-            xAxis = data.WriteTime.map(
+            this.xAxis1 = data.WriteTime.map(
               time => time.split('T')[1].split('.')[0]
             )
             for (let index = 1; index <= 12; index++) {
-              legend.push('第' + index + '簇')
-              series.push({
+              this.legend1.push('第' + index + '簇')
+              this.series1.push({
                 name: '第' + index + '簇',
                 type: 'line',
                 data: data['Data' + index]
               })
             }
-            this.getBatterySummaryStateTbv()
+            this.getEcharts()
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    getBatterySummaryStateMmv () {
+      this.$axios
+        .get(this.url[1], {
+          params: {
+            AutoSystemID: this.paramsTvpbc.AutoSystemID,
+            BatteryIDS: this.paramsTvpbc.batterID,
+            BankIndex: this.bank
+          }
+        })
+        .then(res => {
+          if (res.data.code === 0) {
+            let data = res.data.data
+            this.xAxis2 = data.WriteTime.map(
+              time => time.split('T')[1].split('.')[0]
+            )
+            for (let index = 1; index <= 12; index++) {
+              this.legend2.push('第' + index + '簇')
+              this.series2.push({
+                name: '第' + index + '簇',
+                type: 'line',
+                data: data['Data' + index]
+              })
+            }
+            this.getEcharts1()
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    getBatterySummaryStateDbp () {
+      this.$axios
+        .get(this.url[1], {
+          params: {
+            AutoSystemID: this.paramsTvpbc.AutoSystemID,
+            BatteryIDS: this.paramsTvpbc.batterID,
+            BankIndex: this.bank
+          }
+        })
+        .then(res => {
+          if (res.data.code === 0) {
+            let data = res.data.data
+            this.xAxis3 = data.WriteTime.map(
+              time => time.split('T')[1].split('.')[0]
+            )
+            for (let index = 1; index <= 12; index++) {
+              this.legend3.push('第' + index + '簇')
+              this.series3.push({
+                name: '第' + index + '簇',
+                type: 'line',
+                data: data['Data' + index]
+              })
+            }
+            this.getEcharts2()
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    getBatterySummaryStateTvd () {
+      this.$axios
+        .get(this.url[1], {
+          params: {
+            AutoSystemID: this.paramsTvpbc.AutoSystemID,
+            BatteryIDS: this.paramsTvpbc.batterID,
+            BankIndex: this.bank
+          }
+        })
+        .then(res => {
+          if (res.data.code === 0) {
+            let data = res.data.data
+            this.xAxis4 = data.WriteTime.map(
+              time => time.split('T')[1].split('.')[0]
+            )
+            for (let index = 1; index <= 12; index++) {
+              this.legend4.push('第' + index + '簇')
+              this.series4.push({
+                name: '第' + index + '簇',
+                type: 'line',
+                data: data['Data' + index]
+              })
+            }
+            this.getEcharts3()
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    getBatterySummaryStateSvsv () {
+      this.$axios
+        .get(this.url[1], {
+          params: {
+            AutoSystemID: this.paramsTvpbc.AutoSystemID,
+            BatteryIDS: this.paramsTvpbc.batterID,
+            BankIndex: this.bank
+          }
+        })
+        .then(res => {
+          if (res.data.code === 0) {
+            let data = res.data.data
+            this.xAxis5 = data.WriteTime.map(
+              time => time.split('T')[1].split('.')[0]
+            )
+            for (let index = 1; index <= 12; index++) {
+              this.legend5.push('第' + index + '簇')
+              this.series5.push({
+                name: '第' + index + '簇',
+                type: 'line',
+                data: data['Data' + index]
+              })
+            }
+            this.getEcharts4()
           }
         })
         .catch(err => {
@@ -147,7 +261,7 @@ export default {
               type: 'line',
               data: data['Data1']
             })
-            this.getEcharts()
+            this.getEcharts5()
           }
         })
         .catch(err => {
@@ -204,6 +318,13 @@ export default {
         series: this.series1
       })
 
+      setTimeout(function () {
+        window.onresize = function () {
+          myChart1.resize()
+        }
+      }, 200)
+    },
+    getEcharts1 () {
       // 第2个图
       var myChart2 = this.$echarts.init(document.getElementById('myChart2'))
       myChart2.setOption({
@@ -252,6 +373,13 @@ export default {
         },
         series: this.series2
       })
+      setTimeout(function () {
+        window.onresize = function () {
+          myChart2.resize()
+        }
+      }, 200)
+    },
+    getEcharts2 () {
       // 第3个图
       var myChart3 = this.$echarts.init(document.getElementById('myChart3'))
       myChart3.setOption({
@@ -300,6 +428,13 @@ export default {
         },
         series: this.series3
       })
+      setTimeout(function () {
+        window.onresize = function () {
+          myChart3.resize()
+        }
+      }, 200)
+    },
+    getEcharts3 () {
       // 第4个图
       var myChart4 = this.$echarts.init(document.getElementById('myChart4'))
       myChart4.setOption({
@@ -348,6 +483,13 @@ export default {
         },
         series: this.series4
       })
+      setTimeout(function () {
+        window.onresize = function () {
+          myChart4.resize()
+        }
+      }, 200)
+    },
+    getEcharts4 () {
       // 第5个图
       var myChart5 = this.$echarts.init(document.getElementById('myChart5'))
       myChart5.setOption({
@@ -396,6 +538,13 @@ export default {
         },
         series: this.series5
       })
+      setTimeout(function () {
+        window.onresize = function () {
+          myChart5.resize()
+        }
+      }, 200)
+    },
+    getEcharts5 () {
       // 第6个图
       var myChart6 = this.$echarts.init(document.getElementById('myChart6'))
       myChart6.setOption({
@@ -403,19 +552,7 @@ export default {
           text: '总压信息'
         },
         tooltip: {
-          trigger: 'axis',
-          formatter (value) {
-            let str = value[0].name + '<br/>'
-            value.forEach((item, index) => {
-              if (index % 2 !== 1) {
-                str += item.marker + item.seriesName + ': ' + item.data + ' '
-              } else {
-                str +=
-                  item.marker + item.seriesName + ': ' + item.data + '<br/>'
-              }
-            })
-            return str
-          }
+          trigger: 'axis'
         },
         legend: {
           data: this.legend6,
@@ -444,14 +581,9 @@ export default {
         },
         series: this.series6
       })
-
       setTimeout(function () {
         window.onresize = function () {
-          myChart1.resize()
-          myChart2.resize()
-          myChart3.resize()
-          myChart4.resize()
-          myChart5.resize()
+          myChart6.resize()
         }
       }, 200)
     }
