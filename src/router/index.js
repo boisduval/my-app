@@ -319,6 +319,24 @@ const routes = [
         }
       },
       {
+        path: '/stateInfo',
+        name: 'stateInfo',
+        component: () => import(/* webpackChunkName: "BatterManageStateInfo" */ '../views/BatterManage/StateInfo.vue'),
+
+        meta: {
+          keepAlive: false // 需要缓存
+        }
+      },
+      {
+        path: '/batterySummaryStateTvpbc',
+        name: 'batterySummaryStateTvpbc',
+        component: () => import(/* webpackChunkName: "BatterySummaryStateTvpbc" */ '../views/BatterManage/BatterySummaryStateTvpbc.vue'),
+
+        meta: {
+          keepAlive: false // 需要缓存
+        }
+      },
+      {
         path: '/selfCheck',
         name: 'selfCheck',
         component: () => import(/* webpackChunkName: "BatterManageSelfCheck" */ '../views/BatterManage/SelfCheck.vue'),
@@ -685,6 +703,14 @@ const routes = [
         path: '/upsExtendedAnalogQuery',
         name: 'upsExtendedAnalogQuery',
         component: () => import(/* webpackChunkName: "UPSExtendedAnalogQuery" */ '../views/UPS/UPSExtendedAnalogQuery.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/upsSet',
+        name: 'upsSet',
+        component: () => import(/* webpackChunkName: "UPSSet" */ '../views/UPS/UPSSet.vue'),
         meta: {
           keepAlive: false // 不需要被缓存
         }

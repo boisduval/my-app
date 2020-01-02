@@ -291,6 +291,8 @@ export default {
         })
     },
     handleClick () {
+      this.searchForm.page = 1
+      this.searchForm.limit = this.pageSize[0]
       this.getData()
     }
   }

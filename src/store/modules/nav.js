@@ -209,6 +209,15 @@ const state = {
             DataIndex: '1000',
             Text: '电池状态',
             Use: true
+          },
+          {
+            ID: '637084863136927728',
+            MID: '637084646010653918',
+            Href: 'stateInfo',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '状态信息',
+            Use: true
           }
         ]
       }
@@ -290,6 +299,15 @@ const state = {
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: 'UPS信息',
+            Use: true
+          },
+          {
+            ID: '18',
+            MID: '6',
+            Href: 'upsSet',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'UPS设置',
             Use: true
           }
         ]
