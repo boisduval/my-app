@@ -111,17 +111,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -181,13 +181,23 @@
           width="240"
         >
         </vxe-table-column> -->
-        <vxe-table-column field="DeviceID" title="设备唯一识别号" sortable width="320">
+        <vxe-table-column
+          field="DeviceID"
+          title="设备唯一识别号"
+          sortable
+          width="320"
+        >
         </vxe-table-column>
         <!-- <vxe-table-column field="DType" title="设备注册类型" sortable width="180">
         </vxe-table-column> -->
-         <vxe-table-column field="Text" title="名称" sortable width="320">
+        <vxe-table-column field="Text" title="名称" sortable width="320">
         </vxe-table-column>
-         <vxe-table-column field="RegistrationTime" title="最新注册时间" sortable width="320">
+        <vxe-table-column
+          field="RegistrationTime"
+          title="最新注册时间"
+          sortable
+          width="320"
+        >
         </vxe-table-column>
         <vxe-table-column title="操作" width="250" fixed="right">
           <template v-slot="{ row }">
@@ -213,20 +223,33 @@
 
       <!-- 详情Dialog开始 -->
       <!-- 详情开始 -->
-      <Drawer :closable="false" v-model="value4" title="详细信息" draggable width="30">
-        <p :style="pStyle">ICCID编码</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.ICCID }}
-        </div>
-        <Divider />
-        <p :style="pStyle">设备注册类型</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.DType }}
-        </div>
-        <Divider />
-        <p :style="pStyle">设备注册序号</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.Index }}
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        title="详细信息"
+        draggable
+        width="30"
+      >
+        <div class="block">
+          <div class="radio">
+            排序：
+            <el-radio-group v-model="reverse">
+              <el-radio :label="true">倒序</el-radio>
+              <el-radio :label="false">正序</el-radio>
+            </el-radio-group>
+          </div>
+
+          <el-timeline :reverse="reverse">
+            <el-timeline-item
+              v-for="(activity, index) in activities"
+              :key="index"
+              :timestamp="activity.timestamp"
+              :color="activity.color"
+            >
+              序号：{{ activity.index }}<br/>
+              类型：{{ activity.type}}
+            </el-timeline-item>
+          </el-timeline>
         </div>
       </Drawer>
       <!-- 详情结束 -->
@@ -259,7 +282,6 @@ export default {
       dialogFormVisible: false,
       value: '',
       detailData: [],
-      activeItem: {},
       value4: false,
       pStyle: {
         fontSize: '14px',
@@ -267,7 +289,9 @@ export default {
         lineHeight: '24px',
         display: 'block',
         marginBottom: '16px'
-      }
+      },
+      reverse: true,
+      activities: []
     }
   },
   computed: {
@@ -355,9 +379,30 @@ export default {
     // 详情
     toDetail (row) {
       console.log(row)
-      this.activeItem.ICCID = row.ICCID
-      this.activeItem.Index = row.Index
-      this.activeItem.DType = row.DType
+      var url = '/api/Devices/GetDevicesRegisterInfoListing'
+      this.$axios
+        .get(url, { params: {
+          AutoSystemID: this.searchForm.AutoSystemID,
+          IdentifyNumber: row.ICCID
+        } })
+        .then(res => {
+          if (res.data.code === 0) {
+            let data = res.data.data
+            data.map(item => {
+              this.activities.push({
+                timestamp: item.RegistrationTime,
+                index: item.Index,
+                type: item.DType,
+                color: item.DType === '终端注册' ? '#409EFF' : '#E6A23C'
+              })
+            })
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
       this.value4 = true
     },
 
@@ -405,7 +450,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {
@@ -453,5 +498,8 @@ export default {
   color: #606266;
   border-color: #dcdfe6;
   background-color: #fff;
+}
+ul {
+  margin-top: 20px;
 }
 </style>

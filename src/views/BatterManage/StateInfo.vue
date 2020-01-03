@@ -161,7 +161,7 @@
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="440" align="center">
+        <vxe-table-column title="操作" width="250" align="center">
           <template v-slot="{ row }">
             <el-button
               plain
