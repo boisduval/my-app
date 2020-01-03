@@ -214,8 +214,8 @@ export default {
       loading: false,
       detail: [
         {
-          label: '总压曲线',
-          path: '/batterySummaryStateTvpbc'
+          label: '状态曲线',
+          path: '/batterySummary'
         }
       ]
     }
@@ -263,7 +263,7 @@ export default {
       params.SystemID = id
       params.batterID = batterID
       switch (path) {
-        case '/batterySummaryStateTvpbc':
+        case '/batterySummary':
           this.set_paramsTvpbc(params)
           break
       }

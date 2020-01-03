@@ -328,13 +328,70 @@ const routes = [
         }
       },
       {
-        path: '/batterySummaryStateTvpbc',
-        name: 'batterySummaryStateTvpbc',
-        component: () => import(/* webpackChunkName: "BatterySummaryStateTvpbc" */ '../views/BatterManage/BatterySummaryStateTvpbc.vue'),
-
+        path: '/batterySummary',
+        name: 'batterySummary',
+        component: () => import(/* webpackChunkName: "BatterySummary" */ '../views/BatterManage/BatterySummary.vue'),
         meta: {
           keepAlive: false // 需要缓存
-        }
+        },
+        children: [
+          {
+            path: '/',
+            name: 'batterySummaryStateTvpbc',
+            component: () => import(/* webpackChunkName: "BatterySummaryStateTvpbc" */ '../views/BatterManage/BatterySummaryStateTvpbc.vue'),
+            meta: {
+              keepAlive: false // 需要缓存
+            }
+          },
+          {
+            path: '/batterySummary/batterySummaryStateCitm',
+            name: 'batterySummaryStateCitm',
+            component: () => import(/* webpackChunkName: "BatterySummaryStateCitm" */ '../views/BatterManage/BatterySummaryStateCitm.vue'),
+            meta: {
+              keepAlive: false // 需要缓存
+            }
+          },
+          {
+            path: '/batterySummary/batterySummaryStateOb',
+            name: 'batterySummaryStateOb',
+            component: () => import(/* webpackChunkName: "BatterySummaryStateOb" */ '../views/BatterManage/BatterySummaryStateOb.vue'),
+            meta: {
+              keepAlive: false // 需要缓存
+            }
+          },
+          {
+            path: '/batterySummary/batterySummaryStateHvenpc',
+            name: 'batterySummaryStateHvenpc',
+            component: () => import(/* webpackChunkName: "BatterySummaryStateHvenpc" */ '../views/BatterManage/BatterySummaryStateHvenpc.vue'),
+            meta: {
+              keepAlive: false // 需要缓存
+            }
+          },
+          {
+            path: '/batterySummary/batterySummaryStateMbt',
+            name: 'batterySummaryStateMbt',
+            component: () => import(/* webpackChunkName: "BatterySummaryStateMbt" */ '../views/BatterManage/BatterySummaryStateMbt.vue'),
+            meta: {
+              keepAlive: false // 需要缓存
+            }
+          },
+          {
+            path: '/batterySummary/batterySummaryStateHircn',
+            name: 'batterySummaryStateHircn',
+            component: () => import(/* webpackChunkName: "BatterySummaryStateHircn" */ '../views/BatterManage/BatterySummaryStateHircn.vue'),
+            meta: {
+              keepAlive: false // 需要缓存
+            }
+          },
+          {
+            path: '/batterySummary/batterySummaryStatePeiv',
+            name: 'batterySummaryStatePeiv',
+            component: () => import(/* webpackChunkName: "BatterySummaryStatePeiv" */ '../views/BatterManage/BatterySummaryStatePeiv.vue'),
+            meta: {
+              keepAlive: false // 需要缓存
+            }
+          }
+        ]
       },
       {
         path: '/selfCheck',
