@@ -133,25 +133,28 @@
         <vxe-table-column
           field="AccountNumber"
           title="登录账号"
-          width="130"
+          width="150"
           sortable
           show-overflow
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column
           field="DUser"
           title="登录名称"
-          width="100"
+          width="150"
           show-overflow
           sortable
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column
           field="HostName"
           title="IP地址"
-          width="123"
+          width="160"
           sortable
           show-overflow
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column
@@ -160,6 +163,7 @@
           width="158"
           sortable
           show-overflow
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column
@@ -168,6 +172,7 @@
           width="130"
           sortable
           show-overflow
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column
@@ -176,6 +181,7 @@
           width="130"
           sortable
           show-overflow
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column

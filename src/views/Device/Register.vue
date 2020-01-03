@@ -172,15 +172,6 @@
           show-overflow
         >
         </vxe-table-column>
-        <!-- <vxe-table-column field="Index" title="设备注册序号" width="150" sortable>
-        </vxe-table-column> -->
-        <!-- <vxe-table-column
-          field="ICCID"
-          title="ICCID编码"
-          sortable
-          width="240"
-        >
-        </vxe-table-column> -->
         <vxe-table-column
           field="DeviceID"
           title="设备唯一识别号"
@@ -188,8 +179,6 @@
           width="320"
         >
         </vxe-table-column>
-        <!-- <vxe-table-column field="DType" title="设备注册类型" sortable width="180">
-        </vxe-table-column> -->
         <vxe-table-column field="Text" title="名称" sortable width="320">
         </vxe-table-column>
         <vxe-table-column
@@ -247,7 +236,7 @@
               :color="activity.color"
             >
               序号：{{ activity.index }}<br/>
-              类型：{{ activity.type}}
+              类型：{{ activity.id }}&nbsp;[{{ activity.type}}]
             </el-timeline-item>
           </el-timeline>
         </div>
@@ -393,7 +382,8 @@ export default {
                 timestamp: item.RegistrationTime,
                 index: item.Index,
                 type: item.DType,
-                color: item.DType === '终端注册' ? '#409EFF' : '#E6A23C'
+                color: item.DType === '终端注册' ? '#409EFF' : '#E6A23C',
+                id: item.DeviceID
               })
             })
           } else if (res.data.code === 1) {

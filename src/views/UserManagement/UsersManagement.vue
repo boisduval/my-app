@@ -47,7 +47,14 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -111,17 +118,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -262,6 +269,9 @@
         </vxe-table-column>
         <vxe-table-column title="操作" width="350" fixed="right">
           <template v-slot="{ row }">
+            <el-button size="mini" @click="updataActiveTime(row)"
+              >审核</el-button
+            >
             <el-button size="mini" @click="getUserInfo(row)">详情</el-button>
             <el-button size="mini" @click="editItem(row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="deleteItem(row)"
@@ -378,72 +388,72 @@
       >
         <div style="max-height:500px;overflow:auto">
           <el-form
-          label-width="90px"
-          label-position="right"
-          :model="editForm"
-          :inline="true"
-        >
-          <el-form-item label="用户账户">
-            <el-input
-              v-model="editForm.AccountNumber"
-              placeholder="请输入用户账户"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="用户姓名">
-            <el-input
-              v-model="editForm.UserName"
-              placeholder="请输入用户姓名"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="用户籍贯">
-            <el-input
-              v-model="editForm.NativePlace"
-              placeholder="请输入用户籍贯"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="担任职务">
-            <el-input
-              v-model="editForm.InSubordinate"
-              placeholder="请输入担任职务"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="座机号码">
-            <el-input
-              v-model="editForm.TelNumber"
-              placeholder="请输入座机号码"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="所属公司">
-            <el-input
-              v-model="editForm.InCompany"
-              placeholder="请输入所属公司"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="手机号码">
-            <el-input
-              v-model="editForm.PhoneNumber"
-              placeholder="请输入手机号码"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱地址">
-            <el-input
-              v-model="editForm.Email"
-              placeholder="请输入邮箱地址"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="QQ号码">
-            <el-input
-              v-model="editForm.QqNumber"
-              placeholder="请输入QQ号码"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="微信号码">
-            <el-input
-              v-model="editForm.WechatNumber"
-              placeholder="请输入微信号码"
-            ></el-input>
-          </el-form-item>
-        </el-form>
+            label-width="90px"
+            label-position="right"
+            :model="editForm"
+            :inline="true"
+          >
+            <el-form-item label="用户账户">
+              <el-input
+                v-model="editForm.AccountNumber"
+                placeholder="请输入用户账户"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="用户姓名">
+              <el-input
+                v-model="editForm.UserName"
+                placeholder="请输入用户姓名"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="用户籍贯">
+              <el-input
+                v-model="editForm.NativePlace"
+                placeholder="请输入用户籍贯"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="担任职务">
+              <el-input
+                v-model="editForm.InSubordinate"
+                placeholder="请输入担任职务"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="座机号码">
+              <el-input
+                v-model="editForm.TelNumber"
+                placeholder="请输入座机号码"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="所属公司">
+              <el-input
+                v-model="editForm.InCompany"
+                placeholder="请输入所属公司"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="手机号码">
+              <el-input
+                v-model="editForm.PhoneNumber"
+                placeholder="请输入手机号码"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱地址">
+              <el-input
+                v-model="editForm.Email"
+                placeholder="请输入邮箱地址"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="QQ号码">
+              <el-input
+                v-model="editForm.QqNumber"
+                placeholder="请输入QQ号码"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="微信号码">
+              <el-input
+                v-model="editForm.WechatNumber"
+                placeholder="请输入微信号码"
+              ></el-input>
+            </el-form-item>
+          </el-form>
         </div>
 
         <div slot="footer" class="dialog-footer">
@@ -480,12 +490,46 @@
         </div>
       </el-dialog>
       <!-- 详情Dialog结束 -->
+
+      <!-- 审核Dialog开始 -->
+      <el-dialog
+        width="500px"
+        :close-on-click-modal="false"
+        :visible.sync="dialogFormCheckVisible"
+        title="更新有效时间"
+        style="margin-top:20vh"
+      >
+        <div class="dialog-box" style="height:45px;overflow:auto">
+          <el-form label-width="80px">
+            <el-form-item label="有效期">
+              <el-date-picker
+                v-model="activeTime"
+                type="datetime"
+                placeholder="选择日期时间"
+                :clearable="false"
+              >
+          </el-date-picker>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="updataActiveTimeHttp" size="medium" type="primary"
+            >确 定</el-button
+          >
+          <el-button @click="dialogFormCheckVisible = false" size="medium" type="primary"
+            >取 消</el-button
+          >
+        </div>
+      </el-dialog>
+      <!-- 审核Dialog结束 -->
     </el-card>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+let moment = require('moment')
 export default {
   data () {
     return {
@@ -530,7 +574,10 @@ export default {
       },
       dialogFormEditVisible: false,
       dialogFormAddVisible: false,
-      detailData: []
+      dialogFormCheckVisible: false,
+      detailData: [],
+      activeTime: '',
+      activeID: ''
     }
   },
   computed: {
@@ -646,10 +693,10 @@ export default {
           if (res.data.code === 0) {
             this.$message.success(res.data.msg)
             this.addForm = {}
+            this.dialogFormAddVisible = false
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
-          this.dialogFormAddVisible = false
           this.getData()
         })
         .catch(err => {
@@ -940,6 +987,36 @@ export default {
             message: '已取消初始化'
           })
         })
+    },
+
+    // 审核
+    updataActiveTime (row) {
+      console.log(row)
+      this.activeID = row.SystemID
+      this.activeTime = row.ActiveTime
+      this.dialogFormCheckVisible = true
+    },
+    updataActiveTimeHttp () {
+      var url = '/api/Users/UpdataActiveTime'
+      this.$axios
+        .post(url, {
+          AutoSystemID: this.searchForm.AutoSystemID,
+          SystemID: this.activeID,
+          ActiveTime: moment(this.activeTime).format('YYYY-MM-DDTHH:mm:ss')
+        })
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+            this.activeTime = ''
+            this.dialogFormCheckVisible = false
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+          this.getData()
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
 }
@@ -957,7 +1034,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {
@@ -1005,5 +1082,16 @@ export default {
   color: #606266;
   border-color: #dcdfe6;
   background-color: #fff;
+}
+.el-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.dialog-box .el-date-editor.el-input, .dialog-box .el-date-editor.el-input__inner {
+  width: 380px;
+}
+.dialog-box .el-form-item {
+    margin-bottom: 0;
 }
 </style>
