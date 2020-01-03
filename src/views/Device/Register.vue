@@ -234,8 +234,8 @@
           <div class="radio">
             排序：
             <el-radio-group v-model="reverse">
-              <el-radio :label="true">倒序</el-radio>
-              <el-radio :label="false">正序</el-radio>
+              <el-radio :label="true">正序</el-radio>
+              <el-radio :label="false">倒序</el-radio>
             </el-radio-group>
           </div>
 
@@ -290,7 +290,7 @@ export default {
         display: 'block',
         marginBottom: '16px'
       },
-      reverse: true,
+      reverse: false,
       activities: []
     }
   },
@@ -378,7 +378,7 @@ export default {
 
     // 详情
     toDetail (row) {
-      console.log(row)
+      this.activities = []
       var url = '/api/Devices/GetDevicesRegisterInfoListing'
       this.$axios
         .get(url, { params: {
