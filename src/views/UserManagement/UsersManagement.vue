@@ -177,6 +177,7 @@
           width="135"
           sortable
           show-overflow
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column
@@ -185,6 +186,7 @@
           width="100"
           show-overflow
           sortable
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column
@@ -467,30 +469,6 @@
       </el-dialog>
       <!-- 编辑表单结束 -->
 
-      <!-- 详情Dialog开始 -->
-      <el-dialog
-        width="50%"
-        :close-on-click-modal="false"
-        :visible.sync="dialogFormVisible"
-        title="用户详情"
-      >
-        <vxe-table stripe :data="detailData" border>
-          <vxe-table-column field="label1" title="参数"></vxe-table-column>
-          <vxe-table-column field="value1" title="值"></vxe-table-column>
-          <vxe-table-column field="label2" title="参数"></vxe-table-column>
-          <vxe-table-column field="value2" title="值"></vxe-table-column>
-        </vxe-table>
-        <div slot="footer" class="dialog-footer">
-          <el-button
-            @click="dialogFormVisible = false"
-            size="medium"
-            type="primary"
-            >确 定</el-button
-          >
-        </div>
-      </el-dialog>
-      <!-- 详情Dialog结束 -->
-
       <!-- 审核Dialog开始 -->
       <el-dialog
         width="500px"
@@ -523,6 +501,96 @@
         </div>
       </el-dialog>
       <!-- 审核Dialog结束 -->
+
+      <!-- 详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        title="用户详情"
+        draggable
+        width="30"
+      >
+        <p :style="pStyle">用户账号</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.AccountNumber }}
+        </div>
+        <Divider />
+        <p :style="pStyle">用户名称</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.UserName }}
+        </div>
+        <Divider />
+        <p :style="pStyle">籍贯</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.NativePlace }}
+        </div>
+        <Divider />
+        <p :style="pStyle">职务</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.InSubordinate }}
+        </div>
+        <Divider />
+        <p :style="pStyle">部门</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.InDepartment }}
+        </div>
+        <Divider />
+        <p :style="pStyle">公司</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.InCompany }}
+        </div>
+        <Divider />
+        <p :style="pStyle">手机号码</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.PhoneNumber }}
+        </div>
+        <Divider />
+        <p :style="pStyle">座机号码</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.TelNumber }}
+        </div>
+        <Divider />
+        <p :style="pStyle">邮箱地址</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Email }}
+        </div>
+        <Divider />
+        <p :style="pStyle">QQ号码</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.QqNumber }}
+        </div>
+        <Divider />
+        <p :style="pStyle">微信号码</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.WechatNumber }}
+        </div>
+        <Divider />
+        <p :style="pStyle">登录次数</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.TotalNumberOfLandings }}
+        </div>
+        <Divider />
+        <p :style="pStyle">上次登录IP</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.RecentLandfallIp }}
+        </div>
+        <Divider />
+        <p :style="pStyle">登录时间</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.RecentLandfallTime }}
+        </div>
+        <Divider />
+        <p :style="pStyle">注册时间</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.RegistrationTime }}
+        </div>
+        <Divider />
+        <p :style="pStyle">有效时间</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.ActiveTime }}
+        </div>
+      </Drawer>
+      <!-- 详情结束 -->
     </el-card>
   </div>
 </template>
@@ -557,7 +625,6 @@ export default {
       customColumns: [],
       count: 0,
       addForm: {},
-      dialogFormVisible: false,
       selectedItems: [],
       editForm: {
         AccountNumber: '',
@@ -575,9 +642,17 @@ export default {
       dialogFormEditVisible: false,
       dialogFormAddVisible: false,
       dialogFormCheckVisible: false,
-      detailData: [],
       activeTime: '',
-      activeID: ''
+      activeID: '',
+      activeItem: '',
+      value4: false,
+      pStyle: {
+        fontSize: '16px',
+        color: 'rgba(0,0,0,0.85)',
+        lineHeight: '24px',
+        display: 'block',
+        marginBottom: '16px'
+      }
     }
   },
   computed: {
@@ -818,58 +893,8 @@ export default {
         )
         .then(res => {
           if (res.data.code === 0) {
-            let data = res.data.data[0]
-            this.detailData = [
-              {
-                label1: '用户账号',
-                value1: data.AccountNumber,
-                label2: '用户名称',
-                value2: data.UserName
-              },
-              {
-                label1: '籍贯',
-                value1: data.NativePlace,
-                label2: '职务',
-                value2: data.InSubordinate
-              },
-              {
-                label1: '部门',
-                value1: data.InDepartment,
-                label2: '公司',
-                value2: data.InCompany
-              },
-              {
-                label1: '手机号码',
-                value1: data.PhoneNumber,
-                label2: '座机号码',
-                value2: data.TelNumber
-              },
-              {
-                label1: '邮箱地址',
-                value1: data.Email,
-                label2: 'QQ号码',
-                value2: data.QqNumber
-              },
-              {
-                label1: '微信号码',
-                value1: data.WechatNumber,
-                label2: '登录次数',
-                value2: data.TotalNumberOfLandings
-              },
-              {
-                label1: '上次登录IP',
-                value1: data.RecentLandfallIp,
-                label2: '登录时间',
-                value2: data.RecentLandfallTime
-              },
-              {
-                label1: '注册时间',
-                value1: data.RegistrationTime,
-                label2: '有效时间',
-                value2: data.ActiveTime
-              }
-            ]
-            this.dialogFormVisible = true
+            this.activeItem = res.data.data[0]
+            this.value4 = true
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }

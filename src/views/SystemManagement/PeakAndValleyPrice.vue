@@ -41,7 +41,14 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -88,17 +95,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -257,50 +264,52 @@
         width="60%"
         :close-on-click-modal="false"
       >
-        <el-form :model="editForm" label-width="90px">
-          <el-form-item label="电价标签" prop="VText">
-            <el-input v-model="editForm.VText"></el-input>
-          </el-form-item>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="8">
-            <el-form-item label="过期时间">
-              <el-date-picker
-                v-model="value"
-                type="date"
-                placeholder="选择日期"
-              >
-              </el-date-picker>
+        <div style="max-height:500px;overflow:auto;">
+          <el-form :model="editForm" label-width="90px">
+            <el-form-item label="电价标签" prop="VText">
+              <el-input v-model="editForm.VText"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="8">
-            <el-form-item label="电价时令">
-              <el-radio-group v-model="editForm.Summer">
-                <el-radio label="夏令时"></el-radio>
-                <el-radio label="冬令时"></el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="8">
-            <el-form-item label="平高峰">
-              <el-radio-group v-model="editForm.Climax">
-                <el-radio label="高峰"></el-radio>
-                <el-radio label="平峰"></el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col
-            :xs="24"
-            :sm="24"
-            :md="12"
-            :lg="6"
-            :xl="6"
-            v-for="(item, index) in PVChart"
-            :key="index"
-          >
-            <el-form-item :label="'第' + index + '时电价'">
-              <el-input v-model="PVChart[index]"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-form>
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="8">
+              <el-form-item label="过期时间">
+                <el-date-picker
+                  v-model="value"
+                  type="date"
+                  placeholder="选择日期"
+                >
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="8">
+              <el-form-item label="电价时令">
+                <el-radio-group v-model="editForm.Summer">
+                  <el-radio label="夏令时"></el-radio>
+                  <el-radio label="冬令时"></el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="8">
+              <el-form-item label="平高峰">
+                <el-radio-group v-model="editForm.Climax">
+                  <el-radio label="高峰"></el-radio>
+                  <el-radio label="平峰"></el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col
+              :xs="24"
+              :sm="24"
+              :md="12"
+              :lg="6"
+              :xl="6"
+              v-for="(item, index) in PVChart"
+              :key="index"
+            >
+              <el-form-item :label="'第' + index + '时电价'">
+                <el-input v-model="PVChart[index]"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-form>
+        </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormEditVisible = false">取 消</el-button>
           <el-button type="primary" @click="editHttp">提 交</el-button>
@@ -315,50 +324,53 @@
         width="50%"
         :close-on-click-modal="false"
       >
-        <el-form :model="addForm" label-width="90px">
-          <el-form-item label="电价标签" prop="VText">
-            <el-input v-model="addForm.VText"></el-input>
-          </el-form-item>
-          <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-            <el-form-item label="过期时间">
-              <el-date-picker
-                v-model="value"
-                type="date"
-                placeholder="选择日期"
-              >
-              </el-date-picker>
+        <div style="max-height:500px;overflow:auto;">
+          <el-form :model="addForm" label-width="90px">
+            <el-form-item label="电价标签" prop="VText">
+              <el-input v-model="addForm.VText"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-            <el-form-item label="电价时令">
-              <el-radio-group v-model="addForm.Summer">
-                <el-radio label="夏令时"></el-radio>
-                <el-radio label="冬令时"></el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-            <el-form-item label="平高峰">
-              <el-radio-group v-model="addForm.Climax">
-                <el-radio label="高峰"></el-radio>
-                <el-radio label="平峰"></el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col
-            :xs="24"
-            :sm="24"
-            :md="12"
-            :lg="6"
-            :xl="6"
-            v-for="(item, index) in addPVChart"
-            :key="index"
-          >
-            <el-form-item :label="'第' + index + '时电价'">
-              <el-input v-model="addPVChart[index]"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-form>
+            <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+              <el-form-item label="过期时间">
+                <el-date-picker
+                  v-model="value"
+                  type="date"
+                  placeholder="选择日期"
+                >
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+              <el-form-item label="电价时令">
+                <el-radio-group v-model="addForm.Summer">
+                  <el-radio label="夏令时"></el-radio>
+                  <el-radio label="冬令时"></el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+              <el-form-item label="平高峰">
+                <el-radio-group v-model="addForm.Climax">
+                  <el-radio label="高峰"></el-radio>
+                  <el-radio label="平峰"></el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col
+              :xs="24"
+              :sm="24"
+              :md="12"
+              :lg="6"
+              :xl="6"
+              v-for="(item, index) in addPVChart"
+              :key="index"
+            >
+              <el-form-item :label="'第' + index + '时电价'">
+                <el-input v-model="addPVChart[index]"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-form>
+        </div>
+
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormAddVisible = false">取 消</el-button>
           <el-button type="primary" @click="addHttp">提 交</el-button>
@@ -804,7 +816,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {
@@ -854,5 +866,8 @@ export default {
 }
 #myChart {
   height: 500px;
+}
+.el-form {
+  margin-right: 10px;
 }
 </style>
