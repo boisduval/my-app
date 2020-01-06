@@ -120,21 +120,55 @@
       </el-pagination>
       <!-- 分页结束 -->
 
-      <!-- 详情Dialog开始 -->
-      <!-- <el-dialog
-        width="50%"
-        :close-on-click-modal="false"
-        :visible.sync="dialogFormVisible"
+      <!-- 详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="value4"
         title="告警详情"
+        draggable
+        width="30"
       >
-        <vxe-table stripe :data="detailData" border>
-          <vxe-table-column field="label1" title="参数"></vxe-table-column>
-          <vxe-table-column field="value1" title="值"></vxe-table-column>
-          <vxe-table-column field="label2" title="参数"></vxe-table-column>
-          <vxe-table-column field="value2" title="值"></vxe-table-column>
-        </vxe-table>
-      </el-dialog> -->
-      <!-- 详情Dialog结束 -->
+        <p :style="pStyle">应用编号</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Appid }}
+        </div>
+        <Divider />
+        <p :style="pStyle">应用名称</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.AppName }}
+        </div>
+        <Divider />
+        <p :style="pStyle">告警来源</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Source }}
+        </div>
+        <Divider />
+        <p :style="pStyle">告警编号</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Alarmid }}
+        </div>
+        <Divider />
+        <p :style="pStyle">告警级别</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Level }}
+        </div>
+        <Divider />
+        <p :style="pStyle">告警级别名称</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.LevelMsg }}
+        </div>
+        <Divider />
+        <p :style="pStyle">告警标题</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.AlarmTitle }}
+        </div>
+        <Divider />
+        <p :style="pStyle">告警信息</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.AlarmMsg }}
+        </div>
+      </Drawer>
+      <!-- 详情结束 -->
     </el-card>
   </div>
 </template>
@@ -155,8 +189,16 @@ export default {
       isShow: true,
       fileName: '告警信息',
       loading: false,
-      dialogFormVisible: false,
-      detailData: []
+      detailData: [],
+      activeItem: '',
+      value4: false,
+      pStyle: {
+        fontSize: '16px',
+        color: 'rgba(0,0,0,0.85)',
+        lineHeight: '24px',
+        display: 'block',
+        marginBottom: '16px'
+      }
     }
   },
   computed: {
@@ -236,71 +278,9 @@ export default {
     // 详情
     toDetail (row) {
       console.log(row)
+      this.activeItem = row
+      this.value4 = true
     }
-
-    // 获取告警信息
-    // getUserLogInfo (SystemID) {
-    //   var url = '/api/Log/GetUserLogInfo'
-    //   this.$axios
-    //     .get(
-    //       `${url}?AutoSystemID=${this.searchForm.AutoSystemID}&LogSystemID=${SystemID}`
-    //     )
-    //     .then(res => {
-    //       if (res.data.code === 0) {
-    //         let data = res.data.data[0]
-    //         this.detailData = [
-    //           {
-    //             label1: '日志类型',
-    //             value1: data.LogType,
-    //             label2: '登录序号',
-    //             value2: data.LogIndex
-    //           },
-    //           {
-    //             label1: '外网地址',
-    //             value1: data.LogIP,
-    //             label2: '内网地址',
-    //             value2: data.logHostIP
-    //           },
-    //           {
-    //             label1: '客户端地址',
-    //             value1: data.RemoteIP,
-    //             label2: '客户端属地',
-    //             value2: data.ComputerLocation
-    //           },
-    //           {
-    //             label1: '主机名称',
-    //             value1: data.UserHostName,
-    //             label2: '语言类型',
-    //             value2: data.UserLanguage
-    //           },
-    //           {
-    //             label1: '浏览器类型',
-    //             value1: data.Browser,
-    //             label2: '浏览器版本',
-    //             value2: data.BrowserVersion
-    //           },
-    //           {
-    //             label1: '服务器地址',
-    //             value1: data.HttpForwardedAddress,
-    //             label2: '开始时间',
-    //             value2: data.StartTime
-    //           },
-    //           {
-    //             label1: '结束时间',
-    //             value1: data.StopTime,
-    //             label2: '记录时间',
-    //             value2: data.RecordingTime
-    //           }
-    //         ]
-    //         this.dialogFormVisible = true
-    //       } else if (res.data.code === 1) {
-    //         this.$message.error(res.data.msg)
-    //       }
-    //     })
-    //     .catch(err => {
-    //       console.error(err)
-    //     })
-    // },
   }
 }
 </script>

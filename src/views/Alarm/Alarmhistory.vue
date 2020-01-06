@@ -218,28 +218,6 @@
       </el-pagination>
       <!-- 分页结束 -->
 
-      <!-- 详情Dialog开始 -->
-      <el-dialog
-        width="50%"
-        :close-on-click-modal="false"
-        :visible.sync="dialogFormVisible"
-        title="用户日志"
-      >
-        <vxe-table stripe :data="detailData" border>
-          <vxe-table-column field="label1" title="参数"></vxe-table-column>
-          <vxe-table-column field="value1" title="值"></vxe-table-column>
-        </vxe-table>
-        <div slot="footer" class="dialog-footer">
-          <el-button
-            @click="dialogFormVisible = false"
-            type="primary"
-            size="medium"
-            >确 定</el-button
-          >
-        </div>
-      </el-dialog>
-      <!-- 详情Dialog结束 -->
-
       <!--  确认报警Dialog开始 -->
       <el-dialog
         width="40%"
@@ -293,6 +271,66 @@
         </div>
       </el-dialog>
       <!--  确认报警Dialog结束 -->
+
+      <!-- 详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        title="告警详情"
+        draggable
+        width="30"
+      >
+        <p :style="pStyle">告警级别</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Level }}
+        </div>
+        <Divider />
+        <p :style="pStyle">告警类型</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Type }}
+        </div>
+        <!-- <Divider />
+        <p :style="pStyle">发生时间</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.WriteTime }}
+        </div>
+        <Divider />
+        <p :style="pStyle">确认时间</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.OverTime }}
+        </div> -->
+        <Divider />
+        <p :style="pStyle">告警来源</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.ASource }}
+        </div>
+        <Divider />
+        <p :style="pStyle">简要描述</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Name }}
+        </div>
+        <Divider />
+        <p :style="pStyle">详细信息</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Msg }}
+        </div>
+        <Divider />
+        <p :style="pStyle">账户名称</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.OverAccountNumber }}
+        </div>
+        <Divider />
+        <p :style="pStyle">用户名称</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.OverUserName }}
+        </div>
+        <Divider />
+        <p :style="pStyle">详细信息</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.OverMsg }}
+        </div>
+      </Drawer>
+      <!-- 详情结束 -->
     </el-card>
   </div>
 </template>
@@ -346,6 +384,15 @@ export default {
         Type: '',
         WriteTime: '',
         Name: ''
+      },
+      activeItem: '',
+      value4: false,
+      pStyle: {
+        fontSize: '16px',
+        color: 'rgba(0,0,0,0.85)',
+        lineHeight: '24px',
+        display: 'block',
+        marginBottom: '16px'
       }
     }
   },
@@ -445,50 +492,8 @@ export default {
         )
         .then(res => {
           if (res.data.code === 0) {
-            let data = res.data.data
-            this.detailData = [
-              {
-                label1: '告警级别',
-                value1: data.Level
-              },
-              {
-                label1: '告警类型',
-                value1: data.Type
-              },
-              {
-                label1: '发生时间',
-                value1: data.WriteTime
-              },
-              {
-                label1: '确认时间',
-                value1: data.OverTime
-              },
-              {
-                label1: '告警来源',
-                value1: data.ASource
-              },
-              {
-                label1: '简要描述',
-                value1: data.Name
-              },
-              {
-                label1: '详细信息',
-                value1: data.Msg
-              },
-              {
-                label1: '账户名称',
-                value1: data.OverAccountNumber
-              },
-              {
-                label1: '用户名称',
-                value1: data.OverUserName
-              },
-              {
-                label1: '详细信息',
-                value1: data.OverMsg
-              }
-            ]
-            this.dialogFormVisible = true
+            this.activeItem = res.data.data
+            this.value4 = true
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
