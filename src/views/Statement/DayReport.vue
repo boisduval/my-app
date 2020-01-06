@@ -225,29 +225,85 @@
       </el-pagination>
       <!-- 分页结束 -->
 
-      <!-- 详情Dialog开始 -->
-      <el-dialog
-        width="50%"
-        :close-on-click-modal="false"
-        :visible.sync="dialogFormVisible"
-        title="用户日志"
+      <!-- 详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        title="日志详情"
+        draggable
+        width="30"
       >
-        <vxe-table stripe :data="detailData" border>
-          <vxe-table-column field="label1" title="参数"></vxe-table-column>
-          <vxe-table-column field="value1" title="值"></vxe-table-column>
-          <vxe-table-column field="label2" title="参数"></vxe-table-column>
-          <vxe-table-column field="value2" title="值"></vxe-table-column>
-        </vxe-table>
-        <div slot="footer" class="dialog-footer">
-          <el-button
-            @click="dialogFormVisible = false"
-            size="medium"
-            type="primary"
-            >确 定</el-button
-          >
+        <p :style="pStyle">日志类型</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.LogType }}
         </div>
-      </el-dialog>
-      <!-- 详情Dialog结束 -->
+        <Divider />
+        <p :style="pStyle">登录序号</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.LogIndex }}
+        </div>
+        <Divider />
+        <p :style="pStyle">外网地址</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.LogIP }}
+        </div>
+        <Divider />
+        <p :style="pStyle">内网地址</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.logHostIP }}
+        </div>
+        <Divider />
+        <p :style="pStyle">客户端地址</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.RemoteIP }}
+        </div>
+        <Divider />
+        <p :style="pStyle">客户端属地</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.ComputerLocation }}
+        </div>
+        <Divider />
+        <p :style="pStyle">主机名称</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.UserHostName }}
+        </div>
+        <Divider />
+        <p :style="pStyle">语言类型</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.UserLanguage }}
+        </div>
+        <Divider />
+        <p :style="pStyle">浏览器类型</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.Browser }}
+        </div>
+        <Divider />
+        <p :style="pStyle">浏览器版本</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.BrowserVersion }}
+        </div>
+        <Divider />
+        <p :style="pStyle">服务器地址</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.HttpForwardedAddress }}
+        </div>
+        <Divider />
+        <p :style="pStyle">开始时间</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.StartTime }}
+        </div>
+        <Divider />
+        <p :style="pStyle">结束时间</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.StopTime }}
+        </div>
+        <Divider />
+        <p :style="pStyle">记录时间</p>
+        <div class="demo-drawer-profile">
+          {{ activeItem.RecordingTime }}
+        </div>
+      </Drawer>
+      <!-- 详情结束 -->
     </el-card>
   </div>
 </template>
@@ -273,10 +329,17 @@ export default {
       isShow: true,
       fileName: '日志信息',
       loading: false,
-      dialogFormVisible: false,
       options: [],
       value: '',
-      detailData: []
+      activeItem: '',
+      value4: false,
+      pStyle: {
+        fontSize: '16px',
+        color: 'rgba(0,0,0,0.85)',
+        lineHeight: '24px',
+        display: 'block',
+        marginBottom: '16px'
+      }
     }
   },
   computed: {
@@ -381,7 +444,6 @@ export default {
 
     // 详情
     toDetail (row) {
-      console.log(row)
       this.getUserLogInfo(row.SystemID)
     },
 
@@ -394,52 +456,8 @@ export default {
         )
         .then(res => {
           if (res.data.code === 0) {
-            let data = res.data.data[0]
-            this.detailData = [
-              {
-                label1: '日志类型',
-                value1: data.LogType,
-                label2: '登录序号',
-                value2: data.LogIndex
-              },
-              {
-                label1: '外网地址',
-                value1: data.LogIP,
-                label2: '内网地址',
-                value2: data.logHostIP
-              },
-              {
-                label1: '客户端地址',
-                value1: data.RemoteIP,
-                label2: '客户端属地',
-                value2: data.ComputerLocation
-              },
-              {
-                label1: '主机名称',
-                value1: data.UserHostName,
-                label2: '语言类型',
-                value2: data.UserLanguage
-              },
-              {
-                label1: '浏览器类型',
-                value1: data.Browser,
-                label2: '浏览器版本',
-                value2: data.BrowserVersion
-              },
-              {
-                label1: '服务器地址',
-                value1: data.HttpForwardedAddress,
-                label2: '开始时间',
-                value2: data.StartTime
-              },
-              {
-                label1: '结束时间',
-                value1: data.StopTime,
-                label2: '记录时间',
-                value2: data.RecordingTime
-              }
-            ]
-            this.dialogFormVisible = true
+            this.activeItem = res.data.data[0]
+            this.value4 = true
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
