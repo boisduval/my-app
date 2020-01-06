@@ -66,6 +66,7 @@
       版权所有 ©{{ footerInfo.SystemYear }} 浙江衡睿科技有限公司
       <br />技术支持电话：000-00000000 <br />
     </div>
+    <Spin size="large" fix v-if="spinShow"></Spin>
   </div>
 </template>
 
@@ -113,7 +114,8 @@ export default {
       broName2: '',
       broName1: '',
       userAgent: '',
-      footerInfo: ''
+      footerInfo: '',
+      spinShow: false
     }
   },
   methods: {
@@ -279,10 +281,12 @@ export default {
       return 'Other'
     },
     login () {
+      this.spinShow = true
       this.data.MD5Pass = this.$md5(this.data.MD5Pass)
       this.$axios
         .post('/api/Users/UserLogin', this.data)
         .then(res => {
+          this.spinShow = false
           if (res.data.code === 1) {
             this.data.MD5Pass = ''
             this.$message.error(res.data.msg)

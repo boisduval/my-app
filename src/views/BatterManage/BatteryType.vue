@@ -33,7 +33,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="formInline.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  formInline.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -79,17 +86,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}
-              </vxe-checkbox>
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}
+            </vxe-checkbox>
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -219,7 +226,7 @@
           width="180"
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="150" fixed="right">
+        <vxe-table-column title="操作" width="200" fixed="right">
           <template v-slot="{ row }">
             <el-button size="mini" @click="showDialog(row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="deleteItem(row)"
@@ -249,120 +256,122 @@
         class="abow_dialog"
         :close-on-click-modal="false"
       >
-        <el-form :model="form" :inline="true" :rules="rules" ref="ruleForm1">
-          <el-form-item
-            label="电池名称"
-            :label-width="formLabelWidth"
-            prop="BName"
-          >
-            <el-input v-model="form.BName" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="电池容量"
-            :label-width="formLabelWidth"
-            prop="Capacity"
-          >
-            <el-input v-model="form.Capacity" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="电池内阻"
-            :label-width="formLabelWidth"
-            prop="InternalResistance"
-          >
-            <el-input
-              v-model="form.InternalResistance"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="自放电率"
-            :label-width="formLabelWidth"
-            prop="SelfDischarge"
-          >
-            <el-input
-              v-model="form.SelfDischarge"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="电池材料"
-            :label-width="formLabelWidth"
-            prop="batteryMaterIDAdd"
-          >
-            <el-select v-model="batteryMaterID" clearable>
-              <el-option
-                v-for="(item, index) in batteryMaterialList"
-                :key="index"
-                :value="item.SystemID"
-                :label="item.Name"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="标准电压"
-            :label-width="formLabelWidth"
-            prop="StandardVoltage"
-          >
-            <el-input
-              v-model="form.StandardVoltage"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="最大电压"
-            :label-width="formLabelWidth"
-            prop="VoltageMax"
-          >
-            <el-input v-model="form.VoltageMax" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="最小电压"
-            :label-width="formLabelWidth"
-            prop="VoltageMin"
-          >
-            <el-input v-model="form.VoltageMin" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="最大温度"
-            :label-width="formLabelWidth"
-            prop="TemperatureMax"
-          >
-            <el-input
-              v-model="form.TemperatureMax"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="最小温度"
-            :label-width="formLabelWidth"
-            prop="TemperatureMin"
-          >
-            <el-input
-              v-model="form.TemperatureMin"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="充电比率"
-            :label-width="formLabelWidth"
-            prop="ChargingRatio"
-          >
-            <el-input
-              v-model="form.ChargingRatio"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="放电比率"
-            :label-width="formLabelWidth"
-            prop="DischargeRate"
-          >
-            <el-input
-              v-model="form.DischargeRate"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-        </el-form>
+        <div style="max-height:500px;overflow:auto;">
+          <el-form :model="form" :inline="true" :rules="rules" ref="ruleForm1">
+            <el-form-item
+              label="电池名称"
+              :label-width="formLabelWidth"
+              prop="BName"
+            >
+              <el-input v-model="form.BName" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="电池容量"
+              :label-width="formLabelWidth"
+              prop="Capacity"
+            >
+              <el-input v-model="form.Capacity" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="电池内阻"
+              :label-width="formLabelWidth"
+              prop="InternalResistance"
+            >
+              <el-input
+                v-model="form.InternalResistance"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="自放电率"
+              :label-width="formLabelWidth"
+              prop="SelfDischarge"
+            >
+              <el-input
+                v-model="form.SelfDischarge"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="电池材料"
+              :label-width="formLabelWidth"
+              prop="batteryMaterIDAdd"
+            >
+              <el-select v-model="batteryMaterID" clearable>
+                <el-option
+                  v-for="(item, index) in batteryMaterialList"
+                  :key="index"
+                  :value="item.SystemID"
+                  :label="item.Name"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="标准电压"
+              :label-width="formLabelWidth"
+              prop="StandardVoltage"
+            >
+              <el-input
+                v-model="form.StandardVoltage"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="最大电压"
+              :label-width="formLabelWidth"
+              prop="VoltageMax"
+            >
+              <el-input v-model="form.VoltageMax" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="最小电压"
+              :label-width="formLabelWidth"
+              prop="VoltageMin"
+            >
+              <el-input v-model="form.VoltageMin" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="最大温度"
+              :label-width="formLabelWidth"
+              prop="TemperatureMax"
+            >
+              <el-input
+                v-model="form.TemperatureMax"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="最小温度"
+              :label-width="formLabelWidth"
+              prop="TemperatureMin"
+            >
+              <el-input
+                v-model="form.TemperatureMin"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="充电比率"
+              :label-width="formLabelWidth"
+              prop="ChargingRatio"
+            >
+              <el-input
+                v-model="form.ChargingRatio"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="放电比率"
+              :label-width="formLabelWidth"
+              prop="DischargeRate"
+            >
+              <el-input
+                v-model="form.DischargeRate"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
           <el-button type="primary" @click="edit('ruleForm1')">确 定</el-button>
@@ -376,126 +385,137 @@
         :visible.sync="dialogFormAddVisible"
         :close-on-click-modal="false"
       >
-        <el-form :model="formAdd" :inline="true" :rules="rules" ref="ruleForm">
-          <el-form-item
-            label="电池名称"
-            :label-width="formLabelWidth"
-            prop="BName"
+        <div style="max-height:500px;overflow:auto;">
+          <el-form
+            :model="formAdd"
+            :inline="true"
+            :rules="rules"
+            ref="ruleForm"
           >
-            <el-input v-model="formAdd.BName" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="电池容量"
-            :label-width="formLabelWidth"
-            prop="Capacity"
-          >
-            <el-input v-model="formAdd.Capacity" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="电池内阻"
-            :label-width="formLabelWidth"
-            prop="InternalResistance"
-          >
-            <el-input
-              v-model="formAdd.InternalResistance"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="自放电率"
-            :label-width="formLabelWidth"
-            prop="SelfDischarge"
-          >
-            <el-input
-              v-model="formAdd.SelfDischarge"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="电池材料"
-            :label-width="formLabelWidth"
-            prop="batteryMaterIDAdd"
-          >
-            <el-select v-model="batteryMaterIDAdd" clearable>
-              <el-option
-                v-for="(item, index) in batteryMaterialList"
-                :key="index"
-                :value="item.SystemID"
-                :label="item.Name"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="标准电压"
-            :label-width="formLabelWidth"
-            prop="StandardVoltage"
-          >
-            <el-input
-              v-model="formAdd.StandardVoltage"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="最大电压"
-            :label-width="formLabelWidth"
-            prop="VoltageMax"
-          >
-            <el-input
-              v-model="formAdd.VoltageMax"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="最小电压"
-            :label-width="formLabelWidth"
-            prop="VoltageMin"
-          >
-            <el-input
-              v-model="formAdd.VoltageMin"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="最大温度"
-            :label-width="formLabelWidth"
-            prop="TemperatureMax"
-          >
-            <el-input
-              v-model="formAdd.TemperatureMax"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="最小温度"
-            :label-width="formLabelWidth"
-            prop="TemperatureMin"
-          >
-            <el-input
-              v-model="formAdd.TemperatureMin"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="充电比率"
-            :label-width="formLabelWidth"
-            prop="ChargingRatio"
-          >
-            <el-input
-              v-model="formAdd.ChargingRatio"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="放电比率"
-            :label-width="formLabelWidth"
-            prop="DischargeRate"
-          >
-            <el-input
-              v-model="formAdd.DischargeRate"
-              autocomplete="off"
-            ></el-input>
-          </el-form-item>
-        </el-form>
+            <el-form-item
+              label="电池名称"
+              :label-width="formLabelWidth"
+              prop="BName"
+            >
+              <el-input v-model="formAdd.BName" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="电池容量"
+              :label-width="formLabelWidth"
+              prop="Capacity"
+            >
+              <el-input
+                v-model="formAdd.Capacity"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="电池内阻"
+              :label-width="formLabelWidth"
+              prop="InternalResistance"
+            >
+              <el-input
+                v-model="formAdd.InternalResistance"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="自放电率"
+              :label-width="formLabelWidth"
+              prop="SelfDischarge"
+            >
+              <el-input
+                v-model="formAdd.SelfDischarge"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="电池材料"
+              :label-width="formLabelWidth"
+              prop="batteryMaterIDAdd"
+            >
+              <el-select v-model="batteryMaterIDAdd" clearable>
+                <el-option
+                  v-for="(item, index) in batteryMaterialList"
+                  :key="index"
+                  :value="item.SystemID"
+                  :label="item.Name"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="标准电压"
+              :label-width="formLabelWidth"
+              prop="StandardVoltage"
+            >
+              <el-input
+                v-model="formAdd.StandardVoltage"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="最大电压"
+              :label-width="formLabelWidth"
+              prop="VoltageMax"
+            >
+              <el-input
+                v-model="formAdd.VoltageMax"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="最小电压"
+              :label-width="formLabelWidth"
+              prop="VoltageMin"
+            >
+              <el-input
+                v-model="formAdd.VoltageMin"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="最大温度"
+              :label-width="formLabelWidth"
+              prop="TemperatureMax"
+            >
+              <el-input
+                v-model="formAdd.TemperatureMax"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="最小温度"
+              :label-width="formLabelWidth"
+              prop="TemperatureMin"
+            >
+              <el-input
+                v-model="formAdd.TemperatureMin"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="充电比率"
+              :label-width="formLabelWidth"
+              prop="ChargingRatio"
+            >
+              <el-input
+                v-model="formAdd.ChargingRatio"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="放电比率"
+              :label-width="formLabelWidth"
+              prop="DischargeRate"
+            >
+              <el-input
+                v-model="formAdd.DischargeRate"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
+
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormAddVisible = false">取 消</el-button>
           <el-button type="primary" @click="addHttp('ruleForm')"
@@ -862,7 +882,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

@@ -12,7 +12,7 @@
             :model="formInline"
             class="demo-form-inline"
             label-width="90px"
-            label-position="left"
+            label-position="right"
           >
             <el-form-item label="ICCID编号:">
               <el-input
@@ -156,10 +156,9 @@
           title="设备管理员"
           sortable
           width="150"
-          align="center"
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="180">
+        <vxe-table-column field="DTime" title="登记时间" sortable width="180" align="center">
         </vxe-table-column>
         <vxe-table-column title="操作" width="250" align="center">
           <template v-slot="{ row }">

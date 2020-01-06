@@ -42,26 +42,6 @@ export default {
       data: {},
       activeName: 'EquipmentInfo',
       list: [
-        // {
-        //   label: 'DTU信息',
-        //   name: 'DTUInfo'
-        // },
-        // {
-        //   label: '控制器信息',
-        //   name: 'ControllerInfo'
-        // },
-        // {
-        //   label: 'BMS信息',
-        //   name: 'BmsInfo'
-        // },
-        // {
-        //   label: '电池信息',
-        //   name: 'BatteryInfo'
-        // },
-        // {
-        //   label: '温度信息',
-        //   name: 'TemperatureInfo'
-        // }
         {
           label: '设备信息',
           name: 'EquipmentInfo'

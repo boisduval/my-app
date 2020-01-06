@@ -157,11 +157,12 @@
           title="设备管理员"
           sortable
           width="150"
+          align="left"
         >
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="150">
+        <vxe-table-column title="操作" width="200">
           <template v-slot="{ row }">
             <el-button size="small" @click="setSelfInspection(row)">
               <i class="el-icon-edit"></i>
@@ -398,11 +399,6 @@ export default {
   display: inline-block;
   margin-bottom: 16px;
   box-shadow: 0 6px 0 2px #606266, 0 0 0 2px #606266, 0 12px 0 2px #606266;
-}
-
-.el-button {
-  padding: 8px 10px;
-  margin-left: 5px;
 }
 
 .menu-btn:focus,

@@ -58,6 +58,14 @@ const routes = [
         }
       },
       {
+        path: '/equipmentManage',
+        name: 'equipmentManage',
+        component: () => import(/* webpackChunkName: "EquipmentManage" */ '../views/Device/EquipmentManage.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
         path: '/deviceDetail',
         name: 'deviceDetail',
         component: () => import(/* webpackChunkName: "deviceDetail" */ '../views/Device/DeviceDetail.vue'),
@@ -246,7 +254,7 @@ const routes = [
       {
         path: '/temperatureManage',
         name: 'temperatureManage',
-        component: () => import(/* webpackChunkName: "BatterManageTemperatureManage" */ '../views/BatterManage/TemperatureManage.vue'),
+        component: () => import(/* webpackChunkName: "TemperatureManage" */ '../views/BatterManage/TemperatureManage.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -254,7 +262,7 @@ const routes = [
       {
         path: '/temperatureInfo',
         name: 'temperatureInfo',
-        component: () => import(/* webpackChunkName: "BatterManageTemperatureInfo" */ '../views/BatterManage/TemperatureInfo.vue'),
+        component: () => import(/* webpackChunkName: "TemperatureInfo" */ '../views/BatterManage/TemperatureInfo.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -262,7 +270,7 @@ const routes = [
       {
         path: '/systemControl',
         name: 'systemControl',
-        component: () => import(/* webpackChunkName: "BatterManageSystemControl" */ '../views/BatterManage/SystemControl.vue'),
+        component: () => import(/* webpackChunkName: "SystemControl" */ '../views/BatterManage/SystemControl.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -270,7 +278,7 @@ const routes = [
       {
         path: '/thresholdSetting',
         name: 'thresholdSetting',
-        component: () => import(/* webpackChunkName: "BatterManageThresholdSetting" */ '../views/BatterManage/ThresholdSetting.vue'),
+        component: () => import(/* webpackChunkName: "ThresholdSetting" */ '../views/BatterManage/ThresholdSetting.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -278,7 +286,7 @@ const routes = [
       {
         path: '/workThreshold',
         name: 'workThreshold',
-        component: () => import(/* webpackChunkName: "BatterManageWorkThreshold" */ '../views/BatterManage/WorkThreshold.vue'),
+        component: () => import(/* webpackChunkName: "WorkThreshold" */ '../views/BatterManage/WorkThreshold.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }

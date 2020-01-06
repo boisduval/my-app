@@ -173,7 +173,7 @@
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="180">
+        <vxe-table-column field="DTime" title="登记时间" sortable width="250" align="center">
         </vxe-table-column>
         <vxe-table-column title="操作" width="200" fixed="right" align="center">
           <template v-slot="{ row }">
@@ -191,7 +191,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="formInline.page"
-        :page-sizes="[2, 4, 8]"
+        :page-sizes="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="count"
       >
@@ -302,7 +302,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -345,6 +345,9 @@ export default {
         DAffiliationUserID: ''
       }
     }
+  },
+  computed: {
+    ...mapState('table', ['pageSize'])
   },
   methods: {
     ...mapMutations('detail', ['set_paramsD', 'set_paramsB', 'set_paramsS']),
@@ -535,6 +538,7 @@ export default {
   },
 
   created () {
+    this.formInline.limit = this.pageSize[0]
     this.getData()
   }
 }
@@ -613,11 +617,6 @@ export default {
   display: inline-block;
   margin-bottom: 16px;
   box-shadow: 0 6px 0 2px #606266, 0 0 0 2px #606266, 0 12px 0 2px #606266;
-}
-
-.el-button {
-  padding: 8px 10px;
-  margin-left: 5px;
 }
 
 .menu-btn:focus,

@@ -156,7 +156,6 @@
           title="设备管理员"
           sortable
           width="150"
-          align="center"
         >
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">

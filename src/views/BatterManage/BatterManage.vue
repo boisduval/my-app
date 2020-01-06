@@ -210,7 +210,7 @@
           show-overflow
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="150" fixed="right">
+        <vxe-table-column title="操作" width="200" fixed="right">
           <template v-slot="{ row }">
             <el-button size="mini" @click="showDialog(row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="deleteItem(row)"

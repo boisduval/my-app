@@ -141,20 +141,22 @@
           field="DIDS"
           title="设备ID字符串"
           sortable
-          width="200"
+          width="250"
           show-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="150">
+        <vxe-table-column field="DName" show-overflow title="设备名称" sortable width="200">
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
           title="设备管理员"
           sortable
-          width="150"
+          width="200"
+          show-overflow
+          align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="180">
+        <vxe-table-column field="DTime" show-overflow title="登记时间" sortable width="250">
         </vxe-table-column>
         <vxe-table-column title="操作" width="500">
           <template v-slot="{ row }">

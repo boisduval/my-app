@@ -41,7 +41,14 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
               <el-button
                 type="primary"
                 plain
@@ -108,17 +115,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -180,7 +187,14 @@
         </vxe-table-column>
         <vxe-table-column field="LogIP" title="本机IP" sortable width="200">
         </vxe-table-column>
-        <vxe-table-column field="Msg" title="日志信息" sortable width="450">
+        <vxe-table-column
+          field="Msg"
+          title="日志信息"
+          sortable
+          width="450"
+          align="left"
+          show-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="RecordingTime"
@@ -225,7 +239,12 @@
           <vxe-table-column field="value2" title="值"></vxe-table-column>
         </vxe-table>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false" size="medium" type="primary">确 定</el-button>
+          <el-button
+            @click="dialogFormVisible = false"
+            size="medium"
+            type="primary"
+            >确 定</el-button
+          >
         </div>
       </el-dialog>
       <!-- 详情Dialog结束 -->
@@ -474,7 +493,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

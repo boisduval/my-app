@@ -98,7 +98,7 @@
           width="380"
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right">
+        <vxe-table-column title="操作" width="200" fixed="right" align="center">
           <template v-slot="{ row }">
             <el-button plain size="small" @click="toDetail(row)">
               <i class="el-icon-info">&nbsp;告警详情</i>
