@@ -8,8 +8,8 @@ div {
   box-sizing: border-box;
 }
 .el-badge__content.is-fixed {
-  top: 15px;
-  right: 20px;
+  top: 17px;
+  right: 27px;
 }
 
 .el-popover {

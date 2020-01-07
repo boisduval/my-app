@@ -201,6 +201,9 @@
             <el-button size="small" @click="toDetail(row)" type="primary">
               详情
             </el-button>
+            <el-button size="small" @click="getController(row)" type="success">
+              控制器
+            </el-button>
             <el-button size="small" type="danger" @click="deleteItem(row)">
               删除
             </el-button>
@@ -239,10 +242,7 @@
               <el-input v-model="form.PScale" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="项目内容" :label-width="formLabelWidth">
-              <el-input
-                v-model="form.PContent"
-                autocomplete="off"
-              ></el-input>
+              <el-input v-model="form.PContent" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="项目地点" :label-width="formLabelWidth">
               <el-input v-model="form.PSite" autocomplete="off"></el-input>
@@ -266,10 +266,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item label="项目描述" :label-width="formLabelWidth">
-              <el-input
-                v-model="form.PDescribe"
-                autocomplete="off"
-              ></el-input>
+              <el-input v-model="form.PDescribe" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="计划完工时间" :label-width="formLabelWidth">
               <el-date-picker
@@ -403,6 +400,22 @@
         </div>
       </Drawer>
       <!-- 详情结束 -->
+      <!-- 穿梭框开始 -->
+      <el-dialog
+        title="控制器列表"
+        width="650px"
+        :close-on-click-modal="false"
+        :visible.sync="dialogVisible"
+      >
+        <Transfer
+        :data="projectData"
+        :target-keys="value"
+        :render-format="render1"
+        @on-change="handleChange"
+        :list-style="listStyle"
+        :titles="['不属于项目', '属于项目']"></Transfer>
+      </el-dialog>
+      <!-- 穿梭框结束 -->
     </el-card>
   </div>
 </template>
@@ -466,7 +479,15 @@ export default {
         display: 'block',
         marginBottom: '16px'
       },
-      activeItem: ''
+      activeItem: '',
+      SystemID: '',
+      projectData: [],
+      value: [],
+      dialogVisible: false,
+      listStyle: {
+        width: '250px',
+        height: '400px'
+      }
     }
   },
   computed: {
@@ -660,6 +681,76 @@ export default {
     toDetail (row) {
       this.value4 = true
       this.activeItem = row
+    },
+
+    // 控制器
+    getController (row) {
+      console.log(row)
+      this.SystemID = row.SystemID
+      this.dialogVisible = true
+      this.value = []
+      this.projectData = []
+      var url = '/api/Project/GetControllerInProject'
+      this.$axios
+        .get(url, {
+          params: {
+            AutoSystemID: this.searchForm.AutoSystemID,
+            ProjectSystemID: row.SystemID
+          }
+        })
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+            var data = res.data.data
+            if (data.hasOwnProperty('controllerinproject')) {
+              data.controllerinproject.map(item => {
+                this.projectData.push({
+                  key: item.SystemID,
+                  label: item.Name
+                })
+                this.value.push(item.SystemID)
+              })
+            }
+
+            if (data.hasOwnProperty('controlleroutproject')) {
+              data.controlleroutproject.map(item => {
+                this.projectData.push({
+                  key: item.SystemID,
+                  label: item.Name
+                })
+              })
+            }
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    handleChange (newTargetKeys, direction, moveKeys) {
+      this.value = newTargetKeys
+      var url = '/api/Project/SetControllerInProject'
+      var obj = {
+        AutoSystemID: this.searchForm.AutoSystemID,
+        ProjectSystemID: this.SystemID,
+        ControllerSystemIDs: this.value.toString()
+      }
+      this.$axios
+        .post(url, obj)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    render1 (item) {
+      return item.label
     }
   },
 
@@ -777,7 +868,15 @@ export default {
   margin-right: 10px;
 }
 
-.el-date-editor.el-input, .el-date-editor.el-input__inner {
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner {
   width: 100%;
+}
+
+.ivu-transfer {
+  text-align: center;
+}
+/deep/.ivu-transfer-list {
+  text-align: left;
 }
 </style>

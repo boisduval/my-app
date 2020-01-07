@@ -286,10 +286,12 @@ export default {
       this.$axios
         .post('/api/Users/UserLogin', this.data)
         .then(res => {
-          this.spinShow = false
           if (res.data.code === 1) {
             this.data.MD5Pass = ''
-            this.$message.error(res.data.msg)
+            setTimeout(() => {
+              this.spinShow = false
+              this.$message.error(res.data.msg)
+            }, 500)
             // localStorage.clear()
           } else if (res.data.code === 0) {
             this.setUserIfo(res.data.data)
@@ -297,7 +299,10 @@ export default {
               'AutoSystemID',
               res.data.data.UserAutoSystemID
             )
-            this.$router.push('/')
+            setTimeout(() => {
+              this.spinShow = false
+              this.$router.push('/')
+            }, 500)
           }
         })
         .catch(error => {

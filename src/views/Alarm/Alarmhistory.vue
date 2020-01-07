@@ -196,8 +196,13 @@
             <el-button plain size="mini" @click="toDetail(row)">
               <i class="el-icon-info">&nbsp;详情</i>
             </el-button>
-            <el-button type="danger" size="mini" :disabled="row.OverTime >= '2001/1/1 0:00:00'">
-              <i class="el-icon-circle-check" @click="showCheckDialog(row)"
+            <el-button
+              type="danger"
+              size="mini"
+              @click="showCheckDialog(row)"
+              :disabled="row.OverTime >= '2001/1/1 0:00:00'"
+              >
+              <i class="el-icon-circle-check"
                 >&nbsp;确认警报</i
               >
             </el-button>

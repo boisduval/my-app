@@ -183,6 +183,7 @@
         <vxe-table-column title="操作" width="350" fixed="right">
           <template v-slot="{ row }">
             <el-button size="mini" @click="editItem(row)">编辑</el-button>
+            <el-button size="mini" @click="getProject(row)" type="primary">项目</el-button>
             <el-button size="mini" type="danger" @click="deleteItem(row)"
               >删除</el-button
             >
@@ -288,6 +289,23 @@
         </div>
       </el-dialog>
       <!-- 编辑表单结束 -->
+
+      <!-- 穿梭框开始 -->
+      <el-dialog
+        title="项目列表"
+        width="650px"
+        :close-on-click-modal="false"
+        :visible.sync="dialogVisible"
+      >
+        <Transfer
+        :data="projectData"
+        :target-keys="value"
+        :render-format="render1"
+        @on-change="handleChange"
+        :list-style="listStyle"
+        :titles="['不属于部门', '属于部门']"></Transfer>
+      </el-dialog>
+      <!-- 穿梭框结束 -->
     </el-card>
   </div>
 </template>
@@ -325,7 +343,15 @@ export default {
       roleTree: [],
       options1: [],
       options2: [],
-      RoleSystemID: ''
+      RoleSystemID: '',
+      projectData: [],
+      value: [],
+      dialogVisible: false,
+      listStyle: {
+        width: '250px',
+        height: '400px'
+      },
+      activeItem: ''
     }
   },
   computed: {
@@ -565,7 +591,6 @@ export default {
     // 编辑
     async editItem (row) {
       try {
-        console.log(row)
         let res = await this.getRoleType()
         if (res.data.code === 0) {
           this.options2 = res.data.data
@@ -601,6 +626,68 @@ export default {
         .catch(err => {
           console.error(err)
         })
+    },
+
+    // 获取项目列表
+    getProject (row) {
+      this.activeItem = row.buSystemID
+      this.dialogVisible = true
+      this.value = []
+      this.projectData = []
+      var url = '/api/Project/GetProjectInDepartment'
+      this.$axios
+        .get(url, { params: {
+          AutoSystemID: this.searchForm.AutoSystemID,
+          DeparSystemID: row.buSystemID
+        } })
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+            var data = res.data.data
+            data.projectindepartment.map(item => {
+              this.projectData.push({
+                key: item.SystemID,
+                label: item.Name
+              })
+              this.value.push(item.SystemID)
+            })
+            data.projectoutdepartment.map(item => {
+              this.projectData.push({
+                key: item.SystemID,
+                label: item.Name
+              })
+            })
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    handleChange (newTargetKeys, direction, moveKeys) {
+      this.value = newTargetKeys
+      var url = '/api/Project/SetProjectInDepartment'
+      var obj = {
+        AutoSystemID: this.searchForm.AutoSystemID,
+        DepartmentSystemID: this.activeItem,
+        ProjectSystemIDs: this.value.toString()
+      }
+      this.$axios
+        .post(url, obj)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    render1 (item) {
+      return item.label
     }
   }
 }
@@ -669,5 +756,12 @@ export default {
 
 #el-dialog {
   max-height: 662px;
+}
+
+.ivu-transfer {
+  text-align: center;
+}
+/deep/.ivu-transfer-list {
+  text-align: left;
 }
 </style>

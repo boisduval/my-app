@@ -625,4 +625,8 @@ export default {
 .alink:hover {
   color: #999;
 }
+.mes {
+  margin: 0 8px;
+  border-right: #777 1px solid;
+}
 </style>
