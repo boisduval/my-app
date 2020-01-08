@@ -627,6 +627,5 @@ export default {
 }
 .mes {
   margin: 0 8px;
-  border-right: #777 1px solid;
 }
 </style>

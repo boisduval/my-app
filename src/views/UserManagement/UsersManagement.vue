@@ -72,7 +72,7 @@
         <el-button
           type="primary"
           size="small"
-          @click="dialogFormAddVisible = true"
+          @click="addItem"
           class="button-left"
         >
           <i class="el-icon-plus"></i>
@@ -303,75 +303,110 @@
         :visible.sync="dialogFormAddVisible"
         title="添加用户"
       >
-        <el-form
-          label-width="90px"
-          label-position="right"
-          :model="addForm"
-          :inline="true"
-        >
-          <el-form-item label="用户账户">
-            <el-input
-              v-model="addForm.AccountNumber"
-              placeholder="请输入用户账户"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="用户姓名">
-            <el-input
-              v-model="addForm.UserName"
-              placeholder="请输入用户姓名"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="用户籍贯">
-            <el-input
-              v-model="addForm.NativePlace"
-              placeholder="请输入用户籍贯"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="担任职务">
-            <el-input
-              v-model="addForm.InSubordinate"
-              placeholder="请输入担任职务"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="座机号码">
-            <el-input
-              v-model="addForm.TelNumber"
-              placeholder="请输入座机号码"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="所属公司">
-            <el-input
-              v-model="addForm.InCompany"
-              placeholder="请输入所属公司"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="手机号码">
-            <el-input
-              v-model="addForm.PhoneNumber"
-              placeholder="请输入手机号码"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱地址">
-            <el-input
-              v-model="addForm.Email"
-              placeholder="请输入邮箱地址"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="QQ号码">
-            <el-input
-              v-model="addForm.QqNumber"
-              placeholder="请输入QQ号码"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="微信号码">
-            <el-input
-              v-model="addForm.WechatNumber"
-              placeholder="请输入微信号码"
-            ></el-input>
-          </el-form-item>
-        </el-form>
+        <div style="max-height:500px;overflow:auto">
+          <el-form
+            label-width="90px"
+            label-position="right"
+            :model="addForm"
+            :inline="true"
+            style="position:relative"
+          >
+            <Spin v-if="spinShow" fix></Spin>
+            <el-form-item label="用户账户">
+              <el-input
+                v-model="addForm.AccountNumber"
+                placeholder="请输入用户账户"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="用户姓名">
+              <el-input
+                v-model="addForm.UserName"
+                placeholder="请输入用户姓名"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="用户籍贯">
+              <el-input
+                v-model="addForm.NativePlace"
+                placeholder="请输入用户籍贯"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="担任职务">
+              <el-input
+                v-model="addForm.InSubordinate"
+                placeholder="请输入担任职务"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="座机号码">
+              <el-input
+                v-model="addForm.TelNumber"
+                placeholder="请输入座机号码"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="所属公司">
+              <el-input
+                v-model="addForm.InCompany"
+                placeholder="请输入所属公司"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="手机号码">
+              <el-input
+                v-model="addForm.PhoneNumber"
+                placeholder="请输入手机号码"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱地址">
+              <el-input
+                v-model="addForm.Email"
+                placeholder="请输入邮箱地址"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="QQ号码">
+              <el-input
+                v-model="addForm.QqNumber"
+                placeholder="请输入QQ号码"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="微信号码">
+              <el-input
+                v-model="addForm.WechatNumber"
+                placeholder="请输入微信号码"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="所属部门">
+              <el-select
+                v-model="addForm.DepartmentSystemID"
+                placeholder="请选择"
+              >
+                <el-option
+                  v-for="item in newDepartment"
+                  :key="item.SystemID"
+                  :label="item.Name"
+                  :value="item.SystemID"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="角色">
+              <el-select v-model="addForm.RoleSystemID" placeholder="请选择">
+                <el-option
+                  v-for="item in newProject"
+                  :key="item.SystemID"
+                  :label="item.Name"
+                  :value="item.SystemID"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+
         <div slot="footer" class="dialog-footer">
-          <el-button @click="addItem" size="medium" type="primary">
+          <el-button
+            @click="addHttp"
+            size="medium"
+            type="primary"
+            :disabled="spinShow"
+          >
             提 交
           </el-button>
           <el-button @click="dialogFormAddVisible = false" size="medium">
@@ -394,7 +429,9 @@
             label-position="right"
             :model="editForm"
             :inline="true"
+            style="position:relative"
           >
+            <Spin v-if="spinShow1" fix></Spin>
             <el-form-item label="用户账户">
               <el-input
                 v-model="editForm.AccountNumber"
@@ -455,11 +492,36 @@
                 placeholder="请输入微信号码"
               ></el-input>
             </el-form-item>
+            <el-form-item label="所属部门">
+              <el-select
+                v-model="editForm.DepartmentSystemID"
+                placeholder="请选择"
+              >
+                <el-option
+                  v-for="item in newDepartment"
+                  :key="item.SystemID"
+                  :label="item.Name"
+                  :value="item.SystemID"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="角色">
+              <el-select v-model="editForm.RoleSystemID" placeholder="请选择">
+                <el-option
+                  v-for="item in newProject"
+                  :key="item.SystemID"
+                  :label="item.Name"
+                  :value="item.SystemID"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
           </el-form>
         </div>
 
         <div slot="footer" class="dialog-footer">
-          <el-button @click="editHttp" size="medium" type="primary">
+          <el-button @click="editHttp" size="medium" type="primary" :disabled="spinShow1">
             提 交
           </el-button>
           <el-button @click="dialogFormEditVisible = false" size="medium">
@@ -486,7 +548,7 @@
                 placeholder="选择日期时间"
                 :clearable="false"
               >
-          </el-date-picker>
+              </el-date-picker>
             </el-form-item>
           </el-form>
         </div>
@@ -495,7 +557,10 @@
           <el-button @click="updataActiveTimeHttp" size="medium" type="primary"
             >确 定</el-button
           >
-          <el-button @click="dialogFormCheckVisible = false" size="medium" type="primary"
+          <el-button
+            @click="dialogFormCheckVisible = false"
+            size="medium"
+            type="primary"
             >取 消</el-button
           >
         </div>
@@ -624,7 +689,22 @@ export default {
       fileName: '用户信息',
       customColumns: [],
       count: 0,
-      addForm: {},
+      addForm: {
+        ASystemID: '',
+        UserSystemID: '',
+        AccountNumber: '',
+        UserName: '',
+        NativePlace: '',
+        InSubordinate: '',
+        InCompany: '',
+        RoleSystemID: '',
+        DepartmentSystemID: '',
+        PhoneNumber: '',
+        TelNumber: '',
+        Email: '',
+        QqNumber: '',
+        WechatNumber: ''
+      },
       selectedItems: [],
       editForm: {
         AccountNumber: '',
@@ -637,7 +717,9 @@ export default {
         TelNumber: '',
         UserName: '',
         UserSystemID: '',
-        WechatNumber: ''
+        WechatNumber: '',
+        RoleSystemID: '',
+        DepartmentSystemID: ''
       },
       dialogFormEditVisible: false,
       dialogFormAddVisible: false,
@@ -652,7 +734,11 @@ export default {
         lineHeight: '24px',
         display: 'block',
         marginBottom: '16px'
-      }
+      },
+      spinShow: false,
+      spinShow1: false,
+      newDepartment: [],
+      newProject: []
     }
   },
   computed: {
@@ -760,6 +846,12 @@ export default {
 
     // 添加
     addItem () {
+      this.dialogFormAddVisible = true
+      this.spinShow = true
+      this.getDepartmentList()
+      this.getRoleList()
+    },
+    addHttp () {
       this.addForm.ASystemID = this.searchForm.AutoSystemID
       var url = '/api/Users/AddUser'
       this.$axios
@@ -884,7 +976,6 @@ export default {
 
     // 获取用户日志信息
     getUserInfo (row) {
-      console.log(row)
       var SystemID = row.SystemID
       var url = '/api/Users/GetUserInfo'
       this.$axios
@@ -906,6 +997,8 @@ export default {
 
     // 编辑
     editItem (row) {
+      this.dialogFormEditVisible = true
+      this.spinShow1 = true
       var url = '/api/Users/GetUserInfo'
       this.$axios
         .get(url, {
@@ -929,9 +1022,10 @@ export default {
               TelNumber: data.TelNumber,
               UserName: data.UserName,
               UserSystemID: row.SystemID,
-              WechatNumber: data.WechatNumber
+              WechatNumber: data.WechatNumber,
+              DepartmentSystemID: data.DepartmentSystemID,
+              RoleSystemID: data.RoleSystemID
             }
-            this.dialogFormEditVisible = true
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
@@ -939,6 +1033,8 @@ export default {
         .catch(err => {
           console.error(err)
         })
+      this.getDepartmentList()
+      this.getRoleList()
     },
     editHttp () {
       let obj = {
@@ -1042,6 +1138,44 @@ export default {
         .catch(err => {
           console.error(err)
         })
+    },
+
+    // 获取部门列表
+    getDepartmentList () {
+      var url = '/api/Project/GetDepartmentList'
+      this.$axios
+        .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}`)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.newDepartment = res.data.data
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 获取角色列表
+    getRoleList () {
+      var url = '/api/Project/GetRoleList'
+      this.$axios
+        .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}`)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.newProject = res.data.data
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+          setTimeout(() => {
+            this.spinShow = false
+            this.spinShow1 = false
+          }, 500)
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
 }
@@ -1113,10 +1247,11 @@ export default {
   top: 50%;
   left: 50%;
 }
-.dialog-box .el-date-editor.el-input, .dialog-box .el-date-editor.el-input__inner {
+.dialog-box .el-date-editor.el-input,
+.dialog-box .el-date-editor.el-input__inner {
   width: 380px;
 }
 .dialog-box .el-form-item {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 </style>
