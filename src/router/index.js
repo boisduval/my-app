@@ -336,6 +336,15 @@ const routes = [
         }
       },
       {
+        path: '/dataVisual',
+        name: 'dataVisual',
+        component: () => import(/* webpackChunkName: "DataVisual" */ '../views/BatterManage/DataVisual.vue'),
+
+        meta: {
+          keepAlive: false // 需要缓存
+        }
+      },
+      {
         path: '/batterySummary',
         name: 'batterySummary',
         component: () => import(/* webpackChunkName: "BatterySummary" */ '../views/BatterManage/BatterySummary.vue'),

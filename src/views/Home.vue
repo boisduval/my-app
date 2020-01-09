@@ -166,7 +166,7 @@
 
         <el-main>
           <transition name="slide-fade" mode="out-in">
-            <div>
+            <div style="height:100%">
               <keep-alive>
                 <!-- <transition name="slide-fade" mode="out-in"> -->
                 <router-view v-if="$route.meta.keepAlive"></router-view>

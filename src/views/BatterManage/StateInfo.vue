@@ -167,7 +167,7 @@
               size="small"
               v-for="(item, index) in detail"
               :key="index"
-              @click="toDetail(row.SystemID, item.label, row.DIDS, item.path)"
+              @click="toDetail(row, item.label, item.path)"
             >
               <i class="el-icon-info">{{ item.label }}</i>
             </el-button>
@@ -215,12 +215,17 @@ export default {
         {
           label: '状态曲线',
           path: '/batterySummary'
+        },
+        {
+          label: '数据展示',
+          path: '/dataVisual'
         }
       ]
     }
   },
   methods: {
-    ...mapMutations('statedetail', ['set_paramsTvpbc', 'set_paramsESG', 'set_paramsSAG', 'set_paramsEAG']),
+    ...mapMutations('statedetail', ['set_paramsTvpbc']),
+    ...mapMutations('dataV', ['set_paramsName']),
     ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
@@ -256,14 +261,21 @@ export default {
       this.getData()
     },
 
-    toDetail (id, label, batterID, path) {
+    toDetail (row, label, path) {
       var params = {}
       params.AutoSystemID = localStorage.getItem('AutoSystemID')
-      params.SystemID = id
-      params.batterID = batterID
+      params.SystemID = row.SystemID
+      params.batterID = row.DICCID
+      var obj = {
+        name: row.DName,
+        id: row.DICCID
+      }
       switch (path) {
         case '/batterySummary':
           this.set_paramsTvpbc(params)
+          break
+        case '/dataVisual':
+          this.set_paramsName(obj)
           break
       }
 
