@@ -23,7 +23,7 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <el-row :gutter="20">
+    <el-row :gutter="20" style="margin-top:20px">
       <el-col :span="12">
         <el-card class="box-card">
           <div id="myChart" style="height:350px"></div>

@@ -107,12 +107,20 @@
               </el-button>
             </el-badge>
             <el-badge :value="AlarmCount" class="item" type="warning">
-              <el-button size="small" class="mes" @click="$router.push('/alarmRealTime')">
+              <el-button
+                size="small"
+                class="mes"
+                @click="$router.push('/alarmRealTime')"
+              >
                 <i class="el-icon-message-solid"></i>
               </el-button>
             </el-badge>
             <el-badge :value="UnReadCount" class="item">
-              <el-button size="small" class="mes" @click="$router.push('/mailBox')">
+              <el-button
+                size="small"
+                class="mes"
+                @click="$router.push('/mailBox')"
+              >
                 <i class="el-icon-message"></i>
               </el-button>
             </el-badge>

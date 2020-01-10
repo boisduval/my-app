@@ -21,7 +21,8 @@
                           <span style="color:#ffff00">{{
                             data.TotalVoltage
                           }}</span
-                          >V
+                          >
+                          V
                         </h3>
                       </div>
                     </div>
@@ -32,7 +33,8 @@
                           <span style="color:#ffff00">{{
                             data.TotalCurrent
                           }}</span
-                          >V
+                          >
+                          A
                         </h3>
                       </div>
                     </div>
@@ -48,7 +50,8 @@
                           <span style="color:#ffff00">{{
                             data.ChargeCurrent
                           }}</span
-                          >V
+                          >
+                          A
                         </h3>
                       </div>
                     </div>
@@ -59,7 +62,8 @@
                           <span style="color:#ffff00">{{
                             data.NominalTotalCapacity
                           }}</span
-                          >V
+                          >
+                          A
                         </h3>
                       </div>
                     </div>
@@ -95,7 +99,8 @@
                           <span style="color:#ffff00">{{
                             data.ChargeCapacity
                           }}</span
-                          >V
+                          >
+                          A
                         </h3>
                       </div>
                     </div>
@@ -106,7 +111,8 @@
                           <span style="color:#ffff00">{{
                             data.ChargingEndTime
                           }}</span
-                          >秒
+                          >
+                          秒
                         </h3>
                       </div>
                     </div>
@@ -117,7 +123,8 @@
                           <span style="color:#ffff00">{{
                             data.DischargeEndTime
                           }}</span
-                          >秒
+                          >
+                          秒
                         </h3>
                       </div>
                     </div>
@@ -418,7 +425,8 @@
                           <span style="color:#ffff00">{{
                             data.ClustersNumber
                           }}</span
-                          >簇
+                          >
+                          簇
                         </h3>
                       </div>
                     </div>
@@ -429,7 +437,8 @@
                           <span style="color:#ffff00">{{
                             data.QuantityOfSingleBattery
                           }}</span
-                          >节
+                          >
+                          节
                         </h3>
                       </div>
                     </div>
@@ -445,7 +454,8 @@
                           <span style="color:#ffff00">{{
                             data.AlarmNumber
                           }}</span
-                          >次
+                          >
+                          次
                         </h3>
                       </div>
                     </div>
@@ -456,7 +466,8 @@
                           <span style="color:#ffff00">{{
                             data.MachineHaltNumber
                           }}</span
-                          >次
+                          >
+                          次
                         </h3>
                       </div>
                     </div>
