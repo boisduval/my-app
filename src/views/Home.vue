@@ -586,7 +586,7 @@ export default {
 
 .tab-box {
   position: relative;
-  height: 40px;
+  /* height: 40px; */
 }
 
 .el-submenu [class^="fa"] {

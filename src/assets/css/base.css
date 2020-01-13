@@ -18,6 +18,7 @@ div {
 
 .el-main {
   padding-top: 0;
+  padding-bottom: 0;
 }
 
 .tab-box .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
@@ -252,4 +253,8 @@ div {
 .el-submenu .el-menu-item {
   height: 40px;
   line-height: 40px;
+}
+
+.el-card:nth-last-child(1) {
+  margin-bottom: 20px;
 }

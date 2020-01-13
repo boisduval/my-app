@@ -34,8 +34,6 @@
           <div id="myChart1" style="height:350px"></div>
         </el-card>
       </el-col>
-    </el-row>
-    <el-row :gutter="20" style="margin-top:20px">
       <el-col :span="12">
         <el-card class="box-card">
           <div id="myChart2" style="height:350px"></div>

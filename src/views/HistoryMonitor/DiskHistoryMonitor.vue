@@ -39,8 +39,6 @@
           <div id="myChart2" style="height:350px"></div>
         </el-card>
       </el-col>
-    </el-row>
-    <el-row :gutter="20" style="margin-top:20px">
       <el-col :span="8">
         <el-card>
           <div id="myChart3" style="height:350px"></div>
