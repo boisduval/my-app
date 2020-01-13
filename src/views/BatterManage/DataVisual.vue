@@ -663,13 +663,13 @@ export default {
               case '放电':
                 this.showLine = true
                 this.$nextTick(() => {
-                  this.play('svg_28')
+                  this.play('svg_27')
                 })
                 break
               case '充电':
                 this.showLine = true
                 this.$nextTick(() => {
-                  this.play('svg_27')
+                  this.play('svg_28')
                 })
             }
             this.$message.success(res.data.msg)
