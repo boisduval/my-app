@@ -773,6 +773,7 @@ export default {
 
     // 获取详情
     getDetailData (row, index) {
+      console.log(row)
       switch (index) {
         case 'index1':
           this.dialogFormVisible = true
@@ -787,7 +788,7 @@ export default {
           this.dialogFormVisible3 = true
           break
       }
-      this.SystemID = row.SystemID
+      this.SystemID = row.DICCID
       this.bank = '0'
       this.getDataHttp()
     },
