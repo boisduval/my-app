@@ -631,8 +631,4 @@ export default {
   border-color: #dcdfe6;
   background-color: #fff;
 }
-
-/deep/ .el-card {
-  margin-bottom: 20px;
-}
 </style>

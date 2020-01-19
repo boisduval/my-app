@@ -42,16 +42,18 @@
           v-for="(item, index) in funcButton"
           :key="index"
         >
-          <el-card style="height:100%;">
-            <div @click="$router.push(item.path)">
-              <div class="func-icon">
-                <i :class="item.icon"></i>
+          <div @click="toDetail($event, item)">
+            <el-card style="height:100%;">
+              <div>
+                <div class="func-icon">
+                  <i :class="item.icon"></i>
+                </div>
+                <div class="func-label">
+                  <span>{{ item.label }}</span>
+                </div>
               </div>
-              <div class="func-label">
-                <span>{{ item.label }}</span>
-              </div>
-            </div>
-          </el-card>
+            </el-card>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -102,12 +104,16 @@
               <div class="energy-order">
                 <h4 class="energy-title">电量排行榜</h4>
                 <div class="order-data">
-                  <div class="order-row" v-for="(item, index) in batterOrder" :key="index">
+                  <div
+                    class="order-row"
+                    v-for="(item, index) in batterOrder"
+                    :key="index"
+                  >
                     <div class="row-l">
-                      <div class="num">{{index + 1}}</div>
-                      {{item.label}}
+                      <div class="num">{{ index + 1 }}</div>
+                      {{ item.Name }}
                     </div>
-                    <div class="row-r">{{item.num}}Kw</div>
+                    <div class="row-r">{{ item.Value }} Kwh</div>
                   </div>
                 </div>
               </div>
@@ -125,24 +131,24 @@ export default {
     return {
       top: [
         {
-          icon: 'el-icon-coin',
+          icon: 'fa fa-hdd-o',
           title: '设备装机量',
-          data: '32'
+          data: ''
         },
         {
           icon: 'el-icon-coin',
           title: '单体电池总数量',
-          data: '32323'
+          data: ''
         },
         {
-          icon: 'el-icon-coin',
+          icon: 'fa fa-battery',
           title: '装机总电量',
-          data: '1000Kw'
+          data: ''
         },
         {
-          icon: 'el-icon-coin',
+          icon: 'fa fa-battery',
           title: '当前总电量',
-          data: '825.3Kw'
+          data: ''
         }
       ],
       funcButton: [
@@ -190,39 +196,39 @@ export default {
       device: [
         {
           label: '逆变设备装机数量',
-          num: '32'
+          num: ''
         },
         {
           label: '消防设备装机数量',
-          num: '32'
+          num: ''
         },
         {
           label: '控制器在线数量',
-          num: '32'
+          num: ''
         },
         {
           label: '发电机设备装机数量',
-          num: '32'
+          num: ''
         },
         {
           label: '光伏设备装机数量',
-          num: '32'
+          num: ''
         },
         {
           label: '控制器在线率',
-          num: '32'
+          num: ''
         },
         {
           label: '联动设备装机数量',
-          num: '32'
+          num: ''
         },
         {
           label: '风能设备装机数量',
-          num: '32'
+          num: ''
         },
         {
           label: '用户在线数量',
-          num: '32'
+          num: ''
         }
       ],
       batterOrder: [
@@ -258,15 +264,48 @@ export default {
           label: '控制器1',
           num: '323'
         }
-      ]
+      ],
+      AutoSystemID: '',
+      xAxis: [],
+      series: []
     }
   },
   created () {
-    this.$nextTick(() => {
-      this.getChart()
-    })
+    this.AutoSystemID = localStorage.getItem('AutoSystemID')
+    this.getData()
   },
   methods: {
+    getData () {
+      this.$axios
+        .get(`/api/Chart/GetSystemFrontPage?AutoSystemID=${this.AutoSystemID}`)
+        .then(res => {
+          if (res.data.code === 0) {
+            var data = res.data.data
+            this.top[0].data = data.EquipmentLoadingCapacity
+            this.top[1].data = data.TotalNumberOfSingleBatteries
+            this.top[2].data = data.TotalInstalledElectricity + ' Kwh'
+            this.top[3].data = data.CurrentTotalElectricQuantity + ' Kwh'
+            this.device[0].num = data.InstalledNumberOfInverterEquipment
+            this.device[1].num = data.InstalledQuantityOfFireFightingEquipment
+            this.device[2].num = data.NumberOfControllersOnline
+            this.device[3].num = data.InstalledNumberOfGeneratorEquipment
+            this.device[4].num = data.InstalledQuantityOfPhotovoltaicEquipment
+            this.device[5].num = data.ControllerOnLineRate
+            this.device[6].num = data.InstalledNumberOfLinkageEquipment
+            this.device[7].num = data.InstalledWindPowerEquipment
+            this.device[8].num = data.NumberOfUsersOnline
+            this.xAxis = data.EnergyStatisticsTimes
+            this.series = data.EnergyStatisticsValues
+            this.batterOrder = data.EnergyRankings
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+          this.getChart()
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
     getChart () {
       var myChart = this.$echarts.init(document.getElementById('myChart'))
       myChart.setOption({
@@ -275,14 +314,14 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.xAxis
         },
         yAxis: {
           type: 'value'
         },
         series: [
           {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: this.series,
             type: 'line',
             smooth: true,
             areaStyle: {
@@ -306,6 +345,19 @@ export default {
           myChart.resize()
         }
       }, 200)
+    },
+    toDetail (event, item) {
+      var div = this.$(event.currentTarget)
+      div.addClass('animated bounce')
+      div.one(
+        'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        () => {
+          div.removeClass('animated bounce')
+        }
+      )
+      setTimeout(() => {
+        this.$router.push(item.path)
+      }, 1000)
     }
   }
 }
@@ -367,6 +419,14 @@ export default {
   color: rgb(255, 192, 105);
 }
 .function .el-card:hover {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  border-color: #ccc;
+  cursor: pointer;
+}
+.function .el-card:checked {
+  scale: 0.8;
+}
+.main-top .el-card:hover {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
   border-color: #ccc;
 }

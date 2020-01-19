@@ -29,11 +29,16 @@ import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title'
 import 'babel-polyfill'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+import animate from 'animate.css'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueAxios, axios)
 Vue.use(VXETable)
+Vue.use(animate)
+Vue.use(VueAwesomeSwiper /* { default global options } */)
 VXETable.use(VXETablePluginExportXLSX)
 VXETable.use(VXETablePluginElement)
 Vue.component(CollapseTransition.name, CollapseTransition)

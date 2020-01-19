@@ -112,7 +112,6 @@
                             data.ChargingEndTime
                           }}</span
                           >
-                          秒
                         </h3>
                       </div>
                     </div>
@@ -124,7 +123,6 @@
                             data.DischargeEndTime
                           }}</span
                           >
-                          秒
                         </h3>
                       </div>
                     </div>
