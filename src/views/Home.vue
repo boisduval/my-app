@@ -202,7 +202,7 @@
       field="imgBase64"
       key="0"
       v-model="show"
-      url="http://sf28090049.wicp.vip:8081//api/Users/UpdataUserICOO"
+      url="http://sf28090049.wicp.vip:8082//conn/api/Users/UpdataUserICOO"
       @crop-success="cropSuccess"
       @crop-upload-success="cropUploadSuccess"
       @crop-upload-fail="cropUploadFail"

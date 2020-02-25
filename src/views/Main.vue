@@ -28,6 +28,30 @@
             </div>
           </el-card>
         </el-col>
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="12"
+          :lg="6"
+          :xl="6"
+          style="height:150px;margin-bottom:20px;"
+        >
+          <el-card style="height:100%;">
+            <div class="main-top-box">
+              <div class="top-icon">
+                <p>{{ ControllerOnLineRate }}</p>
+              </div>
+              <div class="top-content">
+                <div class="top-title">
+                  <h2>当前总电量</h2>
+                </div>
+                <div class="top-data">
+                  <h3>{{ top4 }}</h3>
+                </div>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
       </el-row>
     </div>
     <div class="function">
@@ -144,12 +168,12 @@ export default {
           icon: 'fa fa-battery',
           title: '装机总电量',
           data: ''
-        },
-        {
-          icon: 'fa fa-battery',
-          title: '当前总电量',
-          data: ''
         }
+        // {
+        //   icon: 'fa fa-battery',
+        //   title: '当前总电量',
+        //   data: ''
+        // }
       ],
       funcButton: [
         {
@@ -267,7 +291,9 @@ export default {
       ],
       AutoSystemID: '',
       xAxis: [],
-      series: []
+      series: [],
+      ControllerOnLineRate: '',
+      top4: ''
     }
   },
   created () {
@@ -284,7 +310,9 @@ export default {
             this.top[0].data = data.EquipmentLoadingCapacity
             this.top[1].data = data.TotalNumberOfSingleBatteries
             this.top[2].data = data.TotalInstalledElectricity + ' Kwh'
-            this.top[3].data = data.CurrentTotalElectricQuantity + ' Kwh'
+            // this.top[3].data = data.CurrentTotalElectricQuantity + ' Kwh'
+            this.top4 = data.CurrentTotalElectricQuantity + ' Kwh'
+            this.ControllerOnLineRate = data.ControllerOnLineRate
             this.device[0].num = data.InstalledNumberOfInverterEquipment
             this.device[1].num = data.InstalledQuantityOfFireFightingEquipment
             this.device[2].num = data.NumberOfControllersOnline
@@ -383,6 +411,11 @@ export default {
 }
 .top-icon i {
   font-size: 50px;
+  color: #409eff;
+}
+.top-icon p {
+  font-size: 30px;
+  font-weight: 700;
   color: #409eff;
 }
 .el-card /deep/ .el-card__body {

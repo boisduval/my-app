@@ -50,21 +50,17 @@
     <el-row style="width: 100%;display:flex;justify-content:center;">
       <el-col :xs="20" :sm="16" :md="10" :lg="6" :xl="6">
         <div class="link-to">
-          <a href="http://www.hresys.com/" class="btn btn-link-2">企业官网</a>
-          <a
-            href="http://192.168.0.162:8082/Exhibition.aspx"
-            class="btn btn-link-2"
-            >数据中心</a
-          >
-          <a href="#" class="btn btn-link-2">用户注册</a>
+          <a v-for="item in footerInfo.Links" :key="item.id" class="btn btn-link-2" :href="item.Value">
+            {{ item.Name }}
+          </a>
         </div>
       </el-col>
     </el-row>
 
     <!-- 底部信息 -->
     <div class="footerifo">
-      版权所有 ©{{ footerInfo.SystemYear }} 浙江衡睿科技有限公司
-      <br />技术支持电话：000-00000000 <br />
+      版权所有 ©{{ footerInfo.SystemYear }} {{ footerInfo.CompanyName }}
+      <br />{{ footerInfo.ButtonName }}<br />
     </div>
     <Spin size="large" fix v-if="spinShow"></Spin>
   </div>
@@ -316,6 +312,7 @@ export default {
         .get(`/api/Ablut/SystemConfig?AutoSystemID=${AutoSystemID}`)
         .then(res => {
           this.footerInfo = res.data.data
+          console.log(this.footerInfo)
           document.title = this.footerInfo.SystemText
         })
         .catch(err => {

@@ -6,7 +6,7 @@ import { Message } from 'element-ui'
 
 // axios默认配置
 axios.defaults.timeout = 10000 // 超时时间
-axios.defaults.baseURL = 'http://sf28090049.wicp.vip:8081' // 默认地址
+axios.defaults.baseURL = 'http://sf28090049.wicp.vip:8082/conn' // 默认地址
 // axios.defaults.baseURL = 'http://60.186.197.171:8081'
 // 路由响应拦截
 // http response 拦截器
@@ -24,7 +24,7 @@ axios.interceptors.response.use(
       if (response.data.code == 2) {
         Message.error(response.data.msg)
         localStorage.clear()
-        window.location.href = '/login'
+        window.location.href = '/console/login'
       } else if (response.data.code === 3) {
         Message.warning(response.data.msg)
         return response
@@ -32,7 +32,7 @@ axios.interceptors.response.use(
         Message.error(response.data.msg)
         setTimeout(() => {
           localStorage.clear()
-          window.location.href = '/login'
+          window.location.href = '/console/login'
         }, 1000)
       } else {
         // Message.error(response.data.msg)

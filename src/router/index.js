@@ -73,46 +73,6 @@ const routes = [
           keepAlive: false // 不需要被缓存
         },
         children: [
-          // {
-          //   path: '',
-          //   name: 'DTUInfo',
-          //   component: () => import(/* webpackChunkName: "DTUInfo" */ '../views/Device/DTUInfo.vue'),
-          //   meta: {
-          //     keepAlive: false // 不需要被缓存
-          //   }
-          // },
-          // {
-          //   path: 'ControllerInfo',
-          //   name: 'ControllerInfo',
-          //   component: () => import(/* webpackChunkName: "ControllerInfo" */ '../views/Device/ControllerInfo.vue'),
-          //   meta: {
-          //     keepAlive: false // 不需要被缓存
-          //   }
-          // },
-          // {
-          //   path: 'BmsInfo',
-          //   name: 'BmsInfo',
-          //   component: () => import(/* webpackChunkName: "BmsInfo" */ '../views/Device/BmsInfo.vue'),
-          //   meta: {
-          //     keepAlive: false // 不需要被缓存
-          //   }
-          // },
-          // {
-          //   path: 'BatteryInfo',
-          //   name: 'BatteryInfo',
-          //   component: () => import(/* webpackChunkName: "BatteryInfo" */ '../views/Device/BatteryInfo.vue'),
-          //   meta: {
-          //     keepAlive: false // 不需要被缓存
-          //   }
-          // },
-          // {
-          //   path: 'TemperatureInfo',
-          //   name: 'TemperatureInfo',
-          //   component: () => import(/* webpackChunkName: "TemperatureInfo" */ '../views/Device/TemperatureInfo.vue'),
-          //   meta: {
-          //     keepAlive: false // 不需要被缓存
-          //   }
-          // },
           {
             path: '',
             name: 'EquipmentInfo',
@@ -814,7 +774,8 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-  mode: 'history'
+  mode: 'history',
+  base: process.env.BASE_URL
 })
 
 router.beforeEach((to, from, next) => {
