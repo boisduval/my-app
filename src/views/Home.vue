@@ -124,6 +124,15 @@
                 <i class="el-icon-message"></i>
               </el-button>
             </el-badge>
+            <el-badge class="item">
+              <el-button
+                size="small"
+                class="mes"
+                @click="mailVisible=true"
+              >
+                <i class="iconfont icon-custom-service"></i>
+              </el-button>
+            </el-badge>
           </div>
         </el-header>
         <!-- 头部结束 -->
@@ -211,6 +220,50 @@
     ></my-upload>
     <img :src="imgDataUrl" />
     <!-- 设置头像结束 -->
+    <!-- 反馈开始 -->
+    <el-dialog
+        title="反馈"
+        width="70%"
+        :close-on-click-modal="false"
+        :visible.sync="mailVisible"
+      >
+        <div style="height:500px;overflow:auto">
+          <el-form
+            label-width="80px"
+            label-position="right"
+            :model="sendForm"
+            style="padding-right:20px"
+          >
+            <el-form-item label="标题">
+              <el-input v-model="sendForm.Title"></el-input>
+            </el-form-item>
+            <el-form-item label="内容">
+              <!-- <div id="editor"></div> -->
+              <quill-editor
+                style="min-height:400px"
+                v-model="sendForm.Msg"
+                ref="myQuillEditor"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @change="onEditorChange($event)"
+                class="editor"
+              >
+              </quill-editor>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="sendMail" size="medium" type="primary">
+            提 交
+          </el-button>
+          <el-button @click="mailVisible = false" size="medium">
+            取 消
+          </el-button>
+        </div>
+      </el-dialog>
+    <!-- 反馈结束 -->
   </div>
 </template>
 
@@ -219,6 +272,12 @@ import { mapState, mapMutations } from 'vuex'
 import myUpload from 'vue-image-crop-upload'
 import 'babel-polyfill'
 import screenfull from 'screenfull'
+import '../assets/fonts/font_6tqvyv80kmd/iconfont.css'
+
+import { quillEditor } from 'vue-quill-editor' // 调用编辑器
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 export default {
   data () {
     return {
@@ -241,11 +300,40 @@ export default {
       beforeUnload_time: '',
       gap_time: '',
       AlarmCount: '',
-      UnReadCount: ''
+      UnReadCount: '',
+      mailVisible: false,
+      sendForm: {},
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 加粗，斜体，下划线，删除线
+            ['blockquote', 'code-block'], // 引用，代码块
+
+            // [{ header: 1 }, { header: 2 }], // 标题，键值对的形式；1、2表示字体大小
+            [{ list: 'ordered' }, { list: 'bullet' }], // 列表
+            [{ script: 'sub' }, { script: 'super' }], // 上下标
+            [{ indent: '-1' }, { indent: '+1' }], // 缩进
+            [{ direction: 'rtl' }], // 文本方向
+
+            [{ size: ['small', false, 'large', 'huge'] }], // 字体大小
+            // [{ header: [1, 2, 3, 4, 5, 6, false] }], // 几级标题
+
+            [{ color: [] }, { background: [] }], // 字体颜色，字体背景颜色
+            [{ font: [] }], // 字体
+            [{ align: [] }], // 对齐方式
+
+            ['clean'], // 清除字体样式
+            ['image', 'video'] // 上传图片、上传视频
+          ]
+        },
+        theme: 'snow',
+        placeholder: '请输入正文'
+      }
     }
   },
   components: {
-    'my-upload': myUpload
+    'my-upload': myUpload,
+    quillEditor
   },
   computed: {
     ...mapState('home', ['userIfo']),
@@ -483,8 +571,34 @@ export default {
         .catch(err => {
           console.error(err)
         })
+    },
+    onEditorReady (editor) {
+    // 准备编辑器
+    },
+    onEditorBlur () {}, // 失去焦点事件
+    onEditorFocus () {}, // 获得焦点事件
+    onEditorChange () {}, // 内容改变事件
+    // 发送邮件
+    sendMail () {
+      this.sendForm.AutoSystemID = localStorage.getItem('AutoSystemID')
+      var url = '/api/Mail/Contactus'
+      this.$axios
+        .post(url, this.sendForm)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$message.success(res.data.msg)
+            this.mailVisible = false
+            this.sendForm = {}
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
+
 }
 </script>
 
