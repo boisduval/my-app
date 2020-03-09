@@ -8,7 +8,7 @@
         <div class="row fill-h">
           <div class="col-lg-3">
             <div class="xpanel-wrapper xpanel-wrapper-2">
-              <div class="xpanel">
+              <BorderLeft>
                 <div class="content-box">
                   <div class="title">
                     <h2>总电气状态</h2>
@@ -69,13 +69,13 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </BorderLeft>
             </div>
             <div
               class="xpanel-wrapper xpanel-wrapper-3"
               style="margin-top:20px;"
             >
-              <div class="xpanel">
+              <BorderLeft>
                 <div class="content-box">
                   <div class="title">
                     <h2>充电信息</h2>
@@ -128,7 +128,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </BorderLeft>
             </div>
           </div>
           <div class="col-lg-6">
@@ -410,7 +410,7 @@
           </div>
           <div class="col-lg-3">
             <div class="xpanel-wrapper xpanel-wrapper-2">
-              <div class="xpanel-r">
+              <BorderRight>
                 <div class="content-box">
                   <div class="title">
                     <h2>装机状态</h2>
@@ -471,13 +471,13 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </BorderRight>
             </div>
             <div
               class="xpanel-wrapper xpanel-wrapper-3"
               style="margin-top:20px;"
             >
-              <div class="xpanel-r">
+              <BorderRight>
                 <div class="content-box">
                   <div class="title">
                     <h2>极值信息</h2>
@@ -577,7 +577,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </BorderRight>
             </div>
           </div>
         </div>
@@ -786,22 +786,6 @@ export default {
 }
 .xpanel-wrapper-3 {
   height: calc(45% - 10px);
-}
-.xpanel {
-  padding: 15px;
-  height: 100%;
-  min-height: 170px;
-  background: url("../../assets/img/border-l.png") center no-repeat;
-  background-size: 100% 100%;
-  box-sizing: border-box;
-}
-.xpanel-r {
-  padding: 15px;
-  height: 100%;
-  min-height: 170px;
-  background: url("../../assets/img/border-r.png") center no-repeat;
-  background-size: 100% 100%;
-  box-sizing: border-box;
 }
 .title {
   height: 30px;

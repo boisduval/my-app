@@ -747,18 +747,9 @@ const state = {
         Count: 4,
         List: [
           {
-            ID: '42',
-            MID: '637031848503872542',
-            Href: '/ui/Ablut/UserFeedback.aspx',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '用户反馈',
-            Use: true
-          },
-          {
             ID: '41',
             MID: '637031848503872542',
-            Href: '/ui/Ablut/AHelp.aspx',
+            Href: 'help',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '帮助信息',

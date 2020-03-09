@@ -748,6 +748,14 @@ const routes = [
         meta: {
           keepAlive: false // 不需要被缓存
         }
+      },
+      {
+        path: '/help',
+        name: 'help',
+        component: () => import(/* webpackChunkName: "Help" */ '../views/About/Help.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
       }
     ]
   },

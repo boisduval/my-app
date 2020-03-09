@@ -33,6 +33,10 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import animate from 'animate.css'
 
+// 组件
+import BorderLeft from './components/BorderLeft.vue'
+import BorderRight from './components/BorderRight.vue'
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueAxios, axios)
@@ -46,6 +50,8 @@ Vue.prototype.$md5 = md5
 Vue.prototype.$axios = axios
 Vue.prototype.$ = jquery
 Vue.prototype.$echarts = echarts
+Vue.component('BorderLeft', BorderLeft)
+Vue.component('BorderRight', BorderRight)
 
 new Vue({
   strict: false,
