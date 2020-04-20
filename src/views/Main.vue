@@ -14,10 +14,10 @@
         >
           <el-card style="height:100%;">
             <div class="main-top-box">
-              <div class="top-icon">
+              <div class="top-icon flex3">
                 <i :class="item.icon"></i>
               </div>
-              <div class="top-content">
+              <div class="top-content flex5">
                 <div class="top-title">
                   <h2>{{ item.title }}</h2>
                 </div>
@@ -87,7 +87,7 @@
           <span>设备统计</span>
         </div>
         <div class="device-data">
-          <el-row :gutter="200">
+          <el-row :gutter="20">
             <el-col
               :xs="24"
               :sm="24"
@@ -99,10 +99,10 @@
               style="margin-bottom: 10px;"
             >
               <div class="data-item">
-                <h3>
+                <h3 class="flex" style="text-align:right;">
                   {{ item.label }}
                 </h3>
-                <h3>
+                <h3 class="flex" style="text-align:right;">
                   {{ item.num }}
                 </h3>
               </div>
@@ -133,11 +133,11 @@
                     v-for="(item, index) in batterOrder"
                     :key="index"
                   >
-                    <div class="row-l">
+                    <div class="row-l flex">
                       <div class="num">{{ index + 1 }}</div>
                       {{ item.Name }}
                     </div>
-                    <div class="row-r">{{ item.Value }} Kwh</div>
+                    <div class="row-r flex">{{ item.Value }} Kwh</div>
                   </div>
                 </div>
               </div>
@@ -398,16 +398,11 @@ export default {
   align-items: center;
 }
 .top-content {
-  flex: 4;
   text-align: left;
 }
 .top-content h3 {
   color: #666;
   margin-top: 10px;
-}
-.top-icon {
-  flex: 3;
-  /* padding-left: 40px; */
 }
 .top-icon i {
   font-size: 50px;
@@ -508,10 +503,6 @@ export default {
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
-}
-.row-l,
-.row-r {
-  flex: 1;
 }
 .row-l {
   text-align: left;

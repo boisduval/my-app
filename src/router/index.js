@@ -756,6 +756,22 @@ const routes = [
         meta: {
           keepAlive: false // 不需要被缓存
         }
+      },
+      {
+        path: '/realTime',
+        name: 'realTime',
+        component: () => import(/* webpackChunkName: "Help" */ '../views/Pcs/RealTime.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/pcsInfo',
+        name: 'pcsInfo',
+        component: () => import(/* webpackChunkName: "Help" */ '../views/Pcs/PcsInfo.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
       }
     ]
   },

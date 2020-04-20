@@ -572,6 +572,29 @@ const state = {
       }
     },
     {
+      ID: '10',
+      Href: '/',
+      Class: 'fa fa-tasks',
+      Text: 'PCS管理',
+      SOrder: 4000000,
+      ShowNum: '0',
+      Use: true,
+      LeveList: {
+        Count: 6,
+        List: [
+          {
+            ID: '21',
+            MID: '10',
+            Href: 'pcsInfo',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'PCS信息',
+            Use: true
+          }
+        ]
+      }
+    },
+    {
       ID: '637031848502576736',
       Href: '/',
       Class: 'fa fa-group (alias)',

@@ -258,3 +258,28 @@ div {
 .el-card:nth-last-child(1) {
   margin-bottom: 20px;
 }
+.flex {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+.flex2 {
+  flex: 2;
+  min-width: 0;
+  min-height: 0;
+}
+.flex3 {
+  flex: 3;
+  min-width: 0;
+  min-height: 0;
+}
+.flex4 {
+  flex: 4;
+  min-width: 0;
+  min-height: 0;
+}
+.flex5 {
+  flex: 5;
+  min-width: 0;
+  min-height: 0;
+}
