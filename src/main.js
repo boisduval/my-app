@@ -32,6 +32,7 @@ import 'babel-polyfill'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import animate from 'animate.css'
+import VueI18n from 'vue-i18n'
 
 // 组件
 import BorderLeft from './components/BorderLeft.vue'
@@ -43,6 +44,7 @@ Vue.use(VueAxios, axios)
 Vue.use(VXETable)
 Vue.use(animate)
 Vue.use(VueAwesomeSwiper /* { default global options } */)
+Vue.use(VueI18n)
 VXETable.use(VXETablePluginExportXLSX)
 VXETable.use(VXETablePluginElement)
 Vue.component(CollapseTransition.name, CollapseTransition)
@@ -53,9 +55,17 @@ Vue.prototype.$echarts = echarts
 Vue.component('BorderLeft', BorderLeft)
 Vue.component('BorderRight', BorderRight)
 
+const i18n = new VueI18n({
+  locale: 'zh',
+  messages: {
+    'zh': require('@/assets/lang/zh.json'),
+    'en': require('@/assets/lang/en.json')
+  }
+})
 new Vue({
   strict: false,
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

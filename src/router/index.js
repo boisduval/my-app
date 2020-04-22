@@ -510,6 +510,14 @@ const routes = [
         }
       },
       {
+        path: '/tokenManage',
+        name: 'tokenManage',
+        component: () => import(/* webpackChunkName: "SystemManagementTokenManage" */ '../views/SystemManagement/TokenManage.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
         path: '/usersManagement',
         name: 'usersManagement',
         component: () => import(/* webpackChunkName: "UsersManagement" */ '../views/UserManagement/UsersManagement.vue'),

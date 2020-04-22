@@ -431,6 +431,15 @@ const state = {
             DataIndex: '1000',
             Text: '配置帮助',
             Use: true
+          },
+          {
+            ID: '48',
+            MID: '7',
+            Href: 'tokenManage',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '令牌管理',
+            Use: true
           }
         ]
       }

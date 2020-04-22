@@ -717,8 +717,8 @@ export default {
   top: 0;
   color: #999;
   padding: 0 20px;
-  height: 40px;
-  line-height: 40px;
+  height: 35px;
+  line-height: 35px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;

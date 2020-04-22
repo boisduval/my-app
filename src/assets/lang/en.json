@@ -1,0 +1,10 @@
+{
+    "main": {
+        "topInfo": ["Equipment installed capacity", "Total number of single cells", "Total installed power", "Current total power"],
+        "topBar": ["Users", "Devices", "Battery", "UPS", "Warning", "Station letters", "Logs", "Notes"],
+        "deviceCount": {
+            "title": "Equipment statistics",
+            "value": ["Number of installed inverter equipment", "Number of installed fire fighting equipment", "Number of controllers online", "Number of installed generator equipment", "Number of installed photovoltaic equipment", "Controller online rate", "Number of linked equipment installed", "Number of installed wind energy equipment", "Number of users online"]
+        }
+    }
+}

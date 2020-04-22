@@ -38,12 +38,12 @@
         >
           <el-card style="height:100%;">
             <div class="main-top-box">
-              <div class="top-icon">
+              <div class="top-icon flex3">
                 <p>{{ ControllerOnLineRate }}</p>
               </div>
-              <div class="top-content">
+              <div class="top-content flex5">
                 <div class="top-title">
-                  <h2>当前总电量</h2>
+                  <h2>{{$t('main.topInfo[3]')}}</h2>
                 </div>
                 <div class="top-data">
                   <h3>{{ top4 }}</h3>
@@ -84,7 +84,7 @@
     <div class="device-num">
       <el-card>
         <div slot="header" class="clearfix">
-          <span>设备统计</span>
+          <span>{{$t('main.deviceCount.title')}}</span>
         </div>
         <div class="device-data">
           <el-row :gutter="20">
@@ -297,10 +297,22 @@ export default {
     }
   },
   created () {
+    this.setData()
     this.AutoSystemID = localStorage.getItem('AutoSystemID')
     this.getData()
   },
   methods: {
+    setData () {
+      this.top.forEach((value, index) => {
+        value.title = this.$t('main.topInfo')[index]
+      })
+      this.funcButton.forEach((val, i) => {
+        val.label = this.$t('main.topBar')[i]
+      })
+      this.device.forEach((val, i) => {
+        val.label = this.$t('main.deviceCount.value')[i]
+      })
+    },
     getData () {
       this.$axios
         .get(`/api/Chart/GetSystemFrontPage?AutoSystemID=${this.AutoSystemID}`)
@@ -361,7 +373,7 @@ export default {
           color: '#259CEC'
         },
         grid: {
-          left: 50,
+          left: 80,
           top: 20,
           right: 20,
           bottom: 35
@@ -409,7 +421,7 @@ export default {
   color: #409eff;
 }
 .top-icon p {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 700;
   color: #409eff;
 }
