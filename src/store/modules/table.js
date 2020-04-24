@@ -1,5 +1,5 @@
 const state = {
-  pageSize: [4, 8, 12, 16]
+  pageSize: [10, 20, 30, 50]
 }
 
 const mutations = {

@@ -286,6 +286,33 @@ const state = {
             DataIndex: '1000',
             Text: '报警报表',
             Use: true
+          },
+          {
+            ID: '18',
+            MID: '5',
+            Href: 'batteryReport',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '电池报表',
+            Use: true
+          },
+          {
+            ID: '18',
+            MID: '5',
+            Href: 'pcsReport',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'PCS报表',
+            Use: true
+          },
+          {
+            ID: '18',
+            MID: '5',
+            Href: 'abnormalReport',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '异常报表',
+            Use: true
           }
         ]
       }

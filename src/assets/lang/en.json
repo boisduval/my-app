@@ -5,6 +5,7 @@
         "deviceCount": {
             "title": "Equipment statistics",
             "value": ["Number of installed inverter equipment", "Number of installed fire fighting equipment", "Number of controllers online", "Number of installed generator equipment", "Number of installed photovoltaic equipment", "Controller online rate", "Number of linked equipment installed", "Number of installed wind energy equipment", "Number of users online"]
-        }
+        },
+        "batteryOrder": [""]
     }
 }

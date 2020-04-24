@@ -255,40 +255,7 @@ export default {
           num: ''
         }
       ],
-      batterOrder: [
-        {
-          label: '控制器1',
-          num: '323'
-        },
-        {
-          label: '控制器1',
-          num: '323'
-        },
-        {
-          label: '控制器1',
-          num: '323'
-        },
-        {
-          label: '控制器1',
-          num: '323'
-        },
-        {
-          label: '控制器1',
-          num: '323'
-        },
-        {
-          label: '控制器1',
-          num: '323'
-        },
-        {
-          label: '控制器1',
-          num: '323'
-        },
-        {
-          label: '控制器1',
-          num: '323'
-        }
-      ],
+      batterOrder: '',
       AutoSystemID: '',
       xAxis: [],
       series: [],

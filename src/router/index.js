@@ -420,6 +420,30 @@ const routes = [
         }
       },
       {
+        path: '/batteryReport',
+        name: 'batteryReport',
+        component: () => import(/* webpackChunkName: "StatementBatteryReport" */ '../views/Statement/BatteryReport.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
+        path: '/pcsReport',
+        name: 'pcsReport',
+        component: () => import(/* webpackChunkName: "StatementPcsReport" */ '../views/Statement/PcsReport.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
+        path: '/abnormalReport',
+        name: 'abnormalReport',
+        component: () => import(/* webpackChunkName: "StatementAbnormalReport" */ '../views/Statement/AbnormalReport.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
         path: '/alarmRealTime',
         name: 'alarmRealTime',
         component: () => import(/* webpackChunkName: "AlarmAlarmRealTime" */ '../views/Alarm/AlarmRealTime.vue'),

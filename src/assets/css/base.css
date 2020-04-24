@@ -258,6 +258,16 @@ div {
 .el-card:nth-last-child(1) {
   margin-bottom: 20px;
 }
+.flex-row {
+  display: flex;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.flex-center {
+  justify-content: center;
+}
 .flex {
   flex: 1;
   min-width: 0;
@@ -282,4 +292,13 @@ div {
   flex: 5;
   min-width: 0;
   min-height: 0;
+}
+.el-table .primary-row {
+  background: #F0F7FF;
+  color: #909399;
+  font-weight: 700;
+}
+.el-table .light,
+.el-table .light th{
+  background-color: #F0F7FF;
 }
