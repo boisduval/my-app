@@ -2,30 +2,38 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>页面标题</span>
+        <span>模糊查询</span>
       </div>
       <el-form :inline="true">
         <el-form-item id="search">
-          <el-input v-model="searchForm.name"></el-input>
+          <el-input v-model="searchForm.LikeName"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
+          <el-button type="primary" @click="getData">查询</el-button>
         </el-form-item>
       </el-form>
     </el-card>
     <el-card class="box-card" style="margin-top:20px;">
-      <List>
-        <ListItem>
-            <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar" title="This is title" description="This is description, this is description." />
-        </ListItem>
-        <ListItem>
-            <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar" title="This is title" description="This is description, this is description." />
+      <List item-layout="vertical">
+        <ListItem v-for="(item, index) in tableData" :key="index">
+            <ListItemMeta :title="item.Name" />
+            <div v-html="item.Message"></div>
+            <!-- <template slot="extra">
+              <ul class="ivu-list-item-action">
+                <li>
+                    <a href="">Edit</a>
+                </li>
+                <li>
+                    <a href="">More</a>
+                </li>
+              </ul>
+            </template> -->
         </ListItem>
     </List>
     </el-card>
     <!-- 分页开始 -->
     <div style="margin-top:20px;">
-      <Page :total="100" show-total show-elevator @on-change="pageChange" />
+      <Page :total="count" show-total show-elevator @on-change="pageChange" />
     </div>
     <!-- 分页结束 -->
   </div>
@@ -37,22 +45,44 @@ export default {
     return {
       searchForm: {
         AutoSystemID: '',
-        page: '',
-        limit: '',
-        IsManagement: '',
+        page: '1',
+        limit: '5',
         LikeName: '',
         LikeMessage: ''
-      }
+      },
+      tableData: '',
+      count: 0
     }
   },
   methods: {
-    onSubmit () {
-      console.log('ok')
-    },
 
     pageChange (pageNum) {
       console.log(pageNum)
+      this.searchForm.page = pageNum
+      this.getData()
+    },
+
+    getData () {
+      var url = '/api/Help/GetHelpList'
+      this.$axios
+        .get(url, { params: this.searchForm })
+        .then(res => {
+          if (res.data.code === 0) {
+            this.tableData = res.data.data
+            this.count = res.data.count
+            this.loading = false
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     }
+  },
+  created () {
+    this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
+    this.getData()
   }
 }
 </script>

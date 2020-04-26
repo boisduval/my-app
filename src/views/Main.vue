@@ -86,8 +86,8 @@
         <div slot="header" class="clearfix">
           <span>{{$t('main.deviceCount.title')}}</span>
         </div>
-        <div class="device-data">
-          <el-row :gutter="20">
+        <div class="device-data flex-row">
+          <!-- <el-row :gutter="20">
             <el-col
               :xs="24"
               :sm="24"
@@ -107,7 +107,16 @@
                 </h3>
               </div>
             </el-col>
-          </el-row>
+          </el-row> -->
+          <div v-for="(item, index) in device"
+              :key="index" class="data-item" >
+              <h3 class="flex" style="text-align:right;">
+                  {{ item.label }}
+                </h3>
+                <h3 class="flex" style="text-align:right;">
+                  {{ item.num }}
+                </h3>
+          </div>
         </div>
       </el-card>
     </div>
@@ -438,6 +447,7 @@ export default {
   border-color: #ccc;
 }
 .data-item {
+  padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -446,6 +456,7 @@ export default {
   font-size: 16px;
 }
 .device-data {
+  flex-wrap: wrap;
   width: calc(100% - 20px);
   margin: 0 10px;
 }
@@ -494,5 +505,35 @@ export default {
 .order-data .order-row:nth-child(3) .num {
   color: rgb(24, 144, 255);
   background-color: rgb(230, 247, 255);
+}
+@media screen and (max-width: 576px) {
+  .data-item {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 576px) {
+  .data-item {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 768px) {
+  .data-item {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 992px) {
+  .data-item {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .data-item {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 1600px) {
+  .data-item {
+    width: 33.3%;
+  }
 }
 </style>

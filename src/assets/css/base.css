@@ -302,3 +302,6 @@ div {
 .el-table .light th{
   background-color: #F0F7FF;
 }
+.ivu-list-item-meta-title {
+  font-weight: 700;
+}

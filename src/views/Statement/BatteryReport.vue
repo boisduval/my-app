@@ -20,34 +20,28 @@
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
+                :clearable="false"
+                @change="getData"
               >
               </el-date-picker>
             </el-form-item>
             <el-form-item label="设备名称:" label-width="80px">
-              <el-select v-model="searchForm.LikeType" clearable>
+              <el-select v-model="searchForm.DeviceSystemID" @change="getData">
                 <el-option
                   v-for="(item, index) in options"
                   :key="index"
-                  :value="item"
-                  :label="item"
+                  :value="item.SystemID"
+                  :label="item.Name"
                 ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="设备Bank" label-width="80px">
-              <el-select v-model="bank">
+              <el-select v-model="searchForm.BankIndex" @change="getData">
                 <el-option label="Bank1" value="0"></el-option>
                 <el-option label="Bank2" value="1"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label-width="20px" label=" ">
-              <el-button
-                type="primary"
-                @click="
-                  searchForm.page = 1;
-                  getData();
-                "
-                >查询</el-button
-              >
               <el-button
                 type="primary"
                 plain
@@ -82,349 +76,413 @@
       <div slot="header" class="clearfix">
         <span>电池总览</span>
       </div>
-      <div class="wrap-box flex-row">
-          <div class="wrap">
-            <div style="padding: 0 20px">
-              <el-table
+      <div class="wrap-box flex-row" v-loading="loading">
+        <div class="wrap">
+          <div style="padding: 0 20px">
+            <el-table
               :show-header="false"
               :data="table1"
               :row-class-name="tableRowClassName"
               :border="true"
-              style="width: 100%">
+              style="width: 100%"
+            >
               <el-table-column
                 prop="one"
                 align="center"
                 show-overflow-tooltip
-                label="1">
+                label="1"
+              >
               </el-table-column>
               <el-table-column
                 prop="two"
                 align="center"
                 show-overflow-tooltip
-                label="2">
+                label="2"
+              >
               </el-table-column>
               <el-table-column
                 prop="three"
                 align="center"
                 show-overflow-tooltip
-                label="3">
+                label="3"
+              >
               </el-table-column>
               <el-table-column
                 prop="four"
                 align="center"
                 show-overflow-tooltip
-                label="4">
+                label="4"
+              >
               </el-table-column>
               <el-table-column
                 prop="five"
                 align="center"
                 show-overflow-tooltip
-                label="5">
+                label="5"
+              >
               </el-table-column>
               <el-table-column
                 prop="six"
                 align="center"
                 show-overflow-tooltip
-                label="6">
+                label="6"
+              >
               </el-table-column>
               <el-table-column
                 prop="seven"
                 align="center"
                 show-overflow-tooltip
-                label="7">
+                label="7"
+              >
               </el-table-column>
             </el-table>
+          </div>
+        </div>
+        <div class="wrap">
+          <div style="padding: 0 20px">
+            <el-table
+              :show-header="false"
+              :data="table2"
+              :row-class-name="tableRowClassName"
+              :border="true"
+              style="width: 100%"
+            >
+              <el-table-column
+                prop="one"
+                align="center"
+                show-overflow-tooltip
+                label="1"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="two"
+                align="center"
+                show-overflow-tooltip
+                label="2"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="three"
+                align="center"
+                show-overflow-tooltip
+                label="3"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="four"
+                align="center"
+                show-overflow-tooltip
+                label="4"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="five"
+                align="center"
+                show-overflow-tooltip
+                label="5"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="six"
+                align="center"
+                show-overflow-tooltip
+                label="6"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="seven"
+                align="center"
+                show-overflow-tooltip
+                label="7"
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+        </div>
+        <div class="wrap">
+          <div id="myChart1" style="height:350px;padding: 0 20px"></div>
+        </div>
+        <div class="wrap">
+          <div id="myChart2" style="height:350px;padding: 0 20px"></div>
+        </div>
+        <div class="wrap">
+          <div id="myChart3" style="height:350px;padding: 0 20px"></div>
+        </div>
+        <div class="wrap">
+          <div style="height:350px;padding: 0 20px" class="flex-column">
+            <div
+              class="flex flex-column"
+              style="justify-content: flex-end;padding-bottom: 40px;"
+            >
+              <div style="padding: 0 20px">
+                <el-table
+                  :show-header="false"
+                  :data="table3"
+                  :row-class-name="tableRowClassName"
+                  :border="true"
+                  style="width: 100%"
+                >
+                  <el-table-column
+                    prop="one"
+                    align="center"
+                    show-overflow-tooltip
+                    label="1"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    prop="two"
+                    align="center"
+                    show-overflow-tooltip
+                    label="2"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    prop="three"
+                    align="center"
+                    show-overflow-tooltip
+                    label="3"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    prop="four"
+                    align="center"
+                    show-overflow-tooltip
+                    label="4"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    prop="five"
+                    align="center"
+                    show-overflow-tooltip
+                    label="5"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    prop="six"
+                    align="center"
+                    show-overflow-tooltip
+                    label="6"
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </div>
+            <div class="text" v-if="tableData.cIRCUIT_BREAKER_FEEDBACK_STATE">
+              {{tableData.cIRCUIT_BREAKER_FEEDBACK_STATE.totalname}}
             </div>
           </div>
-          <div class="wrap">
-            <div style="padding: 0 20px">
-              <el-table
-                :show-header="false"
-                :data="table2"
-                :row-class-name="tableRowClassName"
-                :border="true"
-                style="width: 100%">
-                <el-table-column
-                  prop="one"
-                  align="center"
-                  show-overflow-tooltip
-                  label="1">
-                </el-table-column>
-                <el-table-column
-                  prop="two"
-                  align="center"
-                  show-overflow-tooltip
-                  label="2">
-                </el-table-column>
-                <el-table-column
-                  prop="three"
-                  align="center"
-                  show-overflow-tooltip
-                  label="3">
-                </el-table-column>
-                <el-table-column
-                  prop="four"
-                  align="center"
-                  show-overflow-tooltip
-                  label="4">
-                </el-table-column>
-                <el-table-column
-                  prop="five"
-                  align="center"
-                  show-overflow-tooltip
-                  label="5">
-                </el-table-column>
-                <el-table-column
-                  prop="six"
-                  align="center"
-                  show-overflow-tooltip
-                  label="6">
-                </el-table-column>
-                <el-table-column
-                  prop="seven"
-                  align="center"
-                  show-overflow-tooltip
-                  label="7">
-                </el-table-column>
-              </el-table>
-            </div>
-          </div>
-          <div class="wrap">
-            <div id="myChart1" style="height:350px;padding: 0 20px"></div>
-          </div>
-          <div class="wrap">
-            <div id="myChart2" style="height:350px;padding: 0 20px"></div>
-          </div>
-          <div class="wrap">
-            <div id="myChart3" style="height:350px;padding: 0 20px"></div>
-          </div>
-          <div class="wrap">
-            <div style="height:350px;padding: 0 20px" class="flex-column">
-                <div class="flex flex-column" style="justify-content: flex-end;padding-bottom: 40px;">
-                  <div style="padding: 0 20px">
-                    <el-table
-                      :show-header="false"
-                      :data="table2"
-                      :row-class-name="tableRowClassName"
-                      :border="true"
-                      style="width: 100%">
-                      <el-table-column
-                        prop="one"
-                        align="center"
-                        show-overflow-tooltip
-                        label="1">
-                      </el-table-column>
-                      <el-table-column
-                        prop="two"
-                        align="center"
-                        show-overflow-tooltip
-                        label="2">
-                      </el-table-column>
-                      <el-table-column
-                        prop="three"
-                        align="center"
-                        show-overflow-tooltip
-                        label="3">
-                      </el-table-column>
-                      <el-table-column
-                        prop="four"
-                        align="center"
-                        show-overflow-tooltip
-                        label="4">
-                      </el-table-column>
-                      <el-table-column
-                        prop="five"
-                        align="center"
-                        show-overflow-tooltip
-                        label="5">
-                      </el-table-column>
-                      <el-table-column
-                        prop="six"
-                        align="center"
-                        show-overflow-tooltip
-                        label="6">
-                      </el-table-column>
-                    </el-table>
-                  </div>
-                </div>
-                <div class="text">
-                  各簇断路器反馈状态
-                </div>
-            </div>
-          </div>
+        </div>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 let moment = require('moment')
 export default {
   data () {
     return {
       searchForm: {
         AutoSystemID: '',
+        DeviceSystemID: '',
+        BankIndex: '',
         Start: '',
-        Stop: '',
-        LikeType: '',
-        LikeMessage: '',
-        page: 1,
-        limit: 10
+        Stop: ''
       },
       tableData: [],
-      count: 0,
-      customColumns: [],
       isShow: true,
-      fileName: '日志信息',
       loading: false,
       options: [],
       value: '',
-      bank: 0,
-      table1: [
-        {
-          one: '第一簇总压',
-          two: '第二簇总压',
-          three: '第三簇总压',
-          four: '第四簇总压',
-          five: '第五簇总压',
-          six: '第六簇总压',
-          seven: '电池总压'
-        },
-        {
-          one: '48.5V',
-          two: '48.5V',
-          three: '48.5V',
-          four: '48.5V',
-          five: '48.5V',
-          six: '48.5V',
-          seven: '48V'
-        },
-        {
-          one: '第七簇总压',
-          two: '第八簇总压',
-          three: '第九簇总压',
-          four: '第十簇总压',
-          five: '第十一簇总压',
-          six: '第十二簇总压',
-          seven: 'SOC'
-        },
-        {
-          one: '48.5V',
-          two: '48.5V',
-          three: '48.5V',
-          four: '48.5V',
-          five: '48.5V',
-          six: '48.5V',
-          seven: '48V'
-        }
-      ],
-      table2: [
-        {
-          one: '第一簇总流',
-          two: '第二簇总流',
-          three: '第三簇总流',
-          four: '第四簇总流',
-          five: '第五簇总流',
-          six: '第六簇总流',
-          seven: '电池总流'
-        },
-        {
-          one: '15.3A',
-          two: '15.3A',
-          three: '15.3A',
-          four: '15.3A',
-          five: '15.3A',
-          six: '15.3A',
-          seven: '48A'
-        },
-        {
-          one: '第七簇总流',
-          two: '第八簇总流',
-          three: '第九簇总流',
-          four: '第十簇总流',
-          five: '第十一簇总流',
-          six: '第十二簇总流',
-          seven: 'SOC'
-        },
-        {
-          one: '15.3A',
-          two: '15.3A',
-          three: '15.3A',
-          four: '15.3A',
-          five: '15.3A',
-          six: '15.3A',
-          seven: '48A'
-        }
-      ],
-      table3: [
-        {
-          one: '第一簇断路器状态',
-          two: '第二簇断路器状态',
-          three: '第三簇断路器状态',
-          four: '第四簇断路器状态',
-          five: '第五簇断路器状态',
-          six: '第六簇断路器状态'
-        },
-        {
-          one: '闭合',
-          two: '闭合',
-          three: '闭合',
-          four: '闭合',
-          five: '闭合',
-          six: '闭合'
-        },
-        {
-          one: '第七簇断路器状态',
-          two: '第八簇断路器状态',
-          three: '第九簇断路器状态',
-          four: '第十簇断路器状态',
-          five: '第十一簇断路器状态',
-          six: '第十二簇断路器状态'
-        },
-        {
-          one: '闭合',
-          two: '闭合',
-          three: '闭合',
-          four: '闭合',
-          five: '闭合',
-          six: '闭合'
-        }
-      ]
+      table1: [],
+      table2: [],
+      table3: []
     }
   },
-  computed: {
-    ...mapState('table', ['pageSize'])
-  },
   created () {
+    // this.setData()
     this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
-    this.searchForm.limit = this.pageSize[0]
+    this.searchForm.BankIndex = 1
+    this.getDevices()
     var today = moment()
       .subtract(0, 'days')
       .format('YYYY-MM-DD')
     this.value = [today, today]
     // this.getDevices()
     // this.getData()
-    this.$nextTick(() => {
-      this.getEcharts()
-    })
   },
   methods: {
     // 获取日报信息列表
     getData () {
       this.loading = true
+      this.table1 = []
+      this.table2 = []
+      this.table3 = []
+      this.tableData = ''
       this.searchForm.Start = moment(this.value[0]).format('YYYY-MM-DD')
       this.searchForm.Stop = moment(this.value[1]).format('YYYY-MM-DD')
-      var url = '/api/Log/GetUserLogList'
+      var url = 'api/Statistics/GetBattery'
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
           if (res.data.code === 0) {
             this.tableData = res.data.data
-            this.count = res.data.count
-            this.loading = false
+            console.log(this.tableData)
+            var arr1 = this.tableData.tOTAL_VOLTAGE_PER_BATTERY_CLUSTER
+              .valueUnits
+            var arr2 = this.tableData.cURRENT_IN_THE_MAIN_CIRCUIT_OF_EACH_BATTERY_CLUSTER
+              .valueUnits
+            var arr3 = this.tableData.cIRCUIT_BREAKER_FEEDBACK_STATE
+              .valueUnits
+            this.table1.push({
+              one: arr1[0].name,
+              two: arr1[1].name,
+              three: arr1[2].name,
+              four: arr1[3].name,
+              five: arr1[4].name,
+              six: arr1[5].name,
+              seven: this.tableData.tOTAL_BATTERY_VOLTAGE.name
+            })
+            this.table1.push({
+              one: arr1[0].value + arr1[0].unit,
+              two: arr1[1].value + arr1[1].unit,
+              three: arr1[2].value + arr1[2].unit,
+              four: arr1[3].value + arr1[3].unit,
+              five: arr1[4].value + arr1[4].unit,
+              six: arr1[5].value + arr1[5].unit,
+              seven: this.tableData.tOTAL_BATTERY_VOLTAGE.value +
+              this.tableData.tOTAL_BATTERY_VOLTAGE.unit
+            })
+            this.table1.push({
+              one: arr1[6].name,
+              two: arr1[7].name,
+              three: arr1[8].name,
+              four: arr1[9].name,
+              five: arr1[10].name,
+              six: arr1[11].name,
+              seven: this.tableData.oVERALL_BATTERY_SOC.name
+            })
+            this.table1.push({
+              one: arr1[6].value + arr1[6].unit,
+              two: arr1[7].value + arr1[7].unit,
+              three: arr1[8].value + arr1[8].unit,
+              four: arr1[9].value + arr1[9].unit,
+              five: arr1[10].value + arr1[10].unit,
+              six: arr1[11].value + arr1[11].unit,
+              seven: this.tableData.oVERALL_BATTERY_SOC.value +
+              this.tableData.oVERALL_BATTERY_SOC.unit
+            })
+
+            this.table2.push({
+              one: arr2[0].name,
+              two: arr2[1].name,
+              three: arr2[2].name,
+              four: arr2[3].name,
+              five: arr2[4].name,
+              six: arr2[5].name,
+              seven: this.tableData.cURRENT_IN_THE_MAIN_CIRCUIT_OF_THE_BATTERY.name
+            })
+            this.table2.push({
+              one: arr2[0].value + arr2[0].unit,
+              two: arr2[1].value + arr2[1].unit,
+              three: arr2[2].value + arr2[2].unit,
+              four: arr2[3].value + arr2[3].unit,
+              five: arr2[4].value + arr2[4].unit,
+              six: arr2[5].value + arr2[5].unit,
+              seven: this.tableData.cURRENT_IN_THE_MAIN_CIRCUIT_OF_THE_BATTERY.value +
+              this.tableData.cURRENT_IN_THE_MAIN_CIRCUIT_OF_THE_BATTERY.unit
+            })
+            this.table2.push({
+              one: arr2[6].name,
+              two: arr2[7].name,
+              three: arr2[8].name,
+              four: arr2[9].name,
+              five: arr2[10].name,
+              six: arr2[11].name,
+              seven: this.tableData.oVERALL_BATTERY_HEALTH.name
+            })
+            this.table2.push({
+              one: arr2[6].value + arr2[6].unit,
+              two: arr2[7].value + arr2[7].unit,
+              three: arr2[8].value + arr2[8].unit,
+              four: arr2[9].value + arr2[9].unit,
+              five: arr2[10].value + arr2[10].unit,
+              six: arr2[11].value + arr2[11].unit,
+              seven: this.tableData.oVERALL_BATTERY_HEALTH.value +
+              this.tableData.oVERALL_BATTERY_HEALTH.unit
+            })
+
+            this.table3.push({
+              one: arr3[0].name,
+              two: arr3[1].name,
+              three: arr3[2].name,
+              four: arr3[3].name,
+              five: arr3[4].name,
+              six: arr3[5].name
+            })
+            this.table3.push({
+              one: arr3[0].value + arr3[0].unit,
+              two: arr3[1].value + arr3[1].unit,
+              three: arr3[2].value + arr3[2].unit,
+              four: arr3[3].value + arr3[3].unit,
+              five: arr3[4].value + arr3[4].unit,
+              six: arr3[5].value + arr3[5].unit
+            })
+            this.table3.push({
+              one: arr3[6].name,
+              two: arr3[7].name,
+              three: arr3[8].name,
+              four: arr3[9].name,
+              five: arr3[10].name,
+              six: arr3[11].name
+            })
+            this.table3.push({
+              one: arr3[6].value + arr3[6].unit,
+              two: arr3[7].value + arr3[7].unit,
+              three: arr3[8].value + arr3[8].unit,
+              four: arr3[9].value + arr3[9].unit,
+              five: arr3[10].value + arr3[10].unit,
+              six: arr3[11].value + arr3[11].unit
+            })
+
+            this.tableData.VoltageDifferenceTrendOfEachCluster.series = []
+            this.tableData.VoltageDifferenceTrendOfEachCluster.legend = []
+            this.tableData.VoltageDifferenceTrendOfEachCluster.SeriesData.forEach(item => {
+              this.tableData.VoltageDifferenceTrendOfEachCluster.legend.push(item.name)
+              this.tableData.VoltageDifferenceTrendOfEachCluster.series.push({
+                name: item.name,
+                type: 'line',
+                stack: item.stack,
+                data: item.data
+              })
+            })
+
+            this.tableData.CurrentDifferenceTrendOfEachCluster.series = []
+            this.tableData.CurrentDifferenceTrendOfEachCluster.legend = []
+            this.tableData.CurrentDifferenceTrendOfEachCluster.SeriesData.forEach(item => {
+              this.tableData.CurrentDifferenceTrendOfEachCluster.legend.push(item.name)
+              this.tableData.CurrentDifferenceTrendOfEachCluster.series.push({
+                name: item.name,
+                type: 'line',
+                stack: item.stack,
+                data: item.data
+              })
+            })
+            this.$nextTick(() => {
+              this.getEcharts()
+            })
+            setTimeout(() => {
+              this.loading = false
+            }, 500)
           } else if (res.data.code === 1) {
+            setTimeout(() => {
+              this.loading = false
+            }, 500)
             this.$message.error(res.data.msg)
+          } else {
+            setTimeout(() => {
+              this.loading = false
+            }, 500)
           }
         })
         .catch(err => {
@@ -432,14 +490,16 @@ export default {
         })
     },
 
-    // 获取类型列表
+    // 获取设备列表
     getDevices () {
-      var url = '/api/Log/GetUserType'
+      var url = '/api/Devices/GetDevicesNameList'
       this.$axios
         .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}`)
         .then(res => {
           if (res.data.code === 0) {
             this.options = res.data.data
+            this.searchForm.DeviceSystemID = this.options[0].SystemID
+            this.getData()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
@@ -470,6 +530,7 @@ export default {
           break
       }
       this.value = [num, new Date()]
+      this.getData()
     },
 
     tableRowClassName ({ row, rowIndex }) {
@@ -484,54 +545,70 @@ export default {
       var myChart1 = this.$echarts.init(document.getElementById('myChart1'))
       myChart1.setOption({
         title: {
-          text: '各簇总电压',
+          text: this.tableData.VoltageDifferenceTrendOfEachCluster.Name,
           bottom: 0,
           left: 'center'
         },
-        // grid: {
-        //   left: '50',
-        //   right: '20',
-        //   bottom: '40',
-        //   containLabel: true
-        // },
+        grid: {
+          left: '25',
+          right: '20',
+          bottom: '40',
+          top: '20%',
+          containLabel: true
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: this.tableData.VoltageDifferenceTrendOfEachCluster.legend,
+          top: '8%',
+          type: 'scroll'
+        },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.tableData.VoltageDifferenceTrendOfEachCluster.XAxisData
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          min: this.tableData.VoltageDifferenceTrendOfEachCluster.YAxisMin,
+          max: this.tableData.VoltageDifferenceTrendOfEachCluster.YAxisMax
         },
-        series: [{
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line'
-        }]
+        series: this.tableData.VoltageDifferenceTrendOfEachCluster.series
       })
 
       // 第2个图
       var myChart2 = this.$echarts.init(document.getElementById('myChart2'))
       myChart2.setOption({
         title: {
-          text: '各簇总电流',
+          text: this.tableData.CurrentDifferenceTrendOfEachCluster.Name,
           bottom: 0,
           left: 'center'
         },
-        // grid: {
-        //   left: '50',
-        //   right: '20',
-        //   bottom: '40',
-        //   containLabel: true
-        // },
+        grid: {
+          left: '25',
+          right: '20',
+          bottom: '40',
+          top: '20%',
+          containLabel: true
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: this.tableData.CurrentDifferenceTrendOfEachCluster.legend,
+          top: '8%',
+          type: 'scroll'
+        },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.tableData.CurrentDifferenceTrendOfEachCluster.XAxisData
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          min: this.tableData.CurrentDifferenceTrendOfEachCluster.YAxisMin,
+          max: this.tableData.CurrentDifferenceTrendOfEachCluster.YAxisMax
         },
-        series: [{
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line'
-        }]
+        series: this.tableData.CurrentDifferenceTrendOfEachCluster.series
       })
 
       // 第3个图
@@ -585,11 +662,11 @@ export default {
 
 <style scoped>
 .wrap-box {
-    width: 100%;
-    flex-wrap: wrap;
+  width: 100%;
+  flex-wrap: wrap;
 }
 .wrap {
-    padding: 10px 20px;
+  padding: 10px 20px;
 }
 .wrap .text {
   font-size: 18px;

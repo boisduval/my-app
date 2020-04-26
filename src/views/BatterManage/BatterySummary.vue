@@ -4,8 +4,8 @@
       <el-form label-width="100px" :inline="true">
         <el-form-item label="设备Bank" style="width:400px">
           <el-select v-model="bank" style="width:250px">
-            <el-option label="Bank1" value="0"></el-option>
-            <el-option label="Bank2" value="1"></el-option>
+            <el-option label="Bank1" :value="0"></el-option>
+            <el-option label="Bank2" :value="1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -29,7 +29,7 @@
 export default {
   data () {
     return {
-      bank: 0,
+      bank: '',
       radio1: '总压曲线',
       radio2: '系统状态',
       radio3: '健康状态',
@@ -66,6 +66,9 @@ export default {
           break
       }
     }
+  },
+  created () {
+    this.bank = 0
   }
 }
 </script>
