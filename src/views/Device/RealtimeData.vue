@@ -129,7 +129,7 @@
           field="DICCID"
           title="ICCID"
           sortable
-          width="300"
+          width="280"
           show-overflow
         >
         </vxe-table-column>
@@ -137,29 +137,41 @@
           field="DIDS"
           title="设备ID"
           sortable
-          width="300"
+          width="280"
           show-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="200">
+        <vxe-table-column field="DName" title="设备名称" sortable width="180">
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
           title="设备管理员"
           sortable
-          width="200"
+          width="180"
         >
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable>
         </vxe-table-column>
-        <vxe-table-column title="操作" align="center" width="250">
+        <vxe-table-column title="数据类型" align="center" width="180">
+          <template v-slot="{}">
+            <el-select v-model="form.ConfigType">
+              <el-option
+                v-for="(item, index) in list"
+                :key="index"
+                :value="item.Type"
+                :label="item.Name"
+              ></el-option>
+            </el-select>
+          </template>
+        </vxe-table-column>
+        <vxe-table-column title="操作" align="center" width="180">
           <template v-slot="{ row }">
             <el-button
               plain
               size="small"
               @click="showDialog(row)"
             >
-              <i class="el-icon-info">在线升级</i>
+              <i class="el-icon-info">显示数据</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -178,71 +190,95 @@
       </el-pagination>
       <!-- 分页结束 -->
 
-      <!-- 编辑表单开始 -->
+      <!-- 数据表单开始 -->
       <el-dialog
         title="在线升级"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
+        width="70%"
       >
-        <div style="position:relative">
+        <el-form :model="form" style="position:relative">
           <Spin v-if="spinShow1" fix></Spin>
-          <el-form :model="form">
-            <el-form-item label="设备名称" :label-width="formLabelWidth">
-              <el-input v-model="form.name" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="系统代码" :label-width="formLabelWidth">
-              <el-input v-model="form.devicesystemid" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="识别号码" :label-width="formLabelWidth">
-              <el-input
-                v-model="form.deviceid"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="更新目标" :label-width="formLabelWidth">
-              <el-select v-model="form.target">
-                <el-option
-                  v-for="(item, index) in target"
-                  :key="index"
-                  :value="item.unit"
-                  :label="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-          <el-form :inline="true" id="upload">
-            <el-form-item label="文件地址" :label-width="formLabelWidth">
-              <el-input
-                readonly
-                v-model="fileName"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item :label-width="formLabelWidth">
-              <el-upload
-                class="upload-demo"
-                action="http://sf28090049.wicp.vip:8082/conn/api/File/GetDMSCBootLoader"
-                :file-list="fileList"
-                :auto-upload="false"
-                :show-file-list="false"
-                :multiple="false"
-                :data="form"
-                :on-success="handleSuccess"
-                :on-error="handleError"
-                ref="upload"
-                :on-change="showFileName"
-              >
-                <el-button type="primary" @click="showFileName">导入文件</el-button>
-              </el-upload>
-            </el-form-item>
-          </el-form>
-        </div>
+          <el-form-item label="设备名称" :label-width="formLabelWidth">
+            <el-input v-model="form.Name" autocomplete="off" readonly ></el-input>
+          </el-form-item>
+          <el-form-item label="识别号码" :label-width="formLabelWidth">
+            <el-input
+              readonly
+              v-model="deviceid"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="数据类型" :label-width="formLabelWidth">
+            <el-select v-model="form.ConfigType" disabled>
+              <el-option
+                v-for="(item, index) in list"
+                :key="index"
+                :value="item.Type"
+                :label="item.Name"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="原始数据" :label-width="formLabelWidth">
+            <vxe-table
+              height="300px"
+              :data="tableData1"
+              border
+              :customs.sync="customColumns1"
+              style="width: 100%">
+              <vxe-table-column
+                field="RowIndex"
+                title="起始地址">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell0"
+                title="第一列">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell1"
+                title="第二列">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell2"
+                title="第三列">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell3"
+                title="第四列">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell4"
+                title="第五列">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell5"
+                title="第六列">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell6"
+                title="第七列">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell7"
+                title="第八列">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell8"
+                title="第九列">
+              </vxe-table-column>
+              <vxe-table-column
+                field="Cell9"
+                title="第十列">
+              </vxe-table-column>
+            </vxe-table>
+          </el-form-item>
+        </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="edit" :disabled="spinShow1">确 定</el-button>
+          <el-button type="primary" :disabled="spinShow1" @click="exportExcel1">下 载</el-button>
         </div>
       </el-dialog>
-      <!-- 编辑表单结束 -->
+      <!-- 数据表单结束 -->
     </el-card>
   </div>
 </template>
@@ -263,22 +299,26 @@ export default {
       },
       tableData: [],
       customColumns: [],
+      customColumns1: [],
       isShow: true,
       count: 0,
       loading: false,
       form: {
         AutoSystemID: '',
-        name: '',
-        target: '',
-        deviceid: '',
-        devicesystemid: ''
+        ConfigType: '',
+        DeviceSystemID: ''
       },
       formLabelWidth: '90px',
       dialogFormVisible: false,
-      target: [],
+      list: [],
       spinShow1: false,
-      fileList: [],
-      fileName: ''
+      deviceid: '',
+      tableData1: [],
+      listHead: '',
+      listFilter: '',
+      listHead1: '',
+      listFilter1: '',
+      fileName: 'export'
     }
   },
   methods: {
@@ -325,6 +365,27 @@ export default {
         export_json_to_excel(tHeader, data, `${this.fileName}表`)
       })
     },
+    // 导出excel
+    exportExcel1 () {
+      this.listHead1 = []
+      this.listFilter1 = []
+      for (var i = 0; i < this.customColumns1.length; i++) {
+        if (this.customColumns1[i].visible) {
+          this.listFilter1.push(this.customColumns1[i].property)
+          this.listHead1.push(this.customColumns1[i].title)
+        }
+      }
+      require.ensure([], () => {
+        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
+        const tHeader = this.listHead1
+        // 上面设置Excel的表格第一行的标题
+        const filterVal = this.listFilter1
+        // 上面的index、nickName、name是tableData里对象的属性
+        const list = this.tableData1 // 把data里的tableData存到list
+        const data = this.formatJson(filterVal, list)
+        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+      })
+    },
     formatJson (filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => v[j]))
     },
@@ -333,22 +394,22 @@ export default {
     showDialog (row) {
       this.dialogFormVisible = true
       this.spinShow1 = true
-      this.getControllerList()
-      console.log(row)
-      this.form.devicesystemid = row.SystemID
-      this.form.deviceid = row.DICCID
-      this.form.name = row.DName
+      this.form.DeviceSystemID = row.SystemID
+      this.deviceid = row.DICCID
+      this.form.Name = row.DName
+      this.form.AutoSystemID = this.formInline.AutoSystemID
+      this.getConfig()
     },
 
     getData () {
       this.loading = true
-      this.formInline.AutoSystemID = localStorage.getItem('AutoSystemID')
       this.$axios
         .get(
           `/api/Devices/GetRegistrationEquipmentList?AutoSystemID=${this.formInline.AutoSystemID}&page=${this.formInline.page}&limit=${this.formInline.limit}&ICCID=${this.formInline.ICCID}&IDS=${this.formInline.IDS}&VIN=${this.formInline.VIN}&Name=${this.formInline.Name}`
         )
         .then(res => {
-          if (res.data.data) {
+          if (res.data.code === 0) {
+            this.getValueInfo()
             this.tableData = res.data.data
           } else {
             this.tableData = []
@@ -362,24 +423,18 @@ export default {
         })
     },
 
-    // 编辑
-    edit () {
-      this.form.AutoSystemID = localStorage.getItem('AutoSystemID')
-      this.$refs.upload.submit()
-    },
-
-    // 获取控制器列表
-    getControllerList () {
+    // 获取数据类型接口
+    getValueInfo () {
       this.$axios
         .get(
-          `/api/Devices/GetTargetList?AutoSystemID=${this.formInline.AutoSystemID}`
+          `/api/Dictionaries/GetValueInfo?AutoSystemID=${this.formInline.AutoSystemID}&KeyType=DMS_CONFIG_TYPE`
         )
         .then(res => {
-          if (res.data.data) {
-            this.target = res.data.data.TargetList
-            this.form.target = this.target[0].unit
-          } else {
-            this.target = []
+          if (res.data.code === 0) {
+            res.data.data.forEach(element => {
+              this.list.push(element.SlaveInfo)
+            })
+            this.form.ConfigType = this.list[0].Type
           }
           setTimeout(() => {
             this.spinShow1 = false
@@ -390,28 +445,31 @@ export default {
         })
     },
 
-    beforeRemove (file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
-    },
-    showFileName (file, fileList) {
-      if (file.status === 'ready') {
-        this.fileName = file.name
-      }
-    },
-    handleSuccess (response, file, fileList) {
-      this.$message.success(response.msg)
-      this.form = {}
-      this.fileName = ''
-      this.dialogFormVisible = false
-    },
-    handleError (response, file, fileList) {
-      this.$message.error(response.msg)
+    getConfig () {
+      var url = '/api/Realtime/GetDMSCConfig'
+      this.$axios
+        .get(url, { params: this.form })
+        .then(res => {
+          if (res.data.code === 0) {
+            this.tableData1 = res.data.data
+          } else {
+            this.tableData1 = []
+            this.$message.error(res.data.msg)
+          }
+          setTimeout(() => {
+            this.spinShow1 = false
+          }, 500)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   computed: {
     ...mapState('table', ['pageSize'])
   },
   created () {
+    this.formInline.AutoSystemID = localStorage.getItem('AutoSystemID')
     this.formInline.limit = this.pageSize[0]
     this.getData()
   }

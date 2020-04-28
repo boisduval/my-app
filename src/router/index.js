@@ -196,6 +196,14 @@ const routes = [
         }
       },
       {
+        path: '/realtimeData',
+        name: 'realtimeData',
+        component: () => import(/* webpackChunkName: "RealtimeData" */ '../views/Device/RealtimeData.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
         path: '/batteryType',
         name: 'batteryType',
         component: () => import(/* webpackChunkName: "BatterManageBatteryType" */ '../views/BatterManage/BatteryType.vue'),

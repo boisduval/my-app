@@ -123,6 +123,15 @@ const state = {
             DataIndex: '1000',
             Text: '设备升级',
             Use: true
+          },
+          {
+            ID: '13',
+            MID: '3',
+            Href: 'realtimeData',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '实时数据',
+            Use: true
           }
         ]
       }

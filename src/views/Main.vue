@@ -87,27 +87,6 @@
           <span>{{$t('main.deviceCount.title')}}</span>
         </div>
         <div class="device-data flex-row">
-          <!-- <el-row :gutter="20">
-            <el-col
-              :xs="24"
-              :sm="24"
-              :md="12"
-              :lg="8"
-              :xl="8"
-              v-for="(item, index) in device"
-              :key="index"
-              style="margin-bottom: 10px;"
-            >
-              <div class="data-item">
-                <h3 class="flex" style="text-align:right;">
-                  {{ item.label }}
-                </h3>
-                <h3 class="flex" style="text-align:right;">
-                  {{ item.num }}
-                </h3>
-              </div>
-            </el-col>
-          </el-row> -->
           <div v-for="(item, index) in device"
               :key="index" class="data-item" >
               <h3 class="flex" style="text-align:right;">
