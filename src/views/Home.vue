@@ -731,8 +731,8 @@ export default {
 }
 
 .el-submenu .el-menu-item {
-  height: 40px;
-  line-height: 40px;
+  height: 35px;
+  line-height: 35px;
 }
 
 .footer {
