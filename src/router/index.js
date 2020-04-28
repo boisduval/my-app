@@ -188,6 +188,14 @@ const routes = [
         }
       },
       {
+        path: '/deviceUpgrade',
+        name: 'deviceUpgrade',
+        component: () => import(/* webpackChunkName: "DeviceUpgrade" */ '../views/Device/DeviceUpgrade.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
         path: '/batteryType',
         name: 'batteryType',
         component: () => import(/* webpackChunkName: "BatterManageBatteryType" */ '../views/BatterManage/BatteryType.vue'),

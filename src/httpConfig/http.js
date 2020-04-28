@@ -23,7 +23,7 @@ axios.interceptors.response.use(
       // eslint-disable-next-line
       if (response.data.code == 2) {
         Message.error(response.data.msg)
-        localStorage.clear()
+        localStorage.removeItem('AutoSystemID')
         window.location.href = '/console/login'
       } else if (response.data.code === 3) {
         Message.warning(response.data.msg)
@@ -31,7 +31,7 @@ axios.interceptors.response.use(
       } else if (response.data.code === 4) {
         Message.error(response.data.msg)
         setTimeout(() => {
-          localStorage.clear()
+          localStorage.removeItem('AutoSystemID')
           window.location.href = '/console/login'
         }, 1000)
       } else {

@@ -157,11 +157,9 @@
             <el-button
               plain
               size="small"
-              v-for="(item, index) in detail"
-              :key="index"
-              @click="toDetail(row.SystemID, item.label, row.DIDS, item.path)"
+              @click="showDialog(row)"
             >
-              <i class="el-icon-info">{{ item.label }}</i>
+              <i class="el-icon-info">在线升级</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -179,12 +177,76 @@
       >
       </el-pagination>
       <!-- 分页结束 -->
+
+      <!-- 编辑表单开始 -->
+      <el-dialog
+        title="在线升级"
+        :visible.sync="dialogFormVisible"
+        :close-on-click-modal="false"
+      >
+        <el-form :model="form">
+          <Spin v-if="spinShow1" fix></Spin>
+          <el-form-item label="设备名称" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="系统代码" :label-width="formLabelWidth">
+            <el-input v-model="form.devicesystemid" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="识别号码" :label-width="formLabelWidth">
+            <el-input
+              v-model="form.deviceid"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="更新目标" :label-width="formLabelWidth">
+            <el-select v-model="form.target">
+              <el-option
+                v-for="(item, index) in target"
+                :key="index"
+                :value="item.unit"
+                :label="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <el-form :inline="true" id="upload">
+          <el-form-item label="文件地址" :label-width="formLabelWidth">
+            <el-input
+              readonly
+              v-model="fileName"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item :label-width="formLabelWidth">
+            <el-upload
+              class="upload-demo"
+              action="http://sf28090049.wicp.vip:8082/conn/api/File/GetDMSCBootLoader"
+              :file-list="fileList"
+              :auto-upload="false"
+              :show-file-list="false"
+              :multiple="false"
+              :data="form"
+              :on-success="handleSuccess"
+              :on-error="handleError"
+              ref="upload"
+              :on-change="showFileName"
+            >
+              <el-button type="primary" @click="showFileName">导入文件</el-button>
+            </el-upload>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="edit" :disabled="spinShow1">确 定</el-button>
+        </div>
+      </el-dialog>
+      <!-- 编辑表单结束 -->
     </el-card>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -200,7 +262,6 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '设备信息',
       count: 0,
       loading: false,
       detail: [
@@ -208,34 +269,23 @@ export default {
           label: '实时状态',
           path: '/realTime'
         }
-      ]
+      ],
+      form: {
+        AutoSystemID: '',
+        name: '',
+        target: '',
+        deviceid: '',
+        devicesystemid: ''
+      },
+      formLabelWidth: '90px',
+      dialogFormVisible: false,
+      target: [],
+      spinShow1: false,
+      fileList: [],
+      fileName: ''
     }
   },
   methods: {
-    ...mapMutations('pcsdetail', ['set_paramsRT']),
-    ...mapMutations('tabs', ['set_detail_label']),
-    getData () {
-      this.loading = true
-      this.formInline.AutoSystemID = localStorage.getItem('AutoSystemID')
-      this.$axios
-        .get(
-          `/api/Devices/GetRegistrationEquipmentList?AutoSystemID=${this.formInline.AutoSystemID}&page=${this.formInline.page}&limit=${this.formInline.limit}&ICCID=${this.formInline.ICCID}&IDS=${this.formInline.IDS}&VIN=${this.formInline.VIN}&Name=${this.formInline.Name}`
-        )
-        .then(res => {
-          if (res.data.data) {
-            this.tableData = res.data.data
-          } else {
-            this.tableData = []
-          }
-          this.count = res.data.count
-          this.loading = false
-          this.$refs.xTable.reloadCustoms([])
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-
     // 每页显示多少条
     handleSizeChange (val) {
       this.formInline.limit = val
@@ -298,6 +348,85 @@ export default {
     },
     formatJson (filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => v[j]))
+    },
+
+    // 显示编辑框
+    showDialog (row) {
+      this.dialogFormVisible = true
+      this.spinShow1 = true
+      this.getControllerList()
+      console.log(row)
+      this.form.devicesystemid = row.SystemID
+      this.form.deviceid = row.DICCID
+      this.form.name = row.DName
+    },
+
+    getData () {
+      this.loading = true
+      this.formInline.AutoSystemID = localStorage.getItem('AutoSystemID')
+      this.$axios
+        .get(
+          `/api/Devices/GetRegistrationEquipmentList?AutoSystemID=${this.formInline.AutoSystemID}&page=${this.formInline.page}&limit=${this.formInline.limit}&ICCID=${this.formInline.ICCID}&IDS=${this.formInline.IDS}&VIN=${this.formInline.VIN}&Name=${this.formInline.Name}`
+        )
+        .then(res => {
+          if (res.data.data) {
+            this.tableData = res.data.data
+          } else {
+            this.tableData = []
+          }
+          this.count = res.data.count
+          this.loading = false
+          this.$refs.xTable.reloadCustoms([])
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+
+    // 编辑
+    edit () {
+      this.form.AutoSystemID = localStorage.getItem('AutoSystemID')
+      this.$refs.upload.submit()
+    },
+
+    // 获取控制器列表
+    getControllerList () {
+      this.$axios
+        .get(
+          `/api/Devices/GetTargetList?AutoSystemID=${this.formInline.AutoSystemID}`
+        )
+        .then(res => {
+          if (res.data.data) {
+            this.target = res.data.data.TargetList
+            this.form.target = this.target[0].unit
+          } else {
+            this.target = []
+          }
+          setTimeout(() => {
+            this.spinShow1 = false
+          }, 500)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+
+    beforeRemove (file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
+    },
+    showFileName (file, fileList) {
+      if (file.status === 'ready') {
+        this.fileName = file.name
+      }
+    },
+    handleSuccess (response, file, fileList) {
+      this.$message.success(response.msg)
+      this.form = {}
+      this.fileName = ''
+      this.dialogFormVisible = false
+    },
+    handleError (response, file, fileList) {
+      this.$message.error(response.msg)
     }
   },
   computed: {
@@ -413,5 +542,16 @@ export default {
 
 #export li:hover {
   background-color: #f2f2f2;
+}
+
+#upload {
+  display: flex;
+}
+
+#upload .el-form-item:nth-child(1) {
+  flex: 1;
+}
+#upload .el-form-item:nth-child(1) /deep/.el-form-item__content {
+  width: calc(100% - 90px);
 }
 </style>

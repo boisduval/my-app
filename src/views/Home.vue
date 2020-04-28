@@ -502,7 +502,7 @@ export default {
               if (res.data.code === 0) {
                 this.$message.success(res.data.msg)
                 setTimeout(() => {
-                  localStorage.clear()
+                  localStorage.removeItem('AutoSystemID')
                   this.$router.push('login')
                 }, 1000)
               } else if (res.data.code === 1) {

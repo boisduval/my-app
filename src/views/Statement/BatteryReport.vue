@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <!-- 表单开始 -->
     <el-collapse-transition>
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>设备日报表列表查询</span>
+            <span>查询</span>
           </div>
           <el-form
             :inline="true"
@@ -76,7 +76,7 @@
       <div slot="header" class="clearfix">
         <span>电池总览</span>
       </div>
-      <div class="wrap-box flex-row" v-loading="loading">
+      <div class="wrap-box flex-row">
         <div class="wrap">
           <div style="padding: 0 20px">
             <el-table
@@ -468,12 +468,24 @@ export default {
                 data: item.data
               })
             })
-            this.$nextTick(() => {
-              this.getEcharts()
+
+            this.tableData.ExtremeValueOfInternalResistanceOfMonomer.series = []
+            this.tableData.ExtremeValueOfInternalResistanceOfMonomer.legend = []
+            this.tableData.ExtremeValueOfInternalResistanceOfMonomer.SeriesData.forEach(item => {
+              this.tableData.ExtremeValueOfInternalResistanceOfMonomer.legend.push(item.name)
+              this.tableData.ExtremeValueOfInternalResistanceOfMonomer.series.push({
+                name: item.name,
+                type: 'bar',
+                data: item.data,
+                barGap: '40%'
+              })
             })
             setTimeout(() => {
               this.loading = false
             }, 500)
+            this.$nextTick(() => {
+              this.getEcharts()
+            })
           } else if (res.data.code === 1) {
             setTimeout(() => {
               this.loading = false
@@ -615,7 +627,7 @@ export default {
       var myChart3 = this.$echarts.init(document.getElementById('myChart3'))
       myChart3.setOption({
         title: {
-          text: '各簇单体内阻极值',
+          text: this.tableData.ExtremeValueOfInternalResistanceOfMonomer.Name,
           bottom: 0,
           left: 'center'
         },
@@ -625,27 +637,28 @@ export default {
             type: 'shadow'
           }
         },
+        grid: {
+          left: '25',
+          right: '20',
+          bottom: '40',
+          top: '20%',
+          containLabel: true
+        },
+        legend: {
+          data: this.tableData.ExtremeValueOfInternalResistanceOfMonomer.legend,
+          top: '8%',
+          type: 'scroll'
+        },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.tableData.ExtremeValueOfInternalResistanceOfMonomer.XAxisData
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          min: this.tableData.ExtremeValueOfInternalResistanceOfMonomer.YAxisMin,
+          max: this.tableData.ExtremeValueOfInternalResistanceOfMonomer.YAxisMax
         },
-        series: [
-          {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'bar',
-            barGao: '40%',
-            name: '1'
-          },
-          {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'bar',
-            barGao: '40%',
-            name: '2'
-          }
-        ]
+        series: this.tableData.ExtremeValueOfInternalResistanceOfMonomer.series
       })
 
       setTimeout(function () {
