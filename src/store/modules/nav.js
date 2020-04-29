@@ -844,7 +844,7 @@ const state = {
           {
             ID: '43',
             MID: '637031848503872542',
-            Href: '/ui/Ablut/Info.aspx',
+            Href: 'about',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '关于',

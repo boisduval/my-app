@@ -814,6 +814,14 @@ const routes = [
         }
       },
       {
+        path: '/about',
+        name: 'about',
+        component: () => import(/* webpackChunkName: "About" */ '../views/About/About.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
         path: '/realTime',
         name: 'realTime',
         component: () => import(/* webpackChunkName: "Help" */ '../views/Pcs/RealTime.vue'),

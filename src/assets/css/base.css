@@ -305,3 +305,6 @@ div {
 .ivu-list-item-meta-title {
   font-weight: 700;
 }
+a {
+  vertical-align: baseline;
+}
