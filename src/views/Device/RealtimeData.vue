@@ -129,7 +129,7 @@
           field="DICCID"
           title="ICCID"
           sortable
-          width="280"
+          width="300"
           show-overflow
         >
         </vxe-table-column>
@@ -137,34 +137,22 @@
           field="DIDS"
           title="设备ID"
           sortable
-          width="280"
+          width="300"
           show-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="180">
+        <vxe-table-column field="DName" title="设备名称" sortable width="200">
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
           title="设备管理员"
           sortable
-          width="180"
+          width="200"
         >
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable>
         </vxe-table-column>
-        <vxe-table-column title="数据类型" align="center" width="180">
-          <template v-slot="{}">
-            <el-select v-model="form.ConfigType">
-              <el-option
-                v-for="(item, index) in list"
-                :key="index"
-                :value="item.Type"
-                :label="item.Name"
-              ></el-option>
-            </el-select>
-          </template>
-        </vxe-table-column>
-        <vxe-table-column title="操作" align="center" width="180">
+        <vxe-table-column title="操作" align="center" width="250">
           <template v-slot="{ row }">
             <el-button
               plain
@@ -210,7 +198,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="数据类型" :label-width="formLabelWidth">
-            <el-select v-model="form.ConfigType" disabled>
+            <el-select v-model="form.ConfigType" @change="getConfig">
               <el-option
                 v-for="(item, index) in list"
                 :key="index"
@@ -398,7 +386,7 @@ export default {
       this.deviceid = row.DICCID
       this.form.Name = row.DName
       this.form.AutoSystemID = this.formInline.AutoSystemID
-      this.getConfig()
+      this.getValueInfo()
     },
 
     getData () {
@@ -425,6 +413,7 @@ export default {
 
     // 获取数据类型接口
     getValueInfo () {
+      this.list = []
       this.$axios
         .get(
           `/api/Dictionaries/GetValueInfo?AutoSystemID=${this.formInline.AutoSystemID}&KeyType=DMS_CONFIG_TYPE`
@@ -435,6 +424,7 @@ export default {
               this.list.push(element.SlaveInfo)
             })
             this.form.ConfigType = this.list[0].Type
+            this.getConfig()
           }
           setTimeout(() => {
             this.spinShow1 = false
@@ -446,6 +436,7 @@ export default {
     },
 
     getConfig () {
+      this.tableData1 = []
       var url = '/api/Realtime/GetDMSCConfig'
       this.$axios
         .get(url, { params: this.form })
@@ -453,7 +444,6 @@ export default {
           if (res.data.code === 0) {
             this.tableData1 = res.data.data
           } else {
-            this.tableData1 = []
             this.$message.error(res.data.msg)
           }
           setTimeout(() => {

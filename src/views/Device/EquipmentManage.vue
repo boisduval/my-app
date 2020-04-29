@@ -11,8 +11,8 @@
             :inline="true"
             :model="searchForm"
             class="demo-form-inline"
-            label-width="90px"
-            label-position="left"
+            label-width="100px"
+            label-position="right"
           >
             <el-form-item label="项目名称:">
               <el-input
@@ -190,7 +190,7 @@
           field="PPlannedCompletionTime"
           title="计划完工时间"
           sortable
-          width="200"
+          show-header-overflow
           show-overflow
           align="center"
         >

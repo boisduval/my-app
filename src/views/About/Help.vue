@@ -32,7 +32,7 @@
     </List>
     </el-card>
     <!-- 分页开始 -->
-    <div style="margin-top:20px;">
+    <div style="margin:20px 0;">
       <Page :total="count" show-total show-elevator @on-change="pageChange" />
     </div>
     <!-- 分页结束 -->

@@ -33,6 +33,7 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import animate from 'animate.css'
 import VueI18n from 'vue-i18n'
+import BaiduMap from 'vue-baidu-map'
 
 // 组件
 import BorderLeft from './components/BorderLeft.vue'
@@ -45,6 +46,10 @@ Vue.use(VXETable)
 Vue.use(animate)
 Vue.use(VueAwesomeSwiper /* { default global options } */)
 Vue.use(VueI18n)
+Vue.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: 'qw85SoGjGEBX62CTN0Vfp8Lz8mg5vExr'
+})
 VXETable.use(VXETablePluginExportXLSX)
 VXETable.use(VXETablePluginElement)
 Vue.component(CollapseTransition.name, CollapseTransition)

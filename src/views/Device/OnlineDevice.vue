@@ -86,7 +86,7 @@
           <vxe-table-column
             field="DeviceID"
             title="设备ID"
-            width="300"
+            width="350"
             sortable
             show-overflow
           >
@@ -103,7 +103,7 @@
           <vxe-table-column
             field="RemoteEndPoint"
             title="远程终结点"
-            width="200"
+            width="250"
             sortable
             show-overflow
           >
@@ -111,7 +111,7 @@
           <vxe-table-column
             field="LocalEndPoint"
             title="本地终结点"
-            width="180"
+            width="250"
             sortable
             show-overflow
           >
@@ -127,7 +127,7 @@
           <vxe-table-column
             field="RegistrationTime"
             title="设备最新注册时间"
-            width="180"
+            show-header-overflow
             sortable
             show-overflow
           >

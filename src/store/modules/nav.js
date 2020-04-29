@@ -835,7 +835,7 @@ const state = {
           {
             ID: '45',
             MID: '637031848503872542',
-            Href: '/ui/Ablut/ContactUS.aspx',
+            Href: 'contactUs',
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '联系我们',

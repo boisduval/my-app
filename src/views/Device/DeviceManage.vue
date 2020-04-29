@@ -11,8 +11,8 @@
             :inline="true"
             :model="formInline"
             class="demo-form-inline"
-            label-width="90px"
-            label-position="left"
+            label-width="100px"
+            label-position="right"
           >
             <el-form-item label="ICCID编号:">
               <el-input

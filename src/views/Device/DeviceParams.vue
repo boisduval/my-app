@@ -5,37 +5,37 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>设备管理列表查询</span>
+            <span>{{$t('deviceParams.top.title')}}</span>
           </div>
           <el-form
             :inline="true"
             :model="searchForm"
             class="demo-form-inline"
-            label-width="90px"
-            label-position="left"
+            label-width="100px"
+            label-position="right"
           >
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('deviceParams.top.lableList')[0]">
               <el-input
                 v-model="searchForm.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('deviceParams.top.placeholderList')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编号:">
+            <el-form-item :label="$t('deviceParams.top.lableList')[1]">
               <el-input
                 v-model="searchForm.IDS"
-                placeholder="请输入设备编号"
+                :placeholder="$t('deviceParams.top.placeholderList')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="VIN编码:">
+            <el-form-item :label="$t('deviceParams.top.lableList')[2]">
               <el-input
                 v-model="searchForm.VIN"
-                placeholder="请输入VIN编码"
+                :placeholder="$t('deviceParams.top.placeholderList')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('deviceParams.top.lableList')[3]">
               <el-input
                 v-model="searchForm.Name"
-                placeholder="请输入设备名称"
+                :placeholder="$t('deviceParams.top.placeholderList')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
@@ -46,7 +46,7 @@
                   searchForm.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{$t('deviceParams.top.search')}}</el-button
               >
             </el-form-item>
           </el-form>

@@ -102,19 +102,19 @@
     <div class="energy">
       <el-card>
         <div slot="header" class="clearfix">
-          <span>能源统计</span>
+          <span>{{$t('main.energyStatistics.title')}}</span>
         </div>
         <div class="energy-content">
           <el-row :gutter="20">
             <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16">
               <div class="energy-chart">
-                <h4 class="energy-title">电量趋势</h4>
+                <h4 class="energy-title">{{$t('main.energyStatistics.trend')}}</h4>
                 <div id="myChart"></div>
               </div>
             </el-col>
             <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
               <div class="energy-order">
-                <h4 class="energy-title">电量排行榜</h4>
+                <h4 class="energy-title">{{$t('main.energyStatistics.order')}}</h4>
                 <div class="order-data">
                   <div
                     class="order-row"
