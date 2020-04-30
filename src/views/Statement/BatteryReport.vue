@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div>
     <!-- 表单开始 -->
     <el-collapse-transition>
       <div style="box-sizing:border-box;" v-show="isShow">
@@ -76,7 +76,7 @@
       <div slot="header" class="clearfix">
         <span>电池总览</span>
       </div>
-      <div class="wrap-box flex-row">
+      <div class="wrap-box flex-row" v-loading="loading">
         <div class="wrap">
           <div style="padding: 0 20px">
             <el-table

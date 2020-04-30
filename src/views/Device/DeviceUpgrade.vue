@@ -184,7 +184,7 @@
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
       >
-        <div style="position:relative">
+        <div style="position:relative" v-if="show">
           <Spin v-if="spinShow1" fix></Spin>
           <el-form :model="form">
             <el-form-item label="设备名称" :label-width="formLabelWidth">
@@ -193,14 +193,14 @@
             <el-form-item label="系统代码" :label-width="formLabelWidth">
               <el-input v-model="form.devicesystemid" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="识别号码" :label-width="formLabelWidth">
+            <el-form-item label="设备编码" :label-width="formLabelWidth">
               <el-input
                 v-model="form.deviceid"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
             <el-form-item label="更新目标" :label-width="formLabelWidth">
-              <el-select v-model="form.target">
+              <el-select v-model="form.target" @change="getLabel">
                 <el-option
                   v-for="(item, index) in target"
                   :key="index"
@@ -211,7 +211,7 @@
             </el-form-item>
           </el-form>
           <el-form :inline="true" id="upload">
-            <el-form-item label="文件地址" :label-width="formLabelWidth">
+            <el-form-item label="文件名称" :label-width="formLabelWidth">
               <el-input
                 readonly
                 v-model="fileName"
@@ -237,9 +237,49 @@
             </el-form-item>
           </el-form>
         </div>
-        <div slot="footer" class="dialog-footer">
+        <div v-if="!show">
+          <el-form :model="form">
+            <el-form-item label="设备名称" :label-width="formLabelWidth">
+              <p>
+                {{form.name}}
+              </p>
+            </el-form-item>
+            <el-form-item label="系统代码" :label-width="formLabelWidth">
+              <p>
+                {{form.devicesystemid}}
+              </p>
+            </el-form-item>
+            <el-form-item label="设备编码" :label-width="formLabelWidth">
+              <p>
+                {{form.deviceid}}
+              </p>
+            </el-form-item>
+            <el-form-item label="更新目标" :label-width="formLabelWidth">
+              {{upgradeTarget}}
+            </el-form-item>
+            <el-form-item label="文件名称" :label-width="formLabelWidth">
+              <p>
+                {{fileName}}
+              </p>
+            </el-form-item>
+            <el-form-item label="升级结果" :label-width="formLabelWidth">
+              <p v-if="successTip !== ''" style="color:#409EFF">
+                {{successTip}}
+              </p>
+              <p v-if="successTip === ''" style="color:#409EFF">
+                等待升级结果倒计时...{{num}}秒
+              </p>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div slot="footer" class="dialog-footer" v-if="show">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
           <el-button type="primary" @click="edit" :disabled="spinShow1">确 定</el-button>
+        </div>
+        <div slot="footer" class="dialog-footer" v-if="!show">
+          <el-button @click="dialogFormVisible = false">
+            {{successTip === '' ? '取消等待' : '关闭窗口'}}
+          </el-button>
         </div>
       </el-dialog>
       <!-- 编辑表单结束 -->
@@ -278,7 +318,11 @@ export default {
       target: [],
       spinShow1: false,
       fileList: [],
-      fileName: ''
+      fileName: '',
+      num: 5,
+      show: true,
+      successTip: '',
+      upgradeTarget: ''
     }
   },
   methods: {
@@ -332,6 +376,10 @@ export default {
     // 显示编辑框
     showDialog (row) {
       this.dialogFormVisible = true
+      this.show = true
+      this.successTip = ''
+      this.form = {}
+      this.fileName = ''
       this.spinShow1 = true
       this.getControllerList()
       console.log(row)
@@ -375,9 +423,10 @@ export default {
           `/api/Devices/GetTargetList?AutoSystemID=${this.formInline.AutoSystemID}`
         )
         .then(res => {
-          if (res.data.data) {
+          if (res.data.code === 0) {
             this.target = res.data.data.TargetList
             this.form.target = this.target[0].unit
+            this.upgradeTarget = this.target[0].value
           } else {
             this.target = []
           }
@@ -399,13 +448,41 @@ export default {
       }
     },
     handleSuccess (response, file, fileList) {
-      this.$message.success(response.msg)
-      this.form = {}
-      this.fileName = ''
-      this.dialogFormVisible = false
+      // this.$message.success(response.msg)
+      this.successCallback(response.callback)
+      // this.dialogFormVisible = false
+      var timer
+      this.show = false
+      this.num = 5
+      timer = setInterval(() => {
+        if (this.num >= 1) {
+          this.num--
+        } else {
+          clearInterval(timer)
+          this.successTip = '升级成功！'
+        }
+      }, 1000)
     },
     handleError (response, file, fileList) {
+      this.form = {}
+      this.fileName = ''
       this.$message.error(response.msg)
+    },
+    successCallback (id) {
+      this.$axios
+        .get(
+          `/api/Command/GetCallBackInfo?AutoSystemID=${this.formInline.AutoSystemID}&CallBackSystemID=${id}`
+        )
+        .then(res => {
+          if (res.data.code === 0) {
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getLabel (val) {
+      this.upgradeTarget = this.$target.find(val => val === this.form.target).value
     }
   },
   computed: {

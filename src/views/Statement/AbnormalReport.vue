@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div>
     <!-- 表单开始 -->
     <el-collapse-transition>
       <div style="box-sizing:border-box;" v-show="isShow">
@@ -76,7 +76,7 @@
       <div slot="header" class="clearfix">
         <span>异常总览</span>
       </div>
-      <div class="wrap-box flex-row">
+      <div class="wrap-box flex-row" v-loading="loading">
           <div class="wrap" style="width:100%">
             <div style="padding: 0 20px">
               <el-table
@@ -189,7 +189,6 @@ export default {
         .then(res => {
           if (res.data.code === 0) {
             this.tableData = res.data.data
-            console.log(this.tableData)
             var arr1 = this.tableData.bATTERY_CLUSTER_INFO.valueUnits
             for (var i = 0; i < 4; i++) {
               this.table1.push({
