@@ -263,10 +263,10 @@
               </p>
             </el-form-item>
             <el-form-item label="升级结果" :label-width="formLabelWidth">
-              <p v-if="successTip !== ''" style="color:#409EFF">
+              <p v-if="successTipShow" style="color:#409EFF">
                 {{successTip}}
               </p>
-              <p v-if="successTip === ''" style="color:#409EFF">
+              <p v-if="!successTipShow" style="color:#409EFF">
                 等待升级结果倒计时...{{num}}秒
               </p>
             </el-form-item>
@@ -278,7 +278,7 @@
         </div>
         <div slot="footer" class="dialog-footer" v-if="!show">
           <el-button @click="dialogFormVisible = false">
-            {{successTip === '' ? '取消等待' : '关闭窗口'}}
+            {{!successTipShow ? '取消等待' : '关闭窗口'}}
           </el-button>
         </div>
       </el-dialog>
@@ -322,7 +322,8 @@ export default {
       num: 5,
       show: true,
       successTip: '',
-      upgradeTarget: ''
+      upgradeTarget: '',
+      successTipShow: false
     }
   },
   methods: {
@@ -377,6 +378,7 @@ export default {
     showDialog (row) {
       this.dialogFormVisible = true
       this.show = true
+      this.successTipShow = false
       this.successTip = ''
       this.form = {}
       this.fileName = ''
@@ -449,7 +451,6 @@ export default {
     },
     handleSuccess (response, file, fileList) {
       // this.$message.success(response.msg)
-      this.successCallback(response.callback)
       // this.dialogFormVisible = false
       var timer
       this.show = false
@@ -459,7 +460,8 @@ export default {
           this.num--
         } else {
           clearInterval(timer)
-          this.successTip = '升级成功！'
+          this.successCallback(response.callback)
+          this.successTipShow = true
         }
       }, 1000)
     },
@@ -475,6 +477,7 @@ export default {
         )
         .then(res => {
           if (res.data.code === 0) {
+            this.successTip = res.data.data.Result
           }
         })
         .catch(error => {
