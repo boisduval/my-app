@@ -493,11 +493,6 @@ export default {
   box-shadow: 0 6px 0 2px #606266, 0 0 0 2px #606266, 0 12px 0 2px #606266;
 }
 
-.el-button {
-  padding: 8px 10px;
-  margin-left: 5px;
-}
-
 .menu-btn:focus,
 .menu-btn:active {
   color: #606266;

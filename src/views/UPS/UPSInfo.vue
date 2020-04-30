@@ -160,7 +160,7 @@
         </vxe-table-column>
         <vxe-table-column field="DTime" title="登记时间" sortable width="180">
         </vxe-table-column>
-        <vxe-table-column title="操作" width="440" align="center">
+        <vxe-table-column title="操作" width="500" align="center">
           <template v-slot="{ row }">
             <el-button
               plain
@@ -412,11 +412,6 @@ export default {
   display: inline-block;
   margin-bottom: 16px;
   box-shadow: 0 6px 0 2px #606266, 0 0 0 2px #606266, 0 12px 0 2px #606266;
-}
-
-.el-button {
-  padding: 8px 10px;
-  margin-left: 5px;
 }
 
 .menu-btn:focus,

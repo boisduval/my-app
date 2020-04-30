@@ -18,6 +18,10 @@
             "lableList": ["ICCID编号:", "设备编号:", "VIN编码:", "设备名称:"],
             "placeholderList": ["请输入ICCID编号", "请输入设备编号", "请输入VIN编码", "请输入设备名称"],
             "search": "查询"
+        },
+        "form": {
+            "title": "设备列表"
+            
         }
     }
 }

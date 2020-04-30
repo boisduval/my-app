@@ -26,7 +26,7 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item label="设备名称:" label-width="80px">
-              <el-select v-model="searchForm.DeviceSystemID" @change="getData">
+              <el-select v-model="searchForm.DeviceSystemID" @change="getPcsList">
                 <el-option
                   v-for="(item, index) in options"
                   :key="index"
@@ -35,10 +35,9 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="设备Bank" label-width="80px">
-              <el-select v-model="searchForm.BankIndex" @change="getData">
-                <el-option label="Bank1" value="0"></el-option>
-                <el-option label="Bank2" value="1"></el-option>
+            <el-form-item label="PCS" label-width="80px">
+              <el-select v-model="searchForm.PCSIndex" @change="getData">
+                <el-option v-for="(item, index) in pcsList" :key="index" :label="item.unit" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label-width="20px" label=" ">
@@ -76,7 +75,7 @@
       <div slot="header" class="clearfix">
         <span>PCS总览</span>
       </div>
-      <div class="wrap-box flex-row">
+      <div class="wrap-box flex-row" v-loading="loading">
           <div class="wrap">
             <div style="padding: 0 20px">
               <el-table
@@ -152,14 +151,14 @@
                 :border="true"
                 style="width: 100%">
                 <el-table-column
-                  prop="one"
+                  prop="name"
                   align="center"
                   show-overflow-tooltip
                   width="100px"
                   label="1">
                 </el-table-column>
                 <el-table-column
-                  prop="two"
+                  prop="value"
                   show-overflow-tooltip
                   label="2">
                 </el-table-column>
@@ -191,7 +190,7 @@ export default {
       searchForm: {
         AutoSystemID: '',
         DeviceSystemID: '',
-        BankIndex: '',
+        PCSIndex: '',
         Start: '',
         Stop: ''
       },
@@ -200,90 +199,9 @@ export default {
       isShow: true,
       options: [],
       value: '',
-      table1: [
-        {
-          one: 'U相',
-          two: '223.5V',
-          three: '223.5V',
-          four: '712A',
-          five: '162KVA',
-          six: '153KW',
-          seven: '0.99',
-          eight: '98%'
-        },
-        {
-          one: 'U相',
-          two: '223.5V',
-          three: '223.5V',
-          four: '712A',
-          five: '162KVA',
-          six: '153KW',
-          seven: '0.99',
-          eight: '98%'
-        },
-        {
-          one: 'U相',
-          two: '223.5V',
-          three: '223.5V',
-          four: '712A',
-          five: '162KVA',
-          six: '153KW',
-          seven: '0.99',
-          eight: '98%'
-        }
-      ],
-      table2: [
-        {
-          one: '机器型号',
-          two: 'ABB-12341'
-        },
-        {
-          one: '硬件版本',
-          two: 'ABB-12341'
-        },
-        {
-          one: '软件版本',
-          two: 'ABB-12341'
-        },
-        {
-          one: '厂家信息',
-          two: '杭州xxxxxx设备有限公司'
-        }
-      ],
-      table3: [
-        {
-          one: '第一簇断路器状态',
-          two: '第二簇断路器状态',
-          three: '第三簇断路器状态',
-          four: '第四簇断路器状态',
-          five: '第五簇断路器状态',
-          six: '第六簇断路器状态'
-        },
-        {
-          one: '闭合',
-          two: '闭合',
-          three: '闭合',
-          four: '闭合',
-          five: '闭合',
-          six: '闭合'
-        },
-        {
-          one: '第七簇断路器状态',
-          two: '第八簇断路器状态',
-          three: '第九簇断路器状态',
-          four: '第十簇断路器状态',
-          five: '第十一簇断路器状态',
-          six: '第十二簇断路器状态'
-        },
-        {
-          one: '闭合',
-          two: '闭合',
-          three: '闭合',
-          four: '闭合',
-          five: '闭合',
-          six: '闭合'
-        }
-      ]
+      pcsList: [],
+      table1: [],
+      table2: []
     }
   },
   created () {
@@ -304,139 +222,56 @@ export default {
       this.loading = true
       this.table1 = []
       this.table2 = []
-      this.table3 = []
       this.tableData = ''
       this.searchForm.Start = moment(this.value[0]).format('YYYY-MM-DD')
       this.searchForm.Stop = moment(this.value[1]).format('YYYY-MM-DD')
-      var url = 'api/Statistics/GetBattery'
+      var url = 'api/Statistics/GetPCSReport'
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
           if (res.data.code === 0) {
             this.tableData = res.data.data
             console.log(this.tableData)
-            var arr1 = this.tableData.tOTAL_VOLTAGE_PER_BATTERY_CLUSTER
-              .valueUnits
-            var arr2 = this.tableData.cURRENT_IN_THE_MAIN_CIRCUIT_OF_EACH_BATTERY_CLUSTER
-              .valueUnits
-            var arr3 = this.tableData.cIRCUIT_BREAKER_FEEDBACK_STATE
-              .valueUnits
+            var arr1 = this.tableData.u_PHASE_INFO.valueUnits
+            var arr2 = this.tableData.v_PHASE_INFO.valueUnits
+            var arr3 = this.tableData.w_PHASE_INFO.valueUnits
             this.table1.push({
-              one: arr1[0].name,
-              two: arr1[1].name,
-              three: arr1[2].name,
-              four: arr1[3].name,
-              five: arr1[4].name,
-              six: arr1[5].name,
-              seven: this.tableData.tOTAL_BATTERY_VOLTAGE.name
+              one: 'U相',
+              two: arr1[0].value + arr1[0].unit,
+              three: arr1[1].value + arr1[1].unit,
+              four: arr1[2].value + arr1[2].unit,
+              five: arr1[3].value + arr1[3].unit,
+              six: arr1[4].value + arr1[4].unit,
+              seven: arr1[5].value + arr1[5].unit,
+              eight: arr1[6].value + arr1[6].unit
             })
             this.table1.push({
-              one: arr1[0].value + arr1[0].unit,
-              two: arr1[1].value + arr1[1].unit,
-              three: arr1[2].value + arr1[2].unit,
-              four: arr1[3].value + arr1[3].unit,
-              five: arr1[4].value + arr1[4].unit,
-              six: arr1[5].value + arr1[5].unit,
-              seven: this.tableData.tOTAL_BATTERY_VOLTAGE.value +
-              this.tableData.tOTAL_BATTERY_VOLTAGE.unit
+              one: 'V相',
+              two: arr2[0].value + arr2[0].unit,
+              three: arr2[1].value + arr2[1].unit,
+              four: arr2[2].value + arr2[2].unit,
+              five: arr2[3].value + arr2[3].unit,
+              six: arr2[4].value + arr2[4].unit,
+              seven: arr2[5].value + arr2[5].unit,
+              eight: arr2[6].value + arr2[6].unit
             })
             this.table1.push({
-              one: arr1[6].name,
-              two: arr1[7].name,
-              three: arr1[8].name,
-              four: arr1[9].name,
-              five: arr1[10].name,
-              six: arr1[11].name,
-              seven: this.tableData.oVERALL_BATTERY_SOC.name
+              one: 'W相',
+              two: arr3[0].value + arr3[0].unit,
+              three: arr3[1].value + arr3[1].unit,
+              four: arr3[2].value + arr3[2].unit,
+              five: arr3[3].value + arr3[3].unit,
+              six: arr3[4].value + arr3[4].unit,
+              seven: arr3[5].value + arr3[5].unit,
+              eight: arr3[6].value + arr3[6].unit
             })
-            this.table1.push({
-              one: arr1[6].value + arr1[6].unit,
-              two: arr1[7].value + arr1[7].unit,
-              three: arr1[8].value + arr1[8].unit,
-              four: arr1[9].value + arr1[9].unit,
-              five: arr1[10].value + arr1[10].unit,
-              six: arr1[11].value + arr1[11].unit,
-              seven: this.tableData.oVERALL_BATTERY_SOC.value +
-              this.tableData.oVERALL_BATTERY_SOC.unit
-            })
+            this.table2 = this.tableData.dEVICE_INFO.valueUnits
 
-            this.table2.push({
-              one: arr2[0].name,
-              two: arr2[1].name,
-              three: arr2[2].name,
-              four: arr2[3].name,
-              five: arr2[4].name,
-              six: arr2[5].name,
-              seven: this.tableData.cURRENT_IN_THE_MAIN_CIRCUIT_OF_THE_BATTERY.name
-            })
-            this.table2.push({
-              one: arr2[0].value + arr2[0].unit,
-              two: arr2[1].value + arr2[1].unit,
-              three: arr2[2].value + arr2[2].unit,
-              four: arr2[3].value + arr2[3].unit,
-              five: arr2[4].value + arr2[4].unit,
-              six: arr2[5].value + arr2[5].unit,
-              seven: this.tableData.cURRENT_IN_THE_MAIN_CIRCUIT_OF_THE_BATTERY.value +
-              this.tableData.cURRENT_IN_THE_MAIN_CIRCUIT_OF_THE_BATTERY.unit
-            })
-            this.table2.push({
-              one: arr2[6].name,
-              two: arr2[7].name,
-              three: arr2[8].name,
-              four: arr2[9].name,
-              five: arr2[10].name,
-              six: arr2[11].name,
-              seven: this.tableData.oVERALL_BATTERY_HEALTH.name
-            })
-            this.table2.push({
-              one: arr2[6].value + arr2[6].unit,
-              two: arr2[7].value + arr2[7].unit,
-              three: arr2[8].value + arr2[8].unit,
-              four: arr2[9].value + arr2[9].unit,
-              five: arr2[10].value + arr2[10].unit,
-              six: arr2[11].value + arr2[11].unit,
-              seven: this.tableData.oVERALL_BATTERY_HEALTH.value +
-              this.tableData.oVERALL_BATTERY_HEALTH.unit
-            })
-
-            this.table3.push({
-              one: arr3[0].name,
-              two: arr3[1].name,
-              three: arr3[2].name,
-              four: arr3[3].name,
-              five: arr3[4].name,
-              six: arr3[5].name
-            })
-            this.table3.push({
-              one: arr3[0].value + arr3[0].unit,
-              two: arr3[1].value + arr3[1].unit,
-              three: arr3[2].value + arr3[2].unit,
-              four: arr3[3].value + arr3[3].unit,
-              five: arr3[4].value + arr3[4].unit,
-              six: arr3[5].value + arr3[5].unit
-            })
-            this.table3.push({
-              one: arr3[6].name,
-              two: arr3[7].name,
-              three: arr3[8].name,
-              four: arr3[9].name,
-              five: arr3[10].name,
-              six: arr3[11].name
-            })
-            this.table3.push({
-              one: arr3[6].value + arr3[6].unit,
-              two: arr3[7].value + arr3[7].unit,
-              three: arr3[8].value + arr3[8].unit,
-              four: arr3[9].value + arr3[9].unit,
-              five: arr3[10].value + arr3[10].unit,
-              six: arr3[11].value + arr3[11].unit
-            })
-
-            this.tableData.VoltageDifferenceTrendOfEachCluster.series = []
-            this.tableData.VoltageDifferenceTrendOfEachCluster.legend = []
-            this.tableData.VoltageDifferenceTrendOfEachCluster.SeriesData.forEach(item => {
-              this.tableData.VoltageDifferenceTrendOfEachCluster.legend.push(item.name)
-              this.tableData.VoltageDifferenceTrendOfEachCluster.series.push({
+            this.tableData.EachLooksAtThePower.series = []
+            this.tableData.EachLooksAtThePower.legend = []
+            this.tableData.EachLooksAtThePower.SeriesData.forEach(item => {
+              this.tableData.EachLooksAtThePower.legend.push(item.name)
+              this.tableData.EachLooksAtThePower.series.push({
                 name: item.name,
                 type: 'line',
                 stack: item.stack,
@@ -444,11 +279,35 @@ export default {
               })
             })
 
-            this.tableData.CurrentDifferenceTrendOfEachCluster.series = []
-            this.tableData.CurrentDifferenceTrendOfEachCluster.legend = []
-            this.tableData.CurrentDifferenceTrendOfEachCluster.SeriesData.forEach(item => {
-              this.tableData.CurrentDifferenceTrendOfEachCluster.legend.push(item.name)
-              this.tableData.CurrentDifferenceTrendOfEachCluster.series.push({
+            this.tableData.ActivePowerOfEachPhase.series = []
+            this.tableData.ActivePowerOfEachPhase.legend = []
+            this.tableData.ActivePowerOfEachPhase.SeriesData.forEach(item => {
+              this.tableData.ActivePowerOfEachPhase.legend.push(item.name)
+              this.tableData.ActivePowerOfEachPhase.series.push({
+                name: item.name,
+                type: 'line',
+                stack: item.stack,
+                data: item.data
+              })
+            })
+
+            this.tableData.TotalBatteryCurrent.series = []
+            this.tableData.TotalBatteryCurrent.legend = []
+            this.tableData.TotalBatteryCurrent.SeriesData.forEach(item => {
+              this.tableData.TotalBatteryCurrent.legend.push(item.name)
+              this.tableData.TotalBatteryCurrent.series.push({
+                name: item.name,
+                type: 'line',
+                stack: item.stack,
+                data: item.data
+              })
+            })
+
+            this.tableData.BatterySOC.series = []
+            this.tableData.BatterySOC.legend = []
+            this.tableData.BatterySOC.SeriesData.forEach(item => {
+              this.tableData.BatterySOC.legend.push(item.name)
+              this.tableData.BatterySOC.series.push({
                 name: item.name,
                 type: 'line',
                 stack: item.stack,
@@ -479,6 +338,7 @@ export default {
 
     // 获取设备列表
     getDevices () {
+      this.options = []
       var url = '/api/Devices/GetDevicesNameList'
       this.$axios
         .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}`)
@@ -486,6 +346,26 @@ export default {
           if (res.data.code === 0) {
             this.options = res.data.data
             this.searchForm.DeviceSystemID = this.options[0].SystemID
+            this.getPcsList()
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
+    // 获取PCS列表
+    getPcsList () {
+      this.pcsList = []
+      var url = '/api/Statistics/GetPCSIndexList'
+      this.$axios
+        .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}&DeviceSystemID=${this.searchForm.DeviceSystemID}`)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.pcsList = res.data.data.pCS_INDEX.valueUnits
+            this.searchForm.PCSIndex = this.pcsList[0].value
             this.getData()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
@@ -517,6 +397,7 @@ export default {
           break
       }
       this.value = [num, new Date()]
+      this.getData()
     },
 
     tableColClassName ({ row, column, rowIndex, columnIndex }) {
@@ -531,108 +412,140 @@ export default {
       var myChart1 = this.$echarts.init(document.getElementById('myChart1'))
       myChart1.setOption({
         title: {
-          text: '各相视在功率',
+          text: this.tableData.EachLooksAtThePower.Name,
           bottom: 0,
           left: 'center'
         },
-        // grid: {
-        //   left: '50',
-        //   right: '20',
-        //   bottom: '40',
-        //   containLabel: true
-        // },
+        grid: {
+          left: '25',
+          right: '20',
+          bottom: '40',
+          top: '20%',
+          containLabel: true
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: this.tableData.EachLooksAtThePower.legend,
+          top: '8%',
+          type: 'scroll'
+        },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.tableData.EachLooksAtThePower.XAxisData
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          min: this.tableData.EachLooksAtThePower.YAxisMin,
+          max: this.tableData.EachLooksAtThePower.YAxisMax
         },
-        series: [{
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line'
-        }]
+        series: this.tableData.EachLooksAtThePower.series
       })
 
       // 第2个图
       var myChart2 = this.$echarts.init(document.getElementById('myChart2'))
       myChart2.setOption({
         title: {
-          text: '各相有功功率',
+          text: this.tableData.ActivePowerOfEachPhase.Name,
           bottom: 0,
           left: 'center'
         },
-        // grid: {
-        //   left: '50',
-        //   right: '20',
-        //   bottom: '40',
-        //   containLabel: true
-        // },
+        grid: {
+          left: '25',
+          right: '20',
+          bottom: '40',
+          top: '20%',
+          containLabel: true
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: this.tableData.ActivePowerOfEachPhase.legend,
+          top: '8%',
+          type: 'scroll'
+        },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.tableData.ActivePowerOfEachPhase.XAxisData
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          min: this.tableData.ActivePowerOfEachPhase.YAxisMin,
+          max: this.tableData.ActivePowerOfEachPhase.YAxisMax
         },
-        series: [{
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line'
-        }]
+        series: this.tableData.ActivePowerOfEachPhase.series
       })
 
       // 第3个图
       var myChart3 = this.$echarts.init(document.getElementById('myChart3'))
       myChart3.setOption({
         title: {
-          text: '电池总电流',
+          text: this.tableData.TotalBatteryCurrent.Name,
           bottom: 0,
           left: 'center'
         },
-        // grid: {
-        //   left: '50',
-        //   right: '20',
-        //   bottom: '40',
-        //   containLabel: true
-        // },
+        grid: {
+          left: '25',
+          right: '20',
+          bottom: '40',
+          top: '20%',
+          containLabel: true
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: this.tableData.TotalBatteryCurrent.legend,
+          top: '8%',
+          type: 'scroll'
+        },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.tableData.TotalBatteryCurrent.XAxisData
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          min: this.tableData.TotalBatteryCurrent.YAxisMin,
+          max: this.tableData.TotalBatteryCurrent.YAxisMax
         },
-        series: [{
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line'
-        }]
+        series: this.tableData.TotalBatteryCurrent.series
       })
 
       // 第4个图
       var myChart4 = this.$echarts.init(document.getElementById('myChart4'))
       myChart4.setOption({
         title: {
-          text: '电池SOC',
+          text: this.tableData.BatterySOC.Name,
           bottom: 0,
           left: 'center'
         },
-        // grid: {
-        //   left: '50',
-        //   right: '20',
-        //   bottom: '40',
-        //   containLabel: true
-        // },
+        grid: {
+          left: '25',
+          right: '20',
+          bottom: '40',
+          top: '20%',
+          containLabel: true
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: this.tableData.BatterySOC.legend,
+          top: '8%',
+          type: 'scroll'
+        },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.tableData.BatterySOC.XAxisData
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          min: this.tableData.BatterySOC.YAxisMin,
+          max: this.tableData.BatterySOC.YAxisMax
         },
-        series: [{
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-          type: 'line'
-        }]
+        series: this.tableData.BatterySOC.series
       })
 
       setTimeout(function () {
