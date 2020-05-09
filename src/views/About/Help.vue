@@ -16,9 +16,9 @@
     <el-card class="box-card" style="margin-top:20px;">
       <List item-layout="vertical">
         <ListItem v-for="(item, index) in tableData" :key="index">
-            <ListItemMeta :title="item.Name" />
-            <div v-html="item.Message"></div>
-            <!-- <template slot="extra">
+          <ListItemMeta :title="item.Name" />
+          <div v-html="item.Message"></div>
+          <!-- <template slot="extra">
               <ul class="ivu-list-item-action">
                 <li>
                     <a href="">Edit</a>
@@ -28,8 +28,15 @@
                 </li>
               </ul>
             </template> -->
+          <template slot="action"> </template>
+          <template slot="extra">
+            <div class="flex-row">
+              <!-- <div><Icon type="ios-star-outline" /> 123</div>
+              <div><Icon type="ios-thumbs-up-outline" /> 234</div> -->
+            </div>
+          </template>
         </ListItem>
-    </List>
+      </List>
     </el-card>
     <!-- 分页开始 -->
     <div style="margin:20px 0;">
@@ -55,7 +62,6 @@ export default {
     }
   },
   methods: {
-
     pageChange (pageNum) {
       console.log(pageNum)
       this.searchForm.page = pageNum
@@ -89,10 +95,10 @@ export default {
 
 <style scoped>
 #search {
-    width:calc(100% - 100px);
-    min-width: 150px;
+  width: calc(100% - 100px);
+  min-width: 150px;
 }
 /deep/.el-form-item__content {
-    width: 100%;
+  width: 100%;
 }
 </style>

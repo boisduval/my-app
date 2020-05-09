@@ -40,7 +40,14 @@
             </el-form-item>
             <!-- <br> -->
             <el-form-item>
-              <el-button type="primary" @click="formInline.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  formInline.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -77,17 +84,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -122,8 +129,19 @@
         highlight-hover-row
         highlight-current-row
       >
-        <vxe-table-column type="checkbox" width="50" fixed="left" align="center"></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left" align="center">
+        <vxe-table-column
+          type="checkbox"
+          width="50"
+          fixed="left"
+          align="center"
+        ></vxe-table-column>
+        <vxe-table-column
+          type="seq"
+          width="50"
+          title="序号"
+          fixed="left"
+          align="center"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
@@ -131,6 +149,7 @@
           sortable
           width="300"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
@@ -139,26 +158,45 @@
           sortable
           width="300"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="200">
+        <vxe-table-column
+          field="DName"
+          title="设备名称"
+          sortable
+          width="200"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
           title="设备管理员"
           sortable
           width="200"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable>
+        <vxe-table-column
+          field="DTime"
+          title="登记时间"
+          width="250"
+          sortable
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
-        <vxe-table-column title="操作" align="center" width="250">
+        <vxe-table-column
+          title="操作"
+          align="center"
+          width="250"
+          show-overflow
+          show-header-overflow
+        >
           <template v-slot="{ row }">
-            <el-button
-              plain
-              size="small"
-              @click="showDialog(row)"
-            >
+            <el-button plain size="small" @click="showDialog(row)">
               <i class="el-icon-info">显示数据</i>
             </el-button>
           </template>
@@ -188,14 +226,14 @@
         <el-form :model="form" style="position:relative">
           <Spin v-if="spinShow1" fix></Spin>
           <el-form-item label="设备名称" :label-width="formLabelWidth">
-            <el-input v-model="form.Name" autocomplete="off" readonly ></el-input>
+            <el-input
+              v-model="form.Name"
+              autocomplete="off"
+              readonly
+            ></el-input>
           </el-form-item>
           <el-form-item label="识别号码" :label-width="formLabelWidth">
-            <el-input
-              readonly
-              v-model="deviceid"
-              autocomplete="off"
-            ></el-input>
+            <el-input readonly v-model="deviceid" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="数据类型" :label-width="formLabelWidth">
             <el-select v-model="form.ConfigType" @change="getConfig">
@@ -213,57 +251,38 @@
               :data="tableData1"
               border
               :customs.sync="customColumns1"
-              style="width: 100%">
-              <vxe-table-column
-                field="RowIndex"
-                title="起始地址">
+              style="width: 100%"
+            >
+              <vxe-table-column field="RowIndex" title="起始地址">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell0"
-                title="第一列">
+              <vxe-table-column field="Cell0" title="第一列">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell1"
-                title="第二列">
+              <vxe-table-column field="Cell1" title="第二列">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell2"
-                title="第三列">
+              <vxe-table-column field="Cell2" title="第三列">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell3"
-                title="第四列">
+              <vxe-table-column field="Cell3" title="第四列">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell4"
-                title="第五列">
+              <vxe-table-column field="Cell4" title="第五列">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell5"
-                title="第六列">
+              <vxe-table-column field="Cell5" title="第六列">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell6"
-                title="第七列">
+              <vxe-table-column field="Cell6" title="第七列">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell7"
-                title="第八列">
+              <vxe-table-column field="Cell7" title="第八列">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell8"
-                title="第九列">
+              <vxe-table-column field="Cell8" title="第九列">
               </vxe-table-column>
-              <vxe-table-column
-                field="Cell9"
-                title="第十列">
+              <vxe-table-column field="Cell9" title="第十列">
               </vxe-table-column>
             </vxe-table>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" :disabled="spinShow1" @click="exportExcel1">下 载</el-button>
+          <el-button type="primary" :disabled="spinShow1" @click="exportExcel1"
+            >下 载</el-button
+          >
         </div>
       </el-dialog>
       <!-- 数据表单结束 -->
@@ -503,7 +522,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

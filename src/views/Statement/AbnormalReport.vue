@@ -164,12 +164,15 @@ export default {
   created () {
     // this.setData()
     this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
-    this.searchForm.BankIndex = 1
-    this.getDevices()
+    this.searchForm.BankIndex = '0'
     var today = moment()
       .subtract(0, 'days')
       .format('YYYY-MM-DD')
-    this.value = [today, today]
+    var yesterday = moment()
+      .subtract(1, 'days')
+      .format('YYYY-MM-DD')
+    this.value = [yesterday, today]
+    this.getDevices()
     // this.getDevices()
     // this.getData()
   },
@@ -229,7 +232,7 @@ export default {
               this.tableData.bATTERY_ALARM_STATISTICS.legend.push(item.name)
               this.tableData.bATTERY_ALARM_STATISTICS.series.push({
                 name: item.name,
-                type: 'line',
+                type: 'bar',
                 stack: item.stack,
                 data: item.data
               })
@@ -359,7 +362,10 @@ export default {
           containLabel: true
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          axiosPointer: {
+            type: 'shadow'
+          }
         },
         legend: {
           data: this.tableData.bATTERY_ALARM_STATISTICS.legend,

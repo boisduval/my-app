@@ -19,16 +19,8 @@ const state = {
             DataIndex: '1000',
             Text: '首页显示',
             Use: true
-          },
-          {
-            ID: '637032132477933545',
-            MID: '637032130932778696',
-            Href: 'screen',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '展示大屏',
-            Use: true
           }
+
         ]
       }
     },
@@ -260,51 +252,51 @@ const state = {
       LeveList: {
         Count: 5,
         List: [
-          {
-            ID: '13',
-            MID: '5',
-            Href: 'dayReport',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '设备日报表',
-            Use: true
-          },
-          {
-            ID: '14',
-            MID: '5',
-            Href: 'weekReport',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '设备周报表',
-            Use: true
-          },
-          {
-            ID: '15',
-            MID: '5',
-            Href: 'monthReport',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '设备月报表',
-            Use: true
-          },
-          {
-            ID: '16',
-            MID: '5',
-            Href: 'yearReport',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '设备年报表',
-            Use: true
-          },
-          {
-            ID: '17',
-            MID: '5',
-            Href: 'alarmReport',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '报警报表',
-            Use: true
-          },
+          // {
+          //   ID: '13',
+          //   MID: '5',
+          //   Href: 'dayReport',
+          //   Class: 'J_menuItem',
+          //   DataIndex: '1000',
+          //   Text: '设备日报表',
+          //   Use: true
+          // },
+          // {
+          //   ID: '14',
+          //   MID: '5',
+          //   Href: 'weekReport',
+          //   Class: 'J_menuItem',
+          //   DataIndex: '1000',
+          //   Text: '设备周报表',
+          //   Use: true
+          // },
+          // {
+          //   ID: '15',
+          //   MID: '5',
+          //   Href: 'monthReport',
+          //   Class: 'J_menuItem',
+          //   DataIndex: '1000',
+          //   Text: '设备月报表',
+          //   Use: true
+          // },
+          // {
+          //   ID: '16',
+          //   MID: '5',
+          //   Href: 'yearReport',
+          //   Class: 'J_menuItem',
+          //   DataIndex: '1000',
+          //   Text: '设备年报表',
+          //   Use: true
+          // },
+          // {
+          //   ID: '17',
+          //   MID: '5',
+          //   Href: 'alarmReport',
+          //   Class: 'J_menuItem',
+          //   DataIndex: '1000',
+          //   Text: '报警报表',
+          //   Use: true
+          // },
           {
             ID: '18',
             MID: '5',

@@ -40,7 +40,14 @@
             </el-form-item>
             <!-- <br> -->
             <el-form-item>
-              <el-button type="primary" @click="formInline.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  formInline.page = 1;
+                  getData();
+                "
+                >查询</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -77,17 +84,17 @@
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
         <el-button class="menu-btn" title="导出" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
@@ -122,8 +129,19 @@
         highlight-hover-row
         highlight-current-row
       >
-        <vxe-table-column type="checkbox" width="50" fixed="left" align="center"></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left" align="center">
+        <vxe-table-column
+          type="checkbox"
+          width="50"
+          fixed="left"
+          align="center"
+        ></vxe-table-column>
+        <vxe-table-column
+          type="seq"
+          width="50"
+          title="序号"
+          fixed="left"
+          align="center"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
@@ -131,6 +149,7 @@
           sortable
           width="300"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
@@ -139,26 +158,45 @@
           sortable
           width="300"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="200">
+        <vxe-table-column
+          field="DName"
+          title="设备名称"
+          sortable
+          width="200"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
           title="设备管理员"
           sortable
           width="200"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable>
+        <vxe-table-column
+          field="DTime"
+          title="登记时间"
+          width="250"
+          sortable
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
-        <vxe-table-column title="操作" align="center" width="250">
+        <vxe-table-column
+          title="操作"
+          align="center"
+          width="250"
+          show-overflow
+          show-header-overflow
+        >
           <template v-slot="{ row }">
-            <el-button
-              plain
-              size="small"
-              @click="showDialog(row)"
-            >
+            <el-button plain size="small" @click="showDialog(row)">
               <i class="el-icon-info">在线升级</i>
             </el-button>
           </template>
@@ -191,13 +229,13 @@
               <el-input v-model="form.name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="系统代码" :label-width="formLabelWidth">
-              <el-input v-model="form.devicesystemid" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="设备编码" :label-width="formLabelWidth">
               <el-input
-                v-model="form.deviceid"
+                v-model="form.devicesystemid"
                 autocomplete="off"
               ></el-input>
+            </el-form-item>
+            <el-form-item label="设备编码" :label-width="formLabelWidth">
+              <el-input v-model="form.deviceid" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="更新目标" :label-width="formLabelWidth">
               <el-select v-model="form.target" @change="getLabel">
@@ -232,7 +270,9 @@
                 ref="upload"
                 :on-change="showFileName"
               >
-                <el-button type="primary" @click="showFileName">导入文件</el-button>
+                <el-button type="primary" @click="showFileName"
+                  >导入文件</el-button
+                >
               </el-upload>
             </el-form-item>
           </el-form>
@@ -241,44 +281,46 @@
           <el-form :model="form">
             <el-form-item label="设备名称" :label-width="formLabelWidth">
               <p>
-                {{form.name}}
+                {{ form.name }}
               </p>
             </el-form-item>
             <el-form-item label="系统代码" :label-width="formLabelWidth">
               <p>
-                {{form.devicesystemid}}
+                {{ form.devicesystemid }}
               </p>
             </el-form-item>
             <el-form-item label="设备编码" :label-width="formLabelWidth">
               <p>
-                {{form.deviceid}}
+                {{ form.deviceid }}
               </p>
             </el-form-item>
             <el-form-item label="更新目标" :label-width="formLabelWidth">
-              {{upgradeTarget}}
+              {{ upgradeTarget }}
             </el-form-item>
             <el-form-item label="文件名称" :label-width="formLabelWidth">
               <p>
-                {{fileName}}
+                {{ fileName }}
               </p>
             </el-form-item>
             <el-form-item label="升级结果" :label-width="formLabelWidth">
               <p v-if="successTipShow" style="color:#409EFF">
-                {{successTip}}
+                {{ successTip }}
               </p>
               <p v-if="!successTipShow" style="color:#409EFF">
-                等待升级结果倒计时...{{num}}秒
+                等待升级结果倒计时...{{ num }}秒
               </p>
             </el-form-item>
           </el-form>
         </div>
         <div slot="footer" class="dialog-footer" v-if="show">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="edit" :disabled="spinShow1">确 定</el-button>
+          <el-button type="primary" @click="edit" :disabled="spinShow1"
+            >确 定</el-button
+          >
         </div>
         <div slot="footer" class="dialog-footer" v-if="!show">
           <el-button @click="dialogFormVisible = false">
-            {{!successTipShow ? '取消等待' : '关闭窗口'}}
+            {{ !successTipShow ? "取消等待" : "关闭窗口" }}
           </el-button>
         </div>
       </el-dialog>
@@ -485,7 +527,9 @@ export default {
         })
     },
     getLabel (val) {
-      this.upgradeTarget = this.$target.find(val => val === this.form.target).value
+      this.upgradeTarget = this.$target.find(
+        val => val === this.form.target
+      ).value
     }
   },
   computed: {
@@ -535,7 +579,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

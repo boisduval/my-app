@@ -302,12 +302,15 @@ export default {
   created () {
     // this.setData()
     this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
-    this.searchForm.BankIndex = 1
-    this.getDevices()
+    this.searchForm.BankIndex = '0'
     var today = moment()
       .subtract(0, 'days')
       .format('YYYY-MM-DD')
-    this.value = [today, today]
+    var yesterday = moment()
+      .subtract(1, 'days')
+      .format('YYYY-MM-DD')
+    this.value = [yesterday, today]
+    this.getDevices()
     // this.getDevices()
     // this.getData()
   },

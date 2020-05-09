@@ -25,15 +25,6 @@ const routes = [
       },
 
       {
-        path: '/screen',
-        name: 'screen',
-        component: () => import(/* webpackChunkName: "screen" */ '../views/Screen.vue'),
-        meta: {
-          keepAlive: false // 需要被缓存
-        }
-      },
-
-      {
         path: '/deviceifo',
         name: 'deviceifo',
         component: () => import(/* webpackChunkName: "deviceifo" */ '../views/Device/DeviceIfo.vue'),
@@ -395,46 +386,46 @@ const routes = [
           keepAlive: false // 不需要缓存
         }
       },
-      {
-        path: '/dayReport',
-        name: 'dayReport',
-        component: () => import(/* webpackChunkName: "StatementDayReport" */ '../views/Statement/DayReport.vue'),
-        meta: {
-          keepAlive: false // 需要被缓存
-        }
-      },
-      {
-        path: '/weekReport',
-        name: 'weekReport',
-        component: () => import(/* webpackChunkName: "StatementWeekReport" */ '../views/Statement/WeekReport.vue'),
-        meta: {
-          keepAlive: false // 需要被缓存
-        }
-      },
-      {
-        path: '/monthReport',
-        name: 'monthReport',
-        component: () => import(/* webpackChunkName: "StatementMonthReport" */ '../views/Statement/MonthReport.vue'),
-        meta: {
-          keepAlive: false // 需要被缓存
-        }
-      },
-      {
-        path: '/yearReport',
-        name: 'yearReport',
-        component: () => import(/* webpackChunkName: "StatementYearReport" */ '../views/Statement/YearReport.vue'),
-        meta: {
-          keepAlive: false // 需要被缓存
-        }
-      },
-      {
-        path: '/alarmReport',
-        name: 'alarmReport',
-        component: () => import(/* webpackChunkName: "StatementAlarmReport" */ '../views/Statement/AlarmReport.vue'),
-        meta: {
-          keepAlive: false // 需要被缓存
-        }
-      },
+      // {
+      //   path: '/dayReport',
+      //   name: 'dayReport',
+      //   component: () => import(/* webpackChunkName: "StatementDayReport" */ '../views/Statement/DayReport.vue'),
+      //   meta: {
+      //     keepAlive: false // 需要被缓存
+      //   }
+      // },
+      // {
+      //   path: '/weekReport',
+      //   name: 'weekReport',
+      //   component: () => import(/* webpackChunkName: "StatementWeekReport" */ '../views/Statement/WeekReport.vue'),
+      //   meta: {
+      //     keepAlive: false // 需要被缓存
+      //   }
+      // },
+      // {
+      //   path: '/monthReport',
+      //   name: 'monthReport',
+      //   component: () => import(/* webpackChunkName: "StatementMonthReport" */ '../views/Statement/MonthReport.vue'),
+      //   meta: {
+      //     keepAlive: false // 需要被缓存
+      //   }
+      // },
+      // {
+      //   path: '/yearReport',
+      //   name: 'yearReport',
+      //   component: () => import(/* webpackChunkName: "StatementYearReport" */ '../views/Statement/YearReport.vue'),
+      //   meta: {
+      //     keepAlive: false // 需要被缓存
+      //   }
+      // },
+      // {
+      //   path: '/alarmReport',
+      //   name: 'alarmReport',
+      //   component: () => import(/* webpackChunkName: "StatementAlarmReport" */ '../views/Statement/AlarmReport.vue'),
+      //   meta: {
+      //     keepAlive: false // 需要被缓存
+      //   }
+      // },
       {
         path: '/batteryReport',
         name: 'batteryReport',
