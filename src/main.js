@@ -22,7 +22,6 @@ import 'vxe-table/lib/index.css'
 import VXETablePluginExportXLSX from 'vxe-table-plugin-export-xlsx'
 import VXETablePluginElement from 'vxe-table-plugin-element'
 import echarts from 'echarts'
-import 'echarts-gl'
 // 引入柱状图
 import 'echarts/lib/chart/bar'
 // 引入提示框和标题组件

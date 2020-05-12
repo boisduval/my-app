@@ -1,6 +1,6 @@
 const state = {
   asideItem: [
-    {
+    { // 显示首页
       ID: '637032130932778696',
       Href: '/',
       Class: 'fa fa-home',
@@ -24,7 +24,7 @@ const state = {
         ]
       }
     },
-    {
+    { // 我的设备
       ID: '3',
       Href: '/',
       Class: 'fa fa-instagram',
@@ -122,13 +122,13 @@ const state = {
             Href: 'realtimeData',
             Class: 'J_menuItem',
             DataIndex: '1000',
-            Text: '实时数据',
+            Text: '设备实时数据',
             Use: true
           }
         ]
       }
     },
-    {
+    { // 电池管理
       ID: '637084646010653918',
       Href: '/',
       Class: 'fa fa-cubes',
@@ -237,11 +237,20 @@ const state = {
             DataIndex: '1000',
             Text: '状态信息',
             Use: true
+          },
+          {
+            ID: '637084863136927728',
+            MID: '637084646010653918',
+            Href: 'batteryRealtime',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '电池实时数据',
+            Use: true
           }
         ]
       }
     },
-    {
+    { // 报表管理
       ID: '5',
       Href: '/',
       Class: 'fa fa-clipboard',
@@ -327,7 +336,7 @@ const state = {
         ]
       }
     },
-    {
+    { // UPS管理
       ID: '637084647579493664',
       Href: 'Main.aspx',
       Class: 'fa fa-tasks',
@@ -359,7 +368,7 @@ const state = {
         ]
       }
     },
-    {
+    { // ESS管理
       ID: '637084651199696764',
       Href: 'Main.aspx',
       Class: 'fa fa-tasks',
@@ -372,7 +381,7 @@ const state = {
         List: []
       }
     },
-    {
+    { // 告警管理
       ID: '6',
       Href: 'Main.aspx',
       Class: 'fa fa-exclamation',
@@ -404,7 +413,7 @@ const state = {
         ]
       }
     },
-    {
+    { // 系统管理
       ID: '7',
       Href: '/',
       Class: 'fa fa-cogs',
@@ -481,7 +490,7 @@ const state = {
         ]
       }
     },
-    {
+    { // 实时监控
       ID: '8',
       Href: '/',
       Class: 'fa fa-dashboard',
@@ -549,7 +558,7 @@ const state = {
         ]
       }
     },
-    {
+    { // 历史监控
       ID: '9',
       Href: '/',
       Class: 'fa fa-line-chart',
@@ -617,7 +626,7 @@ const state = {
         ]
       }
     },
-    {
+    { // PCS管理
       ID: '10',
       Href: '/',
       Class: 'fa fa-tasks',
@@ -636,11 +645,20 @@ const state = {
             DataIndex: '1000',
             Text: 'PCS信息',
             Use: true
+          },
+          {
+            ID: '21',
+            MID: '10',
+            Href: 'pcsRealtime',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'PCS实时数据',
+            Use: true
           }
         ]
       }
     },
-    {
+    { // 用户管理
       ID: '637031848502576736',
       Href: '/',
       Class: 'fa fa-group (alias)',
@@ -699,7 +717,7 @@ const state = {
         ]
       }
     },
-    {
+    { // 站内信箱
       ID: '637031848503652954',
       Href: '/',
       Class: 'fa fa-envelope',
@@ -722,7 +740,7 @@ const state = {
         ]
       }
     },
-    {
+    { // 日志管理
       ID: '637031848504354649',
       Href: '/',
       Class: 'fa fa-bookmark',
@@ -772,7 +790,7 @@ const state = {
         ]
       }
     },
-    {
+    { // 备忘信息
       ID: '637031848504872645',
       Href: '/',
       Class: 'fa fa-edit (alias)',
@@ -804,7 +822,7 @@ const state = {
         ]
       }
     },
-    {
+    { // 关于信息
       ID: '637031848503872542',
       Href: 'Main.aspx',
       Class: 'fa fa-bank (alias)',

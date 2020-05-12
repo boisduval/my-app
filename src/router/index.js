@@ -386,6 +386,15 @@ const routes = [
           keepAlive: false // 不需要缓存
         }
       },
+      {
+        path: '/batteryRealtime',
+        name: 'batteryRealtime',
+        component: () => import(/* webpackChunkName: "BatteryRealtime" */ '../views/BatterManage/BatteryRealtime.vue'),
+
+        meta: {
+          keepAlive: false // 不需要缓存
+        }
+      },
       // {
       //   path: '/dayReport',
       //   name: 'dayReport',
@@ -823,7 +832,15 @@ const routes = [
       {
         path: '/pcsInfo',
         name: 'pcsInfo',
-        component: () => import(/* webpackChunkName: "Help" */ '../views/Pcs/PcsInfo.vue'),
+        component: () => import(/* webpackChunkName: "PcsInfo" */ '../views/Pcs/PcsInfo.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/pcsRealtime',
+        name: 'pcsRealtime',
+        component: () => import(/* webpackChunkName: "PcsRealtime" */ '../views/Pcs/PcsRealtime.vue'),
         meta: {
           keepAlive: false // 不需要被缓存
         }

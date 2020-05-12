@@ -235,6 +235,12 @@
           <el-form-item label="识别号码" :label-width="formLabelWidth">
             <el-input readonly v-model="deviceid" autocomplete="off"></el-input>
           </el-form-item>
+          <el-form-item label="Bank序号" :label-width="formLabelWidth">
+            <el-select v-model="form.PCSIndex" @change="getConfig">
+              <el-option label="PCS 1" value="0"></el-option>
+              <el-option label="PCS 2" value="1"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="数据类型" :label-width="formLabelWidth">
             <el-select v-model="form.ConfigType" @change="getConfig">
               <el-option
@@ -313,7 +319,8 @@ export default {
       form: {
         AutoSystemID: '',
         ConfigType: '',
-        DeviceSystemID: ''
+        DeviceSystemID: '',
+        PCSIndex: ''
       },
       formLabelWidth: '90px',
       dialogFormVisible: false,
@@ -406,6 +413,7 @@ export default {
       this.deviceid = row.DICCID
       this.dname = row.DName
       this.form.AutoSystemID = this.formInline.AutoSystemID
+      this.form.PCSIndex = '0'
       this.getValueInfo()
     },
 
@@ -436,7 +444,7 @@ export default {
       this.list = []
       this.$axios
         .get(
-          `/api/Dictionaries/GetValueInfo?AutoSystemID=${this.formInline.AutoSystemID}&KeyType=DMS_CONFIG_TYPE`
+          `/api/Dictionaries/GetValueInfo?AutoSystemID=${this.formInline.AutoSystemID}&KeyType=DMS_PCS_TYPE`
         )
         .then(res => {
           if (res.data.code === 0) {
@@ -457,7 +465,7 @@ export default {
 
     getConfig () {
       this.tableData1 = []
-      var url = '/api/Realtime/GetDMSCConfig'
+      var url = '/api/Realtime/GetPCSInfo'
       this.$axios
         .get(url, { params: this.form })
         .then(res => {
