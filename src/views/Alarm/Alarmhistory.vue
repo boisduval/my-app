@@ -173,10 +173,10 @@
         </vxe-table-column>
         <vxe-table-column field="Name" title="告警名称" sortable width="120">
         </vxe-table-column>
-        <vxe-table-column field="Msg" title="详细信息" width="420" align="left">
+        <vxe-table-column field="Msg" title="详细信息" width="420" align="left" show-overflow>
         </vxe-table-column>
-        <vxe-table-column field="Msg" title="日志信息" sortable width="450" align="left">
-        </vxe-table-column>
+        <!-- <vxe-table-column field="Msg" title="日志信息" sortable width="450" align="left">
+        </vxe-table-column> -->
         <vxe-table-column
           field="WriteTime"
           title="发生时间"

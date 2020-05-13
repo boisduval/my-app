@@ -38,7 +38,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>字典列表</span>
+        <span>帮助列表</span>
       </div>
       <!-- 表格操作栏开始 -->
       <div class="table-oper">
@@ -145,14 +145,6 @@
         >
         </vxe-table-column>
         <vxe-table-column
-          field="Type"
-          title="地址"
-          width="100"
-          show-overflow
-          sortable
-        >
-        </vxe-table-column>
-        <vxe-table-column
           field="WriteTime"
           title="记录时间"
           width="200"
@@ -238,26 +230,20 @@
         width="40%"
         :close-on-click-modal="false"
         :visible.sync="dialogFormVisible"
-        title="系统字典"
+        title="添加帮助"
       >
         <el-form label-width="90px" label-position="right" :model="addForm">
-          <el-form-item label="字典名称">
+          <el-form-item label="帮助名称">
             <el-input
-              v-model="addForm.Text"
-              placeholder="请输入字典名称"
+              v-model="addForm.Name"
+              placeholder="请输入帮助名称"
             ></el-input>
           </el-form-item>
-          <el-form-item label="字典类型">
-            <el-input
-              v-model="addForm.Type"
-              placeholder="请输入字典类型"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="备注">
+          <el-form-item label="帮助内容">
             <el-input
               type="textarea"
-              v-model="addForm.Annotation"
-              placeholder="请输入备注"
+              v-model="addForm.Message"
+              placeholder="请输入帮助内容"
               :autosize="{ minRows: 4, maxRows: 8 }"
             ></el-input>
           </el-form-item>
@@ -278,26 +264,20 @@
         width="40%"
         :close-on-click-modal="false"
         :visible.sync="dialogFormEditVisible"
-        title="修改数据"
+        title="编辑帮助"
       >
         <el-form label-width="90px" label-position="right" :model="editForm">
-          <el-form-item label="字典名称">
+          <el-form-item label="帮助名称">
             <el-input
-              v-model="editForm.Text"
-              placeholder="请输入字典名称"
+              v-model="editForm.Name"
+              placeholder="请输入帮助名称"
             ></el-input>
           </el-form-item>
-          <el-form-item label="字典类型">
-            <el-input
-              v-model="editForm.Type"
-              placeholder="请输入字典类型"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="备注">
+          <el-form-item label="帮助内容">
             <el-input
               type="textarea"
-              v-model="editForm.Annotation"
-              placeholder="请输入备注"
+              v-model="editForm.Message"
+              placeholder="请输入帮助内容"
               :autosize="{ minRows: 4, maxRows: 8 }"
             ></el-input>
           </el-form-item>
@@ -312,6 +292,35 @@
         </div>
       </el-dialog>
       <!-- 编辑表单结束 -->
+
+      <!-- 详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        title="帮助详情"
+        draggable
+        width="30"
+      >
+        <p :style="pStyle">帮助名称</p>
+        <div class="demo-drawer-profile">
+          {{ detailInfo.Name }}
+        </div>
+        <Divider />
+        <p :style="pStyle">文档内容</p>
+        <div class="demo-drawer-profile" v-html="detailInfo.Message">
+        </div>
+        <Divider />
+        <p :style="pStyle">创建时间</p>
+        <div class="demo-drawer-profile">
+          {{ detailInfo.WriteTime }}
+        </div>
+        <Divider />
+        <p :style="pStyle">更新时间</p>
+        <div class="demo-drawer-profile">
+          {{ detailInfo.UpDataTime }}
+        </div>
+      </Drawer>
+      <!-- 详情结束 -->
     </el-card>
   </div>
 </template>
@@ -341,11 +350,19 @@ export default {
       editForm: {
         AutoSystemID: '',
         SystemID: '',
-        Text: '',
-        Type: '',
-        Annotation: ''
+        Name: '',
+        Message: ''
       },
-      dialogFormEditVisible: false
+      dialogFormEditVisible: false,
+      value4: false,
+      pStyle: {
+        fontSize: '16px',
+        color: 'rgba(0,0,0,0.85)',
+        lineHeight: '24px',
+        display: 'block',
+        marginBottom: '16px'
+      },
+      detailInfo: ''
     }
   },
   computed: {
@@ -474,7 +491,7 @@ export default {
     // 添加
     addKey () {
       this.addForm.AutoSystemID = this.searchForm.AutoSystemID
-      var url = '/api/Dictionaries/AddKey'
+      var url = '/api/Help/Add'
       this.$axios
         .post(url, this.addForm)
         .then(res => {
@@ -597,30 +614,36 @@ export default {
 
     // to 详情页
     toDetail (id) {
-      console.log(id)
-      var path = '/dictionaryData'
-      var label = '字典数据'
-      this.set_detail_label(label)
-      this.set_dictionaryDataParams(id)
-      // this.set_params(params)
-      // this.set_batterID(batterID)
-      this.$router.push({ path: path })
+      var url = '/api/Help/Get'
+      var obj = {
+        AutoSystemID: this.searchForm.AutoSystemID,
+        HelpSystemID: id
+      }
+      this.$axios
+        .get(url, { params: obj })
+        .then(res => {
+          this.detailInfo = res.data.data
+          this.value4 = true
+        })
+        .catch(err => {
+          console.error(err)
+        })
     },
 
     // 编辑
     editItem (row) {
       this.editForm = row
+      console.log(this.editForm)
       this.dialogFormEditVisible = true
     },
     editHttp () {
       let obj = {
         AutoSystemID: this.searchForm.AutoSystemID,
-        SystemID: this.editForm.SystemID,
-        Text: this.editForm.Text,
-        Type: this.editForm.Type,
-        Annotation: this.editForm.Annotation
+        Name: this.editForm.Name,
+        Message: this.editForm.Message,
+        SystemID: this.editForm.SystemID
       }
-      var url = '/api/Dictionaries/UpdataKey'
+      var url = '/api/Help/UpData'
       this.$axios
         .post(url, obj)
         .then(res => {
