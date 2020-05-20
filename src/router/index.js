@@ -600,7 +600,7 @@ const routes = [
       {
         path: '/mailBox',
         name: 'mailBox',
-        component: () => import(/* webpackChunkName: "mailBox" */ '../views/Mail/MailBox.vue'),
+        component: () => import(/* webpackChunkName: "mailBox" */ '../views/SystemTools/MailBox.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -640,7 +640,7 @@ const routes = [
       {
         path: '/menmorandumListWaitLoad',
         name: 'menmorandumListWaitLoad',
-        component: () => import(/* webpackChunkName: "MenmorandumListWaitLoad" */ '../views/Menmorandum/MenmorandumListWaitLoad.vue'),
+        component: () => import(/* webpackChunkName: "MenmorandumListWaitLoad" */ '../views/SystemTools/MenmorandumListWaitLoad.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -648,7 +648,7 @@ const routes = [
       {
         path: '/menmorandumListOverLoad',
         name: 'menmorandumListOverLoad',
-        component: () => import(/* webpackChunkName: "MenmorandumListOverLoad" */ '../views/Menmorandum/MenmorandumListOverLoad.vue'),
+        component: () => import(/* webpackChunkName: "MenmorandumListOverLoad" */ '../views/SystemTools/MenmorandumListOverLoad.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -841,6 +841,14 @@ const routes = [
         path: '/pcsRealtime',
         name: 'pcsRealtime',
         component: () => import(/* webpackChunkName: "PcsRealtime" */ '../views/Pcs/PcsRealtime.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/languageManage',
+        name: 'languageManage',
+        component: () => import(/* webpackChunkName: "languageManage" */ '../views/SystemTools/LanguageManage.vue'),
         meta: {
           keepAlive: false // 不需要被缓存
         }

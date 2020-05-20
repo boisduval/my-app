@@ -235,6 +235,8 @@ export default {
             this.othersStatistics[8].value = data.dISCHARGE_LIMITING_VOLTAGE
             this.othersStatistics[9].value = data.iT_TAKES_ELECTRICITY_TO_CHARGE
             this.othersStatistics[10].value = data.dISCHARGE_ENERGY
+          } else {
+            this.setData()
           }
         })
         .catch(err => {

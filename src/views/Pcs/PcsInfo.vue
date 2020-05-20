@@ -150,7 +150,7 @@
           width="200"
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable>
+        <vxe-table-column field="DTime" title="登记时间" sortable width="250">
         </vxe-table-column>
         <vxe-table-column title="操作" align="center" width="250">
           <template v-slot="{ row }">

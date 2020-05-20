@@ -717,29 +717,29 @@ const state = {
         ]
       }
     },
-    { // 站内信箱
-      ID: '637031848503652954',
-      Href: '/',
-      Class: 'fa fa-envelope',
-      Text: '站内信箱',
-      SOrder: 6000000,
-      ShowNum: '0',
-      Use: true,
-      LeveList: {
-        Count: 1,
-        List: [
-          {
-            ID: '27',
-            MID: '637031848503652954',
-            Href: 'mailBox',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '站内信',
-            Use: true
-          }
-        ]
-      }
-    },
+    // { // 站内信箱
+    //   ID: '637031848503652954',
+    //   Href: '/',
+    //   Class: 'fa fa-envelope',
+    //   Text: '站内信箱',
+    //   SOrder: 6000000,
+    //   ShowNum: '0',
+    //   Use: true,
+    //   LeveList: {
+    //     Count: 1,
+    //     List: [
+    //       {
+    //         ID: '27',
+    //         MID: '637031848503652954',
+    //         Href: 'mailBox',
+    //         Class: 'J_menuItem',
+    //         DataIndex: '1000',
+    //         Text: '站内信',
+    //         Use: true
+    //       }
+    //     ]
+    //   }
+    // },
     { // 日志管理
       ID: '637031848504354649',
       Href: '/',
@@ -790,38 +790,38 @@ const state = {
         ]
       }
     },
-    { // 备忘信息
-      ID: '637031848504872645',
-      Href: '/',
-      Class: 'fa fa-edit (alias)',
-      Text: '备忘信息',
-      SOrder: 8001900,
-      ShowNum: '0',
-      Use: true,
-      LeveList: {
-        Count: 2,
-        List: [
-          {
-            ID: '37',
-            MID: '637031848504872645',
-            Href: 'menmorandumListWaitLoad',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '待完成备忘',
-            Use: true
-          },
-          {
-            ID: '38',
-            MID: '637031848504872645',
-            Href: 'menmorandumListOverLoad',
-            Class: 'J_menuItem',
-            DataIndex: '1000',
-            Text: '已完成备忘',
-            Use: true
-          }
-        ]
-      }
-    },
+    // { // 备忘信息
+    //   ID: '637031848504872645',
+    //   Href: '/',
+    //   Class: 'fa fa-edit (alias)',
+    //   Text: '备忘信息',
+    //   SOrder: 8001900,
+    //   ShowNum: '0',
+    //   Use: true,
+    //   LeveList: {
+    //     Count: 2,
+    //     List: [
+    //       {
+    //         ID: '37',
+    //         MID: '637031848504872645',
+    //         Href: 'menmorandumListWaitLoad',
+    //         Class: 'J_menuItem',
+    //         DataIndex: '1000',
+    //         Text: '待完成备忘',
+    //         Use: true
+    //       },
+    //       {
+    //         ID: '38',
+    //         MID: '637031848504872645',
+    //         Href: 'menmorandumListOverLoad',
+    //         Class: 'J_menuItem',
+    //         DataIndex: '1000',
+    //         Text: '已完成备忘',
+    //         Use: true
+    //       }
+    //     ]
+    //   }
+    // },
     { // 关于信息
       ID: '637031848503872542',
       Href: 'Main.aspx',
@@ -858,6 +858,56 @@ const state = {
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: '关于',
+            Use: true
+          }
+        ]
+      }
+    },
+    { // 系统工具
+      ID: '637031848503872543',
+      Href: 'Main.aspx',
+      Class: 'fa fa-wrench (alias)',
+      Text: '系统工具',
+      SOrder: 9002000,
+      ShowNum: '0',
+      Use: true,
+      LeveList: {
+        Count: 4,
+        List: [
+          {
+            ID: '27',
+            MID: '637031848503872543',
+            Href: 'mailBox',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '站内信',
+            Use: true
+          },
+          {
+            ID: '37',
+            MID: '637031848503872543',
+            Href: 'menmorandumListWaitLoad',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '待完成备忘',
+            Use: true
+          },
+          {
+            ID: '38',
+            MID: '637031848503872543',
+            Href: 'menmorandumListOverLoad',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '已完成备忘',
+            Use: true
+          },
+          {
+            ID: '39',
+            MID: '637031848503872543',
+            Href: 'languageManage',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '语言管理',
             Use: true
           }
         ]
