@@ -104,20 +104,20 @@
               >
             </template>
           </div>
-        <el-button class="menu-btn" title="导出" v-popover:export>
+        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" title="打印">
+        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              导出为Csv文件
+              {{$t('base.export.csv')}}
             </li>
             <li @click="exportExcel">
-              导出为Excel文件
+              {{$t('base.export.excel')}}
             </li>
           </ul>
         </el-popover>

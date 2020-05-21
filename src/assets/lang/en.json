@@ -1,9 +1,9 @@
 {
     "main": {
-        "topInfo": ["Equipment installed capacity", "Total number of single cells", "Total installed power", "Current total power"],
+        "topInfo": ["Device installed capacity", "Total number of single cells", "Total installed power", "Current total power"],
         "topBar": ["Users", "Devices", "Battery", "UPS", "Warning", "Station letters", "Logs", "Notes"],
         "deviceCount": {
-            "title": "Equipment statistics",
+            "title": "Device statistics",
             "value": ["Number of installed inverter equipment", "Number of installed fire fighting equipment", "Number of controllers online", "Number of installed generator equipment", "Number of installed photovoltaic equipment", "Controller online rate", "Number of linked equipment installed", "Number of installed wind energy equipment", "Number of users online"]
         },
         "energyStatistics": {
@@ -19,5 +19,179 @@
             "placeholderList": ["Please enter the ICCID number", "Please enter the device number", "Please enter the VIN code", "Please enter VIN code please enter device name"],
             "search": "Search"
         }
+    },
+    "header": {
+        "search": "Please enter what you are looking for...",
+        "close": {
+            "title": "Close",
+            "label": ["Close the other tabs", "Close all tabs"]
+        },
+        "logout": "Logout"
+    },
+    "base": {
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "search": "Fuzzy search",
+        "searchbtn": "Search",
+        "refresh": "Refresh",
+        "add": "Add",
+        "del": "Delete",
+        "edit": "Edit",
+        "multipleAdd": "Multiple add",
+        "multipleDel": "Multiple delete",
+        "export": {
+            "csv": "Export to CSV",
+            "excel": "Export to  Excel",
+            "title": "Export",
+            "print": "print"
+        },
+        "delConfirm": {
+            "tip": "Do you want to delete ",
+            "tip1": "Are you sure to delete it?",
+            "title": "Delete confirmation",
+            "yes": "OK",
+            "no": "Cancel",
+            "cancelTip": "Cancelled delete"
+        },
+        "datePicker": {
+            "start": "Start date",
+            "end": "Ending date",
+            "separator": "To"
+        },
+        "dateGroup": {
+            "today": "today",
+            "yesterday": "yesterday",
+            "twoDays": "Two days before",
+            "week": "Last week",
+            "month": "Last month"
+        }
+    },
+    "user": {
+        "dropdownList": ["Modify the picture", "Personal data", "Contact us", "Receipt mail"]
+    },
+    "screenFull": {
+        "title": "Full Screen",
+        "tip": "Full screen is not supported"
+    },
+    "home": {
+        "feedback": {
+            "title": "Feedback",
+            "formLabel": ["Headline", "Content"],
+            "tip": "Please enter the body"
+        }
+    },
+    "tabName": {
+        "main": "main",
+        "systemPerformance": "system performance"
+    },
+    "logout": {
+        "tip": "Are you sure you want to quit?",
+        "title": "Logout confirmation",
+        "yes": "OK",
+        "no": "Cancel"
+    },
+    "login": {
+        "headline": "Welcome to the system",
+        "tip": "Please enter your account and password:",
+        "placeholder": ["Account", "Password"],
+        "login": "Log in",
+        "footer": "All right reserved"
+    },
+    "alarmHistory": {
+        "searchTitle": "History warning list query",
+        "listTitle": "History alarm",
+        "searchForm": {
+            "label": ["Range:", "Confirm alarm:", "Log:"],
+            "placeholder": ["", "", "Please enter log"]
+        },
+        "tableLabel": ["No.", "Alarm level", "Alarm type", "Alarm name", "Details", "Occurred time", "Confirm time", "Operation"],
+        "operationbtn": ["Details", "Confirm alarm"],
+        "dialog": {
+            "title": "Userlog",
+            "formLabel": [
+                "Alarm level:", "Alarm type:", "Occurred time:", "Alarm source:", "Content"
+            ],
+            "formPlaceholder": "Please enter the content",
+            "default": {
+                "btn": "Default",
+                "msg": "The abnormal information has been confirmed without any problem, so please confirm OK first."
+            }
+        },
+        "detail": {
+            "title": "Details of the alarm",
+            "label": [
+                "Alarm level", "Alarm type", "Alarm source", "Brief description", "Details", "Account name", "Username", "Over message"
+            ],
+            "options": ["All", "Confirmed", "Unconfirmed"]
+        }
+    },
+    "alarmRealtime": {
+        "listTitle": "Real-time Alarm",
+        "tableLabel": [
+            "No.", "Alarm level", "Alarm title", "Alarm source", "Effective time", "Time of generation", "Operation"
+        ],
+        "operationbtn": ["Details "],
+        "detail": {
+            "title": "Details of the alarm",
+            "label": [
+                "Application number", "Application name", "Alarm source", "Alarm number", "Alarm level", "Alarm level name", "Alarm title", "Alarm message"
+            ]
+        }
+    },
+    "batterInfo": {
+        "searchTitle": "Battery type list query",
+        "listTitle": "Type of battery",
+        "searchForm": {
+            "label": ["Device name:", "Information name:", "Battery number:", "Module battery number:"],
+            "placeholder": ["", "Please enter the information name", "Please enter the number of the battery", "Please enter the number of the module battery"]
+        },
+        "tableLabel": ["No.", "Battery name", "Battery number", "Module battery number", "Write time", "Write time"],
+        "operationbtn": ["Voltage trend"],
+        "dialog": {
+            "title": "Details of the battery",
+            "searchTitle": "Battery type list query",
+            "listTitle": "Battery type",
+            "formLabel": ["Battery name", "Range"],
+            "datePicker": {
+                "start": "Start date",
+                "end": "Ending date",
+                "separator": "To"
+            }
+        }
+    },
+    "batterManage": {
+        "searchTitle": "Battery type list query",
+        "listTitle": "Type of battery",
+        "searchForm": {
+            "label": ["Device name:", "Information name:", "Battery number:", "Module battery number:"],
+            "placeholder": ["", "Please enter the information name", "Please enter the number of the battery", "Please enter the number of the module battery"]
+        },
+        "tableLabel": ["No.", "Battery name", "Battery number", "Battery material", "Battery capacity", "Standard voltage", "Battery number", "Write time", "Write time"],
+        "editDialog": {
+            "title": "Add battery information",
+            "formLabel": ["Battery type", "Device name", "Device number", "Battery information", "Battery number", "Battery module"]
+        },
+        "addDialog": {
+            "title": "Add battery information",
+            "formLabel": ["Battery type", "Device name", "Device number", "Battery information", "Battery number", "Battery module"]
+        },
+        "addMultiple": {
+            "title": "Add battery information",
+            "formLabel": ["Battery type", "Device name", "Device number", "Battery name head", "Choose Bank", "Rack attach amount", "Cell attach amount", "Start number of battery module"]
+        },
+        "errorTip": "Please enter the content",
+        "delErrorTip": "Please select the user to delete"
+    },
+    "batteryAlarm": {
+        "searchTitle": "Device management list query",
+        "listTitle": "Device management",
+        "searchForm": {
+            "label": ["ICCID:", "Device number:", "VIN:", "Device name:"],
+            "placeholder": ["Please enter the ICCID", "Please enter the equipment number", "Please enter the VIN", "Please enter the equipment name"]
+        },
+        "tableLabel": [
+            "No.", "DIDS", "Device name", "Device Manager", "Registration time", "Operation"
+        ],
+        "detail": ["Battery alarm", "Alarm voltage"]
     }
 }

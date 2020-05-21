@@ -2,14 +2,14 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>模糊查询</span>
+        <span>{{$t('base.search')}}</span>
       </div>
       <el-form :inline="true">
         <el-form-item id="search">
           <el-input v-model="searchForm.LikeName"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getData">查询</el-button>
+          <el-button type="primary" @click="getData">{{$t('base.searchbtn')}}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -95,7 +95,7 @@ export default {
 
 <style scoped>
 #search {
-  width: calc(100% - 100px);
+  width: calc(100% - 130px);
   min-width: 150px;
 }
 /deep/.el-form-item__content {

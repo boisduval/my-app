@@ -4,9 +4,17 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 
+const lang = JSON.parse(localStorage.getItem('vuex'))
+let val
+if (lang && lang.lang) {
+  val = lang.lang.currentLang
+} else {
+  val = 0
+}
 // axios默认配置
 axios.defaults.timeout = 10000 // 超时时间
 axios.defaults.baseURL = 'http://sf28090049.wicp.vip:8082/conn' // 默认地址
+axios.defaults.headers.common['Language'] = val
 // axios.defaults.baseURL = 'http://60.186.197.171:8081'
 // 路由响应拦截
 // http response 拦截器
@@ -41,6 +49,19 @@ axios.interceptors.response.use(
     }
   },
   error => {
+    // if (error && error.response) {
+    //   switch (error.response.status) {
+    //     case 404:
+    //       router.push({ name: 'errorPage' })
+    //       // error.message = '请求出错(404)'
+    //       break
+    //     case 500:
+    //       router.push({ name: 'error-500' })
+    //       //  error.message = '服务器错误(500)';
+    //       break
+    //     default: error.message = `连接出错(${error.response.status})!`;
+    //   }
+    // }
     return Promise.reject(error.response) // 返回接口返回的错误信息
   }
 )

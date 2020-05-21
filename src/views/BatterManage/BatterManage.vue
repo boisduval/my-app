@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>电池类型列表查询</span>
+            <span>{{ $t("batterManage.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,7 +14,7 @@
             label-width="120px"
             label-position="right"
           >
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('batterManage.searchForm.label')[0]">
               <el-select v-model="searchForm.DeviceSystemID">
                 <el-option
                   v-for="(item, index) in options"
@@ -24,26 +24,33 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="信息名称:">
+            <el-form-item :label="$t('batterManage.searchForm.label')[1]">
               <el-input
                 v-model="searchForm.LikeName"
-                placeholder="请输入信息名称"
+                :placeholder="$t('batterManage.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="电池序号:">
+            <el-form-item :label="$t('batterManage.searchForm.label')[2]">
               <el-input
                 v-model="searchForm.LikeBatteryIndex"
-                placeholder="请输入电池序号"
+                :placeholder="$t('batterManage.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="模块电池序号:">
+            <el-form-item :label="$t('batterManage.searchForm.label')[3]">
               <el-input
                 v-model="searchForm.LikeBIndex"
-                placeholder="请输入模块电池序号"
+                :placeholder="$t('batterManage.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >{{ $t("base.searchbtn") }}</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -54,7 +61,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>电池类型</span>
+        <span>{{ $t("batterManage.listTitle") }}</span>
       </div>
       <!-- 表格操作栏开始 -->
       <div class="table-oper">
@@ -65,7 +72,7 @@
           class="button-left"
         >
           <i class="el-icon-plus"></i>
-          添加
+          {{ $t("base.add") }}
         </el-button>
         <el-button
           type="primary"
@@ -74,7 +81,7 @@
           class="button-left"
         >
           <i class="el-icon-plus"></i>
-          多条添加
+          {{ $t("base.multipleAdd") }}
         </el-button>
         <el-button
           type="primary"
@@ -83,7 +90,7 @@
           class="button-left"
         >
           <i class="el-icon-delete"></i>
-          多选删除
+          {{ $t("base.multipleDel") }}
         </el-button>
         <el-button
           type="primary"
@@ -92,7 +99,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -101,37 +108,45 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" title="导出" v-popover:export>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" title="打印">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              导出为Csv文件
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              导出为Excel文件
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -158,64 +173,82 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('batterManage.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="BName"
-          title="电池名称"
-          width="120"
+          :title="$t('batterManage.tableLabel')[1]"
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="BTypeName"
-          title="电池类型"
-          width="120"
+          :title="$t('batterManage.tableLabel')[2]"
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="BMaterials"
-          title="电池材料"
-          width="120"
+          :title="$t('batterManage.tableLabel')[3]"
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="BCapacity"
-          title="电池容量"
-          width="100"
+          :title="$t('batterManage.tableLabel')[4]"
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="BStandardVoltage"
-          title="标准电压"
-          width="100"
+          :title="$t('batterManage.tableLabel')[5]"
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="BIndex"
-          title="电池序号"
-          width="120"
+          :title="$t('batterManage.tableLabel')[6]"
+          width="180"
           show-overflow
+          show-header-overflow
           sortable
         >
         </vxe-table-column>
         <vxe-table-column
           field="WriteTime"
-          title="记录时间"
-          width="180"
+          :title="$t('batterManage.tableLabel')[7]"
+          width="200"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right">
+        <vxe-table-column
+          :title="$t('batterManage.tableLabel')[8]"
+          width="200"
+          fixed="right"
+        >
           <template v-slot="{ row }">
-            <el-button size="mini" @click="showDialog(row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="deleteItem(row)"
-              >删除</el-button
-            >
+            <el-button size="mini" @click="showDialog(row)">{{
+              $t("base.edit")
+            }}</el-button>
+            <el-button size="mini" type="danger" @click="deleteItem(row)">{{
+              $t("base.del")
+            }}</el-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -235,13 +268,16 @@
 
       <!-- 编辑表单开始 -->
       <el-dialog
-        title="修改信息"
+        :title="$t('batterManage.editDialog.title')"
         :visible.sync="dialogFormVisible"
         width="30%"
         :close-on-click-modal="false"
       >
         <el-form :model="editForm" :rules="rules" ref="ruleForm">
-          <el-form-item label="电池类型" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('batterManage.editDialog.formLabel')[0]"
+            :label-width="formLabelWidth"
+          >
             <el-select v-model="editForm.BTypeSystemID">
               <el-option
                 v-for="(item, index) in btype"
@@ -251,7 +287,10 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="设备名称" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('batterManage.editDialog.formLabel')[1]"
+            :label-width="formLabelWidth"
+          >
             <el-select v-model="editForm.DeviceSystemID">
               <el-option
                 v-for="(item, index) in options"
@@ -262,21 +301,21 @@
             </el-select>
           </el-form-item>
           <el-form-item
-            label="电池信息"
+            :label="$t('batterManage.editDialog.formLabel')[2]"
             :label-width="formLabelWidth"
             prop="BName"
           >
             <el-input v-model="editForm.BName" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item
-            label="电池序号"
+            :label="$t('batterManage.editDialog.formLabel')[3]"
             :label-width="formLabelWidth"
             prop="BIndex"
           >
             <el-input v-model="editForm.BIndex" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item
-            label="电池模块"
+            :label="$t('batterManage.editDialog.formLabel')[4]"
             :label-width="formLabelWidth"
             prop="BmsIndex"
           >
@@ -284,21 +323,28 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="edit('ruleForm')">确 定</el-button>
+          <el-button @click="dialogFormVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="edit('ruleForm')">{{
+            $t("base.submit")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 编辑表单结束 -->
 
       <!-- 添加表单开始 -->
       <el-dialog
-        title="添加电池信息"
+        :title="$t('batterManage.addDialog.title')"
         :visible.sync="dialogFormAddVisible"
         width="30%"
         :close-on-click-modal="false"
       >
         <el-form :model="addForm" :rules="rules" ref="ruleForm1">
-          <el-form-item label="电池类型" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('batterManage.addDialog.formLabel')[0]"
+            :label-width="formLabelWidth"
+          >
             <el-select v-model="addForm.BTypeSystemID">
               <el-option
                 v-for="(item, index) in btype"
@@ -308,7 +354,10 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="设备名称" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('batterManage.addDialog.formLabel')[1]"
+            :label-width="formLabelWidth"
+          >
             <el-select
               v-model="addForm.DeviceSystemID"
               @change="getDeviceId(addForm)"
@@ -322,7 +371,7 @@
             </el-select>
           </el-form-item>
           <el-form-item
-            label="设备编号"
+            :label="$t('batterManage.addDialog.formLabel')[2]"
             :label-width="formLabelWidth"
             prop="DeviceID"
           >
@@ -333,21 +382,21 @@
             ></el-input>
           </el-form-item>
           <el-form-item
-            label="电池信息"
+            :label="$t('batterManage.addDialog.formLabel')[3]"
             :label-width="formLabelWidth"
             prop="BName"
           >
             <el-input v-model="addForm.BName" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item
-            label="电池序号"
+            :label="$t('batterManage.addDialog.formLabel')[4]"
             :label-width="formLabelWidth"
             prop="BIndex"
           >
             <el-input v-model="addForm.BIndex" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item
-            label="电池模块"
+            :label="$t('batterManage.addDialog.formLabel')[5]"
             :label-width="formLabelWidth"
             prop="BmsIndex"
           >
@@ -355,17 +404,19 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormAddVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addHttp('ruleForm1')"
-            >确 定</el-button
-          >
+          <el-button @click="dialogFormAddVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="addHttp('ruleForm1')">{{
+            $t("base.submit")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 添加表单结束 -->
 
       <!-- 添加多个表单开始 -->
       <el-dialog
-        title="添加电池信息"
+        :title="$t('batterManage.addMultiple.title')"
         :visible.sync="addMoreVisibel"
         width="60%"
         :close-on-click-modal="false"
@@ -376,7 +427,7 @@
           ref="ruleForm2"
           label-width="100px"
         >
-          <el-form-item label="电池类型">
+          <el-form-item :label="$t('batterManage.addMultiple.formLabel')[0]">
             <el-select v-model="addList.BTypeSystemID">
               <el-option
                 v-for="(item, index) in btype"
@@ -386,7 +437,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="设备名称">
+          <el-form-item :label="$t('batterManage.addMultiple.formLabel')[1]">
             <el-select
               v-model="addList.DeviceSystemID"
               @change="getDeviceId(addList)"
@@ -399,13 +450,19 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="设备编号" prop="DeviceID">
+          <el-form-item
+            :label="$t('batterManage.addMultiple.formLabel')[2]"
+            prop="DeviceID"
+          >
             <el-input v-model="addList.DeviceID" :readonly="true"></el-input>
           </el-form-item>
-          <el-form-item label="电池名称头" prop="BNameTop">
+          <el-form-item
+            :label="$t('batterManage.addMultiple.formLabel')[3]"
+            prop="BNameTop"
+          >
             <el-input v-model="addList.BNameTop"></el-input>
           </el-form-item>
-          <el-form-item label="Bank选择">
+          <el-form-item :label="$t('batterManage.addMultiple.formLabel')[4]">
             <el-radio-group v-model="addList.BankIndex1">
               <el-radio label="1">Bank1</el-radio>
               <el-radio label="2">Bank2</el-radio>
@@ -414,25 +471,36 @@
           <!-- <el-form-item label="Rack起始地址" prop="RackStart">
             <el-input v-model="addList.RackStart"></el-input>
           </el-form-item> -->
-          <el-form-item label="Rack添加数量" prop="RackNum">
+          <el-form-item
+            :label="$t('batterManage.addMultiple.formLabel')[5]"
+            prop="RackNum"
+          >
             <el-input v-model="addList.RackNum"></el-input>
           </el-form-item>
 
           <!-- <el-form-item label="Cell起始地址" prop="CellStart">
             <el-input v-model="addList.CellStart"></el-input>
           </el-form-item> -->
-          <el-form-item label="Cell添加数量" prop="CellNum">
+          <el-form-item
+            :label="$t('batterManage.addMultiple.formLabel')[6]"
+            prop="CellNum"
+          >
             <el-input v-model="addList.CellNum"></el-input>
           </el-form-item>
-          <el-form-item label="电池模块起始序号" prop="BmsStart">
+          <el-form-item
+            :label="$t('batterManage.addMultiple.formLabel')[7]"
+            prop="BmsStart"
+          >
             <el-input v-model="addList.BmsStart"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="addMoreVisibel = false">取 消</el-button>
-          <el-button type="primary" @click="addListHttp('ruleForm2')"
-            >确 定</el-button
-          >
+          <el-button @click="addMoreVisibel = false">{{
+            $t("base.submit")
+          }}</el-button>
+          <el-button type="primary" @click="addListHttp('ruleForm2')">{{
+            $t("base.cancel")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 添加多个表单结束 -->
@@ -446,7 +514,7 @@ export default {
   data () {
     var valiNumberPass1 = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入内容'))
+        callback(new Error(this.$t('batterManage.errorTip')))
       } else {
         callback()
       }
@@ -525,7 +593,7 @@ export default {
         RackNum: '',
         RackStart: '1'
       },
-      fileName: '电池信息',
+      fileName: 'export',
       addMoreVisibel: false
     }
   },
@@ -587,7 +655,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -732,11 +800,15 @@ export default {
 
     // 删除
     deleteItem (row) {
-      this.$confirm(`是否删除[ ${row.BName} ]`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
+      this.$confirm(
+        `${this.$t('base.delConfirm.tip')}${row.BName}`,
+        this.$t('base.delConfirm.title'),
+        {
+          confirmButtonText: this.$t('base.delConfirm.yes'),
+          cancelButtonText: this.$t('base.delConfirm.no'),
+          type: 'warning'
+        }
+      )
         .then(() => {
           var url = '/api/Battery/DelBattery'
           this.$axios
@@ -773,7 +845,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('base.delConfirm.cancelTip')
           })
         })
     },
@@ -783,7 +855,7 @@ export default {
       this.selectedItems = this.$refs.xTable.getSelectRecords()
       var arr = []
       if (this.selectedItems.length === 0) {
-        this.$message.warning('请选择要删除的用户')
+        this.$message.warning(this.$t('batterManage.delErrorTip'))
         return false
       }
       for (const item of this.selectedItems) {
@@ -792,11 +864,15 @@ export default {
           SystemID: item.SystemID
         })
       }
-      this.$confirm(`确定删除吗`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
+      this.$confirm(
+        this.$t('base.delConfirm.tip1'),
+        this.$t('base.delConfirm.title'),
+        {
+          confirmButtonText: this.$t('base.delConfirm.yes'),
+          cancelButtonText: this.$t('base.delConfirm.no'),
+          type: 'warning'
+        }
+      )
         .then(() => {
           var url = '/api/Battery/DelBattery'
           this.$axios
@@ -828,7 +904,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('base.delConfirm.cancelTip')
           })
         })
     },
@@ -895,7 +971,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

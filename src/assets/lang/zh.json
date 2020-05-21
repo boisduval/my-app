@@ -23,5 +23,179 @@
             "title": "设备列表"
             
         }
+    },
+    "header": {
+        "search": "请输入您需要查找的内容……",
+        "close": {
+            "title": "关闭操作",
+            "label": ["关闭其他选项卡", "关闭所有选项卡"]
+        },
+        "logout": "退出"
+    },
+    "base": {
+        "submit": "提 交",
+        "cancel": "取 消",
+        "search": "模糊查询",
+        "searchbtn": "查询",
+        "refresh": "刷新",
+        "add": "添加",
+        "del": "删除",
+        "edit": "编辑",
+        "multipleAdd": "多条添加",
+        "multipleDel": "多选删除",
+        "export": {
+            "csv": "导出为Csv文件",
+            "excel": "导出为Excel文件",
+            "title": "导出",
+            "print": "打印"
+        },
+        "delConfirm": {
+            "tip": "是否删除 ",
+            "tip1": "确定删除吗",
+            "title": "提示",
+            "yes": "确定",
+            "no": "取消",
+            "cancelTip": "已取消删除"
+        },
+        "datePicker": {
+            "start": "开始日期",
+            "end": "结束日期",
+            "separator": "至"
+        },
+        "dateGroup": {
+            "today": "当天",
+            "yesterday": "昨天",
+            "twoDays": "前两天",
+            "week": "前一周",
+            "month": "前一周"
+        }
+    },
+    "user": {
+        "dropdownList": ["修改头像", "个人资料", "联系我们", "收件信箱"]
+    },
+    "screenFull": {
+        "title": "全屏",
+        "tip": "不支持全屏"
+    },
+    "home": {
+        "feedback": {
+            "title": "反馈",
+            "formLabel": ["标题", "内容"],
+            "tip": "请输入正文"
+        }
+    },
+    "tabName": {
+        "main": "首页",
+        "systemPerformance": "系统性能"
+    },
+    "logout": {
+        "tip": "确定要退出吗?",
+        "title": "提示",
+        "yes": "确定",
+        "no": "取消"
+    },
+    "login": {
+        "headline": "欢迎登陆系统",
+        "tip": "请输入您的账户和密码:",
+        "placeholder": ["账户", "密码"],
+        "login": "登录",
+        "footer": "版权所有"
+    },
+    "alarmHistory": {
+        "searchTitle": "历史告警列表查询",
+        "listTitle": "历史告警",
+        "searchForm": {
+            "label": ["范围选择:", "确认警告:", "日志信息:"],
+            "placeholder": ["", "", "请输入日志信息"]
+        },
+        "tableLabel": ["序号", "告警级别", "告警类型", "告警名称", "详细信息", "发生时间", "确认时间", "操作"],
+        "operationbtn": ["详情", "确认警报"],
+        "dialog": {
+            "title": "用户日志",
+            "formLabel": [
+                "告警级别:", "告警类型:", "发生时间:", "告警来源:", "确认内容"
+            ],
+            "formPlaceholder": "请输入确认内容",
+            "default": {
+                "btn": "默认信息",
+                "msg": "异常信息已确认无问题，先确认OK。"
+            }
+        },
+        "detail": {
+            "title": "告警详情",
+            "label": [
+                "告警级别", "告警类型", "告警来源", "简要描述", "详细信息", "账户名称", "用户名称", "确认信息"
+            ],
+            "options": ["全部", "已确认", "未确认"]
+        }
+    },
+    "alarmRealtime": {
+        "listTitle": "实时告警",
+        "tableLabel": [
+            "序号", "告警级别", "告警标题", "告警来源", "有效时长", "产生时间", "操作"
+        ],
+        "operationbtn": ["告警详情"],
+        "detail": {
+            "title": "告警详情",
+            "label": [
+                "应用编号", "应用名称", "告警来源", "告警编号", "告警级别", "告警级别名称", "告警标题", "告警信息"
+            ]
+        }
+    },
+    "batterInfo": {
+        "searchTitle": "电池类型列表查询",
+        "listTitle": "电池类型",
+        "searchForm": {
+            "label": ["设备名称:", "信息名称:", "电池序号:", "模块电池序号:"],
+            "placeholder": ["", "请输入信息名称", "请输入电池序号", "请输入模块电池序号"]
+        },
+        "tableLabel": ["序号", "电池名称", "电池序号", "模块电池序号", "记录时间", "操作"],
+        "operationbtn": ["电压趋势"],
+        "dialog": {
+            "title": "电池详情",
+            "searchTitle": "电池类型列表查询",
+            "listTitle": "电池类型",
+            "formLabel": ["电池名称", "起止时间"],
+            "datePicker": {
+                "start": "开始日期",
+                "end": "结束日期",
+                "separator": "至"
+            }
+        }
+    },
+    "batterManage": {
+        "searchTitle": "电池类型列表查询",
+        "listTitle": "电池类型",
+        "searchForm": {
+            "label": ["设备名称:", "信息名称:", "电池序号:", "模块电池序号:"],
+            "placeholder": ["", "请输入信息名称", "请输入电池序号", "请输入模块电池序号"]
+        },
+        "tableLabel": ["序号", "电池名称", "电池类型", "电池材料", "电池容量", "标准电压", "电池序号", "记录时间", "操作"],
+        "editDialog": {
+            "title": "添加电池信息",
+            "formLabel": ["电池类型", "设备名称", "设备编号", "电池信息", "电池序号", "电池模块"]
+        },
+        "addDialog": {
+            "title": "添加电池信息",
+            "formLabel": ["电池类型", "设备名称", "设备编号", "电池信息", "电池序号", "电池模块"]
+        },
+        "addMultiple": {
+            "title": "添加电池信息",
+            "formLabel": ["电池类型", "设备名称", "设备编号", "电池名称头", "Bank选择", "Rack添加数量", "Cell添加数量", "电池模块起始序号"]
+        },
+        "errorTip": "请输入内容",
+        "delErrorTip": "请选择要删除的用户"
+    },
+    "batteryAlarm": {
+        "searchTitle": "设备管理列表查询",
+        "listTitle": "设备管理",
+        "searchForm": {
+            "label": ["ICCID编号:", "设备编号:", "VIN编码:", "设备名称:"],
+            "placeholder": ["请输入ICCID编号", "请输入设备编号", "请输入VIN编码", "请输入设备名称"]
+        },
+        "tableLabel": [
+            "序号", "设备ID字符串", "设备名称", "设备管理员", "登记时间", "操作"
+        ],
+        "detail": ["电池报警", "报警电压"]
     }
 }

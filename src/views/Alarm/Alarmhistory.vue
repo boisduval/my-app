@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>历史告警列表查询</span>
+            <span>{{ $t('alarmHistory.searchTitle') }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,17 +14,17 @@
             label-width="80px"
             label-position="right"
           >
-            <el-form-item label="范围选择:">
+            <el-form-item :label="$t('alarmHistory.searchForm.label')[0]">
               <el-date-picker
                 v-model="value"
                 type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('base.datePicker.separator')"
+                :start-placeholder="$t('base.datePicker.start')"
+                :end-placeholder="$t('base.datePicker.end')"
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="确认警告:">
+            <el-form-item :label="$t('alarmHistory.searchForm.label')[1]">
               <el-select v-model="searchForm.Affirm">
                 <el-option
                   v-for="(item, index) in options"
@@ -34,42 +34,49 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="日志信息:">
+            <el-form-item :label="$t('alarmHistory.searchForm.label')[2]">
               <el-input
                 v-model="searchForm.LikeMessage"
-                placeholder="请输入日志信息"
+                :placeholder="$t('alarmHistory.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >{{ $t('base.searchbtn') }}</el-button
+              >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 style="margin-left:20px;"
                 @click="goOtherDay('today')"
-                >当天</el-button
+                >{{ $t('base.dateGroup.today') }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('two')"
-                >前两天</el-button
+                >{{ $t('base.dateGroup.twoDays') }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('week')"
-                >前一周</el-button
+                >{{ $t('base.dateGroup.week') }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('month')"
-                >前一月</el-button
+                >{{ $t('base.dateGroup.month') }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -81,7 +88,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备日报表</span>
+        <span>{{ $t("alarmHistory.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -93,7 +100,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -102,37 +109,45 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" title="导出" v-popover:export>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" title="打印">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              导出为Csv文件
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              导出为Excel文件
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -159,51 +174,88 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('alarmHistory.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="Level"
-          title="告警级别"
+          :title="$t('alarmHistory.tableLabel')[1]"
           sortable
           width="120"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="Type" title="告警类型" width="130" sortable>
+        <vxe-table-column
+          field="Type"
+          :title="$t('alarmHistory.tableLabel')[2]"
+          width="130"
+          sortable
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
-        <vxe-table-column field="Name" title="告警名称" sortable width="120">
+        <vxe-table-column
+          field="Name"
+          :title="$t('alarmHistory.tableLabel')[3]"
+          sortable
+          width="140"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
-        <vxe-table-column field="Msg" title="详细信息" width="420" align="left" show-overflow>
+        <vxe-table-column
+          field="Msg"
+          :title="$t('alarmHistory.tableLabel')[4]"
+          width="420"
+          align="left"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <!-- <vxe-table-column field="Msg" title="日志信息" sortable width="450" align="left">
         </vxe-table-column> -->
         <vxe-table-column
           field="WriteTime"
-          title="发生时间"
+          :title="$t('alarmHistory.tableLabel')[5]"
           sortable
           width="180"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="OverTime"
-          title="确认时间"
+          :title="$t('alarmHistory.tableLabel')[6]"
           sortable
           width="180"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="330" fixed="right">
+        <vxe-table-column
+          :title="$t('alarmHistory.tableLabel')[7]"
+          width="330"
+          fixed="right"
+        >
           <template v-slot="{ row }">
             <el-button plain size="mini" @click="toDetail(row)">
-              <i class="el-icon-info">&nbsp;详情</i>
+              <i class="el-icon-info"
+                >&nbsp;{{ $t("alarmHistory.operationbtn")[0] }}</i
+              >
             </el-button>
             <el-button
               type="danger"
               size="mini"
               @click="showCheckDialog(row)"
               :disabled="row.OverTime >= '2001/1/1 0:00:00'"
-              >
+            >
               <i class="el-icon-circle-check"
-                >&nbsp;确认警报</i
+                >&nbsp;{{ $t("alarmHistory.operationbtn")[1] }}</i
               >
             </el-button>
           </template>
@@ -228,21 +280,21 @@
         width="40%"
         :close-on-click-modal="false"
         :visible.sync="dialogFormCheckVisible"
-        title="用户日志"
+        :title="$t('alarmHistory.dialog.title')"
       >
         <el-form label-width="90px" label-position="right" :model="checkForm">
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-            <el-form-item label="告警级别:">
+            <el-form-item :label="$t('alarmHistory.dialog.formLabel')[0]">
               <el-input :readonly="true" v-model="checkForm.Level"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-            <el-form-item label="告警类型:">
+            <el-form-item :label="$t('alarmHistory.dialog.formLabel')[1]">
               <el-input :readonly="true" v-model="checkForm.Type"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-            <el-form-item label="发生时间:">
+            <el-form-item :label="$t('alarmHistory.dialog.formLabel')[2]">
               <el-input
                 :readonly="true"
                 v-model="checkForm.WriteTime"
@@ -250,28 +302,34 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-            <el-form-item label="告警来源:">
+            <el-form-item :label="$t('alarmHistory.dialog.formLabel')[3]">
               <el-input :readonly="true" v-model="checkForm.Name"></el-input>
             </el-form-item>
           </el-col>
-          <el-form-item label="确认内容">
+          <el-form-item :label="$t('alarmHistory.dialog.formLabel')[4]">
             <el-input
               type="textarea"
               v-model="checkList.AlarmOverInfo"
-              placeholder="请输入确认内容"
-              :autosize="{ minRows: 4, maxRows: 8}"
+              :placeholder="$t('alarmHistory.dialog.formPlaceholder')"
+              :autosize="{ minRows: 4, maxRows: 8 }"
             ></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="checkList.AlarmOverInfo = '异常信息已确认无问题，先确认OK。'" size="medium" type="primary">
-            默认信息
+          <el-button
+            @click="
+              checkList.AlarmOverInfo = $t('alarmHistory.dialog.default.msg')
+            "
+            size="medium"
+            type="primary"
+          >
+            {{ $t("alarmHistory.dialog.default.btn") }}
           </el-button>
           <el-button @click="setAlarmOver" size="medium" type="primary">
-            提 交
+            {{ $t("base.submit") }}
           </el-button>
           <el-button @click="dialogFormCheckVisible = false" size="medium">
-            取 消
+            {{ $t("base.cancel") }}
           </el-button>
         </div>
       </el-dialog>
@@ -285,52 +343,42 @@
         draggable
         width="30"
       >
-        <p :style="pStyle">告警级别</p>
+        <p :style="pStyle">{{ $t("alarmHistory.detail.label")[0] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Level }}
         </div>
         <Divider />
-        <p :style="pStyle">告警类型</p>
+        <p :style="pStyle">{{ $t("alarmHistory.detail.label")[1] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Type }}
         </div>
-        <!-- <Divider />
-        <p :style="pStyle">发生时间</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.WriteTime }}
-        </div>
         <Divider />
-        <p :style="pStyle">确认时间</p>
-        <div class="demo-drawer-profile">
-          {{ activeItem.OverTime }}
-        </div> -->
-        <Divider />
-        <p :style="pStyle">告警来源</p>
+        <p :style="pStyle">{{ $t("alarmHistory.detail.label")[2] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.ASource }}
         </div>
         <Divider />
-        <p :style="pStyle">简要描述</p>
+        <p :style="pStyle">{{ $t("alarmHistory.detail.label")[3] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Name }}
         </div>
         <Divider />
-        <p :style="pStyle">详细信息</p>
+        <p :style="pStyle">{{ $t("alarmHistory.detail.label")[4] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Msg }}
         </div>
         <Divider />
-        <p :style="pStyle">账户名称</p>
+        <p :style="pStyle">{{ $t("alarmHistory.detail.label")[5] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.OverAccountNumber }}
         </div>
         <Divider />
-        <p :style="pStyle">用户名称</p>
+        <p :style="pStyle">{{ $t("alarmHistory.detail.label")[6] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.OverUserName }}
         </div>
         <Divider />
-        <p :style="pStyle">详细信息</p>
+        <p :style="pStyle">{{ $t("alarmHistory.detail.label")[7] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.OverMsg }}
         </div>
@@ -359,20 +407,20 @@ export default {
       count: 0,
       customColumns: [],
       isShow: true,
-      fileName: '日志信息',
+      fileName: 'export',
       loading: false,
       dialogFormVisible: false,
       options: [
         {
-          label: '全部',
+          label: this.$t('alarmHistory.detail.options')[0],
           value: '100'
         },
         {
-          label: '已确认',
+          label: this.$t('alarmHistory.detail.options')[1],
           value: '1'
         },
         {
-          label: '未确认',
+          label: this.$t('alarmHistory.detail.options')[2],
           value: '0'
         }
       ],
@@ -454,7 +502,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -582,7 +630,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

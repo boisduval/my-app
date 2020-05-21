@@ -12,8 +12,8 @@
             <!-- 头部 -->
             <div class="box-top">
               <div class="welcome">
-                <h3>欢迎登陆系统</h3>
-                <p>请输入您的账户和密码:</p>
+                <h3>{{$t('login.headline')}}</h3>
+                <p>{{$t('login.tip')}}</p>
               </div>
               <div class="wel-right">
                 <i class="fa fa-lock"></i>
@@ -24,21 +24,21 @@
               <el-form-item>
                 <el-input
                   v-model="data.AccountNumber"
-                  placeholder="账户"
+                  :placeholder="$t('login.placeholder')[0]"
                   autofocus
                 ></el-input>
               </el-form-item>
               <el-form-item>
                 <el-input
                   v-model="data.MD5Pass"
-                  placeholder="密码"
+                  :placeholder="$t('login.placeholder')[1]"
                   type="password"
                   autocomplete="off"
                   @keyup.enter.native="login"
                 ></el-input>
               </el-form-item>
               <el-button type="primary" style="width:100%" @click="login"
-                >登录</el-button
+                >{{$t('login.login')}}</el-button
               >
             </el-form>
           </div>
@@ -59,8 +59,18 @@
 
     <!-- 底部信息 -->
     <div class="footerifo">
-      版权所有 ©{{ footerInfo.SystemYear }} {{ footerInfo.CompanyName }}
+      {{$t('login.footer')}} ©{{ footerInfo.SystemYear }} {{ footerInfo.CompanyName }}
       <br />{{ footerInfo.ButtonName }}<br />
+    </div>
+
+    <!-- 语言切换 -->
+    <div class="lang">
+      <el-dropdown @command="handleCommand">
+        <i class="fa fa-globe" style="font-size:24px"></i>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item v-for="(item, index) in lang" :key="index" :command="item.Value">{{item.Text}}</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <Spin size="large" fix v-if="spinShow"></Spin>
   </div>
@@ -71,7 +81,8 @@ import returnCitySN from 'returnCitySN'
 import { mapState, mapMutations } from 'vuex'
 export default {
   computed: {
-    ...mapState('home', ['userIfo'])
+    ...mapState('home', ['userIfo']),
+    ...mapState('lang', ['lang', 'currentLang'])
   },
   data () {
     return {
@@ -116,6 +127,7 @@ export default {
   },
   methods: {
     ...mapMutations('home', ['setUserIfo']),
+    ...mapMutations('lang', ['setLang', 'setCurrentLang']),
     bro () {
       // 获取浏览器类型和版本号
       var userAgent = window.navigator.userAgent // 包含以下属性中所有或一部分的字符串：appCodeName,appName,appVersion,language,platform
@@ -312,12 +324,16 @@ export default {
         .get(`/api/Ablut/SystemConfig?AutoSystemID=${AutoSystemID}`)
         .then(res => {
           this.footerInfo = res.data.data
-          console.log(this.footerInfo)
           document.title = this.footerInfo.SystemText
+          this.setLang(this.footerInfo.Languages)
         })
         .catch(err => {
           console.error(err)
         })
+    },
+    handleCommand (command) {
+      this.setCurrentLang(command)
+      this.getFooterInfo()
     }
   },
   created () {
@@ -482,5 +498,11 @@ a:focus {
 
 .welcome {
   margin: 20px 0;
+}
+
+.lang {
+  position: absolute;
+  top: 30px;
+  right: 60px;
 }
 </style>

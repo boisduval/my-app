@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>电池类型列表查询</span>
+            <span>{{ $t("batterInfo.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,7 +14,7 @@
             label-width="120px"
             label-position="right"
           >
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('batterInfo.searchForm.label')[0]">
               <el-select v-model="searchForm.DeviceSystemID">
                 <el-option
                   v-for="(item, index) in options"
@@ -24,26 +24,33 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="信息名称:">
+            <el-form-item :label="$t('batterInfo.searchForm.label')[1]">
               <el-input
                 v-model="searchForm.LikeName"
-                placeholder="请输入信息名称"
+                :placeholder="$t('batterInfo.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="电池序号:">
+            <el-form-item :label="$t('batterInfo.searchForm.label')[2]">
               <el-input
                 v-model="searchForm.LikeBatteryIndex"
-                placeholder="请输入电池序号"
+                :placeholder="$t('batterInfo.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="模块电池序号:">
+            <el-form-item :label="$t('batterInfo.searchForm.label')[3]">
               <el-input
                 v-model="searchForm.LikeBIndex"
-                placeholder="请输入模块电池序号"
+                :placeholder="$t('batterInfo.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="searchForm.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  searchForm.page = 1;
+                  getData();
+                "
+                >{{ $t("base.searchbtn") }}</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -54,7 +61,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>电池类型</span>
+        <span>{{ $t("batterInfo.listTitle") }}</span>
       </div>
       <!-- 表格操作栏开始 -->
       <div class="table-oper">
@@ -65,7 +72,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -74,37 +81,45 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" title="导出" v-popover:export>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" title="打印">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              导出为Csv文件
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              导出为Excel文件
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -131,18 +146,23 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('batterInfo.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="BName"
-          title="电池名称"
+          :title="$t('batterInfo.tableLabel')[1]"
           width="350"
           show-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="BIndex"
-          title="电池序号"
+          :title="$t('batterInfo.tableLabel')[2]"
           width="200"
           show-overflow
           sortable
@@ -150,7 +170,7 @@
         </vxe-table-column>
         <vxe-table-column
           field="BmsIndex"
-          title="模块电池序号"
+          :title="$t('batterInfo.tableLabel')[3]"
           width="200"
           show-overflow
           sortable
@@ -158,15 +178,19 @@
         </vxe-table-column>
         <vxe-table-column
           field="WriteTime"
-          title="记录时间"
+          :title="$t('batterInfo.tableLabel')[4]"
           width="300"
           show-overflow
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="250" fixed="right">
+        <vxe-table-column
+          :title="$t('batterInfo.tableLabel')[5]"
+          width="250"
+          fixed="right"
+        >
           <template v-slot="{ row }">
             <el-button plain size="mini" @click="showDialog(row)">
-              <i class="el-icon-info">电压趋势</i>
+              <i class="el-icon-info">{{ $t("batterInfo.operationbtn")[0] }}</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -187,7 +211,7 @@
 
       <!-- 电压曲线图开始 -->
       <el-dialog
-        title="电池详情"
+        :title="$t('batterInfo.dialog.title')"
         :visible.sync="dialogFormVisible"
         width="80%"
         top="10vh"
@@ -196,33 +220,33 @@
       >
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>电池类型列表查询</span>
+            <span>{{ $t("batterInfo.dialog.searchTitle") }}</span>
           </div>
           <el-form :model="echartsData" label-width="80px" :inline="true">
-            <el-form-item label="电池名称">
+            <el-form-item :label="$t('batterInfo.dialog.formLabel')[0]">
               <el-input v-model="echartsData.BName" :readonly="true"></el-input>
             </el-form-item>
-            <el-form-item label="起止时间">
+            <el-form-item :label="$t('batterInfo.dialog.formLabel')[1]">
               <el-date-picker
                 v-model="value"
                 type="datetimerange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('batterInfo.dialog.datePicker.separator')"
+                :start-placeholder="$t('batterInfo.dialog.datePicker.start')"
+                :end-placeholder="$t('batterInfo.dialog.datePicker.end')"
               >
               </el-date-picker>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="getBatteryChartData"
-                >查询</el-button
-              >
+              <el-button type="primary" @click="getBatteryChartData">{{
+                $t("base.search")
+              }}</el-button>
             </el-form-item>
           </el-form>
         </el-card>
 
         <el-card class="box-card" style="margin-top:20px">
           <div slot="header" class="clearfix">
-            <span>电池类型</span>
+            <span>{{ $t("batterInfo.dialog.listTitle") }}</span>
           </div>
           <div id="myChart"></div>
         </el-card>
@@ -254,7 +278,7 @@ export default {
         DeviceSystemID: ''
       },
       options: [],
-      fileName: '电池信息',
+      fileName: 'export',
       echartsData: {
         AutoSystemID: '',
         BatterySystemID: '',
@@ -328,7 +352,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -502,7 +526,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

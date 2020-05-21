@@ -14,37 +14,45 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" title="导出" v-popover:export>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" title="打印">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              导出为Csv文件
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              导出为Excel文件
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -70,38 +78,58 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('alarmRealtime.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="LevelMsg"
-          title="告警级别"
+          :title="$t('alarmRealtime.tableLabel')[1]"
           sortable
           width="150"
           show-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="AlarmTitle" title="告警标题" width="250">
+        <vxe-table-column
+          field="AlarmTitle"
+          :title="$t('alarmRealtime.tableLabel')[2]"
+          width="250"
+        >
         </vxe-table-column>
-        <vxe-table-column field="Source" title="告警来源" width="250">
+        <vxe-table-column
+          field="Source"
+          :title="$t('alarmRealtime.tableLabel')[3]"
+          width="250"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="TheEffectiveTime"
-          title="有效时长"
+          :title="$t('alarmRealtime.tableLabel')[4]"
           sortable
           width="200"
         >
         </vxe-table-column>
         <vxe-table-column
           field="CreateDatetime"
-          title="产生时间"
+          :title="$t('alarmRealtime.tableLabel')[5]"
           sortable
           width="380"
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right" align="center">
+        <vxe-table-column
+          :title="$t('alarmRealtime.tableLabel')[6]"
+          width="200"
+          fixed="right"
+          align="center"
+        >
           <template v-slot="{ row }">
             <el-button plain size="small" @click="toDetail(row)">
-              <i class="el-icon-info">&nbsp;告警详情</i>
+              <i class="el-icon-info"
+                >&nbsp;{{ $t("alarmRealtime.operationbtn")[0] }}</i
+              >
             </el-button>
           </template>
         </vxe-table-column>
@@ -124,46 +152,46 @@
       <Drawer
         :closable="false"
         v-model="value4"
-        title="告警详情"
+        :title="$t('alarmRealtime.detail.title')"
         draggable
         width="30"
       >
-        <p :style="pStyle">应用编号</p>
+        <p :style="pStyle">{{ $t("alarmRealtime.detail.label")[0] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Appid }}
         </div>
         <Divider />
-        <p :style="pStyle">应用名称</p>
+        <p :style="pStyle">{{ $t("alarmRealtime.detail.label")[1] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.AppName }}
         </div>
         <Divider />
-        <p :style="pStyle">告警来源</p>
+        <p :style="pStyle">{{ $t("alarmRealtime.detail.label")[2] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Source }}
         </div>
         <Divider />
-        <p :style="pStyle">告警编号</p>
+        <p :style="pStyle">{{ $t("alarmRealtime.detail.label")[3] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Alarmid }}
         </div>
         <Divider />
-        <p :style="pStyle">告警级别</p>
+        <p :style="pStyle">{{ $t("alarmRealtime.detail.label")[4] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Level }}
         </div>
         <Divider />
-        <p :style="pStyle">告警级别名称</p>
+        <p :style="pStyle">{{ $t("alarmRealtime.detail.label")[5] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.LevelMsg }}
         </div>
         <Divider />
-        <p :style="pStyle">告警标题</p>
+        <p :style="pStyle">{{ $t("alarmRealtime.detail.label")[6] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.AlarmTitle }}
         </div>
         <Divider />
-        <p :style="pStyle">告警信息</p>
+        <p :style="pStyle">{{ $t("alarmRealtime.detail.label")[7] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.AlarmMsg }}
         </div>
@@ -187,7 +215,7 @@ export default {
       count: 0,
       customColumns: [],
       isShow: true,
-      fileName: '告警信息',
+      fileName: 'export',
       loading: false,
       detailData: [],
       activeItem: '',
@@ -250,7 +278,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -297,7 +325,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

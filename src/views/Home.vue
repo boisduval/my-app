@@ -41,16 +41,16 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                           <el-dropdown-item command="setAvatar">
-                            修改头像
+                            {{$t('user.dropdownList')[0]}}
                           </el-dropdown-item>
                           <el-dropdown-item command="userInfo">
-                            个人资料
+                            {{$t('user.dropdownList')[1]}}
                           </el-dropdown-item>
                           <el-dropdown-item command="a">
-                            联系我们
+                            {{$t('user.dropdownList')[2]}}
                           </el-dropdown-item>
                           <el-dropdown-item command="a">
-                            收件信箱(0)
+                            {{$t('user.dropdownList')[3]}}
                           </el-dropdown-item>
                         </el-dropdown-menu>
                       </el-dropdown>
@@ -94,13 +94,29 @@
               type="text"
               name="search"
               class="search"
-              placeholder="请输入您需要查找的内容......"
+              autocomplete="off"
+              :placeholder="$t('header.search')"
             />
+            <!-- <el-badge class="item">
+              <el-dropdown style="line-height:30px" @command="handleCommand">
+                <el-button size="small" class="mes">
+                  <i class="fa fa-globe"></i>
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item
+                    v-for="(item, index) in lang"
+                    :key="index"
+                    :command="item.Value"
+                    >{{ item.Text }}</el-dropdown-item
+                  >
+                </el-dropdown-menu>
+              </el-dropdown>
+            </el-badge> -->
             <el-badge class="item">
               <el-button
                 size="small"
                 class="mes"
-                title="全屏"
+                :title="$t('screenFull.title')"
                 @click="buttoncli"
               >
                 <i class="el-icon-full-screen"></i>
@@ -125,11 +141,7 @@
               </el-button>
             </el-badge>
             <el-badge class="item">
-              <el-button
-                size="small"
-                class="mes"
-                @click="mailVisible=true"
-              >
+              <el-button size="small" class="mes" @click="mailVisible = true">
                 <i class="iconfont icon-custom-service"></i>
               </el-button>
             </el-badge>
@@ -163,19 +175,19 @@
             @command="handleCommand1"
           >
             <div>
-              关闭操作
+              {{$t('header.close.title')}}
               <i class="el-icon-caret-bottom"></i>
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="others"
-                >关闭其他选项卡</el-dropdown-item
+                >{{$t('header.close.label')[0]}}</el-dropdown-item
               >
-              <el-dropdown-item command="all">关闭所有选项卡</el-dropdown-item>
+              <el-dropdown-item command="all">{{$t('header.close.label')[1]}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
           <div class="close" @click="logout">
-            退出
+            {{$t('header.logout')}}
             <i class="fa fa-sign-out"></i>
           </div>
         </div>
@@ -222,47 +234,47 @@
     <!-- 设置头像结束 -->
     <!-- 反馈开始 -->
     <el-dialog
-        title="反馈"
-        width="70%"
-        :close-on-click-modal="false"
-        :visible.sync="mailVisible"
-      >
-        <div style="height:500px;overflow:auto">
-          <el-form
-            label-width="80px"
-            label-position="right"
-            :model="sendForm"
-            style="padding-right:20px"
-          >
-            <el-form-item label="标题">
-              <el-input v-model="sendForm.Title"></el-input>
-            </el-form-item>
-            <el-form-item label="内容">
-              <!-- <div id="editor"></div> -->
-              <quill-editor
-                style="min-height:400px"
-                v-model="sendForm.Msg"
-                ref="myQuillEditor"
-                :options="editorOption"
-                @blur="onEditorBlur($event)"
-                @focus="onEditorFocus($event)"
-                @change="onEditorChange($event)"
-                class="editor"
-              >
-              </quill-editor>
-            </el-form-item>
-          </el-form>
-        </div>
+      :title="$t('home.feedback.title')"
+      width="70%"
+      :close-on-click-modal="false"
+      :visible.sync="mailVisible"
+    >
+      <div style="height:500px;overflow:auto">
+        <el-form
+          label-width="80px"
+          label-position="right"
+          :model="sendForm"
+          style="padding-right:20px"
+        >
+          <el-form-item :label="$t('home.feedback.formLabel')[0]">
+            <el-input v-model="sendForm.Title"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('home.feedback.formLabel')[1]">
+            <!-- <div id="editor"></div> -->
+            <quill-editor
+              style="min-height:400px"
+              v-model="sendForm.Msg"
+              ref="myQuillEditor"
+              :options="editorOption"
+              @blur="onEditorBlur($event)"
+              @focus="onEditorFocus($event)"
+              @change="onEditorChange($event)"
+              class="editor"
+            >
+            </quill-editor>
+          </el-form-item>
+        </el-form>
+      </div>
 
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="sendMail" size="medium" type="primary">
-            提 交
-          </el-button>
-          <el-button @click="mailVisible = false" size="medium">
-            取 消
-          </el-button>
-        </div>
-      </el-dialog>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="sendMail" size="medium" type="primary">
+          {{$t('base.submit')}}
+        </el-button>
+        <el-button @click="mailVisible = false" size="medium">
+          {{$t('base.cancel')}}
+        </el-button>
+      </div>
+    </el-dialog>
     <!-- 反馈结束 -->
   </div>
 </template>
@@ -327,7 +339,7 @@ export default {
           ]
         },
         theme: 'snow',
-        placeholder: '请输入正文'
+        placeholder: this.$t('home.feedback.tip')
       }
     }
   },
@@ -339,6 +351,7 @@ export default {
     ...mapState('home', ['userIfo']),
     ...mapState('tabs', ['openTab', 'detailLabel']),
     ...mapState('nav', ['asideItem']),
+    ...mapState('lang', ['lang', 'currentLang']),
     activeIndex: {
       get () {
         return this.$store.state.tabs.activeIndex
@@ -357,7 +370,7 @@ export default {
   },
   mounted () {
     if (this.openTab.length === 0) {
-      this.add_tabs({ route: '/main', name: 'main', label: '首页' })
+      this.add_tabs({ route: '/main', name: 'main', label: this.$t('tabName.main') })
       this.set_active_index('/main')
       if (this.$route.path !== '/' && this.$route.path !== '/main') {
         this.$router.push('/')
@@ -375,7 +388,7 @@ export default {
         ? this.$refs[to.name][0].$el.innerText
         : this.detailLabel
       if (to.fullPath === '/perFormance') {
-        label = '系统性能'
+        label = this.$t('tabName.systemPerformance')
       }
       this.set_detail_label('')
       let flag = false
@@ -487,9 +500,9 @@ export default {
 
     // 登出
     logout () {
-      this.$confirm('确定要退出吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('logout.tip'), this.$t('logout.title'), {
+        confirmButtonText: this.$t('logout.yes'),
+        cancelButtonText: this.$t('logout.no'),
         type: 'warning'
       })
         .then(() => {
@@ -535,7 +548,7 @@ export default {
       if (!screenfull.isEnabled) {
         // 如果不允许进入全屏，发出不允许提示
         this.$message({
-          message: '不支持全屏',
+          message: this.$t('screenFull.tip'),
           type: 'warning'
         })
         return false
@@ -573,7 +586,7 @@ export default {
         })
     },
     onEditorReady (editor) {
-    // 准备编辑器
+      // 准备编辑器
     },
     onEditorBlur () {}, // 失去焦点事件
     onEditorFocus () {}, // 获得焦点事件
@@ -598,7 +611,6 @@ export default {
         })
     }
   }
-
 }
 </script>
 
@@ -647,7 +659,7 @@ export default {
 }
 
 .search {
-  width: 200px;
+  width: 280px;
   border: none;
   background-color: #f3f3f4;
   line-height: 30px;

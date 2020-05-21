@@ -56,29 +56,24 @@
                 >
               </template>
             </div>
-            <el-button class="menu-btn" title="导出" v-popover:export>
-              <i class="fa fa-download"></i>
-            </el-button>
-            <el-button class="menu-btn" @click="printEvent" title="打印">
-              <i class="fa fa-print"></i>
-            </el-button>
-            <!-- 导出操作开始 -->
-            <el-popover
-              ref="export"
-              placement="bottom"
-              width="100"
-              trigger="hover"
-            >
-              <ul id="export">
-                <li @click="exportDataEvent">
-                  导出为Csv文件
-                </li>
-                <li @click="exportExcel">
-                  导出为Excel文件
-                </li>
-              </ul>
-            </el-popover>
-            <!-- 导出操作结束 -->
+            <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+          <i class="fa fa-download"></i>
+        </el-button>
+        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+          <i class="fa fa-print"></i>
+        </el-button>
+        <!-- 导出操作开始 -->
+        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
+          <ul id="export">
+            <li @click="exportDataEvent">
+              {{$t('base.export.csv')}}
+            </li>
+            <li @click="exportExcel">
+              {{$t('base.export.excel')}}
+            </li>
+          </ul>
+        </el-popover>
+        <!-- 导出操作结束 -->
           </div>
           <!-- 表格操作栏结束 -->
           <!-- 表格开始 -->

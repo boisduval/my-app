@@ -3,7 +3,7 @@
     <Spin v-if="loading" fix></Spin>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>模糊查询</span>
+        <span>{{$t('base.search')}}</span>
       </div>
       <div class="flex-row" style="flex-wrap:wrap;" v-if="data">
         <div class="item">
