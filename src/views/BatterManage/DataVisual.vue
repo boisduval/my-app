@@ -11,58 +11,62 @@
               <BorderLeft>
                 <div class="content-box">
                   <div class="title">
-                    <h2>总电气状态</h2>
+                    <h2>{{ $t("dataVisual.box1.title")[0] }}</h2>
                   </div>
                   <div class="data-box">
                     <div class="content">
-                      <h3 class="label">电池总电压</h3>
+                      <h3 class="label">
+                        {{ $t("dataVisual.box1.label")[0] }}
+                      </h3>
                       <div class="data">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.TotalVoltage
-                          }}</span
-                          >
+                          }}</span>
                           V
                         </h3>
                       </div>
                     </div>
                     <div class="content">
-                      <h3 class="label">电池总电流</h3>
+                      <h3 class="label">
+                        {{ $t("dataVisual.box1.label")[1] }}
+                      </h3>
                       <div class="data">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.TotalCurrent
-                          }}</span
-                          >
+                          }}</span>
                           A
                         </h3>
                       </div>
                     </div>
                   </div>
                   <div class="title">
-                    <h2>配置状态</h2>
+                    <h2>{{ $t("dataVisual.box1.title")[1] }}</h2>
                   </div>
                   <div class="data-box">
                     <div class="content">
-                      <h3 class="label">充电器输出电流</h3>
+                      <h3 class="label">
+                        {{ $t("dataVisual.box1.label")[2] }}
+                      </h3>
                       <div class="data">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.ChargeCurrent
-                          }}</span
-                          >
+                          }}</span>
                           A
                         </h3>
                       </div>
                     </div>
                     <div class="content">
-                      <h3 class="label">系统标称总容量</h3>
+                      <h3 class="label">
+                        {{ $t("dataVisual.box1.label")[3] }}
+                      </h3>
                       <div class="data">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.NominalTotalCapacity
-                          }}</span
-                          >
+                          }}</span>
                           A
                         </h3>
                       </div>
@@ -78,51 +82,56 @@
               <BorderLeft>
                 <div class="content-box">
                   <div class="title">
-                    <h2>充电信息</h2>
+                    <h2>{{ $t("dataVisual.box2.title")[0] }}</h2>
                   </div>
                   <div class="data-box">
                     <div class="content">
-                      <h3 class="label1">充放电指示</h3>
+                      <h3 class="label1">
+                        {{ $t("dataVisual.box2.label")[0] }}
+                      </h3>
                       <div class="data1">
                         <h3>
                           <span style="color:#ffff00"
                             >{{ data.ChargeAndDischargeState }}
                           </span>
-                          状态
+                          {{ $t("dataVisual.box2.unit")[0] }}
                         </h3>
                       </div>
                     </div>
                     <div class="content">
-                      <h3 class="label1">充电容量</h3>
+                      <h3 class="label1">
+                        {{ $t("dataVisual.box2.label")[1] }}
+                      </h3>
                       <div class="data1">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.ChargeCapacity
-                          }}</span
-                          >
+                          }}</span>
                           A
                         </h3>
                       </div>
                     </div>
                     <div class="content">
-                      <h3 class="labe1">充电结束时间</h3>
+                      <h3 class="labe1">
+                        {{ $t("dataVisual.box2.label")[2] }}
+                      </h3>
                       <div class="data1">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.ChargingEndTime
-                          }}</span
-                          >
+                          }}</span>
                         </h3>
                       </div>
                     </div>
                     <div class="content">
-                      <h3 class="label1">放电结束时间</h3>
+                      <h3 class="label1">
+                        {{ $t("dataVisual.box2.label")[3] }}
+                      </h3>
                       <div class="data1">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.DischargeEndTime
-                          }}</span
-                          >
+                          }}</span>
                         </h3>
                       </div>
                     </div>
@@ -160,18 +169,18 @@
                   </div>
                   <div class="center-row">
                     <div class="center-row-label">
-                      <h3>循环次数</h3>
+                      <h3>{{ $t("dataVisual.box3.label")[0] }}</h3>
                     </div>
                     <div class="center-row-data">
                       <h3>
                         <span style="color:#ffff00">{{ data.CycleIndex }}</span>
-                        次
+                        {{ $t("dataVisual.box3.unit")[0] }}
                       </h3>
                     </div>
                   </div>
                   <div class="center-row">
                     <div class="center-row-label">
-                      <h3>电池容量</h3>
+                      <h3>{{ $t("dataVisual.box3.label")[1] }}</h3>
                     </div>
                     <div class="center-row-data">
                       <h3>
@@ -192,7 +201,6 @@
                     <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
 
                     <g>
-                      <title>background</title>
                       <g display="none" id="canvasGrid">
                         <rect
                           fill="url(#gridpattern)"
@@ -413,59 +421,63 @@
               <BorderRight>
                 <div class="content-box">
                   <div class="title">
-                    <h2>装机状态</h2>
+                    <h2>{{ $t("dataVisual.box4.title")[0] }}</h2>
                   </div>
                   <div class="data-box">
                     <div class="content">
-                      <h3 class="label">安装总簇数</h3>
+                      <h3 class="label">
+                        {{ $t("dataVisual.box4.label")[0] }}
+                      </h3>
                       <div class="data">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.ClustersNumber
-                          }}</span
-                          >
-                          簇
+                          }}</span>
+                          {{ $t("dataVisual.box4.unit")[0] }}
                         </h3>
                       </div>
                     </div>
                     <div class="content">
-                      <h3 class="label">单体电池数量</h3>
+                      <h3 class="label">
+                        {{ $t("dataVisual.box4.label")[1] }}
+                      </h3>
                       <div class="data">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.QuantityOfSingleBattery
-                          }}</span
-                          >
-                          节
+                          }}</span>
+                          {{ $t("dataVisual.box4.unit")[1] }}
                         </h3>
                       </div>
                     </div>
                   </div>
                   <div class="title">
-                    <h2>异常信息</h2>
+                    <h2>{{ $t("dataVisual.box4.title")[1] }}</h2>
                   </div>
                   <div class="data-box">
                     <div class="content">
-                      <h3 class="label">警告次数</h3>
+                      <h3 class="label">
+                        {{ $t("dataVisual.box4.label")[2] }}
+                      </h3>
                       <div class="data">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.AlarmNumber
-                          }}</span
-                          >
-                          次
+                          }}</span>
+                          {{ $t("dataVisual.box4.unit")[2] }}
                         </h3>
                       </div>
                     </div>
                     <div class="content">
-                      <h3 class="label">停机次数</h3>
+                      <h3 class="label">
+                        {{ $t("dataVisual.box4.label")[3] }}
+                      </h3>
                       <div class="data">
                         <h3>
                           <span style="color:#ffff00">{{
                             data.MachineHaltNumber
-                          }}</span
-                          >
-                          次
+                          }}</span>
+                          {{ $t("dataVisual.box4.unit")[3] }}
                         </h3>
                       </div>
                     </div>
@@ -480,7 +492,7 @@
               <BorderRight>
                 <div class="content-box">
                   <div class="title">
-                    <h2>极值信息</h2>
+                    <h2>{{ $t("dataVisual.box5.title")[0] }}</h2>
                   </div>
                   <div class="data-box">
                     <div class="row-box">
@@ -497,7 +509,7 @@
                     </div>
                     <div class="row-box">
                       <div class="row-label">
-                        <h3>单体电压</h3>
+                        <h3>{{ $t("dataVisual.box5.label")[0] }}</h3>
                       </div>
                       <div class="row-data-box">
                         <div class="row-data">
@@ -513,7 +525,7 @@
                     </div>
                     <div class="row-box">
                       <div class="row-label">
-                        <h3>电池温度</h3>
+                        <h3>{{ $t("dataVisual.box5.label")[1] }}</h3>
                       </div>
                       <div class="row-data-box">
                         <div class="row-data">
@@ -529,7 +541,7 @@
                     </div>
                     <div class="row-box">
                       <div class="row-label">
-                        <h3>单体内阻</h3>
+                        <h3>{{ $t("dataVisual.box5.label")[2] }}</h3>
                       </div>
                       <div class="row-data-box">
                         <div class="row-data">
@@ -545,7 +557,7 @@
                     </div>
                     <div class="row-box">
                       <div class="row-label">
-                        <h3>正极绝缘</h3>
+                        <h3>{{ $t("dataVisual.box5.label")[3] }}</h3>
                       </div>
                       <div class="row-data-box">
                         <div class="row-data">
@@ -561,7 +573,7 @@
                     </div>
                     <div class="row-box">
                       <div class="row-label">
-                        <h3>负极绝缘</h3>
+                        <h3>{{ $t("dataVisual.box5.label")[4] }}</h3>
                       </div>
                       <div class="row-data-box">
                         <div class="row-data">

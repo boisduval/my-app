@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>设备管理列表查询</span>
+            <span>{{ $t("systemControl.systemControl") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,33 +14,40 @@
             label-width="90px"
             label-position="right"
           >
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('systemControl.searchForm.label')[0]">
               <el-input
                 v-model="formInline.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('systemControl.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编号:">
+            <el-form-item :label="$t('systemControl.searchForm.label')[1]">
               <el-input
                 v-model="formInline.IDS"
-                placeholder="请输入设备编号"
+                :placeholder="$t('systemControl.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="VIN编码:">
+            <el-form-item :label="$t('systemControl.searchForm.label')[2]">
               <el-input
                 v-model="formInline.VIN"
-                placeholder="请输入VIN编码"
+                :placeholder="$t('systemControl.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('systemControl.searchForm.label')[3]">
               <el-input
                 v-model="formInline.Name"
-                placeholder="请输入设备名称"
+                :placeholder="$t('systemControl.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
             <el-form-item>
-              <el-button type="primary" @click="formInline.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  formInline.page = 1;
+                  getData();
+                "
+                >{{ $t("base.searchbtn") }}</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -50,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{ $t("systemControl.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -62,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -71,37 +78,45 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -125,30 +140,48 @@
         highlight-current-row
       >
         <vxe-table-column type="checkbox" width="50"></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('systemControl.tableLabel')[0]"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DIDS"
-          title="设备ID字符串"
+          :title="$t('systemControl.tableLabel')[1]"
           sortable
           width="400"
           show-overflow
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="200">
+        <vxe-table-column
+          field="DName"
+          :title="$t('systemControl.tableLabel')[2]"
+          sortable
+          width="200"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
-          title="设备管理员"
+          :title="$t('systemControl.tableLabel')[3]"
           sortable
           width="200"
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="300">
+        <vxe-table-column
+          field="DTime"
+          :title="$t('systemControl.tableLabel')[4]"
+          sortable
+          width="300"
+        >
         </vxe-table-column>
-        <vxe-table-column type="expand" title="展开操作" width="80px">
+        <vxe-table-column
+          type="expand"
+          :title="$t('systemControl.tableLabel')[5]"
+          width="80px"
+        >
           <template v-slot:content="{ row }">
             <el-button
               plain
@@ -193,12 +226,12 @@
       <el-dialog
         width="50%"
         :close-on-click-modal="false"
-        :title="activeDialog.title"
+        :title="activeDialog.label"
         :visible.sync="dialogFormVisible"
       >
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>设备信息</span>
+            <span>{{ $t("systemControl.dialog.title") }}</span>
           </div>
           <el-form
             :inline="false"
@@ -208,7 +241,7 @@
             label-position="right"
           >
             <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-              <el-form-item label="设备编号:">
+              <el-form-item :label="$t('systemControl.dialog.label')[0]">
                 <el-input
                   :readonly="true"
                   v-model="formList.BatteryIDS"
@@ -217,13 +250,13 @@
             </el-col>
 
             <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-              <el-form-item label="设备名称:">
+              <el-form-item :label="$t('systemControl.dialog.label')[1]">
                 <el-input :readonly="true" v-model="formList.DName"></el-input>
               </el-form-item>
             </el-col>
 
             <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-              <el-form-item label="设备Bank">
+              <el-form-item :label="$t('systemControl.dialog.label')[2]">
                 <el-select
                   v-model="formList.BankIndex"
                   @change="getBatteryBankCTRLParaCharts"
@@ -238,10 +271,13 @@
 
         <el-card class="box-card" style="margin-top:20px">
           <div slot="header" class="clearfix">
-            <span>{{ activeDialog.cardTop }}</span>
+            <span
+              >{{ activeDialog.label
+              }}{{ $t("systemControl.dialog.suffix") }}</span
+            >
           </div>
           <el-form :inline="true" label-width="180px" label-position="left">
-            <el-form-item :label="activeDialog.cardTitle" id="state">
+            <el-form-item :label="activeDialog.label" id="state">
               <el-col
                 :xs="12"
                 :sm="12"
@@ -256,19 +292,25 @@
                   v-model="item.value"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
-                  :inactive-text="'第' + item.index + '簇'"
+                  :inactive-text="
+                    $t('systemControl.unit')[0] +
+                      item.index +
+                      $t('systemControl.unit')[1]
+                  "
                 >
                 </el-switch>
               </el-col>
             </el-form-item>
             <el-form-item style="float:right;margin-top:20px;">
-              <el-button type="primary" @click="submit">提交</el-button>
-              <el-button type="primary" @click="getBatteryBankCTRLParaCharts"
-                >刷新</el-button
-              >
-              <el-button type="primary" @click="dialogFormVisible = false"
-                >取消</el-button
-              >
+              <el-button type="primary" @click="submit">{{
+                $t("base.submit")
+              }}</el-button>
+              <el-button type="primary" @click="getBatteryBankCTRLParaCharts">{{
+                $t("base.refresh")
+              }}</el-button>
+              <el-button type="primary" @click="dialogFormVisible = false">{{
+                $t("base.cancel")
+              }}</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -295,106 +337,73 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '设备信息',
+      fileName: 'export',
       count: 0,
       loading: false,
       detail: [
         {
-          label: '系统复位',
+          label: this.$t('systemControl.detail')[0],
           path: 'sYSTEM_RESET',
-          title: '系统复位',
-          cardTop: '复位信息',
-          cardTitle: '系统复位',
           BankAddres1: '0x7785',
           BankAddres2: '0x2785'
         },
         {
-          label: '运行模式',
+          label: this.$t('systemControl.detail')[1],
           path: 'sYSTEM_OPERATION_MODE',
-          title: '系统运行模式',
-          cardTop: '系统运行信息',
-          cardTitle: '运行信息',
           BankAddres1: '0x7786',
           BankAddres2: '0x2786'
         },
         {
-          label: '短路保护',
+          label: this.$t('systemControl.detail')[2],
           path: 'sHORT_CIRCUIT_PROTECTION_SWITCH',
-          title: '短路保护',
-          cardTop: '短路保护信息',
-          cardTitle: '短路保护',
           BankAddres1: '0x7787',
           BankAddres2: '0x2787'
         },
         {
-          label: '软关机',
+          label: this.$t('systemControl.detail')[3],
           path: 'sOFT_POWER_OFF',
-          title: '软关机',
-          cardTop: '软关机信息',
-          cardTitle: '软关机',
           BankAddres1: '0x7788',
           BankAddres2: '0x2788'
         },
         {
-          label: '绝缘采样',
+          label: this.$t('systemControl.detail')[4],
           path: 'sTART_INSULATION_SAMPLING',
-          title: '绝缘采样',
-          cardTop: '绝缘采样信息',
-          cardTitle: '绝缘采样',
           BankAddres1: '0x7789',
           BankAddres2: '0x2789'
         },
         {
-          label: '从机ID自动分配',
+          label: this.$t('systemControl.detail')[5],
           path: 'sLAVEID_IS_AUTOMATICALLY_ASSIGNED',
-          title: '从机ID自动分配',
-          cardTop: '从机ID自动分配信息',
-          cardTitle: '从机ID自动分配',
           BankAddres1: '0x778A',
           BankAddres2: '0x278A'
         },
         {
-          label: '故障码使能',
+          label: this.$t('systemControl.detail')[6],
           path: '.fAULT_CODE_ENABLE',
-          title: '故障码使能',
-          cardTop: '故障码使能信息',
-          cardTitle: '故障码使能',
           BankAddres1: '0x778B',
           BankAddres2: '0x278B'
         },
         {
-          label: '复位Eeprom',
+          label: this.$t('systemControl.detail')[7],
           path: 'rESET_EEPROM',
-          title: '复位Eeprom',
-          cardTop: '复位Eeprom信息',
-          cardTitle: '复位Eeprom',
           BankAddres1: '0x778C',
           BankAddres2: '0x278C'
         },
         {
-          label: '反接保护',
+          label: this.$t('systemControl.detail')[8],
           path: 'rEVERSE_PROTECTION_SWITCH',
-          title: '反接保护',
-          cardTop: '反接保护信息',
-          cardTitle: '反接保护',
           BankAddres1: '0x778D',
           BankAddres2: '0x278D'
         },
         {
-          label: '启动测试',
+          label: this.$t('systemControl.detail')[9],
           path: 'sTART_THE_TEST',
-          title: '启动测试',
-          cardTop: '启动测试信息',
-          cardTitle: '启动测试',
           BankAddres1: '0x778E',
           BankAddres2: '0x278E'
         },
         {
-          label: '被动均衡',
+          label: this.$t('systemControl.detail')[10],
           path: 'pASSIVE_EQUALIZATION',
-          title: '被动均衡',
-          cardTop: '被动均衡信息',
-          cardTitle: '被动均衡',
           BankAddres1: '0x778F',
           BankAddres2: '0x278F'
         }
@@ -411,62 +420,62 @@ export default {
       value: true,
       stateList: [
         {
-          index: '一',
+          index: '1',
           value: true,
           num: 1
         },
         {
-          index: '二',
+          index: '2',
           value: true,
           num: 2
         },
         {
-          index: '三',
+          index: '3',
           value: true,
           num: 4
         },
         {
-          index: '四',
+          index: '4',
           value: true,
           num: 8
         },
         {
-          index: '五',
+          index: '5',
           value: true,
           num: 16
         },
         {
-          index: '六',
+          index: '6',
           value: true,
           num: 32
         },
         {
-          index: '七',
+          index: '7',
           value: true,
           num: 64
         },
         {
-          index: '八',
+          index: '8',
           value: true,
           num: 128
         },
         {
-          index: '九',
+          index: '9',
           value: true,
           num: 256
         },
         {
-          index: '十',
+          index: '10',
           value: true,
           num: 512
         },
         {
-          index: '十一',
+          index: '11',
           value: true,
           num: 1024
         },
         {
-          index: '十二',
+          index: '12',
           value: true,
           num: 2048
         }
@@ -538,7 +547,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -649,7 +658,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

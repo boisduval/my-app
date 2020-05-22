@@ -4,7 +4,7 @@
       <!-- 基础信息 -->
       <!-- 基础信息 -->
       <div slot="header" class="clearfix">
-        <span>设备基础信息</span>
+        <span>{{ $t("vAlarm.searchTitle") }}</span>
       </div>
       <el-form label-width="80px" :inline="true">
         <el-form-item
@@ -14,7 +14,7 @@
         >
           <el-input :value="item.value" :readonly="true"></el-input>
         </el-form-item>
-        <el-form-item label="设备Bank">
+        <el-form-item :label="$t('vAlarm.formLabel')[0]">
           <el-select v-model="bank">
             <el-option label="Bank1" value="0"></el-option>
             <el-option label="Bank2" value="1"></el-option>
@@ -25,9 +25,12 @@
     <el-card class="box-card">
       <!-- 详细信息 -->
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="电压信息" name="volAlarm"> </el-tab-pane>
-        <el-tab-pane label="温度信息" name="temperatureAlarm"> </el-tab-pane>
-        <el-tab-pane label="其他信息" name="othersAlarm"> </el-tab-pane>
+        <el-tab-pane :label="$t('vAlarm.tabs')[0]" name="volAlarm">
+        </el-tab-pane>
+        <el-tab-pane :label="$t('vAlarm.tabs')[1]" name="temperatureAlarm">
+        </el-tab-pane>
+        <el-tab-pane :label="$t('vAlarm.tabs')[2]" name="othersAlarm">
+        </el-tab-pane>
         <!-- <el-tab-pane label="电池二级报警" name="secondAlarm"> </el-tab-pane> -->
         <!-- 表格操作栏开始 -->
         <div class="table-oper">
@@ -38,7 +41,7 @@
             class="button-left"
           >
             <i class="el-icon-refresh-right"></i>
-            刷新
+            {{ $t("base.refresh") }}
           </el-button>
           <el-button class="menu-btn">
             <i class="fa fa-list"></i>
@@ -55,24 +58,37 @@
               >
             </template>
           </div>
-          <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
-          <i class="fa fa-download"></i>
-        </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
-          <i class="fa fa-print"></i>
-        </el-button>
-        <!-- 导出操作开始 -->
-        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
-          <ul id="export">
-            <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
-            </li>
-            <li @click="exportExcel">
-              {{$t('base.export.excel')}}
-            </li>
-          </ul>
-        </el-popover>
-        <!-- 导出操作结束 -->
+          <el-button
+            class="menu-btn"
+            :title="$t('base.export.title')"
+            v-popover:export
+          >
+            <i class="fa fa-download"></i>
+          </el-button>
+          <el-button
+            class="menu-btn"
+            @click="printEvent"
+            :title="$t('base.export.print')"
+          >
+            <i class="fa fa-print"></i>
+          </el-button>
+          <!-- 导出操作开始 -->
+          <el-popover
+            ref="export"
+            placement="bottom"
+            width="100"
+            trigger="hover"
+          >
+            <ul id="export">
+              <li @click="exportDataEvent">
+                {{ $t("base.export.csv") }}
+              </li>
+              <li @click="exportExcel">
+                {{ $t("base.export.excel") }}
+              </li>
+            </ul>
+          </el-popover>
+          <!-- 导出操作结束 -->
         </div>
         <!-- 表格操作栏结束 -->
         <!-- 表格开始 -->
@@ -123,7 +139,8 @@ export default {
       activeArray: [],
       volData: [],
       temperatureData: [],
-      othersData: []
+      othersData: [],
+      fileName: 'export'
     }
   },
   computed: {
@@ -181,7 +198,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -254,23 +271,26 @@ export default {
           for (var key in this.data) {
             switch (key) {
               case 'DIDS':
-                this.baseIfo.push({ label: '设备编号', value: this.data[key] })
+                this.baseIfo.push({
+                  label: this.$t('vAlarm.formLabel')[2],
+                  value: this.data[key]
+                })
                 break
               case 'DICCID':
                 this.baseIfo.push({
-                  label: 'ICCID编号',
+                  label: this.$t('vAlarm.formLabel')[1],
                   value: this.data[key]
                 })
                 break
               case 'DVIN':
                 this.baseIfo.push({
-                  label: 'VIN编码',
+                  label: this.$t('vAlarm.formLabel')[3],
                   value: this.data[key]
                 })
                 break
               case 'DName':
                 this.baseIfo.push({
-                  label: '设备名称',
+                  label: this.$t('vAlarm.formLabel')[4],
                   value: this.data[key]
                 })
                 break
@@ -294,171 +314,171 @@ export default {
       this.volInfo = [
         {
           key: 'nUMBER_OF_HIGHEST_VOLTAGE_BATTERY_WHEN_ALARMING',
-          value: '报警时最高电压电池编号'
+          value: this.$t('vAlarm.volInfo')[0]
         },
         {
           key: 'tHE_HIGHEST_VOLTAGE_WHEN_ALARMING',
-          value: '报警时最高电压值'
+          value: this.$t('vAlarm.volInfo')[1]
         },
         {
           key: 'nUMBER_OF_HIGHEST_VOLTAGE_BATTERY_WHEN_SHUT_DOWN',
-          value: '停机时最高电压电池编号'
+          value: this.$t('vAlarm.volInfo')[2]
         },
         {
           key: 'mAXIMUM_VOLTAGE_VALUE_WHEN_STOPPED',
-          value: '停机时最高电压值'
+          value: this.$t('vAlarm.volInfo')[3]
         },
         {
           key: 'mINIMUM_VOLTAGE_BATTERY_NUMBER_WHEN_ALARM',
-          value: '报警时最低电压电池编号'
+          value: this.$t('vAlarm.volInfo')[4]
         },
         {
           key: 'mINIMUM_VOLTAGE_WHEN_ALARMING',
-          value: '报警时最低电压值'
+          value: this.$t('vAlarm.volInfo')[5]
         },
         {
           key: 'mINIMUM_VOLTAGE_BATTERY_NUMBER_WHEN_SHUT_DOWN',
-          value: '停机时最低电压电池编号'
+          value: this.$t('vAlarm.volInfo')[6]
         },
         {
           key: 'mINIMUM_VOLTAGE_VALUE_WHEN_SHUTDOWN',
-          value: '停机时最低电压值'
+          value: this.$t('vAlarm.volInfo')[7]
         },
         {
           key: 'tHE_VOLTAGE_VALUE_WHEN_THE_BATTERY_OVERVOLTAGE_ALARM',
-          value: '电池组过压报警时电压值'
+          value: this.$t('vAlarm.volInfo')[8]
         },
         {
           key: 'tHE_VOLTAGE_VALUE_WHEN_THE_BATTERY_OVERVOLTAGE_STOPS',
-          value: '电池组过压停机时电压值'
+          value: this.$t('vAlarm.volInfo')[9]
         },
         {
           key: 'vOLTAGE_VALUE_WHEN_BATTERY_UNDERVOLTAGE_ALARM',
-          value: '电池组欠压报警时电压值'
+          value: this.$t('vAlarm.volInfo')[10]
         },
         {
           key: 'tHE_VOLTAGE_VALUE_WHEN_THE_BATTERY_IS_SHUT_DOWN',
-          value: '电池组欠压停机时电压值'
+          value: this.$t('vAlarm.volInfo')[11]
         },
         {
           key: 'wARNING_VALUE_OF_MONOMER_PRESSURE_DIFFERENCE_HEIGHT',
-          value: '单体压差高告警值'
+          value: this.$t('vAlarm.volInfo')[12]
         },
         {
           key: 'tHE_VOLTAGE_VALUE_WHEN_THE_BATTERY_IS_SHUT_DOWN',
-          value: '单体压差高停机值'
+          value: this.$t('vAlarm.volInfo')[13]
         },
         {
           key: 'wARNING_VALUE_OF_MONOMER_PRESSURE_DIFFERENCE_HEIGHT',
-          value: '总压差高告警值'
+          value: this.$t('vAlarm.volInfo')[14]
         },
         {
           key: 'tOTAL_DIFFERENTIAL_PRESSURE_HIGH_STOP_VALUE',
-          value: '总压差高停机值'
+          value: this.$t('vAlarm.volInfo')[15]
         }
       ]
       this.temperatureInfo = [
         {
           key: 'nUMBER_OF_HIGHEST_BATTERY_TEMPERATURE_POINT_WHEN_ALARMING',
-          value: '报警时最高电池温度点编号'
+          value: this.$t('vAlarm.temperatureInfo')[0]
         },
         {
           key: 'tHE_HIGHEST_BATTERY_TEMPERATURE_WHEN_ALARMING',
-          value: '报警时最高电池温度值'
+          value: this.$t('vAlarm.temperatureInfo')[1]
         },
         {
           key: 'nUMBER_OF_HIGHEST_BATTERY_TEMPERATURE_POINT_WHEN_SHUT_DOWN',
-          value: '停机时最高电池温度点编号'
+          value: this.$t('vAlarm.temperatureInfo')[2]
         },
         {
           key: 'mAXIMUM_BATTERY_TEMPERATURE_WHEN_SHUT_DOWN',
-          value: '停机时最高电池温度值'
+          value: this.$t('vAlarm.temperatureInfo')[3]
         },
         {
           key: 'nUMBER_OF_LOWEST_BATTERY_TEMPERATURE_POINT_WHEN_ALARMING',
-          value: '报警时最低电池温度点编号'
+          value: this.$t('vAlarm.temperatureInfo')[4]
         },
         {
           key: 'mINIMUM_BATTERY_TEMPERATURE_WHEN_ALARMING',
-          value: '报警时最低电池温度值'
+          value: this.$t('vAlarm.temperatureInfo')[5]
         },
         {
           key: 'mINIMUM_BATTERY_TEMPERATURE_POINT_NUMBER_WHEN_SHUT_DOWN',
-          value: '停机时最低电池温度点编号'
+          value: this.$t('vAlarm.temperatureInfo')[6]
         },
         {
           key: 'mINIMUM_BATTERY_TEMPERATURE_WHEN_SHUT_DOWN',
-          value: '停机时最低电池温度值'
+          value: this.$t('vAlarm.temperatureInfo')[7]
         },
         {
           key: 'nUMBER_OF_THE_HIGHEST_POWER_TEMPERATURE_POINT_WHEN_ALARMING',
-          value: '报警时最高功率温度点编号'
+          value: this.$t('vAlarm.temperatureInfo')[8]
         },
         {
           key: 'mAXIMUM_POWER_TEMPERATURE_WHEN_ALARMING',
-          value: '报警时最高功率温度值'
+          value: this.$t('vAlarm.temperatureInfo')[9]
         },
         {
           key: 'nUMBER_OF_HIGHEST_POWER_TEMPERATURE_POINT_WHEN_SHUTDOWN',
-          value: '停机时最高功率温度点编号'
+          value: this.$t('vAlarm.temperatureInfo')[10]
         },
         {
           key: 'mAXIMUM_POWER_TEMPERATURE_VALUE_DURING_SHUTDOWN',
-          value: '停机时最高功率温度值'
+          value: this.$t('vAlarm.temperatureInfo')[11]
         },
         {
           key: 'hIGH_TEMPERATURE_DIFFERENCE_ALARM_VALUE_OF_SINGLE_UNIT',
-          value: '单体温差高告警值'
+          value: this.$t('vAlarm.temperatureInfo')[12]
         },
         {
           key: 'sINGLE_TEMPERATURE_DIFFERENCE_HIGH_STOP_VALUE',
-          value: '单体温差高停机值'
+          value: this.$t('vAlarm.temperatureInfo')[13]
         }
       ]
       this.othersInfo = [
         {
           key: 'oPERATING_STATE_OF_THIS_BRANCH',
-          value: '本支路运行状态'
+          value: this.$t('vAlarm.othersInfo')[0]
         },
         {
           key: 'eQUIPMENT_FAULT_ALARM_MESSAGE',
-          value: '设备故障报警信息'
+          value: this.$t('vAlarm.othersInfo')[1]
         },
         {
           key: 'tHE_VALUE_OF_THE_CURRENT_WHEN_THE_BATTERY_OVERCHARGE_ALARM',
-          value: '电池充电过流报警时电流值'
+          value: this.$t('vAlarm.othersInfo')[2]
         },
         {
           key: 'tHE_VALUE_OF_CURRENT_WHEN_THE_BATTERY_OVERCHARGES_AND_STOPS',
-          value: '电池充电过流停机时电流值'
+          value: this.$t('vAlarm.othersInfo')[3]
         },
         {
           key: 'bATTERY_DISCHARGE_OVERCURRENT_ALARM_WHEN_THE_CURRENT_VALUE',
-          value: '电池放电过流报警时电流值'
+          value: this.$t('vAlarm.othersInfo')[4]
         },
         {
           key: 'tHE_CURRENT_VALUE_WHEN_THE_BATTERY_DISCHARGE_OVERCURRENT_STOPS',
-          value: '电池放电过流停机时电流值'
+          value: this.$t('vAlarm.othersInfo')[5]
         },
         {
           key: 'iNSULATION_TOO_SMALL_ALARM_VALUE',
-          value: '绝缘过小告警阻值'
+          value: this.$t('vAlarm.othersInfo')[6]
         },
         {
           key: 'iNSULATION_TOO_SMALL_STOP_VALUE',
-          value: '绝缘过小停机阻值'
+          value: this.$t('vAlarm.othersInfo')[7]
         }
       ]
       this.volColumn.push({
         field: 'name',
-        title: '名称',
+        title: this.$t('vAlarm.title'),
         width: 250,
         align: 'left'
       })
       for (let index = 0; index < 12; index++) {
         this.volColumn.push({
           field: 'index' + index,
-          title: '第' + index + '簇',
+          title: this.$t('vAlarm.unit')[0] + (index + 1) + this.$t('vAlarm.unit')[1],
           width: 100
         })
       }

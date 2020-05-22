@@ -492,7 +492,7 @@ export default {
     addHttp () {
       var AutoSystemID = this.formInline.AutoSystemID
       var url = '/api/Language/Add'
-      var code = this.addForm.targetType * 1000000 + this.addForm.deviceType * 1000 + this.addForm.classifyType
+      var code = this.addForm.targetType * 1000000 + this.addForm.deviceType * 1000 + this.addForm.classifyType * 1
       console.log(code)
       var params = {
         AutoSystemID: AutoSystemID,

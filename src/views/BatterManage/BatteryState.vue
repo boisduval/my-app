@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>设备管理列表查询</span>
+            <span>{{ $t("batteryState.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,28 +14,28 @@
             label-width="90px"
             label-position="right"
           >
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('batteryState.searchForm.label')[0]">
               <el-input
                 v-model="formInline.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('batteryState.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编号:">
+            <el-form-item :label="$t('batteryState.searchForm.label')[1]">
               <el-input
                 v-model="formInline.IDS"
-                placeholder="请输入设备编号"
+                :label="$t('batteryState.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="VIN编码:">
+            <el-form-item :label="$t('batteryState.searchForm.label')[2]">
               <el-input
                 v-model="formInline.VIN"
-                placeholder="请输入VIN编码"
+                :label="$t('batteryState.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('batteryState.searchForm.label')[3]">
               <el-input
                 v-model="formInline.Name"
-                placeholder="请输入设备名称"
+                :label="$t('batteryState.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
@@ -46,7 +46,7 @@
                   formInline.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -57,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{ $t("batteryState.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -69,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -78,7 +78,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -95,20 +95,28 @@
             >
           </template>
         </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -132,30 +140,44 @@
         highlight-current-row
       >
         <vxe-table-column type="checkbox" width="50"></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('batteryState.tableLabel')[0]"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DIDS"
-          title="设备ID字符串"
+          :title="$t('batteryState.tableLabel')[1]"
           sortable
           width="300"
           show-overflow
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="180">
+        <vxe-table-column
+          field="DName"
+          :title="$t('batteryState.tableLabel')[2]"
+          sortable
+          width="180"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
-          title="设备管理员"
+          :title="$t('batteryState.tableLabel')[3]"
           sortable
           width="180"
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="200">
+        <vxe-table-column
+          field="DTime"
+          :title="$t('batteryState.tableLabel')[4]"
+          sortable
+          width="200"
+        >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="600">
+        <vxe-table-column :title="$t('batteryState.tableLabel')[5]" width="650">
           <template v-slot="{ row }">
             <el-button
               plain
@@ -167,16 +189,24 @@
               <i class="el-icon-info">{{ item.label }}</i>
             </el-button>
             <el-button plain size="mini" @click="getDetailData(row, 'index1')">
-              <i class="el-icon-info">硬件信息</i>
+              <i class="el-icon-info">{{
+                $t("batteryState.operationbtn")[0]
+              }}</i>
             </el-button>
             <el-button plain size="mini" @click="getDetailData(row, 'index2')">
-              <i class="el-icon-info">停机信息</i>
+              <i class="el-icon-info">{{
+                $t("batteryState.operationbtn")[1]
+              }}</i>
             </el-button>
             <el-button plain size="mini" @click="getDetailData(row, 'index3')">
-              <i class="el-icon-info">告警信息</i>
+              <i class="el-icon-info">{{
+                $t("batteryState.operationbtn")[2]
+              }}</i>
             </el-button>
             <el-button plain size="mini" @click="getDetailData(row, 'index4')">
-              <i class="el-icon-info">其他信息</i>
+              <i class="el-icon-info">{{
+                $t("batteryState.operationbtn")[3]
+              }}</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -198,11 +228,11 @@
       <Drawer
         :closable="false"
         v-model="dialogFormVisible"
-        title="硬件信息"
+        :title="$t('batteryState.hardware.title')"
         draggable
         width="30"
       >
-        <p :style="pStyle">设备Bank</p>
+        <p :style="pStyle">{{ $t("batteryState.hardware.label")[0] }}</p>
         <div class="demo-drawer-profile">
           <el-select v-model="bank" @change="handleSelect">
             <el-option label="Bank1" value="0"></el-option>
@@ -210,20 +240,20 @@
           </el-select>
         </div>
         <Divider />
-        <p :style="pStyle">项目编号</p>
+        <p :style="pStyle">{{ $t("batteryState.hardware.label")[1] }}</p>
         <div class="demo-drawer-profile">
           {{ this.data.iTEM_SERIAL_NUMBER }}
         </div>
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">主版本号</p>
+            <p :style="pStyle">{{ $t("batteryState.hardware.label")[2] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.tHE_MAJOR_VERSION_NUMBER }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">子版本号</p>
+            <p :style="pStyle">{{ $t("batteryState.hardware.label")[3] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.tHE_CHILD_VERSION_NUMBER }}
             </div>
@@ -232,13 +262,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">修正版本号</p>
+            <p :style="pStyle">{{ $t("batteryState.hardware.label")[4] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.rEVISION_NUMBER }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">硬件主版本号</p>
+            <p :style="pStyle">{{ $t("batteryState.hardware.label")[5] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.hARDWARE_MAJOR_VERSION_NUMBER }}
             </div>
@@ -247,13 +277,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">硬件子版本号</p>
+            <p :style="pStyle">{{ $t("batteryState.hardware.label")[6] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.hARDWARE_SUBVERSION_NUMBER }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">bootloader主版本号</p>
+            <p :style="pStyle">{{ $t("batteryState.hardware.label")[7] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.bOOTLOADER_MAIN_VERSION_NUMBER }}
             </div>
@@ -262,13 +292,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">Bootloader子版本号</p>
+            <p :style="pStyle">{{ $t("batteryState.hardware.label")[8] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.bOOTLOADER_SUBVERSION_NUMBER }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">Bootloader修正版本号</p>
+            <p :style="pStyle">{{ $t("batteryState.hardware.label")[9] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.bOOTLOADER_REVISION_NUMBER }}
             </div>
@@ -280,11 +310,11 @@
       <Drawer
         :closable="false"
         v-model="dialogFormVisible1"
-        title="停机信息"
+        :title="$t('batteryState.outage.title')"
         draggable
         width="30"
       >
-        <p :style="pStyle">设备Bank</p>
+        <p :style="pStyle">{{ $t("batteryState.outage.label")[0] }}</p>
         <div class="demo-drawer-profile">
           <el-select v-model="bank" @change="handleSelect">
             <el-option label="Bank1" value="0"></el-option>
@@ -294,13 +324,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">单体过压停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[1] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.sINGLE_OVERVOLTAGE_SHUTDOWN_TIMES }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">电池过压停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[2] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_BATTERY_OVERVOLTAGE_SHUTDOWNS }}
             </div>
@@ -309,13 +339,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">电池充电过流停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[3] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_BATTERY_OVERCURRENT_SHUTDOWN }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">单体欠压停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[4] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.sINGLE_UNIT_UNDERVOLTAGE_SHUTDOWN_TIMES }}
             </div>
@@ -324,13 +354,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">电池欠压停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[5] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.bATTERY_UNDERVOLTAGE_SHUTDOWN_TIMES }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">电池放电过流停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[6] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_BATTERY_DISCHARGE_OVERCURRENT_SHUTDOWN }}
             </div>
@@ -339,13 +369,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">电池过温停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[7] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_BATTERY_OVERTEMPERATURE_SHUTDOWNS }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">电池欠温停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[8] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.uNDERTEMPERATURE_BATTERY_DOWNTIME }}
             </div>
@@ -354,30 +384,39 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">功率过温停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[9] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.pOWER_OVERTEMPERATURE_SHUTDOWN_TIMES }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">单体之间压差过大停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[10] }}</p>
             <div class="demo-drawer-profile">
-              {{ this.data.tHE_PRESSURE_DIFFERENCE_BETWEEN_THE_MONOMERS_IS_TOO_LARGE }}
+              {{
+                this.data
+                  .tHE_PRESSURE_DIFFERENCE_BETWEEN_THE_MONOMERS_IS_TOO_LARGE
+              }}
             </div>
           </el-col>
         </el-row>
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">绝缘电阻值过小停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[11] }}</p>
             <div class="demo-drawer-profile">
-              {{ this.data.tHE_NUMBER_OF_TIMES_WHEN_THE_INSULATION_RESISTANCE_VALUE_IS_TOO_SMALL }}
+              {{
+                this.data
+                  .tHE_NUMBER_OF_TIMES_WHEN_THE_INSULATION_RESISTANCE_VALUE_IS_TOO_SMALL
+              }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">总压差过大停机次数</p>
+            <p :style="pStyle">{{ $t("batteryState.outage.label")[12] }}</p>
             <div class="demo-drawer-profile">
-              {{ this.data.tHE_TOTAL_PRESSURE_DIFFERENCE_IS_TOO_LARGE_SHUTDOWN_TIMES }}
+              {{
+                this.data
+                  .tHE_TOTAL_PRESSURE_DIFFERENCE_IS_TOO_LARGE_SHUTDOWN_TIMES
+              }}
             </div>
           </el-col>
         </el-row>
@@ -387,11 +426,11 @@
       <Drawer
         :closable="false"
         v-model="dialogFormVisible2"
-        title="告警信息"
+        :title="$t('batteryState.alarm.title')"
         draggable
         width="30"
       >
-        <p :style="pStyle">设备Bank</p>
+        <p :style="pStyle">{{ $t("batteryState.alarm.label")[0] }}</p>
         <div class="demo-drawer-profile">
           <el-select v-model="bank" @change="handleSelect">
             <el-option label="Bank1" value="0"></el-option>
@@ -401,13 +440,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">单体过压告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[1] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.sINGLE_OVERVOLTAGE_ALARM_NUMBER }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">电池过压告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[2] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_BATTERY_OVERVOLTAGE_ALARM }}
             </div>
@@ -416,13 +455,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">电池充电过流告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[3] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_BATTERY_OVERCURRENT_ALARM }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">单体欠压告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[4] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_SINGLE_UNDERVOLTAGE_ALARM }}
             </div>
@@ -431,13 +470,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">电池欠压告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[5] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.bATTERY_UNDERVOLTAGE_ALARM_NUMBER }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">电池放电过流告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[6] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.aLARM_NUMBER_OF_BATTERY_DISCHARGE_OVERCURRENT }}
             </div>
@@ -446,13 +485,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">电池过温告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[7] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_BATTERY_OVERTEMPERATURE_ALARM }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">电池欠温告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[8] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.bATTERY_UNDERTEMPERATURE_ALARM_NUMBER }}
             </div>
@@ -461,28 +500,31 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">功率过温告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[9] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.pOWER_OVERTEMPERATURE_ALARM_NUMBER }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">单体之间压差过大告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[10] }}</p>
             <div class="demo-drawer-profile">
-              {{ this.data.eXCESSIVE_ALARM_TIMES_OF_PRESSURE_DIFFERENCE_BETWEEN_UNITS }}
+              {{
+                this.data
+                  .eXCESSIVE_ALARM_TIMES_OF_PRESSURE_DIFFERENCE_BETWEEN_UNITS
+              }}
             </div>
           </el-col>
         </el-row>
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">绝缘电阻值过小告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[11] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.iNSULATION_RESISTANCE_VALUE_TOO_SMALL_ALARM_TIMES }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">总压差过大告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[12] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.tOTAL_PRESSURE_DIFFERENTIAL_EXCESSIVE_ALARM_NUMBER }}
             </div>
@@ -491,13 +533,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">环境温度过高告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[13] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.aLARM_TIMES_OF_EXCESSIVE_AMBIENT_TEMPERATURE }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">环境温度过低告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.alarm.label")[14] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_ALARMS_FOR_LOW_AMBIENT_TEMPERATURE }}
             </div>
@@ -509,11 +551,11 @@
       <Drawer
         :closable="false"
         v-model="dialogFormVisible3"
-        title="告警信息"
+        :title="$t('batteryState.others.title')"
         draggable
         width="30"
       >
-        <p :style="pStyle">设备Bank</p>
+        <p :style="pStyle">{{ $t("batteryState.others.label")[0] }}</p>
         <div class="demo-drawer-profile">
           <el-select v-model="bank" @change="handleSelect">
             <el-option label="Bank1" value="0"></el-option>
@@ -523,13 +565,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">电池循环次数</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[1] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.bATTERY_CYCLE }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">电池总容量</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[2] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.tOTAL_BATTERY_CAPACITY }}
             </div>
@@ -538,13 +580,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">系统运行时间</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[3] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.sYSTEM_RUNNING_TIME }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">最近一次充电容量(0.01Ah)</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[4] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.lAST_CHARGE_CAPACITY }}
             </div>
@@ -553,13 +595,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">最近一次充电结束时间(秒)</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[5] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.tHE_LAST_TIME_A_CHARGE_WAS_COMPLETED }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">最近一次放电结束时间(秒)</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[6] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.eND_TIME_OF_LAST_DISCHARGE }}
             </div>
@@ -568,43 +610,50 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">环境温度过高保护次数</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[7] }}</p>
             <div class="demo-drawer-profile">
-              {{ this.data.nUMBER_OF_TIMES_THE_AMBIENT_TEMPERATURE_IS_TOO_HIGH }}
+              {{
+                this.data.nUMBER_OF_TIMES_THE_AMBIENT_TEMPERATURE_IS_TOO_HIGH
+              }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">环境温度过低保护次数</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[8] }}</p>
             <div class="demo-drawer-profile">
-              {{ this.data.tHE_NUMBER_OF_TIMES_THE_AMBIENT_TEMPERATURE_IS_TOO_LOW }}
+              {{
+                this.data.tHE_NUMBER_OF_TIMES_THE_AMBIENT_TEMPERATURE_IS_TOO_LOW
+              }}
             </div>
           </el-col>
         </el-row>
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">功率过温告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[9] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.pOWER_OVERTEMPERATURE_ALARM_NUMBER }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">单体之间压差过大告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[10] }}</p>
             <div class="demo-drawer-profile">
-              {{ this.data.eXCESSIVE_ALARM_TIMES_OF_PRESSURE_DIFFERENCE_BETWEEN_UNITS }}
+              {{
+                this.data
+                  .eXCESSIVE_ALARM_TIMES_OF_PRESSURE_DIFFERENCE_BETWEEN_UNITS
+              }}
             </div>
           </el-col>
         </el-row>
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">绝缘电阻值过小告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[11] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.iNSULATION_RESISTANCE_VALUE_TOO_SMALL_ALARM_TIMES }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">总压差过大告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[12] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.tOTAL_PRESSURE_DIFFERENTIAL_EXCESSIVE_ALARM_NUMBER }}
             </div>
@@ -613,13 +662,13 @@
         <Divider />
         <el-row>
           <el-col :span="14">
-            <p :style="pStyle">环境温度过高告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[13] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.aLARM_TIMES_OF_EXCESSIVE_AMBIENT_TEMPERATURE }}
             </div>
           </el-col>
           <el-col :span="10">
-            <p :style="pStyle">环境温度过低告警次数</p>
+            <p :style="pStyle">{{ $t("batteryState.others.label")[14] }}</p>
             <div class="demo-drawer-profile">
               {{ this.data.nUMBER_OF_ALARMS_FOR_LOW_AMBIENT_TEMPERATURE }}
             </div>
@@ -648,12 +697,12 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '设备信息',
+      fileName: 'export',
       count: 0,
       loading: false,
       detail: [
         {
-          label: '主控自检状态',
+          label: this.$t('batteryState.detail'),
           path: '/selfCheck'
         }
       ],
@@ -747,7 +796,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {

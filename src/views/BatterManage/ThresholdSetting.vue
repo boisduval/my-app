@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>设备管理列表查询</span>
+            <span>{{ $t("thresholdSetting.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,28 +14,28 @@
             label-width="90px"
             label-position="right"
           >
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('thresholdSetting.searchForm.label')[0]">
               <el-input
                 v-model="formInline.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('thresholdSetting.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编号:">
+            <el-form-item :label="$t('thresholdSetting.searchForm.label')[1]">
               <el-input
                 v-model="formInline.IDS"
-                placeholder="请输入设备编号"
+                :placeholder="$t('thresholdSetting.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="VIN编码:">
+            <el-form-item :label="$t('thresholdSetting.searchForm.label')[2]">
               <el-input
                 v-model="formInline.VIN"
-                placeholder="请输入VIN编码"
+                :placeholder="$t('thresholdSetting.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('thresholdSetting.searchForm.label')[3]">
               <el-input
                 v-model="formInline.Name"
-                placeholder="请输入设备名称"
+                :placeholder="$t('thresholdSetting.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
@@ -46,7 +46,7 @@
                   formInline.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -57,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{ $t("thresholdSetting.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -69,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -78,7 +78,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -95,20 +95,28 @@
             >
           </template>
         </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -135,30 +143,55 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('thresholdSetting.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DIDS"
-          title="设备ID字符串"
+          :title="$t('thresholdSetting.tableLabel')[1]"
           sortable
           width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" show-overflow title="设备名称" sortable width="200">
+        <vxe-table-column
+          field="DName"
+          show-overflow
+          :title="$t('thresholdSetting.tableLabel')[2]"
+          sortable
+          width="200"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
-          title="设备管理员"
+          :title="$t('thresholdSetting.tableLabel')[3]"
           sortable
           width="200"
           show-overflow
+          show-header-overflow
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" show-overflow title="登记时间" sortable width="250">
+        <vxe-table-column
+          field="DTime"
+          show-overflow
+          show-header-overflow
+          :title="$t('thresholdSetting.tableLabel')[4]"
+          sortable
+          width="250"
+        >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="500">
+        <vxe-table-column
+          :title="$t('thresholdSetting.tableLabel')[5]"
+          width="500"
+          show-overflow
+          show-header-overflow
+        >
           <template v-slot="{ row }">
             <el-button
               plain
@@ -196,7 +229,7 @@
         <div style="height:500px;overflow:auto">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span>设备信息</span>
+              <span>{{$t('thresholdSetting.dialog.title')}}</span>
             </div>
             <el-form
               :inline="false"
@@ -206,7 +239,7 @@
               label-position="right"
             >
               <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-                <el-form-item label="设备编号:">
+                <el-form-item :label="$t('thresholdSetting.dialog.label')[0]">
                   <el-input
                     :readonly="true"
                     v-model="formList.BatteryIDS"
@@ -215,7 +248,7 @@
               </el-col>
 
               <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-                <el-form-item label="设备名称:">
+                <el-form-item :label="$t('thresholdSetting.dialog.label')[1]">
                   <el-input
                     :readonly="true"
                     v-model="formList.DName"
@@ -224,7 +257,7 @@
               </el-col>
 
               <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-                <el-form-item label="设备Bank">
+                <el-form-item :label="$t('thresholdSetting.dialog.label')[2]">
                   <el-select
                     v-model="formList.BankIndex"
                     @change="getBatteryBankCTRLParaCharts"
@@ -239,7 +272,7 @@
 
           <el-card class="box-card" style="margin-top:20px">
             <div slot="header" class="clearfix">
-              <span>{{ activeDialog.cardTop }}</span>
+              <span>{{ activeDialog.label }}{{$t('thresholdSetting.dialog.suffix')}}</span>
             </div>
             <el-form label-width="170px" label-position="left">
               <el-form-item
@@ -253,13 +286,15 @@
           </el-card>
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="submit">提交</el-button>
-          <el-button type="primary" @click="getBatteryBankCTRLParaCharts"
-            >刷新</el-button
-          >
-          <el-button type="primary" @click="dialogFormVisible = false"
-            >取消</el-button
-          >
+          <el-button type="primary" @click="submit">{{
+            $t("base.submit")
+          }}</el-button>
+          <el-button type="primary" @click="getBatteryBankCTRLParaCharts">{{
+            $t("base.refresh")
+          }}</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 详情Dialog结束 -->
@@ -284,35 +319,31 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '设备信息',
+      fileName: 'export',
       count: 0,
       loading: false,
       detail: [
         {
-          label: '电压门限',
+          label: this.$t('thresholdSetting.detail')[0],
           path: 'list1',
-          cardTop: '电压门限信息',
           BankAddress1: 0x2790,
           BankAddress2: 0x7790
         },
         {
-          label: '充电一般门限',
+          label: this.$t('thresholdSetting.detail')[1],
           path: 'list2',
-          cardTop: '充电一般门限信息',
           BankAddress1: 0x279c,
           BankAddress2: 0x779c
         },
         {
-          label: '充电过流门限',
+          label: this.$t('thresholdSetting.detail')[2],
           path: 'list3',
-          cardTop: '充电过流门限信息',
           BankAddress1: 0x27b6,
           BankAddress2: 0x77b6
         },
         {
-          label: '环境门限',
+          label: this.$t('thresholdSetting.detail')[3],
           path: 'list4',
-          cardTop: '环境门限信息',
           BankAddress1: 0x2934,
           BankAddress2: 0x7934
         }
@@ -328,213 +359,213 @@ export default {
       list: [],
       list1: [
         {
-          label: '单体过压停机',
+          label: this.$t('thresholdSetting.list1')[0],
           name: 'sINGLE_OVERVOLTAGE_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '单体过压停机恢复',
+          label: this.$t('thresholdSetting.list1')[1],
           name: 'sINGLE_OVERVOLTAGE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '总压过压停机',
+          label: this.$t('thresholdSetting.list1')[2],
           name: 'tOTAL_OVERVOLTAGE_SHUTDOWN_THRESHOLD',
           value: ''
         },
         {
-          label: '总压过压停机恢复',
+          label: this.$t('thresholdSetting.list1')[3],
           name: 'tOTAL_VOLTAGE_OVERVOLTAGE_SHUTDOWN_RECOVERY',
           value: ''
         },
         {
-          label: '主回路充电过流停机',
+          label: this.$t('thresholdSetting.list1')[4],
           name: 'mAIN_LOOP_CHARGING_OVERCURRENT_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '主回路充电过流停机恢复',
+          label: this.$t('thresholdSetting.list1')[5],
           name: 'mAIN_LOOP_CHARGING_OVERCURRENT_SHUTDOWN_RECOVER_THRESHOLD',
           value: ''
         },
         {
-          label: '单体欠停机压',
+          label: this.$t('thresholdSetting.list1')[6],
           name: 'sINGLE_UNIT_UNDER_SHUTDOWN_VOLTAGE_THRESHOLD',
           value: ''
         },
         {
-          label: '单体欠压停机恢复',
+          label: this.$t('thresholdSetting.list1')[7],
           name: 'sINGLE_UNIT_UNDER_VOLTAGE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '总压欠压停机',
+          label: this.$t('thresholdSetting.list1')[8],
           name: 'tOTAL_VOLTAGE_UNDERVOLTAGE_SHUTDOWN',
           value: ''
         },
         {
-          label: '总压欠压停机恢复',
+          label: this.$t('thresholdSetting.list1')[9],
           name: 'tOTAL_VOLTAGE_UNDER_VOLTAGE_SHUTDOWN_RECOVERY',
           value: ''
         },
         {
-          label: '主回路放电过流停机',
+          label: this.$t('thresholdSetting.list1')[10],
           name: 'mAIN_LOOP_DISCHARGE_OVERCURRENT_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '主回路放电过流停机恢复',
+          label: this.$t('thresholdSetting.list1')[11],
           name: 'mAIN_LOOP_DISCHARGE_OVER_CURRENT_SHUTDOWN_THRESHOLD',
           value: ''
         }
       ],
       list2: [
         {
-          label: '充电温度过高停机',
+          label: this.$t('thresholdSetting.list2')[0],
           name: 'cHARGING_TEMPERATURE_TOO_HIGH_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '充电温度过高停机恢复',
+          label: this.$t('thresholdSetting.list2')[1],
           name: 'eXCESSIVE_CHARGING_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '充电温度过低停机',
+          label: this.$t('thresholdSetting.list2')[2],
           name: 'cHARGING_TEMPERATURE_TOO_LOW_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '充电温度过低停机恢复',
+          label: this.$t('thresholdSetting.list2')[3],
           name: 'lOW_CHARGING_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: 'SOC过低停机',
+          label: this.$t('thresholdSetting.list2')[4],
           name: 'sOC_TOO_LOW_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: 'SOC过低停机恢复',
+          label: this.$t('thresholdSetting.list2')[5],
           name: 'sOC_TOO_LOW_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         }
       ],
       list3: [
         {
-          label: '充电过流三级停机保护',
+          label: this.$t('thresholdSetting.list3')[0],
           name:
             'cHARGING_OVERCURRENT_THREE_STAGE_SHUTDOWN_PROTECTION_THRESHOLD',
           value: ''
         },
         {
-          label: '充电过流三级停机恢复',
+          label: this.$t('thresholdSetting.list3')[1],
           name: 'cHARGING_OVERCURRENT_THREE_STAGE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '放电过流三级停机保护',
+          label: this.$t('thresholdSetting.list3')[2],
           name:
             'dISCHARGE_OVERCURRENT_THREE_STAGE_SHUTDOWN_PROTECTION_THRESHOLD',
           value: ''
         },
         {
-          label: '放电过流三级停机恢复',
+          label: this.$t('thresholdSetting.list3')[3],
           name: 'dISCHARGE_OVERCURRENT_THREE_STAGE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         }
       ],
       list4: [
         {
-          label: '功率温度过高停机',
+          label: this.$t('thresholdSetting.list4')[0],
           name: 'eXCESSIVE_POWER_TEMPERATURE_SHUTDOWN_THRESHOLD',
           value: ''
         },
         {
-          label: '功率温度过高停机恢复',
+          label: this.$t('thresholdSetting.list4')[1],
           name: 'eXCESSIVE_POWER_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '绝缘失效停机',
+          label: this.$t('thresholdSetting.list4')[2],
           name: 'iNSULATION_FAILURE_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '绝缘失效停机恢复',
+          label: this.$t('thresholdSetting.list4')[3],
           name: 'iNSULATION_FAILURE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '单体压差过高停机',
+          label: this.$t('thresholdSetting.list4')[4],
           name: 'sINGLE_UNIT_DIFFERENTIAL_PRESSURE_TOO_HIGH_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '单体压差过高停机恢复',
+          label: this.$t('thresholdSetting.list4')[5],
           name:
             'mONOMER_DIFFERENTIAL_PRESSURE_TOO_HIGH_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '总电压压差过高停机',
+          label: this.$t('thresholdSetting.list4')[6],
           name:
             'tHE_TOTAL_VOLTAGE_DIFFERENTIAL_IS_TOO_HIGH_TO_STOP_THE_MACHINE',
           value: ''
         },
         {
-          label: '总电压压差过高停机恢复',
+          label: this.$t('thresholdSetting.list4')[7],
           name:
             'tOTAL_VOLTAGE_DIFFERENTIAL_TOO_HIGH_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '放电过温停机',
+          label: this.$t('thresholdSetting.list4')[8],
           name: 'dISCHARGE_OVER_TEMPERATURE_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '放电过温停机恢复',
+          label: this.$t('thresholdSetting.list4')[9],
           name: 'dISCHARGE_OVER_TEMPERATURE_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '放电欠温停机',
+          label: this.$t('thresholdSetting.list4')[10],
           name: 'dISCHARGE_UNDERTEMPERATURE_SHUTDOWN_THRESHOLD',
           value: ''
         },
         {
-          label: '放电欠温停机恢复',
+          label: this.$t('thresholdSetting.list4')[11],
           name: 'dISCHARGE_UNDERTEMPERATURE_SHOTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '温差过高停机',
+          label: this.$t('thresholdSetting.list4')[12],
           name: 'hIGH_TEMPERATURE_DIFFERENCE_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '温差过高停机恢复',
+          label: this.$t('thresholdSetting.list4')[13],
           name: 'hIGH_TEMPERATURE_DIFFERENCE_DOWNTIME_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '环境温度过高停机',
+          label: this.$t('thresholdSetting.list4')[14],
           name: 'aMBIENT_TEMPERATURE_TOO_HIGH_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '环境温度过高停机恢复',
+          label: this.$t('thresholdSetting.list4')[15],
           name: 'aMBIENT_TEMPERATURE_TOO_HIGH_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         },
         {
-          label: '环境温度过低停机',
+          label: this.$t('thresholdSetting.list4')[16],
           name: 'aMBIENT_TEMPERATURE_TOO_LOW_STOP_THRESHOLD',
           value: ''
         },
         {
-          label: '环境温度过低停机恢复',
+          label: this.$t('thresholdSetting.list4')[17],
           name: 'aMBIENT_TEMPERATURE_TOO_LOW_SHUTDOWN_RECOVERY_THRESHOLD',
           value: ''
         }
@@ -606,7 +637,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {

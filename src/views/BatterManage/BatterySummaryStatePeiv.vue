@@ -67,9 +67,9 @@ export default {
               time => time.split('T')[1].split('.')[0]
             )
             for (let index = 1; index <= 12; index++) {
-              this.legend1.push('第' + index + '簇')
+              this.legend1.push(index)
               this.series1.push({
-                name: '第' + index + '簇',
+                name: index,
                 type: 'line',
                 data: data['Data' + index]
               })
@@ -100,7 +100,7 @@ export default {
             )
             for (let index = 1; index <= 12; index++) {
               this.series2.push({
-                name: '第' + index + '簇',
+                name: index,
                 type: 'line',
                 data: data['Data' + index]
               })

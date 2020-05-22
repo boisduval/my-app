@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>电池类型列表查询</span>
+            <span>{{ $t("batteryType.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,22 +14,22 @@
             label-width="80px"
             label-position="right"
           >
-            <el-form-item label="信息名称:">
+            <el-form-item :label="$t('batteryType.searchForm.label')[0]">
               <el-input
                 v-model="formInline.BName"
-                placeholder="请输入信息名称"
+                :placeholder="$t('batteryType.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="使用容量:">
+            <el-form-item :label="$t('batteryType.searchForm.label')[1]">
               <el-input
                 v-model="formInline.Capacity"
-                placeholder="请输入使用容量"
+                :placeholder="$t('batteryType.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="使用材料:">
+            <el-form-item :label="$t('batteryType.searchForm.label')[2]">
               <el-input
                 v-model="formInline.Materials"
-                placeholder="请输入使用材料"
+                :placeholder="$t('batteryType.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
             <el-form-item>
@@ -39,7 +39,7 @@
                   formInline.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -50,7 +50,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>电池类型</span>
+        <span>{{ $t("batteryType.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -62,7 +62,7 @@
           class="button-left"
         >
           <i class="el-icon-plus"></i>
-          添加
+          {{ $t("base.add") }}
         </el-button>
         <el-button
           type="primary"
@@ -71,7 +71,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.search") }}
         </el-button>
         <el-button
           type="primary"
@@ -80,7 +80,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.searchbtn") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -97,20 +97,28 @@
             </vxe-checkbox>
           </template>
         </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -137,101 +145,133 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('batteryType.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
-        <vxe-table-column field="BName" title="名称" width="100" show-overflow>
+        <vxe-table-column
+          field="BName"
+          :title="$t('batteryType.tableLabel')[1]"
+          width="100"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="Capacity"
-          title="电池容量"
+          :title="$t('batteryType.tableLabel')[2]"
           sortable
           width="100"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="StandardVoltage"
-          title="标准电压"
+          :title="$t('batteryType.tableLabel')[3]"
           sortable
           width="100"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="SelfDischarge"
-          title="自放电率"
+          :title="$t('batteryType.tableLabel')[4]"
           sortable
           width="100"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="Materials"
-          title="电池材料"
+          :title="$t('batteryType.tableLabel')[5]"
           width="100"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="VoltageMax"
-          title="最大电压"
+          :title="$t('batteryType.tableLabel')[6]"
           sortable
           width="100"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="VoltageMin"
-          title="最小电压"
+          :title="$t('batteryType.tableLabel')[7]"
           sortable
           width="100"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="TemperatureMax"
-          title="最大温度"
+          :title="$t('batteryType.tableLabel')[8]"
           sortable
           width="100"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="TemperatureMin"
-          title="最小温度"
+          :title="$t('batteryType.tableLabel')[9]"
           sortable
           width="100"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="ChargingRatio"
-          title="充电比率"
+          :title="$t('batteryType.tableLabel')[10]"
           sortable
           width="100"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="DischargeRate"
-          title="放电比率"
+          :title="$t('batteryType.tableLabel')[11]"
           sortable
           width="100"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="WriteTime"
-          title="写入时间"
+          :title="$t('batteryType.tableLabel')[12]"
           sortable
           width="180"
+          how-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right">
+        <vxe-table-column
+          :title="$t('batteryType.tableLabel')[13]"
+          width="200"
+          fixed="right"
+          how-overflow
+          show-header-overflow
+        >
           <template v-slot="{ row }">
-            <el-button size="mini" @click="showDialog(row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="deleteItem(row)"
-              >删除</el-button
-            >
+            <el-button size="mini" @click="showDialog(row)">{{
+              $t("base.edit")
+            }}</el-button>
+            <el-button size="mini" type="danger" @click="deleteItem(row)">{{
+              $t("base.del")
+            }}</el-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -251,7 +291,7 @@
 
       <!-- 编辑表单开始 -->
       <el-dialog
-        title="修改电池类型"
+        :title="$t('batteryType.editDialog.title')"
         :visible.sync="dialogFormVisible"
         class="abow_dialog"
         :close-on-click-modal="false"
@@ -259,21 +299,21 @@
         <div style="max-height:500px;overflow:auto;">
           <el-form :model="form" :inline="true" :rules="rules" ref="ruleForm1">
             <el-form-item
-              label="电池名称"
+              :label="$t('batteryType.editDialog.label')[0]"
               :label-width="formLabelWidth"
               prop="BName"
             >
               <el-input v-model="form.BName" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item
-              label="电池容量"
+              :label="$t('batteryType.editDialog.label')[1]"
               :label-width="formLabelWidth"
               prop="Capacity"
             >
               <el-input v-model="form.Capacity" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item
-              label="电池内阻"
+              :label="$t('batteryType.editDialog.label')[2]"
               :label-width="formLabelWidth"
               prop="InternalResistance"
             >
@@ -283,7 +323,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="自放电率"
+              :label="$t('batteryType.editDialog.label')[3]"
               :label-width="formLabelWidth"
               prop="SelfDischarge"
             >
@@ -293,7 +333,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="电池材料"
+              :label="$t('batteryType.editDialog.label')[4]"
               :label-width="formLabelWidth"
               prop="batteryMaterIDAdd"
             >
@@ -307,7 +347,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="标准电压"
+              :label="$t('batteryType.editDialog.label')[5]"
               :label-width="formLabelWidth"
               prop="StandardVoltage"
             >
@@ -317,21 +357,21 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="最大电压"
+              :label="$t('batteryType.editDialog.label')[6]"
               :label-width="formLabelWidth"
               prop="VoltageMax"
             >
               <el-input v-model="form.VoltageMax" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item
-              label="最小电压"
+              :label="$t('batteryType.editDialog.label')[7]"
               :label-width="formLabelWidth"
               prop="VoltageMin"
             >
               <el-input v-model="form.VoltageMin" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item
-              label="最大温度"
+              :label="$t('batteryType.editDialog.label')[8]"
               :label-width="formLabelWidth"
               prop="TemperatureMax"
             >
@@ -341,7 +381,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="最小温度"
+              :label="$t('batteryType.editDialog.label')[9]"
               :label-width="formLabelWidth"
               prop="TemperatureMin"
             >
@@ -351,7 +391,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="充电比率"
+              :label="$t('batteryType.editDialog.label')[10]"
               :label-width="formLabelWidth"
               prop="ChargingRatio"
             >
@@ -361,7 +401,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="放电比率"
+              :label="$t('batteryType.editDialog.label')[11]"
               :label-width="formLabelWidth"
               prop="DischargeRate"
             >
@@ -373,15 +413,19 @@
           </el-form>
         </div>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="edit('ruleForm1')">确 定</el-button>
+          <el-button @click="dialogFormVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="edit('ruleForm1')">{{
+            $t("base.submit")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 编辑表单结束 -->
 
       <!-- 添加表单开始 -->
       <el-dialog
-        title="添加电池类型"
+        :title="$t('batteryType.addDialog.title')"
         :visible.sync="dialogFormAddVisible"
         :close-on-click-modal="false"
       >
@@ -393,14 +437,14 @@
             ref="ruleForm"
           >
             <el-form-item
-              label="电池名称"
+              :label="$t('batteryType.addDialog.label')[0]"
               :label-width="formLabelWidth"
               prop="BName"
             >
               <el-input v-model="formAdd.BName" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item
-              label="电池容量"
+              :label="$t('batteryType.addDialog.label')[1]"
               :label-width="formLabelWidth"
               prop="Capacity"
             >
@@ -410,7 +454,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="电池内阻"
+              :label="$t('batteryType.addDialog.label')[2]"
               :label-width="formLabelWidth"
               prop="InternalResistance"
             >
@@ -420,7 +464,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="自放电率"
+              :label="$t('batteryType.addDialog.label')[3]"
               :label-width="formLabelWidth"
               prop="SelfDischarge"
             >
@@ -430,7 +474,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="电池材料"
+              :label="$t('batteryType.addDialog.label')[4]"
               :label-width="formLabelWidth"
               prop="batteryMaterIDAdd"
             >
@@ -444,7 +488,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="标准电压"
+              :label="$t('batteryType.addDialog.label')[5]"
               :label-width="formLabelWidth"
               prop="StandardVoltage"
             >
@@ -454,7 +498,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="最大电压"
+              :label="$t('batteryType.addDialog.label')[6]"
               :label-width="formLabelWidth"
               prop="VoltageMax"
             >
@@ -464,7 +508,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="最小电压"
+              :label="$t('batteryType.addDialog.label')[7]"
               :label-width="formLabelWidth"
               prop="VoltageMin"
             >
@@ -474,7 +518,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="最大温度"
+              :label="$t('batteryType.addDialog.label')[8]"
               :label-width="formLabelWidth"
               prop="TemperatureMax"
             >
@@ -484,7 +528,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="最小温度"
+              :label="$t('batteryType.addDialog.label')[9]"
               :label-width="formLabelWidth"
               prop="TemperatureMin"
             >
@@ -494,7 +538,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="充电比率"
+              :label="$t('batteryType.addDialog.label')[10]"
               :label-width="formLabelWidth"
               prop="ChargingRatio"
             >
@@ -504,7 +548,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              label="放电比率"
+              :label="$t('batteryType.addDialog.label')[11]"
               :label-width="formLabelWidth"
               prop="DischargeRate"
             >
@@ -517,10 +561,12 @@
         </div>
 
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormAddVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addHttp('ruleForm')"
-            >确 定</el-button
-          >
+          <el-button @click="dialogFormAddVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="addHttp('ruleForm')">{{
+            $t("base.submit")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 添加表单结束 -->
@@ -536,9 +582,9 @@ export default {
       // 包含小数的数字
       let reg = /^[+-]?(0|([1-9]\d*))(\.\d+)?$/g
       if (value === '') {
-        callback(new Error('请输入内容'))
+        callback(new Error(this.$t('batteryType.errorTip')[0]))
       } else if (!reg.test(value)) {
-        callback(new Error('请输入数字'))
+        callback(new Error(this.$t('batteryType.errorTip')[1]))
       } else {
         callback()
       }
@@ -555,7 +601,7 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '电池信息',
+      fileName: 'export',
       count: 0,
       loading: false,
       dialogFormVisible: false,
@@ -598,7 +644,11 @@ export default {
       batteryMaterIDAdd: '',
       rules: {
         BName: [
-          { required: true, message: '电池名称不能为空', trigger: 'blur' }
+          {
+            required: true,
+            message: this.$t('batteryType.errorTip')[2],
+            trigger: 'blur'
+          }
         ],
         Capacity: [
           { required: true, validator: valiNumberPass1, trigger: 'blur' }
@@ -703,7 +753,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -775,11 +825,15 @@ export default {
 
     // 删除
     deleteItem (row) {
-      this.$confirm(`是否删除[ ${row.DName} ]`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
+      this.$confirm(
+        `${this.$t('base.delConfirm.tip')}${row.DName}`,
+        this.$t('base.delConfirm.title'),
+        {
+          confirmButtonText: this.$t('base.delConfirm.yes'),
+          cancelButtonText: this.$t('base.delConfirm.no'),
+          type: 'warning'
+        }
+      )
         .then(() => {
           var name = row.BName
           var id = row.SystemID
@@ -814,7 +868,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('base.delConfirm.cancelTip')
           })
         })
     },
@@ -892,7 +946,7 @@ export default {
 .menu-wrapper {
   display: none;
   position: absolute;
-  width: 150px;
+  width: 240px;
   top: 16px;
   right: 0;
   z-index: 1000;

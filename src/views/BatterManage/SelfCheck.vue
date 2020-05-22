@@ -4,7 +4,7 @@
       <!-- 基础信息 -->
       <!-- 基础信息 -->
       <div slot="header" class="clearfix">
-        <span>设备基础信息</span>
+        <span>{{ $t("selfCheck.searchTitle") }}</span>
       </div>
       <el-form label-width="80px" :inline="true">
         <el-form-item
@@ -14,7 +14,7 @@
         >
           <el-input :value="item.value" :readonly="true"></el-input>
         </el-form-item>
-        <el-form-item label="设备Bank">
+        <el-form-item :label="$t('selfCheck.formLabel')[0]">
           <el-select v-model="bank">
             <el-option label="Bank1" value="0"></el-option>
             <el-option label="Bank2" value="1"></el-option>
@@ -24,96 +24,107 @@
     </el-card>
     <el-card class="box-card">
       <!-- 详细信息 -->
-        <!-- 表格操作栏开始 -->
-          <div class="table-oper">
-            <el-button
-              type="primary"
-              size="small"
-              @click="getData(paramsSC)"
-              class="button-left"
-            >
-              <i class="el-icon-refresh-right"></i>
-              刷新
-            </el-button>
-            <el-button class="menu-btn">
-              <i class="fa fa-list"></i>
-            </el-button>
-            <div class="menu-wrapper">
-              <template v-for="(column, index) in customColumns">
-                <vxe-checkbox
-                  v-if="column.property"
-                  class="checkbox-item"
-                  v-model="column.visible"
-                  :key="index"
-                  @change="$refs.xTable.refreshColumn()"
-                  >{{ column.title }}</vxe-checkbox
-                >
-              </template>
-            </div>
-                <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
-              <i class="fa fa-download"></i>
-            </el-button>
-            <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
-              <i class="fa fa-print"></i>
-            </el-button>
-            <!-- 导出操作开始 -->
-            <el-popover ref="export" placement="bottom" width="100" trigger="hover">
-              <ul id="export">
-                <li @click="exportDataEvent">
-                  {{$t('base.export.csv')}}
-                </li>
-                <li @click="exportExcel">
-                  {{$t('base.export.excel')}}
-                </li>
-              </ul>
-            </el-popover>
-            <!-- 导出操作结束 -->
-          </div>
-          <!-- 表格操作栏结束 -->
-          <!-- 表格开始 -->
-          <vxe-table
-            :data="mAIN_CONTROL_SELF_CHECK_STATUS"
-            border
-            :customs.sync="customColumns"
-            ref="xTable"
-            v-loading="loading"
-            element-loading-background="rgba(0, 0, 0, 0)"
-            resizable
-            highlight-hover-row
-            highlight-current-row
-            align="center"
-          >
-            <vxe-table-column
-              type="checkbox"
-              width="50"
-              fixed="left"
-              align="center"
-            ></vxe-table-column>
-            <vxe-table-column
-              type="seq"
-              width="50"
-              title="序号"
-              fixed="left"
-              align="center"
-            >
-            </vxe-table-column>
-            <vxe-table-column
-              v-for="(config, index) in tableColumn"
+      <!-- 表格操作栏开始 -->
+      <div class="table-oper">
+        <el-button
+          type="primary"
+          size="small"
+          @click="getData(paramsSC)"
+          class="button-left"
+        >
+          <i class="el-icon-refresh-right"></i>
+          {{ $t("base.searchbtn") }}
+        </el-button>
+        <el-button class="menu-btn">
+          <i class="fa fa-list"></i>
+        </el-button>
+        <div class="menu-wrapper">
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
               :key="index"
-              v-bind="config"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
             >
-              <template v-slot="{ row }">
-                <template v-if="!row[index]">
-                  <el-tag type="success" size="small" >正常</el-tag>
-                </template>
-                <template v-else>
-                  <el-tag type="warning" size="small">告警</el-tag>
-                </template>
-              </template>
-            </vxe-table-column>
-
-          </vxe-table>
-          <!-- 表格结束 -->
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
+          <i class="fa fa-download"></i>
+        </el-button>
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
+          <i class="fa fa-print"></i>
+        </el-button>
+        <!-- 导出操作开始 -->
+        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
+          <ul id="export">
+            <li @click="exportDataEvent">
+              {{ $t("base.export.csv") }}
+            </li>
+            <li @click="exportExcel">
+              {{ $t("base.export.excel") }}
+            </li>
+          </ul>
+        </el-popover>
+        <!-- 导出操作结束 -->
+      </div>
+      <!-- 表格操作栏结束 -->
+      <!-- 表格开始 -->
+      <vxe-table
+        :data="mAIN_CONTROL_SELF_CHECK_STATUS"
+        border
+        :customs.sync="customColumns"
+        ref="xTable"
+        v-loading="loading"
+        element-loading-background="rgba(0, 0, 0, 0)"
+        resizable
+        highlight-hover-row
+        highlight-current-row
+        align="center"
+      >
+        <vxe-table-column
+          type="checkbox"
+          width="50"
+          fixed="left"
+          align="center"
+        ></vxe-table-column>
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('selfCheck.tableLabel')[0]"
+          fixed="left"
+          align="center"
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          v-for="(config, index) in tableColumn"
+          :key="index"
+          v-bind="config"
+        >
+          <template v-slot="{ row }">
+            <template v-if="!row[index]">
+              <el-tag type="success" size="small">{{
+                $t("selfCheck.state")[0]
+              }}</el-tag>
+            </template>
+            <template v-else>
+              <el-tag type="warning" size="small">{{
+                $t("selfCheck.state")[1]
+              }}</el-tag>
+            </template>
+          </template>
+        </vxe-table-column>
+      </vxe-table>
+      <!-- 表格结束 -->
     </el-card>
   </div>
 </template>
@@ -131,7 +142,8 @@ export default {
       customColumns: [],
       loading: false,
       api: '/api/Devices/GetRegistrationEquipment',
-      tableColumn: []
+      tableColumn: [],
+      fileName: 'export'
     }
   },
   computed: {
@@ -189,7 +201,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -228,23 +240,26 @@ export default {
           for (var key in this.data) {
             switch (key) {
               case 'DIDS':
-                this.baseIfo.push({ label: '设备编号', value: this.data[key] })
+                this.baseIfo.push({
+                  label: this.$t('selfCheck.formLabel')[1],
+                  value: this.data[key]
+                })
                 break
               case 'DICCID':
                 this.baseIfo.push({
-                  label: 'ICCID编号',
+                  label: this.$t('selfCheck.formLabel')[2],
                   value: this.data[key]
                 })
                 break
               case 'DVIN':
                 this.baseIfo.push({
-                  label: 'VIN编码',
+                  label: this.$t('selfCheck.formLabel')[3],
                   value: this.data[key]
                 })
                 break
               case 'DName':
                 this.baseIfo.push({
-                  label: '设备名称',
+                  label: this.$t('selfCheck.formLabel')[3],
                   value: this.data[key]
                 })
                 break
@@ -258,10 +273,19 @@ export default {
 
     setData () {
       this.tableColumn = [
-        { field: 'EEPROM_ERRCODE', title: 'EEPROM故障' },
-        { field: 'MASTER_ID_OUT_OF_BOUNDS', title: '主控ID越界' },
-        { field: 'PCS_STANDBY_FAILED', title: 'PCS待机失败' },
-        { field: 'FLASH_SELF_CHECK_STATUS', title: 'FLASH自检状态' }
+        { field: 'EEPROM_ERRCODE', title: this.$t('selfCheck.tableLabel')[1] },
+        {
+          field: 'MASTER_ID_OUT_OF_BOUNDS',
+          title: this.$t('selfCheck.tableLabel')[2]
+        },
+        {
+          field: 'PCS_STANDBY_FAILED',
+          title: this.$t('selfCheck.tableLabel')[3]
+        },
+        {
+          field: 'FLASH_SELF_CHECK_STATUS',
+          title: this.$t('selfCheck.tableLabel')[4]
+        }
       ]
     }
   }
