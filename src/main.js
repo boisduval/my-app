@@ -60,7 +60,7 @@ Vue.component('BorderLeft', BorderLeft)
 Vue.component('BorderRight', BorderRight)
 
 const i18n = new VueI18n({
-  locale: 'en',
+  locale: 'zh',
   messages: {
     'zh': require('@/assets/lang/zh.json'),
     'en': require('@/assets/lang/en.json')

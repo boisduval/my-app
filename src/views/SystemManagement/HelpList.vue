@@ -227,7 +227,7 @@
 
       <!-- 添加表单开始 -->
       <el-dialog
-        width="40%"
+        width="70%"
         :close-on-click-modal="false"
         :visible.sync="dialogFormVisible"
         title="添加帮助"
@@ -240,12 +240,17 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="帮助内容">
-            <el-input
-              type="textarea"
-              v-model="addForm.Message"
-              placeholder="请输入帮助内容"
-              :autosize="{ minRows: 4, maxRows: 8 }"
-            ></el-input>
+            <quill-editor
+                style="min-height:200px"
+                v-model="addForm.Message"
+                ref="myQuillEditor"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @change="onEditorChange($event)"
+                class="editor"
+              >
+              </quill-editor>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -261,7 +266,7 @@
 
       <!-- 编辑表单开始 -->
       <el-dialog
-        width="40%"
+        width="70%"
         :close-on-click-modal="false"
         :visible.sync="dialogFormEditVisible"
         title="编辑帮助"
@@ -274,12 +279,17 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="帮助内容">
-            <el-input
-              type="textarea"
-              v-model="editForm.Message"
-              placeholder="请输入帮助内容"
-              :autosize="{ minRows: 4, maxRows: 8 }"
-            ></el-input>
+            <quill-editor
+                style="min-height:200px"
+                v-model="editForm.Message"
+                ref="myQuillEditor"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @change="onEditorChange($event)"
+                class="editor"
+              >
+              </quill-editor>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -327,7 +337,14 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { quillEditor } from 'vue-quill-editor' // 调用编辑器
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 export default {
+  components: {
+    quillEditor
+  },
   data () {
     return {
       searchForm: {
@@ -362,7 +379,33 @@ export default {
         display: 'block',
         marginBottom: '16px'
       },
-      detailInfo: ''
+      detailInfo: '',
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], // 加粗，斜体，下划线，删除线
+            ['blockquote', 'code-block'], // 引用，代码块
+
+            // [{ header: 1 }, { header: 2 }], // 标题，键值对的形式；1、2表示字体大小
+            [{ list: 'ordered' }, { list: 'bullet' }], // 列表
+            [{ script: 'sub' }, { script: 'super' }], // 上下标
+            [{ indent: '-1' }, { indent: '+1' }], // 缩进
+            [{ direction: 'rtl' }], // 文本方向
+
+            [{ size: ['small', false, 'large', 'huge'] }], // 字体大小
+            // [{ header: [1, 2, 3, 4, 5, 6, false] }], // 几级标题
+
+            [{ color: [] }, { background: [] }], // 字体颜色，字体背景颜色
+            [{ font: [] }], // 字体
+            [{ align: [] }], // 对齐方式
+
+            ['clean'], // 清除字体样式
+            ['image', 'video'] // 上传图片、上传视频
+          ]
+        },
+        theme: 'snow',
+        placeholder: '请输入正文'
+      }
     }
   },
   computed: {
@@ -659,7 +702,13 @@ export default {
         .catch(err => {
           console.error(err)
         })
-    }
+    },
+    onEditorReady (editor) {
+      // 准备编辑器
+    },
+    onEditorBlur () {}, // 失去焦点事件
+    onEditorFocus () {}, // 获得焦点事件
+    onEditorChange () {} // 内容改变事件
   }
 }
 </script>
@@ -724,5 +773,11 @@ export default {
   color: #606266;
   border-color: #dcdfe6;
   background-color: #fff;
+}
+.ql-container {
+  height: 200px;
+}
+.editor {
+  line-height: 24px;
 }
 </style>
