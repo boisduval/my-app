@@ -4,18 +4,24 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 
-const lang = JSON.parse(localStorage.getItem('vuex'))
-let val
-if (lang && lang.lang) {
-  val = lang.lang.currentLang
-} else {
-  val = 0
-}
 // axios默认配置
 axios.defaults.timeout = 10000 // 超时时间
 axios.defaults.baseURL = 'http://sf28090049.wicp.vip:8082/conn' // 默认地址
-axios.defaults.headers.common['Language'] = val
+// axios.defaults.headers.common['Language'] = val
 // axios.defaults.baseURL = 'http://60.186.197.171:8081'
+axios.interceptors.request.use(
+  config => {
+    const lang = JSON.parse(localStorage.getItem('vuex'))
+    let val
+    if (lang.hasOwnProperty('lang') && lang.lang.hasOwnProperty('currentLang')) {
+      val = lang.lang.currentLang
+    } else {
+      val = 0
+    }
+    config.headers['Language'] = val
+    return config
+  }
+)
 // 路由响应拦截
 // http response 拦截器
 axios.interceptors.response.use(

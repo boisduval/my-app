@@ -1088,5 +1088,13 @@
             ""
         ],
         "title": "Name"
+    },
+    "service": {
+        "print": "Print the terms"
+    },
+    "serviceManage": {
+        "title": "Terms of Service",
+        "label": "Language Type",
+        "update": "Update"
     }
 }

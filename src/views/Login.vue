@@ -12,7 +12,7 @@
             <!-- 头部 -->
             <div class="box-top">
               <div class="welcome">
-                <h3>{{$t('login.headline')}}</h3>
+                <h3>{{$t('login.headline')}} {{footerInfo.ItemNumber}}</h3>
                 <p>{{$t('login.tip')}}</p>
               </div>
               <div class="wel-right">
@@ -332,6 +332,7 @@ export default {
         })
     },
     handleCommand (command) {
+      console.log(command)
       this.setCurrentLang(command)
       this.getFooterInfo()
     }

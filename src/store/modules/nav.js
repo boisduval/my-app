@@ -486,6 +486,15 @@ const state = {
             DataIndex: '1000',
             Text: '令牌管理',
             Use: true
+          },
+          {
+            ID: '48',
+            MID: '7',
+            Href: 'serviceManage',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '服务条款',
+            Use: true
           }
         ]
       }

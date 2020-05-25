@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Service from '../views/Service.vue'
 import ErrorPage from '../views/ErrorPage.vue'
 import ViewUI from 'view-design'
 Vue.use(ViewUI)
@@ -478,7 +479,7 @@ const routes = [
       {
         path: '/peakAndValleyPrice',
         name: 'peakAndValleyPrice',
-        component: () => import(/* webpackChunkName: "SystemManagementPeakAndValleyPrice" */ '../views/SystemManagement/PeakAndValleyPrice.vue'),
+        component: () => import(/* webpackChunkName: "PeakAndValleyPrice" */ '../views/SystemManagement/PeakAndValleyPrice.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -486,7 +487,7 @@ const routes = [
       {
         path: '/meunManagement',
         name: 'meunManagement',
-        component: () => import(/* webpackChunkName: "SystemManagementMeunManagement" */ '../views/SystemManagement/MeunManagement.vue'),
+        component: () => import(/* webpackChunkName: "MeunManagement" */ '../views/SystemManagement/MeunManagement.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -494,7 +495,7 @@ const routes = [
       {
         path: '/dicSystem',
         name: 'dicSystem',
-        component: () => import(/* webpackChunkName: "SystemManagementDicSystem" */ '../views/SystemManagement/DicSystem.vue'),
+        component: () => import(/* webpackChunkName: "DicSystem" */ '../views/SystemManagement/DicSystem.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -502,7 +503,7 @@ const routes = [
       {
         path: '/dictionaryData',
         name: 'dictionaryData',
-        component: () => import(/* webpackChunkName: "SystemManagementDictionaryData" */ '../views/SystemManagement/DictionaryData.vue'),
+        component: () => import(/* webpackChunkName: "DictionaryData" */ '../views/SystemManagement/DictionaryData.vue'),
         meta: {
           keepAlive: false // 不需要被缓存
         }
@@ -518,7 +519,7 @@ const routes = [
       {
         path: '/perFormance',
         name: 'perFormance',
-        component: () => import(/* webpackChunkName: "SystemManagementPerFormance" */ '../views/SystemManagement/PerFormance.vue'),
+        component: () => import(/* webpackChunkName: "PerFormance" */ '../views/SystemManagement/PerFormance.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         },
@@ -544,7 +545,7 @@ const routes = [
       {
         path: '/helpList',
         name: 'helpList',
-        component: () => import(/* webpackChunkName: "SystemManagementHelpList" */ '../views/SystemManagement/HelpList.vue'),
+        component: () => import(/* webpackChunkName: "HelpList" */ '../views/SystemManagement/HelpList.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -552,7 +553,15 @@ const routes = [
       {
         path: '/tokenManage',
         name: 'tokenManage',
-        component: () => import(/* webpackChunkName: "SystemManagementTokenManage" */ '../views/SystemManagement/TokenManage.vue'),
+        component: () => import(/* webpackChunkName: "TokenManage" */ '../views/SystemManagement/TokenManage.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
+        path: '/serviceManage',
+        name: 'serviceManage',
+        component: () => import(/* webpackChunkName: "ServiceManage" */ '../views/SystemManagement/ServiceManage.vue'),
         meta: {
           keepAlive: false // 需要被缓存
         }
@@ -861,6 +870,11 @@ const routes = [
     component: Login
   },
   {
+    path: '/service',
+    name: 'service',
+    component: Service
+  },
+  {
     path: '*',
     name: 'errorPage',
     component: ErrorPage,
@@ -885,7 +899,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // ...
   ViewUI.LoadingBar.start()
-  if (to.name === 'login') {
+  if (to.name === 'login' || to.name === 'service') {
     next()
   } else {
     var AutoSystemID = localStorage.getItem('AutoSystemID')
