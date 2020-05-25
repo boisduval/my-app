@@ -351,7 +351,6 @@ export default {
     ...mapState('home', ['userIfo']),
     ...mapState('tabs', ['openTab', 'detailLabel']),
     ...mapState('nav', ['asideItem']),
-    ...mapState('lang', ['lang', 'currentLang']),
     activeIndex: {
       get () {
         return this.$store.state.tabs.activeIndex

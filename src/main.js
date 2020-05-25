@@ -8,6 +8,12 @@ import jquery from 'jquery'
 import './plugins/iview.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import zh from '@/assets/lang/zh'
+import en from '@/assets/lang/en'
+// import enLocale from 'element-ui/lib/locale/lang/en'
+import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+import zhTwLocale from 'element-ui/lib/locale/lang/zh-TW'
+import enLocale from 'element-ui/lib/locale/lang/en'
 import './assets/css/base.css'
 import 'element-ui/lib/theme-chalk/base.css'
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
@@ -39,7 +45,9 @@ import BorderLeft from './components/BorderLeft.vue'
 import BorderRight from './components/BorderRight.vue'
 
 Vue.config.productionTip = false
-Vue.use(ElementUI)
+Vue.use(ElementUI, {
+  i18n: (key, value) => i18n.t(key, value)
+})
 Vue.use(VueAxios, axios)
 Vue.use(VXETable)
 Vue.use(animate)
@@ -60,10 +68,11 @@ Vue.component('BorderLeft', BorderLeft)
 Vue.component('BorderRight', BorderRight)
 
 const i18n = new VueI18n({
-  locale: 'zh',
+  locale: localStorage.lang || 'zh',
   messages: {
-    'zh': require('@/assets/lang/zh.json'),
-    'en': require('@/assets/lang/en.json')
+    'zh': { ...zh, ...zhLocale },
+    'en': { ...en, ...enLocale },
+    'zh-TW': { ...zhTwLocale }
   }
 })
 new Vue({

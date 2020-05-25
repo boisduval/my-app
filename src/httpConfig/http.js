@@ -11,13 +11,7 @@ axios.defaults.baseURL = 'http://sf28090049.wicp.vip:8082/conn' // 默认地址
 // axios.defaults.baseURL = 'http://60.186.197.171:8081'
 axios.interceptors.request.use(
   config => {
-    const lang = JSON.parse(localStorage.getItem('vuex'))
-    let val
-    if (lang.hasOwnProperty('lang') && lang.lang.hasOwnProperty('currentLang')) {
-      val = lang.lang.currentLang
-    } else {
-      val = 0
-    }
+    let val = localStorage.langNum || 0
     config.headers['Language'] = val
     return config
   }

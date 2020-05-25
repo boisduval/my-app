@@ -81,8 +81,7 @@ import returnCitySN from 'returnCitySN'
 import { mapState, mapMutations } from 'vuex'
 export default {
   computed: {
-    ...mapState('home', ['userIfo']),
-    ...mapState('lang', ['lang', 'currentLang'])
+    ...mapState('home', ['userIfo'])
   },
   data () {
     return {
@@ -122,12 +121,12 @@ export default {
       broName1: '',
       userAgent: '',
       footerInfo: '',
-      spinShow: false
+      spinShow: false,
+      lang: ''
     }
   },
   methods: {
     ...mapMutations('home', ['setUserIfo']),
-    ...mapMutations('lang', ['setLang', 'setCurrentLang']),
     bro () {
       // 获取浏览器类型和版本号
       var userAgent = window.navigator.userAgent // 包含以下属性中所有或一部分的字符串：appCodeName,appName,appVersion,language,platform
@@ -325,7 +324,8 @@ export default {
         .then(res => {
           this.footerInfo = res.data.data
           document.title = this.footerInfo.SystemText
-          this.setLang(this.footerInfo.Languages)
+          localStorage.setItem('langList', JSON.stringify(this.footerInfo.Languages))
+          this.lang = this.footerInfo.Languages
         })
         .catch(err => {
           console.error(err)
@@ -333,7 +333,19 @@ export default {
     },
     handleCommand (command) {
       console.log(command)
-      this.setCurrentLang(command)
+      switch (command) {
+        case '0':
+          localStorage.setItem('lang', 'zh')
+          break
+        case '1':
+          localStorage.setItem('lang', 'zh-TW')
+          break
+        case '2':
+          localStorage.setItem('lang', 'en')
+          break
+      }
+      localStorage.setItem('langNum', command)
+      this.$i18n.locale = localStorage.lang
       this.getFooterInfo()
     }
   },

@@ -10,8 +10,7 @@ const vuexLocal = new VuexPersistence({
   reducer (val) {
     return {
       // 只储存state中的user
-      home: val.home,
-      lang: val.lang
+      home: val.home
     }
   }
 })
