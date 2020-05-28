@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <!-- 基础信息 -->
       <div slot="header" class="clearfix">
-        <span>设备信息</span>
+        <span>{{ $t("batterDetail.title") }}</span>
       </div>
       <el-form label-width="80px" :inline="true">
         <el-form-item
@@ -12,9 +12,13 @@
           :label="item.label"
           style="width:350px"
         >
-          <el-input :value="item.value" :readonly="true" style="width:250px"></el-input>
+          <el-input
+            :value="item.value"
+            :readonly="true"
+            style="width:250px"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="设备Bank" style="width:400px">
+        <el-form-item :label="$t('batterDetail.label')[0]" style="width:400px">
           <el-select v-model="bank" style="width:250px">
             <el-option label="Bank1" value="0"></el-option>
             <el-option label="Bank2" value="1"></el-option>
@@ -49,23 +53,23 @@ export default {
       activeName: 'GetBatterySingleSOCInformationBar3DCharts',
       list: [
         {
-          label: 'SOC实时状态',
+          label: this.$t('batterDetail.list')[0],
           name: 'GetBatterySingleSOCInformationBar3DCharts'
         },
         {
-          label: 'SOH实时状态',
+          label: this.$t('batterDetail.list')[1],
           name: 'GetBatterySingleSOHInformationBar3DCharts'
         },
         {
-          label: '内阻实时状态',
+          label: this.$t('batterDetail.list')[2],
           name: 'GetBatterySingleResistanceInformationBar3DCharts'
         },
         {
-          label: '电压实时状态',
+          label: this.$t('batterDetail.list')[3],
           name: 'GetBatterySingleVoltageInformationBar3DCharts'
         },
         {
-          label: '温度实时状态',
+          label: this.$t('batterDetail.list')[4],
           name: 'GetBatterySingleTemperatureInformationBar3DCharts'
         }
       ],
@@ -101,17 +105,20 @@ export default {
           for (var key in this.data) {
             switch (key) {
               case 'DIDS':
-                this.baseIfo.push({ label: '设备ID', value: this.data[key] })
+                this.baseIfo.push({
+                  label: this.$t('batterDetail.label')[1],
+                  value: this.data[key]
+                })
                 break
               case 'DICCID':
                 this.baseIfo.push({
-                  label: 'ICCID编号',
+                  label: this.$t('batterDetail.label')[2],
                   value: this.data[key]
                 })
                 break
               case 'DName':
                 this.baseIfo.push({
-                  label: '设备名称',
+                  label: this.$t('batterDetail.label')[3],
                   value: this.data[key]
                 })
                 break

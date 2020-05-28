@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <!-- 基础信息 -->
       <div slot="header" class="clearfix">
-        <span>设备基础信息</span>
+        <span>{{ $t("deviceDetail.searchTitle") }}</span>
       </div>
       <el-form label-width="80px" :inline="true">
         <el-form-item
@@ -12,7 +12,11 @@
           :key="index"
           :label="item.label"
         >
-          <el-input :value="item.value" :readonly="true" style="width:250px"></el-input>
+          <el-input
+            :value="item.value"
+            :readonly="true"
+            style="width:250px"
+          ></el-input>
         </el-form-item>
       </el-form>
     </el-card>
@@ -43,31 +47,31 @@ export default {
       activeName: 'EquipmentInfo',
       list: [
         {
-          label: '设备信息',
+          label: this.$t('deviceDetail.list')[0],
           name: 'EquipmentInfo'
         },
         {
-          label: '网络参数',
+          label: this.$t('deviceDetail.list')[1],
           name: 'NetworkParams'
         },
         {
-          label: '拓展参数',
+          label: this.$t('deviceDetail.list')[2],
           name: 'ExpandParams'
         },
         {
-          label: '串口参数',
+          label: this.$t('deviceDetail.list')[3],
           name: 'SerialParams'
         },
         {
-          label: '挂载参数',
+          label: this.$t('deviceDetail.list')[4],
           name: 'MountedParams'
         },
         {
-          label: '预设置电池参数',
+          label: this.$t('deviceDetail.list')[5],
           name: 'PreBatteryParams'
         },
         {
-          label: '电池参数',
+          label: this.$t('deviceDetail.list')[6],
           name: 'BatteryParams'
         }
       ]
@@ -108,25 +112,25 @@ export default {
             switch (key) {
               case 'DIDS':
                 this.baseIfo.push({
-                  label: '设备编号',
+                  label: this.$t('deviceDetail.formLabel')[0],
                   value: this.data[key]
                 })
                 break
               case 'DICCID':
                 this.baseIfo.push({
-                  label: 'ICCID编号',
+                  label: this.$t('deviceDetail.formLabel')[1],
                   value: this.data[key]
                 })
                 break
               case 'DName':
                 this.baseIfo.push({
-                  label: '设备名称',
+                  label: this.$t('deviceDetail.formLabel')[2],
                   value: this.data[key]
                 })
                 break
               case 'DTime':
                 this.baseIfo.push({
-                  label: '登记时间',
+                  label: this.$t('deviceDetail.formLabel')[3],
                   value: this.data[key]
                 })
                 break

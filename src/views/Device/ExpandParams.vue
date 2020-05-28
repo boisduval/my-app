@@ -105,9 +105,9 @@ export default {
               }
             }
           } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
+            // this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
-            this.$message.warning(res.data.msg)
+            // this.$message.warning(res.data.msg)
           }
           if (res.data.code !== 0) {
             this.EInfo.push({

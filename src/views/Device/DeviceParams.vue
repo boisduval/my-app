@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>{{$t('deviceParams.top.title')}}</span>
+            <span>{{ $t("deviceParams.top.title") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -46,7 +46,7 @@
                   searchForm.page = 1;
                   getData();
                 "
-                >{{$t('deviceParams.top.search')}}</el-button
+                >{{ $t("deviceParams.top.search") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -57,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{$t('deviceParams.listTitle')}}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -69,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -78,7 +78,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -95,20 +95,28 @@
             >
           </template>
         </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -138,54 +146,79 @@
         <vxe-table-column
           type="seq"
           width="50"
-          title="序号"
+          :title="$t('deviceParams.tableLabel')[0]"
           fixed="left"
           align="center"
         >
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
-          title="ICCID"
+          :title="$t('deviceParams.tableLabel')[1]"
           sortable
           width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="DIDS"
-          title="设备ID字符串"
+          :title="$t('deviceParams.tableLabel')[2]"
           sortable
           width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="DVIN"
-          title="VIN码"
+          :title="$t('deviceParams.tableLabel')[3]"
           sortable
           width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="150">
+        <vxe-table-column
+          field="DName"
+          :title="$t('deviceParams.tableLabel')[4]"
+          sortable
+          width="150"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
-          title="设备管理员"
+          :title="$t('deviceParams.tableLabel')[5]"
           sortable
           width="150"
           align="left"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="180" align="center">
+        <vxe-table-column
+          field="DTime"
+          :title="$t('deviceParams.tableLabel')[6]"
+          sortable
+          width="180"
+          align="center"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="300" align="center">
+        <vxe-table-column
+          :title="$t('deviceParams.tableLabel')[7]"
+          width="300"
+          align="center"
+          show-header-overflow
+        >
           <template v-slot="{ row }">
             <el-button plain size="small" @click="updateSystemTime(row)">
-              更新系统时间
+              {{$t('deviceParams.operation')[0]}}
             </el-button>
             <el-button plain size="small" @click="DMSReset(row)">
-              设备软重启
+              {{$t('deviceParams.operation')[1]}}
             </el-button>
           </template>
         </vxe-table-column>
@@ -224,7 +257,7 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '设备信息',
+      fileName: 'export',
       count: 0,
       loading: false
     }
@@ -295,7 +328,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -304,9 +337,9 @@ export default {
 
     // 更新系统时间
     updateSystemTime (row) {
-      this.$confirm('确定要更新系统时间吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('deviceParams.tips')[0], this.$t('deviceParams.tip'), {
+        confirmButtonText: this.$t('deviceParams.yes'),
+        cancelButtonText: this.$t('deviceParams.no'),
         type: 'warning'
       })
         .then(() => {
@@ -320,7 +353,8 @@ export default {
               Data: [0]
             }
           }
-          this.$axios.post(url, obj)
+          this.$axios
+            .post(url, obj)
             .then(res => {
               if (res.data.code === 0) {
                 this.$message.success(res.data.msg)
@@ -335,16 +369,16 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('deviceParams.cancel')
           })
         })
     },
 
     // 设备软重启
     DMSReset (row) {
-      this.$confirm('设备将会软重启,确定要继续吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('deviceParams.tips')[1], this.$t('deviceParams.tip'), {
+        confirmButtonText: this.$t('deviceParams.yes'),
+        cancelButtonText: this.$t('deviceParams.no'),
         type: 'warning'
       })
         .then(() => {
@@ -357,7 +391,8 @@ export default {
               Data: [0]
             }
           }
-          this.$axios.post(url, obj)
+          this.$axios
+            .post(url, obj)
             .then(res => {
               if (res.data.code === 0) {
                 this.$message.success(res.data.msg)
@@ -372,7 +407,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('deviceParams.cancel')
           })
         })
     }

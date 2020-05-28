@@ -3,6 +3,16 @@ const state = {
     AutoSystemID: '',
     SystemID: '',
     batterID: ''
+  },
+  paramsCS: {
+    AutoSystemID: '',
+    SystemID: '',
+    batterID: ''
+  },
+  paramsT: {
+    AutoSystemID: '',
+    SystemID: '',
+    batterID: ''
   }
 }
 
@@ -11,6 +21,16 @@ const mutations = {
     state.paramsRT.AutoSystemID = params['AutoSystemID']
     state.paramsRT.SystemID = params['SystemID']
     state.paramsRT.batterID = params['batterID']
+  },
+  set_paramsCS (state, params) {
+    state.paramsCS.AutoSystemID = params['AutoSystemID']
+    state.paramsCS.SystemID = params['SystemID']
+    state.paramsCS.batterID = params['batterID']
+  },
+  set_paramsT (state, params) {
+    state.paramsT.AutoSystemID = params['AutoSystemID']
+    state.paramsT.SystemID = params['SystemID']
+    state.paramsT.batterID = params['batterID']
   }
 }
 

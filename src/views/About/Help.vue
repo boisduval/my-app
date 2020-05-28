@@ -40,9 +40,17 @@
     </el-card>
     <!-- 分页开始 -->
     <div style="margin:20px 0;">
-      <Page :total="count" show-total show-elevator @on-change="pageChange" />
+      <!-- <Page :total="count" show-total show-elevator @on-change="pageChange" /> -->
+      <el-pagination
+        @current-change="pageChange"
+        :current-page="searchForm.page * 1"
+        layout="total, prev, pager, next, jumper"
+        :total="count"
+      >
+      </el-pagination>
     </div>
     <!-- 分页结束 -->
+
   </div>
 </template>
 

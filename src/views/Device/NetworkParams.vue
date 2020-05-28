@@ -44,130 +44,130 @@ export default {
               switch (key) {
                 case 'lOCAL_IP_PROTOCOL_TYPE':
                   this.EInfo.push({
-                    label: '本地IP协议类型',
+                    label: this.$t('networkParams.list')[0],
                     value: this.data[key]
                   })
                   break
                 case 'lOCAL_IP_ACCESS':
                   this.EInfo.push({
-                    label: '本地IP获取方式',
+                    label: this.$t('networkParams.list')[1],
                     value: this.data[key]
                   })
                   break
                 case 'lOCAL_CLIENT_PORT_NUMBER':
                   this.EInfo.push({
-                    label: '本地客户端端口号',
+                    label: this.$t('networkParams.list')[2],
                     value: this.data[key]
                   })
                   break
                 case 'lOCAL_STATIC_IP_ADDRESS':
                   this.EInfo.push({
-                    label: '本地静态IP地址',
+                    label: this.$t('networkParams.list')[3],
                     value: this.data[key]
                   })
                   break
                 case 'lOCAL_SUBNET_MASK':
                   this.EInfo.push({
-                    label: '本地子网掩码',
+                    label: this.$t('networkParams.list')[4],
                     value: this.data[key]
                   })
                   break
                 case 'lOCAL_GATEWAY_ADDRESS':
                   this.EInfo.push({
-                    label: '本地网关地址',
+                    label: this.$t('networkParams.list')[5],
                     value: this.data[key]
                   })
                   break
                 case 'sERVER_IP_ACCESS_METHOD':
                   this.EInfo.push({
-                    label: '服务端IP获取方式',
+                    label: this.$t('networkParams.list')[6],
                     value: this.data[key]
                   })
                   break
                 case 'sERVER_PORT':
                   this.EInfo.push({
-                    label: '服务端端口',
+                    label: this.$t('networkParams.list')[7],
                     value: this.data[key]
                   })
                   break
                 case 'sERVER_STATIC_IP':
                   this.EInfo.push({
-                    label: '服务端静态IP',
+                    label: this.$t('networkParams.list')[8],
                     value: this.data[key]
                   })
                   break
                 case 'sERVER_DOMAIN_NAME_ADDRESS':
                   this.EInfo.push({
-                    label: 'DNS域名',
+                    label: this.$t('networkParams.list')[9],
                     value: this.data[key]
                   })
                   break
                 case 'dNS_1_ADDRESS':
                   this.EInfo.push({
-                    label: 'DNS1地址',
+                    label: this.$t('networkParams.list')[10],
                     value: this.data[key]
                   })
                   break
                 case 'dNS_2_ADDRESS':
                   this.EInfo.push({
-                    label: 'DNS2地址',
+                    label: this.$t('networkParams.list')[11],
                     value: this.data[key]
                   })
                   break
               }
             }
           } else if (res.data.code === 1) {
-            this.$message.error(res.data.msg)
+            // this.$message.error(res.data.msg)
           } else if (res.data.code === 3) {
-            this.$message.warning(res.data.msg)
+            // this.$message.warning(res.data.msg)
           }
           if (res.data.code !== 0) {
             this.EInfo.push({
-              label: '本地IP协议类型',
+              label: this.$t('networkParams.list')[0],
               value: ''
             })
             this.EInfo.push({
-              label: '本地IP获取方式',
+              label: this.$t('networkParams.list')[1],
               value: ''
             })
             this.EInfo.push({
-              label: '本地客户端端口号',
+              label: this.$t('networkParams.list')[2],
               value: ''
             })
             this.EInfo.push({
-              label: '本地静态IP地址',
+              label: this.$t('networkParams.list')[3],
               value: ''
             })
             this.EInfo.push({
-              label: '本地子网掩码',
+              label: this.$t('networkParams.list')[4],
               value: ''
             })
             this.EInfo.push({
-              label: '本地网关地址',
+              label: this.$t('networkParams.list')[5],
               value: ''
             })
             this.EInfo.push({
-              label: '服务端IP获取方式',
+              label: this.$t('networkParams.list')[6],
               value: ''
             })
             this.EInfo.push({
-              label: '服务端端口',
+              label: this.$t('networkParams.list')[7],
               value: ''
             })
             this.EInfo.push({
-              label: '服务端静态IP',
+              label: this.$t('networkParams.list')[8],
               value: ''
             })
             this.EInfo.push({
-              label: 'DNS域名',
+              label: this.$t('networkParams.list')[9],
               value: ''
             })
             this.EInfo.push({
-              label: 'DNS1地址',
+              label: this.$t('networkParams.list')[10],
               value: ''
             })
             this.EInfo.push({
-              label: 'DNS2地址',
+              label: this.$t('networkParams.list')[11],
               value: ''
             })
           }

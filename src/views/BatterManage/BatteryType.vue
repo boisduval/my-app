@@ -71,7 +71,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          {{ $t("base.search") }}
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -80,7 +80,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          {{ $t("base.searchbtn") }}
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>

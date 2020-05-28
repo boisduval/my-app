@@ -833,7 +833,23 @@ const routes = [
       {
         path: '/realTime',
         name: 'realTime',
-        component: () => import(/* webpackChunkName: "Help" */ '../views/Pcs/RealTime.vue'),
+        component: () => import(/* webpackChunkName: "RealTime" */ '../views/Pcs/RealTime.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/controlStatus',
+        name: 'controlStatus',
+        component: () => import(/* webpackChunkName: "ControlStatus" */ '../views/Pcs/ControlStatus.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/tariff',
+        name: 'tariff',
+        component: () => import(/* webpackChunkName: "Tariff" */ '../views/Pcs/Tariff.vue'),
         meta: {
           keepAlive: false // 不需要被缓存
         }

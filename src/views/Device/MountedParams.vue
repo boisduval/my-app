@@ -1,19 +1,21 @@
 <template>
   <div>
     <el-form class="clearfix">
-      <el-col
-        :span="6"
-      >
-          <el-form-item label="UPS数量" label-width="150px">
-            <el-input :value="data.uPS_NUMBER" :readonly="true"></el-input>
-          </el-form-item>
+      <el-col :span="6">
+        <el-form-item
+          :label="$t('MountedParams.formLabel')[0]"
+          label-width="150px"
+        >
+          <el-input :value="data.uPS_NUMBER" :readonly="true"></el-input>
+        </el-form-item>
       </el-col>
-      <el-col
-        :span="6"
-      >
-          <el-form-item label="PCS数量" label-width="150px">
-            <el-input :value="data.pCS_NUMBER" :readonly="true"></el-input>
-          </el-form-item>
+      <el-col :span="6">
+        <el-form-item
+          :label="$t('MountedParams.formLabel')[1]"
+          label-width="150px"
+        >
+          <el-input :value="data.pCS_NUMBER" :readonly="true"></el-input>
+        </el-form-item>
       </el-col>
     </el-form>
     <el-form>
@@ -23,9 +25,9 @@
         :key="index"
         :index="index"
       >
-          <el-form-item :label="item.label" label-width="150px">
-            <el-input :value="item.value" :readonly="true"></el-input>
-          </el-form-item>
+        <el-form-item :label="item.label" label-width="150px">
+          <el-input :value="item.value" :readonly="true"></el-input>
+        </el-form-item>
       </el-col>
     </el-form>
   </div>
@@ -64,50 +66,74 @@ export default {
               switch (key) {
                 case 'pRESETS_THE_UPS_DEVICE_MOUNT_STATE':
                   this.EInfo.push({
-                    label: 'UPS设备挂载状态',
-                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                    label: this.$t('MountedParams.label')[0],
+                    value:
+                      this.data[key] === true
+                        ? this.$t('MountedParams.state')[0]
+                        : this.$t('MountedParams.state')[1]
                   })
                   break
                 case 'pRESETS_THE_PCS_DEVICE_MOUNT_STATE':
                   this.EInfo.push({
-                    label: 'PCS设备挂载状态',
-                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                    label: this.$t('MountedParams.label')[1],
+                    value:
+                      this.data[key] === true
+                        ? this.$t('MountedParams.state')[0]
+                        : this.$t('MountedParams.state')[1]
                   })
                   break
                 case 'pRESETS_THE_GENERATOR_EQUIPMENT_MOUNT_STATE':
                   this.EInfo.push({
-                    label: '发电机设备挂载状态',
-                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                    label: this.$t('MountedParams.label')[2],
+                    value:
+                      this.data[key] === true
+                        ? this.$t('MountedParams.state')[0]
+                        : this.$t('MountedParams.state')[1]
                   })
                   break
                 case 'pRESETS_THE_LINKAGE_MODULE_MOUNT_STATE':
                   this.EInfo.push({
-                    label: '联动模块挂载状态',
-                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                    label: this.$t('MountedParams.label')[3],
+                    value:
+                      this.data[key] === true
+                        ? this.$t('MountedParams.state')[0]
+                        : this.$t('MountedParams.state')[1]
                   })
                   break
                 case 'pRE_SET_FIRE_SYSTEM_MOUNT_STATUS':
                   this.EInfo.push({
-                    label: '消防系统挂载状态',
-                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                    label: this.$t('MountedParams.label')[4],
+                    value:
+                      this.data[key] === true
+                        ? this.$t('MountedParams.state')[0]
+                        : this.$t('MountedParams.state')[1]
                   })
                   break
                 case 'pRESETS_THE_MOUNTING_STATE_OF_PHOTOVOLTAIC_EQUIPMENT':
                   this.EInfo.push({
-                    label: '光伏设备挂载状态',
-                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                    label: this.$t('MountedParams.label')[5],
+                    value:
+                      this.data[key] === true
+                        ? this.$t('MountedParams.state')[0]
+                        : this.$t('MountedParams.state')[1]
                   })
                   break
                 case 'pRE_SET_THE_WIND_POWER_EQUIPMENT_MOUNT_STATE':
                   this.EInfo.push({
-                    label: '风能设备挂载状态',
-                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                    label: this.$t('MountedParams.label')[6],
+                    value:
+                      this.data[key] === true
+                        ? this.$t('MountedParams.state')[0]
+                        : this.$t('MountedParams.state')[1]
                   })
                   break
                 case 'pRESETS_THE_BATTERY_PACK_EQUIPMENT_MOUNT_STATE':
                   this.EInfo.push({
-                    label: '电池组设备挂载状态',
-                    value: this.data[key] === true ? '已挂载' : '未挂载'
+                    label: this.$t('MountedParams.label')[7],
+                    value:
+                      this.data[key] === true
+                        ? this.$t('MountedParams.state')[0]
+                        : this.$t('MountedParams.state')[1]
                   })
                   break
               }
@@ -119,35 +145,35 @@ export default {
           }
           if (res.data.code !== 0) {
             this.EInfo.push({
-              label: 'UPS设备挂载状态',
+              label: this.$t('MountedParams.label')[0],
               value: ''
             })
             this.EInfo.push({
-              label: 'PCS设备挂载状态',
+              label: this.$t('MountedParams.label')[1],
               value: ''
             })
             this.EInfo.push({
-              label: '发电机设备挂载状态',
+              label: this.$t('MountedParams.label')[2],
               value: ''
             })
             this.EInfo.push({
-              label: '联动模块挂载状态',
+              label: this.$t('MountedParams.label')[3],
               value: ''
             })
             this.EInfo.push({
-              label: '消防系统挂载状态',
+              label: this.$t('MountedParams.label')[4],
               value: ''
             })
             this.EInfo.push({
-              label: '光伏设备挂载状态',
+              label: this.$t('MountedParams.label')[5],
               value: ''
             })
             this.EInfo.push({
-              label: '风能设备挂载状态',
+              label: this.$t('MountedParams.label')[6],
               value: ''
             })
             this.EInfo.push({
-              label: '电池组设备挂载状态',
+              label: this.$t('MountedParams.label')[7],
               value: ''
             })
           }

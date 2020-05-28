@@ -52,7 +52,30 @@ export default {
         'Please enter VIN code please enter device name'
       ],
       search: 'Search'
-    }
+    },
+    listTitle: 'Device management',
+    tableLabel: [
+      'No.',
+      'ICCID',
+      'DIDS',
+      'VIN',
+      'Device name',
+      'Device manager',
+      'Registration time',
+      'Operation'
+    ],
+    operation: [
+      'Update system time',
+      'Device soft restart'
+    ],
+    tips: [
+      'Are you sure when to update the system?',
+      'The device will soft restart, are you sure to continue?'
+    ],
+    cancel: 'Canceled',
+    yes: 'OK',
+    no: 'Cancel',
+    tip: 'Confirmation'
   },
   header: {
     search: 'Please enter what you are looking for...',
@@ -934,7 +957,8 @@ export default {
         'Temperature sequence header'
       ]
     },
-    errorTip: 'Please enter the content'
+    errorTip: 'Please enter the content',
+    warningTip: 'Please select the user to delete'
   },
   thresholdSetting: {
     searchTitle: 'Device management list query',
@@ -1030,7 +1054,7 @@ export default {
     formLabel: [
       'Device Bank',
       'ICCID',
-      'Device numbe',
+      'Device number',
       'VIN',
       'Device name'
     ],
@@ -1096,5 +1120,622 @@ export default {
     title: 'Terms of Service',
     label: 'Language Type',
     update: 'Update'
+  },
+  workThreshold: {
+    searchTitle: 'Device management list query',
+    listTitle: 'Device management',
+    searchForm: {
+      label: ['ICCID', 'Device number', 'VIN', 'Device name'],
+      placeholder: [
+        'Please enter the ICCID',
+        'Please enter the device number',
+        'Please enter the VIN',
+        'Please enter the device name'
+      ]
+    },
+    tableLabel: [
+      'No.',
+      'DIDS',
+      'Device name',
+      'Device Manager',
+      'Registration time',
+      'Operation'
+    ],
+    dialog: {
+      unit: ['No. ', ''],
+      title: 'Device information',
+      label: [
+        'Device number',
+        'Device name',
+        'Bank'
+      ],
+      suffix: 'Info'
+    },
+    detail: 'Reset'
+  },
+  batterDetail: {
+    title: 'Device information',
+    label: ['Bank', 'Device number', 'ICCID', 'Device name'],
+    list: [
+      'SOC real time status',
+      'SOH real time status',
+      'Internal resistance real time status',
+      'Voltage real time status',
+      'Temperature real time status'
+    ]
+  },
+  batteryParams: {
+    formLabel: [
+      'number of batteries',
+      'number of battery pack 1 clusters',
+      'number of battery pack 2 clusters'
+    ],
+    unit: ['Number of cells in cluster ', '']
+  },
+  cmdList: {
+    searchTitle: 'Command flow list query',
+    listTitle: 'Command flow',
+    searchForm: {
+      label: ['Range', 'Command parameter', 'Command type'],
+      placeholder: ['', 'Please enter command parameter', 'Please enter command type']
+    },
+    tableLabel: ['No.', 'Account name', 'Command type', 'Method name', 'Command parameter', 'Write time', 'Operation'],
+    operationbtn: ['Details'],
+    drawer: {
+      title: 'Details',
+      label: ['Account name', 'Object name', 'Method name']
+    }
+  },
+  deviceDetail: {
+    searchTitle: 'Basic information of equipment',
+    formLabel: ['Device number', 'ICCID', 'Device name', 'Registration time'],
+    list: ['device information', 'network parameters', ' expansion parameters', 'serial port parameters', ' mount parameters', 'preset battery parameters', ' battery parameters']
+  },
+  deviceInfo: {
+    searchTitle: 'Device management list query',
+    listTitle: 'Device management',
+    searchForm: {
+      label: ['ICCID', 'Device number', 'VIN', 'Device name'],
+      placeholder: [
+        'Please enter the ICCID',
+        'Please enter the device number',
+        'Please enter the VIN',
+        'Please enter the device name'
+      ]
+    },
+    tableLabel: [
+      'No.',
+      'ICCID',
+      'DIDS',
+      'Device name',
+      'Device Manager',
+      'Registration time',
+      'Operation'
+    ],
+    detail: ['device details', 'battery details', 'status details', 'function details']
+  },
+  deviceManage: {
+    searchTitle: 'Device management list query',
+    listTitle: 'Device management',
+    searchForm: {
+      label: ['ICCID', 'Device number', 'VIN', 'Device name'],
+      placeholder: [
+        'Please enter the ICCID',
+        'Please enter the device number',
+        'Please enter the VIN',
+        'Please enter the device name'
+      ]
+    },
+    tableLabel: [
+      'No.',
+      'ICCID',
+      'DIDS',
+      'VIN',
+      'Device name',
+      'Device manager',
+      'Registration time',
+      'Operation'
+    ],
+    dialog: {
+      addTitle: 'Add device',
+      editTitle: 'Edit device',
+      label: [
+        'ICCID',
+        'Device number',
+        'VIN',
+        'Device name',
+        'Device manager',
+        'Device holder'
+      ]
+    }
+  },
+  deviceUpgrade: {
+    ssearchTitle: 'Device management list query',
+    listTitle: 'Device management',
+    searchForm: {
+      label: ['ICCID', 'Device number', 'VIN', 'Device name'],
+      placeholder: [
+        'Please enter the ICCID',
+        'Please enter the device number',
+        'Please enter the VIN',
+        'Please enter the device name'
+      ]
+    },
+    tableLabel: [
+      'No.',
+      'ICCID',
+      'DIDS',
+      'Device name',
+      'Device manager',
+      'Registration time',
+      'Operation'
+    ],
+    operation: ['Online update'],
+    dialog: {
+      label: [
+        'Device name',
+        'System code',
+        'Device number',
+        'Update target',
+        'File name',
+        'The upgrade'
+      ],
+      btn: ['Import a file', 'Cancel', 'Close'],
+      unit: ['Wait for the upgrade results countdown', 'seconds']
+    }
+  },
+  equipmentInfo: {
+    list1: [
+      'DMS device ID',
+      'item no.'
+    ],
+    list2: [
+      'DMS hardware version number',
+      'DMS firmware version number',
+      'RTC time',
+      'MAC address',
+      'local DHCP on state',
+      'DNS domain name open status',
+      'DNS domain name acquisition status',
+      'extended IP on status'
+    ],
+    state1: [
+      'on',
+      'close'
+    ],
+    state2: [
+      'acquired',
+      'not obtained'
+    ]
+  },
+  equipmentManage: {
+    searchTitle: 'item management list query',
+    listTitle: 'item management',
+    searchForm: {
+      label: [
+        'item name',
+        'item type',
+        'item content',
+        'item location'
+      ],
+      placeholder: [
+        'please enter the item name',
+        'please enter item type',
+        'please enter the item content',
+        'please enter item location'
+      ]
+    },
+    tableLabel: [
+      'No.',
+      'item name',
+      'item type',
+      'item content',
+      'item location',
+      'total item investment',
+      'planned completion time',
+      'operation'
+    ],
+    operation: [
+      'Edit',
+      'Details',
+      'Controllers',
+      'Delete'
+    ],
+    dialog: {
+      editTitle: 'Edit Item',
+      addTitle: 'Add Item',
+      label: [
+        'item name',
+        'item type',
+        'item scale',
+        'item content',
+        'item location',
+        'total item investment',
+        'item return rate',
+        'item return period',
+        'item description',
+        'planned finish'
+      ]
+    },
+    drawer: {
+      title: 'Item details',
+      label: [
+        'item name',
+        'system ID',
+        'item scale',
+        'item return rate',
+        'item return period',
+        'item description',
+        'item add time'
+      ]
+    },
+    transfer: {
+      title: 'Controller list',
+      state: [
+        'Not part of the item',
+        'Belong to the item'
+      ]
+    }
+  },
+  funcInfo: {
+    searchTitle: 'Basic information of equipment',
+    formLabel: [
+      'Device Bank',
+      'Device number',
+      'ICCID',
+      'Device name'
+    ],
+    tabs: [
+      'Warning function',
+      'Protection function'
+    ],
+    tableLabel: ['No.'],
+    state: [
+      'normal',
+      'alarm'
+    ],
+    unit: ['No. ', ''],
+    list: [
+      'monomer overpressure',
+      'system over voltage',
+      'charging overcurrent',
+      'monomer undervoltage',
+      'system undervoltage',
+      'discharge overcurrent',
+      'charging temperature too high',
+      'charging temperature too low',
+      'SOC too low',
+      'Charging overcurrent Level 3 (invalid)',
+      'power temperature too high',
+      'ambient temperature too high',
+      'ambient temperature too low',
+      'Discharge overcurrent level III (invalid)',
+      'discharge temperature too high',
+      'Discharge temperature too low'
+    ]
+  },
+  MountedParams: {
+    formLabel: [
+      'UPS quantity ',
+      'PCS quantity'
+    ],
+    label: [
+      'UPS device mount status',
+      'PCS device mount status',
+      'generator equipment mount status',
+      'linkage module mount status',
+      'fire protection system mount status',
+      'PV equipment mount status',
+      'wind energy equipment mount status',
+      'battery pack device mount status'
+    ],
+    state: [
+      'mounted',
+      'not mounted'
+    ]
+  },
+  networkParams: {
+    list: [
+      'local IP protocol type',
+      'local IP access method',
+      'local client port number',
+      'local static IP address',
+      'local subnet mask',
+      'local gateway address',
+      'server IP access method',
+      'server port',
+      'server static IP',
+      'DNS domain name',
+      'dns1 address',
+      'dns2 address'
+    ]
+  },
+  pcsInfo: {
+    searchTitle: 'Device management list query',
+    listTitle: 'Device management',
+    searchForm: {
+      label: ['ICCID', 'Device number', 'VIN', 'Device name'],
+      placeholder: [
+        'Please enter the ICCID',
+        'Please enter the device number',
+        'Please enter the VIN',
+        'Please enter the device name'
+      ]
+    },
+    tableLabel: [
+      'No.',
+      'ICCID',
+      'DIDS',
+      'Device name',
+      'Device manager',
+      'Registration time',
+      'Operation'
+    ],
+    operation: [
+      'running status',
+      'control status',
+      'tariff status'
+    ]
+  },
+  pcsRealtime: {
+    searchTitle: '设备信息',
+    label: [
+      'PCS编号',
+      'ICCID编号',
+      '设备编号',
+      '设备名称',
+      '设备名称'
+    ],
+    tabs: [
+      '设备信息',
+      '输入状态',
+      '输出状态',
+      '电池状态',
+      '收益统计',
+      '其他统计'
+    ],
+    list1: [
+      '机器型号',
+      '设备硬件版本',
+      '设备软件版本',
+      '触摸屏版本',
+      '厂家信息'
+    ],
+    list2: [
+      'U相电网电压',
+      'V相电网电压',
+      'W相电网电压',
+      '电网频率',
+      '交流漏电流',
+      '并离网状态'
+    ],
+    list3: [
+      '离网频率',
+      '输出视在功率',
+      '输出有功功率',
+      '输出无功功率',
+      'U相输出电压',
+      'U相输出电流',
+      'U相输出视在功率',
+      'U相输出有功功率',
+      'U相PF值',
+      'U相负载量',
+      'V相输出电压',
+      'V相输出电流',
+      'V相输出视在功率',
+      'V相输出有功功率',
+      'V相PF值',
+      'V相负载量',
+      'W相输出电压',
+      'W相输出电流',
+      'W相输出视在功率',
+      'W相输出有功功率',
+      'W相PF值',
+      'W相负载量'
+    ],
+    list4: [
+      '直流电压',
+      '直流电流',
+      '总直流功率',
+      '电池组总电压',
+      '电池组总电流',
+      '电池组SOC',
+      '电池组SOH'
+    ],
+    list5: [
+      '总负载量',
+      '当日充电量',
+      '当日放电量',
+      '当日收益',
+      '总充电量',
+      '总放电量',
+      '总收益'
+    ],
+    list6: [
+      '内部温度',
+      '散热器温度',
+      '当前电价',
+      '可用功率',
+      '远程控制状态',
+      '充电限制电流',
+      '放电限制电流',
+      '充电限制电压',
+      '放电限制电压',
+      '充电可用电量',
+      '放电可用电量'
+    ]
+  },
+  controlStatus: {
+    searchTitle: '设备信息',
+    label: [
+      'PCS编号',
+      'ICCID编号',
+      '设备编号',
+      '设备名称',
+      '设备名称'
+    ],
+    tabs: [
+      '控制状态'
+    ],
+    list1: [
+      '开关机设置',
+      '模式自动切换',
+      '主动孤岛使能',
+      '计划曲线运行',
+      'MPPT 模式'
+    ],
+    list2: [
+      '功率因数',
+      '无功功率设置',
+      '手动并离网模式',
+      '有功功率设置',
+      '运行模式',
+      '恒流模式电流',
+      '无功运行模式',
+      '紧急功率值'
+    ],
+    state: [
+      '开机',
+      '关机'
+    ],
+    state1: [
+      '使能',
+      '禁止'
+    ]
+  },
+  tariff: {
+    searchTitle: '设备信息',
+    label: [
+      'PCS编号',
+      'ICCID编号',
+      '设备编号',
+      '设备名称',
+      '设备名称'
+    ],
+    tabs: [
+      '时间分段',
+      '分段功率',
+      '电价状态'
+    ],
+    list1: [
+      '系统时间',
+      '时间段数',
+      '第一段开始时间',
+      '第一段结束时间',
+      '第二段开始时间',
+      '第二段结束时间',
+      '第三段开始时间',
+      '第三段结束时间',
+      '第四段开始时间',
+      '第四段结束时间',
+      '第五段开始时间',
+      '第五段结束时间',
+      '第六段开始时间',
+      '第六段结束时间',
+      '第七段开始时间',
+      '第七段结束时间',
+      '第八段开始时间',
+      '第八段结束时间',
+      '第九段开始时间',
+      '第九段结束时间',
+      '第十段开始时间',
+      '第十段结束时间',
+      '第十一段开始时间',
+      '第十一段结束时间',
+      '第十二段开始时间',
+      '第十二段结束时间'
+    ],
+    list2: [
+      '第一段有功功率',
+      '第一段无功功率',
+      '第二段有功功率',
+      '第二段无功功率',
+      '第三段有功功率',
+      '第三段无功功率',
+      '第四段有功功率',
+      '第四段无功功率',
+      '第五段有功功率',
+      '第五段无功功率',
+      '第六段有功功率',
+      '第六段无功功率',
+      '第七段有功功率',
+      '第七段无功功率',
+      '第八段有功功率',
+      '第八段无功功率',
+      '第九段有功功率',
+      '第九段无功功率',
+      '第十段有功功率',
+      '第十段无功功率',
+      '第十一段有功功率',
+      '第十一段无功功率',
+      '第十二段有功功率',
+      '第十二段无功功率'
+    ],
+    list3: [
+      {
+        list1: [
+          '尖时时段数量',
+          '尖时电价'
+        ],
+        list2: [
+          '第一段尖时开始',
+          '第一段尖时结束',
+          '第二段尖时开始',
+          '第二段尖时结束',
+          '第三段尖时开始',
+          '第三段尖时结束',
+          '第四段尖时开始',
+          '第四段尖时结束'
+        ]
+      },
+      {
+        list1: [
+          '峰时时段数量',
+          '峰时电价'
+        ],
+        list2: [
+          '第一段峰时开始',
+          '第一段峰时结束',
+          '第二段峰时开始',
+          '第二段峰时结束',
+          '第三段峰时开始',
+          '第三段峰时结束',
+          '第四段峰时开始',
+          '第四段峰时结束'
+        ]
+      },
+      {
+        list1: [
+          '平时时段数量',
+          '平时电价'
+        ],
+        list2: [
+          '第一段平时开始',
+          '第一段平时结束',
+          '第二段平时开始',
+          '第二段平时结束',
+          '第三段平时开始',
+          '第三段平时结束',
+          '第四段平时开始',
+          '第四段平时结束'
+        ]
+      },
+      {
+        list1: [
+          '谷时时段数量',
+          '谷时电价'
+        ],
+        list2: [
+          '第一段谷时开始',
+          '第一段谷时结束',
+          '第二段谷时开始',
+          '第二段谷时结束',
+          '第三段谷时开始',
+          '第三段谷时结束',
+          '第四段谷时开始',
+          '第四段谷时结束'
+        ]
+      }
+    ]
   }
 }

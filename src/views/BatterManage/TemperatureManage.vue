@@ -815,7 +815,7 @@ export default {
       this.selectedItems = this.$refs.xTable.getSelectRecords()
       var arr = []
       if (this.selectedItems.length === 0) {
-        this.$message.warning('请选择要删除的用户')
+        this.$message.warning(this.$t('temperatureManage.warningTip'))
         return false
       }
       for (const item of this.selectedItems) {

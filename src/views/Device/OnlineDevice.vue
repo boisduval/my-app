@@ -18,7 +18,7 @@
             class="button-left"
           >
             <i class="el-icon-refresh-right"></i>
-            刷新
+            {{$t('base.refresh')}}
           </el-button>
           <el-button class="menu-btn">
             <i class="fa fa-list"></i>
@@ -152,7 +152,7 @@
             class="button-left"
           >
             <i class="el-icon-refresh-right"></i>
-            刷新
+            {{$t('base.refresh')}}
           </el-button>
           <el-button class="menu-btn">
             <i class="fa fa-list"></i>
@@ -169,12 +169,20 @@
               >
             </template>
           </div>
-          <el-button class="menu-btn" title="导出" v-popover:export1>
-            <i class="fa fa-download"></i>
-          </el-button>
-          <el-button class="menu-btn" @click="printEvent" title="打印">
-            <i class="fa fa-print"></i>
-          </el-button>
+          <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
+          <i class="fa fa-download"></i>
+        </el-button>
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
+          <i class="fa fa-print"></i>
+        </el-button>
           <!-- 导出操作开始 -->
           <el-popover
             ref="export1"
@@ -182,14 +190,14 @@
             width="100"
             trigger="hover"
           >
-            <ul id="export1">
-              <li @click="exportDataEvent">
-                导出为Csv文件
-              </li>
-              <li @click="exportExcel">
-                导出为Excel文件
-              </li>
-            </ul>
+            <ul id="export">
+            <li @click="exportDataEvent">
+              {{ $t("base.export.csv") }}
+            </li>
+            <li @click="exportExcel">
+              {{ $t("base.export.excel") }}
+            </li>
+          </ul>
           </el-popover>
           <!-- 导出操作结束 -->
         </div>
@@ -425,7 +433,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {

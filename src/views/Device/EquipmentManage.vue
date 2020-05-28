@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>项目管理列表查询</span>
+            <span>{{ $t("equipmentManage.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,28 +14,28 @@
             label-width="100px"
             label-position="right"
           >
-            <el-form-item label="项目名称:">
+            <el-form-item :label="$t('equipmentManage.searchForm.label')[0]">
               <el-input
                 v-model="searchForm.Name"
-                placeholder="请输入项目名称"
+                :placeholder="$t('equipmentManage.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目类型:">
+            <el-form-item :label="$t('equipmentManage.searchForm.label')[1]">
               <el-input
                 v-model="searchForm.Type"
-                placeholder="请输入项目类型"
+                :placeholder="$t('equipmentManage.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目内容:">
+            <el-form-item :label="$t('equipmentManage.searchForm.label')[2]">
               <el-input
                 v-model="searchForm.Content"
-                placeholder="请输入项目内容"
+                :placeholder="$t('equipmentManage.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目地点:">
+            <el-form-item :label="$t('equipmentManage.searchForm.label')[3]">
               <el-input
                 v-model="searchForm.Site"
-                placeholder="请输入项目地点"
+                :placeholder="$t('equipmentManage.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
@@ -46,7 +46,7 @@
                   searchForm.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -57,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{ $t("equipmentManage.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -69,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-plus"></i>
-          添加
+          {{ $t("base.add") }}
         </el-button>
         <el-button
           type="primary"
@@ -78,7 +78,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -87,7 +87,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -104,20 +104,28 @@
             >
           </template>
         </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -147,65 +155,85 @@
         <vxe-table-column
           type="seq"
           width="50"
-          title="序号"
+          :title="$t('equipmentManage.tableLabel')[0]"
           fixed="left"
           align="center"
         >
         </vxe-table-column>
         <vxe-table-column
           field="PName"
-          title="项目名称"
+          :title="$t('equipmentManage.tableLabel')[1]"
           sortable
-          width="200"
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="PType"
-          title="项目类型"
+          :title="$t('equipmentManage.tableLabel')[2]"
           sortable
-          width="200"
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="PContent"
-          title="项目内容"
+          :title="$t('equipmentManage.tableLabel')[3]"
           sortable
-          width="200"
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="PSite" title="项目地点" sortable width="200">
+        <vxe-table-column
+          field="PSite"
+          :title="$t('equipmentManage.tableLabel')[4]"
+          sortable
+          width="180"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="TotalInvestment"
-          title="项目总投资"
+          :title="$t('equipmentManage.tableLabel')[5]"
           sortable
-          width="200"
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="PPlannedCompletionTime"
-          title="计划完工时间"
+          :title="$t('equipmentManage.tableLabel')[6]"
           sortable
+          width="200"
           show-header-overflow
           show-overflow
           align="center"
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="300" fixed="right" align="center">
+        <vxe-table-column
+          :title="$t('equipmentManage.tableLabel')[7]"
+          width="350"
+          fixed="right"
+          align="center"
+          show-header-overflow
+        >
           <template v-slot="{ row }">
-            <el-button size="small" @click="showDialog(row)">编辑</el-button>
+            <el-button size="small" @click="showDialog(row)">{{
+              $t("equipmentManage.operation")[0]
+            }}</el-button>
             <el-button size="small" @click="toDetail(row)" type="primary">
-              详情
+              {{ $t("equipmentManage.operation")[1] }}
             </el-button>
             <el-button size="small" @click="getController(row)" type="success">
-              控制器
+              {{ $t("equipmentManage.operation")[2] }}
             </el-button>
             <el-button size="small" type="danger" @click="deleteItem(row)">
-              删除
+              {{ $t("equipmentManage.operation")[3] }}
             </el-button>
           </template>
         </vxe-table-column>
@@ -226,53 +254,82 @@
 
       <!-- 编辑表单开始 -->
       <el-dialog
-        title="修改项目"
+        :title="$t('equipmentManage.dialog.editTitle')"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
       >
         <div style="height:500px;overflow:auto;">
           <el-form :model="form">
-            <el-form-item label="项目名称" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[0]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="form.PName" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="项目类型" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[1]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="form.PType" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="项目规模" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[2]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="form.PScale" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="项目内容" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[3]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="form.PContent" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="项目地点" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[4]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="form.PSite" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="项目总投资" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[5]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 v-model="form.PTotalInvestment"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目回报率" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[6]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 v-model="form.PRateOfReturn"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目回报周期" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[7]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 v-model="form.PPaybackPeriod"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目描述" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[8]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="form.PDescribe" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="计划完工时间" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[9]"
+              :label-width="formLabelWidth"
+            >
               <el-date-picker
                 v-model="form.PPlannedCompletionTime"
                 type="datetime"
-                placeholder="选择日期时间"
                 :clearable="false"
               >
               </el-date-picker>
@@ -281,67 +338,100 @@
         </div>
 
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="edit">确 定</el-button>
+          <el-button @click="dialogFormVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="edit">{{
+            $t("base.submit")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 编辑表单结束 -->
 
       <!-- 添加表单开始 -->
       <el-dialog
-        title="添加项目"
+        :title="$t('equipmentManage.dialog.addTitle')"
         :visible.sync="dialogFormAddVisible"
         :close-on-click-modal="false"
       >
         <div style="height:500px;overflow:auto;">
           <el-form :model="formAdd">
-            <el-form-item label="项目名称" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[0]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="formAdd.PName" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="项目类型" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[1]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="formAdd.PType" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="项目规模" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[2]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="formAdd.PScale" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="项目内容" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[3]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 v-model="formAdd.PContent"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目地点" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[4]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="formAdd.PSite" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="项目总投资" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[5]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 v-model.number="formAdd.PTotalInvestment"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目回报率" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[6]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 v-model="formAdd.PRateOfReturn"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目回报周期" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[7]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 v-model="formAdd.PPaybackPeriod"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
-            <el-form-item label="项目描述" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[8]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 v-model="formAdd.PDescribe"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
-            <el-form-item label="计划完工时间" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('equipmentManage.dialog.label')[9]"
+              :label-width="formLabelWidth"
+            >
               <el-date-picker
                 v-model="formAdd.PPlannedCompletionTime"
                 type="datetime"
-                placeholder="选择日期时间"
                 :clearable="false"
               >
               </el-date-picker>
@@ -350,8 +440,12 @@
         </div>
 
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormAddVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addHttp">确 定</el-button>
+          <el-button @click="dialogFormAddVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="addHttp">{{
+            $t("base.submit")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 添加表单结束 -->
@@ -360,41 +454,41 @@
       <Drawer
         :closable="false"
         v-model="value4"
-        title="项目详情"
+        :title="$t('equipmentManage.drawer.title')"
         draggable
         width="30"
       >
-        <p :style="pStyle">项目名称</p>
+        <p :style="pStyle">{{ $t("equipmentManage.drawer.label")[0] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.PName }}
         </div>
         <Divider />
-        <p :style="pStyle">系统ID</p>
+        <p :style="pStyle">{{ $t("equipmentManage.drawer.label")[1] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.SystemID }}
         </div>
         <Divider />
-        <p :style="pStyle">项目规模</p>
+        <p :style="pStyle">{{ $t("equipmentManage.drawer.label")[2] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.PScale }}
         </div>
         <Divider />
-        <p :style="pStyle">项目回报率</p>
+        <p :style="pStyle">{{ $t("equipmentManage.drawer.label")[3] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.PRateOfReturn }}
         </div>
         <Divider />
-        <p :style="pStyle">项目回报周期</p>
+        <p :style="pStyle">{{ $t("equipmentManage.drawer.label")[4] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.PPaybackPeriod }}
         </div>
         <Divider />
-        <p :style="pStyle">项目描述</p>
+        <p :style="pStyle">{{ $t("equipmentManage.drawer.label")[5] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.PDescribe }}
         </div>
         <Divider />
-        <p :style="pStyle">项目添加时间</p>
+        <p :style="pStyle">{{ $t("equipmentManage.drawer.label")[6] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.PWriteTime }}
         </div>
@@ -402,18 +496,22 @@
       <!-- 详情结束 -->
       <!-- 穿梭框开始 -->
       <el-dialog
-        title="控制器列表"
+        :title="$t('equipmentManage.transfer.title')"
         width="650px"
         :close-on-click-modal="false"
         :visible.sync="dialogVisible"
       >
         <Transfer
-        :data="projectData"
-        :target-keys="value"
-        :render-format="render1"
-        @on-change="handleChange"
-        :list-style="listStyle"
-        :titles="['不属于项目', '属于项目']"></Transfer>
+          :data="projectData"
+          :target-keys="value"
+          :render-format="render1"
+          @on-change="handleChange"
+          :list-style="listStyle"
+          :titles="[
+            $t('equipmentManage.transfer.state')[0],
+            $t('equipmentManage.transfer.state')[1]
+          ]"
+        ></Transfer>
       </el-dialog>
       <!-- 穿梭框结束 -->
     </el-card>
@@ -438,7 +536,7 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '项目信息',
+      fileName: 'export',
       count: 0,
       loading: false,
       dialogFormVisible: false,
@@ -456,7 +554,7 @@ export default {
         PDescribe: '',
         PPlannedCompletionTime: ''
       },
-      formLabelWidth: '100px',
+      formLabelWidth: '140px',
       userList: [],
       formAdd: {
         AutoSystemID: '',
@@ -558,7 +656,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -609,11 +707,15 @@ export default {
     // 删除
     deleteItem (row) {
       console.log(row)
-      this.$confirm(`是否删除用户[ ${row.PName} ]`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
+      this.$confirm(
+        `${this.$t('base.delConfirm.tip')} ${row.PName}`,
+        this.$t('base.delConfirm.title'),
+        {
+          confirmButtonText: this.$t('base.delConfirm.yes'),
+          cancelButtonText: this.$t('base.delConfirm.no'),
+          type: 'warning'
+        }
+      )
         .then(() => {
           var url = '/api/Project/DelProject'
           this.$axios
@@ -645,7 +747,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('base.delConfirm.cancelTip')
           })
         })
     },

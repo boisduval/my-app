@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <div style="position:relative;">
+    <Spin v-if="spinShow" fix></Spin>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>{{$t('serviceManage.title')}}</span>
       </div>
       <el-form label-width="100px">
         <el-form-item :label="$t('serviceManage.label')">
-          <el-select v-model="sendForm.Language">
+          <el-select v-model="sendForm.Language" @change="handleChange">
             <el-option
               v-for="item in languageType"
               :key="item.Value"
@@ -77,7 +78,8 @@ export default {
         TermsOfServiceContent: '',
         Language: '',
         AutoSystemID: ''
-      }
+      },
+      spinShow: false
     }
   },
   components: {
@@ -106,6 +108,17 @@ export default {
           })
       })
     },
+    // 获取服务条款
+    getService () {
+      this.$axios.get(`/api/Ablut/GetTermsOfServiceInfo?LanguageTypeCode=${this.sendForm.Language}`)
+        .then(res => {
+          this.sendForm.TermsOfServiceContent = res.data.data.Content
+          this.spinShow = false
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
     submit () {
       this.sendForm.AutoSystemID = localStorage.getItem('AutoSystemID')
       this.$axios.post('/api/File/UpTermsOfServiceFromMsg', this.sendForm)
@@ -121,6 +134,13 @@ export default {
           console.error(err)
         })
     },
+    handleChange () {
+      this.spinShow = true
+      // this.getService().then(res => {
+      //   this.spinShow = false
+      // })
+      this.getService()
+    },
     onEditorReady (editor) {
       // 准备编辑器
     },
@@ -129,7 +149,10 @@ export default {
     onEditorChange () {} // 内容改变事件
   },
   created () {
-    this.getLanguageType()
+    this.spinShow = true
+    this.getLanguageType().then(res => {
+      return this.getService()
+    })
   }
 }
 </script>

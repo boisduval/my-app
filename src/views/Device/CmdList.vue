@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>命令流水列表查询</span>
+            <span>{{ $t("cmdList.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,26 +14,26 @@
             label-width="100px"
             label-position="right"
           >
-            <el-form-item label="范围选择:">
+            <el-form-item :label="$t('cmdList.searchForm.label')[0]">
               <el-date-picker
                 v-model="value"
                 type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('base.datePicker.separator')"
+                :start-placeholder="$t('base.datePicker.start')"
+                :end-placeholder="$t('base.datePicker.end')"
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="命令参数:">
+            <el-form-item :label="$t('cmdList.searchForm.label')[1]">
               <el-input
                 v-model="searchForm.Parameter"
-                placeholder="请输入命令参数"
+                :placeholder="$t('cmdList.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="命令类型:">
+            <el-form-item :label="$t('cmdList.searchForm.label')[2]">
               <el-input
                 v-model="searchForm.CmdType"
-                placeholder="请输入命令类型"
+                :placeholder="$t('cmdList.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
             <el-form-item>
@@ -43,7 +43,7 @@
                   searchForm.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
               <el-button
                 type="primary"
@@ -51,28 +51,28 @@
                 size="mini"
                 style="margin-left:20px;"
                 @click="goOtherDay('today')"
-                >当天</el-button
+                >{{ $t("base.dateGroup.today") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('two')"
-                >前两天</el-button
+                >{{ $t("base.dateGroup.twoDays") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('week')"
-                >前一周</el-button
+                >{{ $t("base.dateGroup.week") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('month')"
-                >前一月</el-button
+                >{{ $t("base.dateGroup.month") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -84,7 +84,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>命令流水</span>
+        <span>{{ $t("cmdList.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -96,7 +96,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -105,37 +105,45 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -162,36 +170,70 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('cmdList.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="UserName"
-          title="账户名称"
+          :title="$t('cmdList.tableLabel')[1]"
           sortable
           width="150"
           show-overflow
+          show-header-overflow
           align="left"
         >
         </vxe-table-column>
-        <vxe-table-column field="CommandType" title="命令类型" width="150" sortable align="left">
+        <vxe-table-column
+          field="CommandType"
+          :title="$t('cmdList.tableLabel')[2]"
+          width="150"
+          sortable
+          align="left"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="FunctionName"
-          title="方法名称"
+          :title="$t('cmdList.tableLabel')[3]"
           sortable
           width="300"
           align="left"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="Parameter" title="命令参数" sortable show-overflow show-header-overflow align="left">
+        <vxe-table-column
+          field="Parameter"
+          :title="$t('cmdList.tableLabel')[4]"
+          sortable
+          show-overflow
+          show-header-overflow
+          align="left"
+        >
         </vxe-table-column>
-        <vxe-table-column field="RecordingTime" title="记录时间" sortable width="280">
+        <vxe-table-column
+          field="RecordingTime"
+          :title="$t('cmdList.tableLabel')[5]"
+          sortable
+          width="280"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right">
+        <vxe-table-column
+          :title="$t('cmdList.tableLabel')[6]"
+          width="200"
+          fixed="right"
+          show-header-overflow
+        >
           <template v-slot="{ row }">
             <el-button plain size="small" @click="toDetail(row)">
-              <i class="el-icon-info">详情</i>
+              <i class="el-icon-info">{{ $t("cmdList.operationbtn")[0] }}</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -212,18 +254,24 @@
 
       <!-- 详情Dialog开始 -->
       <!-- 详情开始 -->
-      <Drawer :closable="false" v-model="value4" title="详细信息" draggable width="30">
-        <p :style="pStyle">账户名称</p>
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        :title="$t('cmdList.drawer.title')"
+        draggable
+        width="30"
+      >
+        <p :style="pStyle">{{ $t("cmdList.drawer.label")[0] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.UserName }}
         </div>
         <Divider />
-        <p :style="pStyle">对象名称</p>
+        <p :style="pStyle">{{ $t("cmdList.drawer.label")[1] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.CommandType }}
         </div>
         <Divider />
-        <p :style="pStyle">方法名称</p>
+        <p :style="pStyle">{{ $t("cmdList.drawer.label")[1] }}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.FunctionName }}
         </div>
@@ -253,7 +301,7 @@ export default {
       count: 0,
       customColumns: [],
       isShow: true,
-      fileName: '命令流水',
+      fileName: 'export',
       loading: false,
       dialogFormVisible: false,
       value: '',
@@ -322,7 +370,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -404,7 +452,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

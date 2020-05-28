@@ -261,10 +261,11 @@ export default {
           `/api/Devices/GetRegistrationEquipmentList?AutoSystemID=${this.formInline.AutoSystemID}&page=${this.formInline.page}&limit=${this.formInline.limit}&ICCID=${this.formInline.ICCID}&IDS=${this.formInline.IDS}&VIN=${this.formInline.VIN}&Name=${this.formInline.Name}`
         )
         .then(res => {
-          if (res.data.data) {
+          if (res.data.code === 0) {
             this.tableData = res.data.data
           } else {
             this.tableData = []
+            this.$message.error(res.data.msg)
           }
           this.count = res.data.count
           this.loading = false

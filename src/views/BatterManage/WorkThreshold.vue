@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>设备管理列表查询</span>
+            <span>{{ $t("workThreshold.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,33 +14,40 @@
             label-width="90px"
             label-position="right"
           >
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('workThreshold.searchForm.label')[0]">
               <el-input
                 v-model="formInline.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('workThreshold.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编号:">
+            <el-form-item :label="$t('workThreshold.searchForm.label')[1]">
               <el-input
                 v-model="formInline.IDS"
-                placeholder="请输入设备编号"
+                :placeholder="$t('workThreshold.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="VIN编码:">
+            <el-form-item :label="$t('workThreshold.searchForm.label')[2]">
               <el-input
                 v-model="formInline.VIN"
-                placeholder="请输入VIN编码"
+                :placeholder="$t('workThreshold.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('workThreshold.searchForm.label')[3]">
               <el-input
                 v-model="formInline.Name"
-                placeholder="请输入设备名称"
+                :placeholder="$t('workThreshold.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
             <el-form-item>
-              <el-button type="primary" @click="formInline.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  formInline.page = 1;
+                  getData();
+                "
+                >{{ $t("base.searchbtn") }}</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -50,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{ $t("workThreshold.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -62,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -71,37 +78,45 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -129,30 +144,55 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('workThreshold.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DIDS"
-          title="设备ID字符串"
+          :title="$t('workThreshold.tableLabel')[1]"
           sortable
           width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="200" show-overflow>
+        <vxe-table-column
+          field="DName"
+          :title="$t('workThreshold.tableLabel')[2]"
+          sortable
+          width="200"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
-          title="设备管理员"
+          :title="$t('workThreshold.tableLabel')[3]"
           sortable
           width="200"
           align="left"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="250">
+        <vxe-table-column
+          field="DTime"
+          :title="$t('workThreshold.tableLabel')[4]"
+          sortable
+          width="250"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="300">
+        <vxe-table-column
+          :title="$t('workThreshold.tableLabel')[5]"
+          width="300"
+          show-header-overflow
+        >
           <template v-slot="{ row }">
             <el-button
               plain
@@ -182,64 +222,71 @@
 
       <!-- 详情Dialog开始 -->
       <el-dialog
-        width="50%"
+        width="60%"
         :close-on-click-modal="false"
-        :title="activeDialog.title"
+        :title="activeDialog.label"
         :visible.sync="dialogFormVisible"
       >
         <div style="height:400px;overflow:auto">
           <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>设备信息</span>
-          </div>
-          <el-form
-            :inline="true"
-            :model="formList"
-            class="demo-form-inline"
-            label-width="90px"
-            label-position="right"
-          >
-            <el-form-item label="设备编号:">
-              <el-input
-                :readonly="true"
-                v-model="formList.BatteryIDS"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="设备名称:">
-              <el-input :readonly="true" v-model="formList.DName"></el-input>
-            </el-form-item>
-            <el-form-item label="设备Bank">
-              <el-select v-model="formList.BankIndex">
-                <el-option label="Bank1" value="0"></el-option>
-                <el-option label="Bank2" value="1"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-        </el-card>
-        <el-card class="box-card" style="margin-top:20px">
-          <div slot="header" class="clearfix">
-            <span>{{ activeDialog.cardTop }}</span>
-          </div>
-          <el-form
-            :model="formData"
-            :inline="true"
-            label-width="100px"
-            label-position="right"
-          >
-            <el-form-item :label="activeDialog.cardTitle">
-              <el-switch
-                style="margin-left:20px;"
-                v-for="(item, index) in stateList"
-                :key="index"
-                v-model="item.value"
-                active-color="#13ce66"
-                inactive-color="#ff4949"
-                :inactive-text="'第' + item.index + '簇'"
+            <div slot="header" class="clearfix">
+              <span>{{ $t("workThreshold.dialog.title") }}</span>
+            </div>
+            <el-form
+              :inline="true"
+              :model="formList"
+              class="demo-form-inline"
+              label-width="90px"
+              label-position="right"
+            >
+              <el-form-item :label="$t('workThreshold.dialog.label')[0]">
+                <el-input
+                  :readonly="true"
+                  v-model="formList.BatteryIDS"
+                ></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('workThreshold.dialog.label')[0]">
+                <el-input :readonly="true" v-model="formList.DName"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('workThreshold.dialog.label')[0]">
+                <el-select v-model="formList.BankIndex">
+                  <el-option label="Bank1" value="0"></el-option>
+                  <el-option label="Bank2" value="1"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+          </el-card>
+          <el-card class="box-card" style="margin-top:20px">
+            <div slot="header" class="clearfix">
+              <span
+                >{{ activeDialog.label
+                }}{{ $t("workThreshold.dialog.suffix") }}</span
               >
-              </el-switch>
-            </el-form-item>
-          </el-form>
-        </el-card>
+            </div>
+            <el-form
+              :model="formData"
+              :inline="true"
+              label-width="100px"
+              label-position="right"
+            >
+              <el-form-item :label="activeDialog.label">
+                <el-switch
+                  style="margin-left:20px;"
+                  v-for="(item, index) in stateList"
+                  :key="index"
+                  v-model="item.value"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  :inactive-text="
+                    $t('workThreshold.dialog.unit')[0] +
+                      item.index +
+                      $t('workThreshold.dialog.unit')[1]
+                  "
+                >
+                </el-switch>
+              </el-form-item>
+            </el-form>
+          </el-card>
         </div>
       </el-dialog>
       <!-- 详情Dialog结束 -->
@@ -264,16 +311,13 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '设备信息',
+      fileName: 'export',
       count: 0,
       loading: false,
       detail: [
         {
-          label: '系统复位',
-          path: 'sYSTEM_RESET',
-          title: '系统复位',
-          cardTop: '复位信息',
-          cardTitle: '系统复位'
+          label: this.$t('workThreshold.detail'),
+          path: 'sYSTEM_RESET'
         }
       ],
       dialogFormVisible: false,
@@ -288,19 +332,19 @@ export default {
       value: true,
       stateList: [
         {
-          index: '一',
+          index: '1',
           value: true
         },
         {
-          index: '二',
+          index: '2',
           value: true
         },
         {
-          index: '三',
+          index: '3',
           value: true
         },
         {
-          index: '四',
+          index: '4',
           value: true
         }
       ]
@@ -371,7 +415,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -393,11 +437,14 @@ export default {
     // 获取详细数据
     getBatteryBankCTRLParaCharts () {
       var url = 'api/Chart/GetBatteryBankSTOPParaCharts'
-      this.$axios.get(url, { params: {
-        AutoSystemID: this.formList.AutoSystemID,
-        BatteryIDS: this.formList.BatteryIDS,
-        BankIndex: this.formList.BankIndex
-      } })
+      this.$axios
+        .get(url, {
+          params: {
+            AutoSystemID: this.formList.AutoSystemID,
+            BatteryIDS: this.formList.BatteryIDS,
+            BankIndex: this.formList.BankIndex
+          }
+        })
         .then(res => {
           console.log(res)
         })
@@ -455,7 +502,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {
@@ -491,11 +538,6 @@ export default {
   display: inline-block;
   margin-bottom: 16px;
   box-shadow: 0 6px 0 2px #606266, 0 0 0 2px #606266, 0 12px 0 2px #606266;
-}
-
-.el-button {
-  padding: 8px 10px;
-  margin-left: 5px;
 }
 
 .menu-btn:focus,

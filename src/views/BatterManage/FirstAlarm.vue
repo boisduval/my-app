@@ -255,7 +255,15 @@ export default {
             this.activeArray = this.bATTERY_FIRST_ALARM_MESSAGE
             this.setData()
           } else if (res.data.code === 1) {
+            this.bATTERY_FIRST_ALARM_MESSAGE = []
+            this.bATTERY_SECONDARY_ALARM_MESSAGE = []
+            this.activeArray = []
             this.$message.error(res.data.msg)
+          } else {
+            this.bATTERY_FIRST_ALARM_MESSAGE = []
+            this.bATTERY_SECONDARY_ALARM_MESSAGE = []
+            this.activeArray = []
+            this.$message.warning(res.data.msg)
           }
           this.loading = false
         })

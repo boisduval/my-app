@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>设备管理列表查询</span>
+            <span>{{ $t("deviceManage.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,33 +14,40 @@
             label-width="100px"
             label-position="right"
           >
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('deviceManage.searchForm.label')[0]">
               <el-input
                 v-model="formInline.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('deviceManage.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编号:">
+            <el-form-item :label="$t('deviceManage.searchForm.label')[1]">
               <el-input
                 v-model="formInline.IDS"
-                placeholder="请输入设备编号"
+                :placeholder="$t('deviceManage.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="VIN编码:">
+            <el-form-item :label="$t('deviceManage.searchForm.label')[2]">
               <el-input
                 v-model="formInline.VIN"
-                placeholder="请输入VIN编码"
+                :placeholder="$t('deviceManage.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('deviceManage.searchForm.label')[3]">
               <el-input
                 v-model="formInline.Name"
-                placeholder="请输入设备名称"
+                :placeholder="$t('deviceManage.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
             <el-form-item>
-              <el-button type="primary" @click="formInline.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  formInline.page = 1;
+                  getData();
+                "
+                >{{ $t("base.searchbtn") }}</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -50,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{ $t("deviceManage.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -62,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-plus"></i>
-          添加
+          {{ $t("base.add") }}
         </el-button>
         <el-button
           type="primary"
@@ -71,7 +78,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -80,37 +87,45 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -137,50 +152,84 @@
           fixed="left"
           align="center"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left" align="center">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('deviceManage.tableLabel')[0]"
+          fixed="left"
+          align="center"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
-          title="ICCID"
+          :title="$t('deviceManage.tableLabel')[1]"
           sortable
           width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="DIDS"
-          title="设备ID字符串"
+          :title="$t('deviceManage.tableLabel')[2]"
           sortable
           width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="DVIN"
-          title="VIN码"
+          :title="$t('deviceManage.tableLabel')[3]"
           sortable
           width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="150">
+        <vxe-table-column
+          field="DName"
+          :title="$t('deviceManage.tableLabel')[4]"
+          sortable
+          width="150"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
-          title="设备管理员"
+          :title="$t('deviceManage.tableLabel')[5]"
           sortable
           width="150"
           align="left"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="250" align="center">
+        <vxe-table-column
+          field="DTime"
+          :title="$t('deviceManage.tableLabel')[6]"
+          sortable
+          width="250"
+          align="center"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right" align="center">
+        <vxe-table-column
+          :title="$t('deviceManage.tableLabel')[7]"
+          width="200"
+          fixed="right"
+          align="center"
+          show-header-overflow
+        >
           <template v-slot="{ row }">
-            <el-button size="small" @click="showDialog(row)">编辑</el-button>
-            <el-button size="small" type="danger" @click="deleteItem(row)"
-              >删除</el-button
-            >
+            <el-button size="small" @click="showDialog(row)">{{
+              $t("base.edit")
+            }}</el-button>
+            <el-button size="small" type="danger" @click="deleteItem(row)">{{
+              $t("base.del")
+            }}</el-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -200,27 +249,42 @@
 
       <!-- 编辑表单开始 -->
       <el-dialog
-        title="修改设备"
+        :title="$t('deviceManage.dialog.editTitle')"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
       >
         <el-form :model="form">
-          <el-form-item label="ICCID编码" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[0]"
+            :label-width="formLabelWidth"
+          >
             <el-input v-model="form.ICCID" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="设备编号" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[1]"
+            :label-width="formLabelWidth"
+          >
             <el-input
               v-model="form.DeviceIdentifyNumber"
               autocomplete="off"
             ></el-input>
           </el-form-item>
-          <el-form-item label="VIN编码" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[2]"
+            :label-width="formLabelWidth"
+          >
             <el-input v-model="form.VIN" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="设备名称" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[3]"
+            :label-width="formLabelWidth"
+          >
             <el-input v-model="form.Name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="设备管理员" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[4]"
+            :label-width="formLabelWidth"
+          >
             <el-select v-model="form.DManageMentUserID">
               <el-option
                 v-for="(item, index) in userList"
@@ -230,7 +294,10 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="设备持有人" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[5]"
+            :label-width="formLabelWidth"
+          >
             <el-select v-model="form.DAffiliationUserID">
               <el-option
                 v-for="(item, index) in userList"
@@ -242,35 +309,54 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="edit">确 定</el-button>
+          <el-button @click="dialogFormVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="edit">{{
+            $t("base.submit")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 编辑表单结束 -->
 
       <!-- 添加表单开始 -->
       <el-dialog
-        title="添加设备"
+        :title="$t('deviceManage.dialog.addTitle')"
         :visible.sync="dialogFormAddVisible"
         :close-on-click-modal="false"
       >
         <el-form :model="formAdd">
-          <el-form-item label="ICCID编码" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[0]"
+            :label-width="formLabelWidth"
+          >
             <el-input v-model="formAdd.ICCID" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="设备编号" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[1]"
+            :label-width="formLabelWidth"
+          >
             <el-input
               v-model="formAdd.DeviceIdentifyNumber"
               autocomplete="off"
             ></el-input>
           </el-form-item>
-          <el-form-item label="VIN编码" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[2]"
+            :label-width="formLabelWidth"
+          >
             <el-input v-model="formAdd.VIN" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="设备名称" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[3]"
+            :label-width="formLabelWidth"
+          >
             <el-input v-model="formAdd.Name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="设备管理员" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[4]"
+            :label-width="formLabelWidth"
+          >
             <el-select v-model="formAdd.DManageMentUserID">
               <el-option
                 v-for="(item, index) in userList"
@@ -280,7 +366,10 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="设备持有人" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('deviceManage.dialog.label')[5]"
+            :label-width="formLabelWidth"
+          >
             <el-select v-model="formAdd.DAffiliationUserID">
               <el-option
                 v-for="(item, index) in userList"
@@ -292,8 +381,12 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormAddVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addHttp">确 定</el-button>
+          <el-button @click="dialogFormAddVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="addHttp">{{
+            $t("base.submit")
+          }}</el-button>
         </div>
       </el-dialog>
       <!-- 添加表单结束 -->
@@ -318,7 +411,7 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '设备信息',
+      fileName: 'export',
       count: 0,
       loading: false,
       dialogFormVisible: false,
@@ -416,7 +509,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -468,7 +561,7 @@ export default {
     // 删除
     deleteItem (row) {
       console.log(row)
-      this.$confirm(`是否删除用户[ ${row.DName} ]`, '提示', {
+      this.$confirm(`是否删除 ${row.DName}`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -581,7 +674,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {

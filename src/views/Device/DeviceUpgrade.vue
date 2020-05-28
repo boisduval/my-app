@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>模糊查询</span>
+            <span>{{ $t("deviceUpgrade.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,28 +14,28 @@
             label-width="100px"
             label-position="right"
           >
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('deviceUpgrade.searchForm.label')[0]">
               <el-input
                 v-model="formInline.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('deviceUpgrade.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编号:">
+            <el-form-item :label="$t('deviceUpgrade.searchForm.label')[1]">
               <el-input
                 v-model="formInline.IDS"
-                placeholder="请输入设备编号"
+                :placeholder="$t('deviceUpgrade.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="VIN编码:">
+            <el-form-item :label="$t('deviceUpgrade.searchForm.label')[2]">
               <el-input
                 v-model="formInline.VIN"
-                placeholder="请输入VIN编码"
+                :placeholder="$t('deviceUpgrade.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('deviceUpgrade.searchForm.label')[3]">
               <el-input
                 v-model="formInline.Name"
-                placeholder="请输入设备名称"
+                :placeholder="$t('deviceUpgrade.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
@@ -46,7 +46,7 @@
                   formInline.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -57,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{ $t("deviceUpgrade.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -69,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -78,7 +78,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -95,20 +95,28 @@
             >
           </template>
         </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -138,14 +146,14 @@
         <vxe-table-column
           type="seq"
           width="50"
-          title="序号"
+          :title="$t('deviceUpgrade.tableLabel')[0]"
           fixed="left"
           align="center"
         >
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
-          title="ICCID"
+          :title="$t('deviceUpgrade.tableLabel')[1]"
           sortable
           width="300"
           show-overflow
@@ -154,7 +162,7 @@
         </vxe-table-column>
         <vxe-table-column
           field="DIDS"
-          title="设备ID"
+          :title="$t('deviceUpgrade.tableLabel')[2]"
           sortable
           width="300"
           show-overflow
@@ -163,7 +171,7 @@
         </vxe-table-column>
         <vxe-table-column
           field="DName"
-          title="设备名称"
+          :title="$t('deviceUpgrade.tableLabel')[3]"
           sortable
           width="200"
           show-overflow
@@ -172,7 +180,7 @@
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
-          title="设备管理员"
+          :title="$t('deviceUpgrade.tableLabel')[4]"
           sortable
           width="200"
           show-overflow
@@ -181,7 +189,7 @@
         </vxe-table-column>
         <vxe-table-column
           field="DTime"
-          title="登记时间"
+          :title="$t('deviceUpgrade.tableLabel')[5]"
           width="250"
           sortable
           show-overflow
@@ -189,15 +197,14 @@
         >
         </vxe-table-column>
         <vxe-table-column
-          title="操作"
+          :title="$t('deviceUpgrade.tableLabel')[6]"
           align="center"
           width="250"
-          show-overflow
           show-header-overflow
         >
           <template v-slot="{ row }">
             <el-button plain size="small" @click="showDialog(row)">
-              <i class="el-icon-info">在线升级</i>
+              <i class="el-icon-info">{{ $t("deviceUpgrade.operation")[0] }}</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -218,26 +225,38 @@
 
       <!-- 编辑表单开始 -->
       <el-dialog
-        title="在线升级"
+        :title="$t('deviceUpgrade.operation')[0]"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
       >
         <div style="position:relative" v-if="show">
           <Spin v-if="spinShow1" fix></Spin>
           <el-form :model="form">
-            <el-form-item label="设备名称" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[0]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="form.name" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="系统代码" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[1]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 v-model="form.devicesystemid"
                 autocomplete="off"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编码" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[2]"
+              :label-width="formLabelWidth"
+            >
               <el-input v-model="form.deviceid" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="更新目标" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[3]"
+              :label-width="formLabelWidth"
+            >
               <el-select v-model="form.target" @change="getLabel">
                 <el-option
                   v-for="(item, index) in target"
@@ -249,7 +268,10 @@
             </el-form-item>
           </el-form>
           <el-form :inline="true" id="upload">
-            <el-form-item label="文件名称" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[4]"
+              :label-width="formLabelWidth"
+            >
               <el-input
                 readonly
                 v-model="fileName"
@@ -270,57 +292,82 @@
                 ref="upload"
                 :on-change="showFileName"
               >
-                <el-button type="primary" @click="showFileName"
-                  >导入文件</el-button
-                >
+                <el-button type="primary" @click="showFileName">{{
+                  $t("deviceUpgrade.dialog.btn")[0]
+                }}</el-button>
               </el-upload>
             </el-form-item>
           </el-form>
         </div>
         <div v-if="!show">
           <el-form :model="form">
-            <el-form-item label="设备名称" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[0]"
+              :label-width="formLabelWidth"
+            >
               <p>
                 {{ form.name }}
               </p>
             </el-form-item>
-            <el-form-item label="系统代码" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[1]"
+              :label-width="formLabelWidth"
+            >
               <p>
                 {{ form.devicesystemid }}
               </p>
             </el-form-item>
-            <el-form-item label="设备编码" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[2]"
+              :label-width="formLabelWidth"
+            >
               <p>
                 {{ form.deviceid }}
               </p>
             </el-form-item>
-            <el-form-item label="更新目标" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[3]"
+              :label-width="formLabelWidth"
+            >
               {{ upgradeTarget }}
             </el-form-item>
-            <el-form-item label="文件名称" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[4]"
+              :label-width="formLabelWidth"
+            >
               <p>
                 {{ fileName }}
               </p>
             </el-form-item>
-            <el-form-item label="升级结果" :label-width="formLabelWidth">
+            <el-form-item
+              :label="$t('deviceUpgrade.dialog.label')[5]"
+              :label-width="formLabelWidth"
+            >
               <p v-if="successTipShow" style="color:#409EFF">
                 {{ successTip }}
               </p>
               <p v-if="!successTipShow" style="color:#409EFF">
-                等待升级结果倒计时...{{ num }}秒
+                {{ $t("deviceUpgrade.dialog.unit")[0] }}...{{ num
+                }}{{ $t("deviceUpgrade.dialog.unit")[1] }}
               </p>
             </el-form-item>
           </el-form>
         </div>
         <div slot="footer" class="dialog-footer" v-if="show">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="edit" :disabled="spinShow1"
-            >确 定</el-button
-          >
+          <el-button @click="dialogFormVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button type="primary" @click="edit" :disabled="spinShow1">{{
+            $t("base.submit")
+          }}</el-button>
         </div>
         <div slot="footer" class="dialog-footer" v-if="!show">
           <el-button @click="dialogFormVisible = false">
-            {{ !successTipShow ? "取消等待" : "关闭窗口" }}
+            {{
+              !successTipShow
+                ? $t("deviceUpgrade.dialog.btn")[1]
+                : $t("deviceUpgrade.dialog.btn")[2]
+            }}
           </el-button>
         </div>
       </el-dialog>
@@ -355,7 +402,7 @@ export default {
         deviceid: '',
         devicesystemid: ''
       },
-      formLabelWidth: '90px',
+      formLabelWidth: '120px',
       dialogFormVisible: false,
       target: [],
       spinShow1: false,
@@ -409,7 +456,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -481,10 +528,6 @@ export default {
         .catch(error => {
           console.log(error)
         })
-    },
-
-    beforeRemove (file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
     },
     showFileName (file, fileList) {
       if (file.status === 'ready') {
@@ -650,6 +693,6 @@ export default {
   flex: 1;
 }
 #upload .el-form-item:nth-child(1) /deep/.el-form-item__content {
-  width: calc(100% - 90px);
+  width: calc(100% - 120px);
 }
 </style>

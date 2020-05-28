@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>模糊查询</span>
+            <span>{{ $t("pcsInfo.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,33 +14,40 @@
             label-width="90px"
             label-position="right"
           >
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('pcsInfo.searchForm.label')[0]">
               <el-input
                 v-model="formInline.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('pcsInfo.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编号:">
+            <el-form-item :label="$t('pcsInfo.searchForm.label')[1]">
               <el-input
                 v-model="formInline.IDS"
-                placeholder="请输入设备编号"
+                :placeholder="$t('pcsInfo.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="VIN编码:">
+            <el-form-item :label="$t('pcsInfo.searchForm.label')[2]">
               <el-input
                 v-model="formInline.VIN"
-                placeholder="请输入VIN编码"
+                :placeholder="$t('pcsInfo.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('pcsInfo.searchForm.label')[3]">
               <el-input
                 v-model="formInline.Name"
-                placeholder="请输入设备名称"
+                :placeholder="$t('pcsInfo.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
             <el-form-item>
-              <el-button type="primary" @click="formInline.page = 1;getData()">查询</el-button>
+              <el-button
+                type="primary"
+                @click="
+                  formInline.page = 1;
+                  getData();
+                "
+                >{{$t('base.searchbtn')}}</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -50,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{ $t("pcsInfo.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -62,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{$t('base.refresh')}}
         </el-button>
         <el-button
           type="primary"
@@ -71,37 +78,45 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{$t('base.search')}}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
         </el-button>
         <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+          <template v-for="(column, index) in customColumns">
+            <vxe-checkbox
+              v-if="column.property"
+              class="checkbox-item"
+              v-model="column.visible"
+              :key="index"
+              @change="$refs.xTable.refreshColumn()"
+              >{{ column.title }}</vxe-checkbox
+            >
+          </template>
+        </div>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -122,37 +137,67 @@
         highlight-hover-row
         highlight-current-row
       >
-        <vxe-table-column type="checkbox" width="50" fixed="left" align="center"></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left" align="center">
+        <vxe-table-column
+          type="checkbox"
+          width="50"
+          fixed="left"
+          align="center"
+        ></vxe-table-column>
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('pcsInfo.tableLabel')[0]"
+          fixed="left"
+          align="center"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
-          title="ICCID"
+          :title="$t('pcsInfo.tableLabel')[1]"
           sortable
-          width="300"
+          width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="DIDS"
-          title="设备ID"
+          :title="$t('pcsInfo.tableLabel')[2]"
           sortable
-          width="300"
+          width="250"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DName" title="设备名称" sortable width="200">
+        <vxe-table-column
+          field="DName"
+          :title="$t('pcsInfo.tableLabel')[3]"
+          sortable
+          width="180"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
-          title="设备管理员"
+          :title="$t('pcsInfo.tableLabel')[4]"
           sortable
-          width="200"
+          width="180"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable width="250">
+        <vxe-table-column
+          field="DTime"
+          :title="$t('pcsInfo.tableLabel')[5]"
+          sortable
+          width="180"
+          show-header-overflow
+        >
         </vxe-table-column>
-        <vxe-table-column title="操作" align="center" width="250">
+        <vxe-table-column
+          :title="$t('pcsInfo.tableLabel')[6]"
+          align="center"
+          width="450"
+        >
           <template v-slot="{ row }">
             <el-button
               plain
@@ -200,19 +245,27 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: '设备信息',
+      fileName: 'export',
       count: 0,
       loading: false,
       detail: [
         {
-          label: '实时状态',
+          label: this.$t('pcsInfo.operation')[0],
           path: '/realTime'
+        },
+        {
+          label: this.$t('pcsInfo.operation')[1],
+          path: '/controlStatus'
+        },
+        {
+          label: this.$t('pcsInfo.operation')[2],
+          path: '/tariff'
         }
       ]
     }
   },
   methods: {
-    ...mapMutations('pcsdetail', ['set_paramsRT']),
+    ...mapMutations('pcsdetail', ['set_paramsRT', 'set_paramsCS', 'set_paramsT']),
     ...mapMutations('tabs', ['set_detail_label']),
     getData () {
       this.loading = true
@@ -257,6 +310,12 @@ export default {
         case '/realTime':
           this.set_paramsRT(params)
           break
+        case '/controlStatus':
+          this.set_paramsCS(params)
+          break
+        case '/tariff':
+          this.set_paramsT(params)
+          break
       }
 
       this.set_detail_label(label)
@@ -293,7 +352,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -347,7 +406,7 @@ export default {
   float: left;
 }
 
-.menu-btn:hover+.menu-wrapper {
+.menu-btn:hover + .menu-wrapper {
   display: block;
 }
 .menu-wrapper:hover {
