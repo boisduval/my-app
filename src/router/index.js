@@ -453,6 +453,14 @@ const routes = [
         }
       },
       {
+        path: '/pcsEarnings',
+        name: 'pcsEarnings',
+        component: () => import(/* webpackChunkName: "PcsEarnings" */ '../views/Statement/PcsEarnings.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
         path: '/abnormalReport',
         name: 'abnormalReport',
         component: () => import(/* webpackChunkName: "StatementAbnormalReport" */ '../views/Statement/AbnormalReport.vue'),
@@ -858,6 +866,14 @@ const routes = [
         path: '/pcsInfo',
         name: 'pcsInfo',
         component: () => import(/* webpackChunkName: "PcsInfo" */ '../views/Pcs/PcsInfo.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
+        path: '/pcsSettings',
+        name: 'pcsSettings',
+        component: () => import(/* webpackChunkName: "PcsSettings" */ '../views/Pcs/PcsSettings.vue'),
         meta: {
           keepAlive: false // 不需要被缓存
         }

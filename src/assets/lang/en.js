@@ -1737,5 +1737,25 @@ export default {
         ]
       }
     ]
+  },
+  pcsSettings: {
+    operation: [
+      '同步时间'
+    ],
+    confirm: {
+      tip: '确定要同步时间吗',
+      title: '提示',
+      yes: '确定',
+      no: '取消',
+      canceled: '已取消'
+    }
+  },
+  pcsEarnings: {
+    formLabel: [
+      '范围选择',
+      '设备名称',
+      '设备Bank'
+    ],
+    title: '异常总览'
   }
 }

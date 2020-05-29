@@ -321,7 +321,16 @@ const state = {
             Href: 'pcsReport',
             Class: 'J_menuItem',
             DataIndex: '1000',
-            Text: 'PCS报表',
+            Text: 'PCS电气报表',
+            Use: true
+          },
+          {
+            ID: '18',
+            MID: '5',
+            Href: 'pcsEarnings',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'PCS收益报表',
             Use: true
           },
           {
@@ -653,6 +662,15 @@ const state = {
             Class: 'J_menuItem',
             DataIndex: '1000',
             Text: 'PCS信息',
+            Use: true
+          },
+          {
+            ID: '21',
+            MID: '10',
+            Href: 'pcsSettings',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'PCS配置',
             Use: true
           },
           {
