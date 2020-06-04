@@ -44,15 +44,15 @@ export default {
                 value: el['dMS_UART_BAUD']
               })
               this.EInfo.push({
-                label: '数据位',
+                label: this.$t('serialParams.label')[0],
                 value: el['dMS_UART_PROTOCOL']['dATA_BITS']
               })
               this.EInfo.push({
-                label: '停止位',
+                label: this.$t('serialParams.label')[1],
                 value: el['dMS_UART_PROTOCOL']['sTOP_BITS']
               })
               this.EInfo.push({
-                label: '奇偶校验位',
+                label: this.$t('serialParams.label')[2],
                 value: el['dMS_UART_PROTOCOL']['pARITY']
               })
             })
@@ -69,15 +69,15 @@ export default {
                 value: ''
               })
               this.EInfo.push({
-                label: '数据位',
+                label: this.$t('serialParams.label')[0],
                 value: ''
               })
               this.EInfo.push({
-                label: '停止位',
+                label: this.$t('serialParams.label')[1],
                 value: ''
               })
               this.EInfo.push({
-                label: '奇偶校验位',
+                label: this.$t('serialParams.label')[2],
                 value: ''
               })
             }

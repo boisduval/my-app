@@ -26,7 +26,7 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item :label="$t('pcsEarnings.formLabel')[1]" label-width="80px">
-              <el-select v-model="searchForm.DeviceSystemID" @change="getData">
+              <el-select v-model="searchForm.DeviceSystemID" @change="getPcsList">
                 <el-option
                   v-for="(item, index) in options"
                   :key="index"
@@ -37,8 +37,7 @@
             </el-form-item>
             <el-form-item :label="$t('pcsEarnings.formLabel')[2]" label-width="80px">
               <el-select v-model="searchForm.PCSIndex" @change="getData">
-                <el-option label="PCS1" value="0"></el-option>
-                <el-option label="PCS2" value="1"></el-option>
+                <el-option v-for="(item, index) in pcsList" :key="index" :label="item.unit" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label-width="20px" label=" ">
@@ -129,6 +128,7 @@ export default {
       isShow: true,
       options: [],
       value: '',
+      pcsList: [],
       table1: [],
       th: []
     }
@@ -254,7 +254,7 @@ export default {
           if (res.data.code === 0) {
             this.options = res.data.data
             this.searchForm.DeviceSystemID = this.options[0].SystemID
-            this.getData()
+            this.getPcsList()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
@@ -293,6 +293,25 @@ export default {
         return 'primary-row'
       }
       return ''
+    },
+    // 获取PCS列表
+    getPcsList () {
+      this.pcsList = []
+      var url = '/api/Statistics/GetPCSIndexList'
+      this.$axios
+        .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}&DeviceSystemID=${this.searchForm.DeviceSystemID}`)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.pcsList = res.data.data.pCS_INDEX.valueUnits
+            this.searchForm.PCSIndex = this.pcsList[0].value
+            this.getData()
+          } else if (res.data.code === 1) {
+            this.$message.error(res.data.msg)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     },
 
     getEcharts () {

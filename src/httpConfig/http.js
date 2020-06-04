@@ -12,7 +12,9 @@ axios.defaults.baseURL = 'http://sf28090049.wicp.vip:8082/conn' // 默认地址
 axios.interceptors.request.use(
   config => {
     let val = localStorage.langNum || 0
+    let val1 = localStorage.AutoSystemID || 0
     config.headers['Language'] = val
+    config.headers['AutoSystemID'] = val1
     return config
   }
 )

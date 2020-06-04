@@ -5,16 +5,16 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>{{ $t("systemLog.searchTitle") }}</span>
+            <span>{{ $t("loginLog.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
             :model="searchForm"
             class="demo-form-inline"
-            label-width="80px"
+            label-width="100px"
             label-position="right"
           >
-            <el-form-item :label="$t('hardware.formLabel')[0]">
+            <el-form-item :label="$t('loginLog.searchForm.label')[0]">
               <el-date-picker
                 v-model="value"
                 type="daterange"
@@ -24,22 +24,22 @@
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item :label="$t('hardware.formLabel')[1]">
-              <el-select v-model="searchForm.LikeType" clearable>
+            <el-form-item :label="$t('loginLog.searchForm.label')[1]">
+              <el-select v-model="searchForm.UserSystemID">
                 <el-option
-                  v-for="(item, index) in options"
+                  v-for="(item, index) in userList"
                   :key="index"
-                  :value="item"
-                  :label="item"
+                  :value="item.SystemID"
+                  :label="item.Name"
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item :label="$t('hardware.formLabel')[2]">
+            <el-form-item :label="$t('loginLog.searchForm.label')[2]">
               <el-input
-                v-model="searchForm.LikeMessage"
-                :placeholder="$t('hardware.placeholder')[2]"
+                v-model="searchForm.HostAddress"
               ></el-input>
             </el-form-item>
+            <!-- <br> -->
             <el-form-item>
               <el-button
                 type="primary"
@@ -49,35 +49,6 @@
                 "
                 >{{ $t("base.searchbtn") }}</el-button
               >
-              <el-button
-                type="primary"
-                plain
-                size="mini"
-                style="margin-left:20px;"
-                @click="goOtherDay('today')"
-                >{{ $t("base.dateGroup.today") }}</el-button
-              >
-              <el-button
-                type="primary"
-                plain
-                size="mini"
-                @click="goOtherDay('two')"
-                >{{ $t("base.dateGroup.twoDays") }}</el-button
-              >
-              <el-button
-                type="primary"
-                plain
-                size="mini"
-                @click="goOtherDay('week')"
-                >{{ $t("base.dateGroup.week") }}</el-button
-              >
-              <el-button
-                type="primary"
-                plain
-                size="mini"
-                @click="goOtherDay('month')"
-                >{{ $t("base.dateGroup.month") }}</el-button
-              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -85,10 +56,9 @@
       </div>
     </el-collapse-transition>
     <!-- 表单结束 -->
-
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>{{ $t("systemLog.listTitle") }}</span>
+        <span>{{ $t("loginLog.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -174,58 +144,82 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column
-          type="seq"
-          width="50"
-          :title="$t('systemLog.tableLabel')[0]"
-          fixed="left"
-        >
+        <vxe-table-column type="seq" width="50" :title="$t('loginLog.tableLabel')[0]" fixed="left">
         </vxe-table-column>
         <vxe-table-column
-          field="Type"
-          :title="$t('systemLog.tableLabel')[1]"
+          field="AccountNumber"
+          :title="$t('loginLog.tableLabel')[1]"
           sortable
           width="150"
-          show-header-overflow
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
-          field="Msg"
-          :title="$t('systemLog.tableLabel')[2]"
-          show-header-overflow
-          show-overflow
-          align="left"
-        >
-        </vxe-table-column>
-        <vxe-table-column
-          field="RecordingTime"
-          :title="$t('systemLog.tableLabel')[3]"
+          field="UserName"
+          :title="$t('loginLog.tableLabel')[2]"
           sortable
-          width="200"
-          align="left"
-          show-header-overflow
+          width="180"
           show-overflow
+          show-header-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="NativePlace"
+          :title="$t('loginLog.tableLabel')[3]"
+          width="180"
+          show-overflow
+          show-header-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="HostIP"
+          :title="$t('loginLog.tableLabel')[4]"
+          sortable
+          width="180"
+          show-overflow
+          show-header-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="ComputerLocation"
+          :title="$t('loginLog.tableLabel')[5]"
+          width="180"
+          show-overflow
+          show-header-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="Platform"
+          :title="$t('loginLog.tableLabel')[6]"
+          width="180"
+          show-overflow
+          show-header-overflow
+        >
+        </vxe-table-column>
+        <vxe-table-column
+          field="BrowserType"
+          :title="$t('loginLog.tableLabel')[7]"
+          width="180"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="WriteTime"
-          :title="$t('systemLog.tableLabel')[4]"
+          :title="$t('loginLog.tableLabel')[8]"
           sortable
-          width="200"
-          align="left"
-          show-header-overflow
+          width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column
-          field="Parameter"
-          :title="$t('systemLog.tableLabel')[5]"
-          width="200"
-          align="left"
-          show-header-overflow
-          show-overflow
-        >
+        <vxe-table-column :title="$t('loginLog.tableLabel')[9]" width="200" fixed="right">
+          <template v-slot="{ row }">
+            <el-button plain size="small" @click="toDetail(row)">
+              <i class="el-icon-info">{{$t('loginLog.operation')[0]}}</i>
+            </el-button>
+          </template>
         </vxe-table-column>
       </vxe-table>
       <!-- 表格结束 -->
@@ -242,29 +236,40 @@
       </el-pagination>
       <!-- 分页结束 -->
 
-      <!-- 详情Dialog开始 -->
-      <el-dialog
-        width="50%"
-        :close-on-click-modal="false"
-        :visible.sync="dialogFormVisible"
-        title="用户日志"
+      <!-- 详情开始 -->
+      <Drawer
+        :closable="false"
+        v-model="value4"
+        :title="$t('register.dialog.title')"
+        draggable
+        width="30"
       >
-        <vxe-table stripe :data="detailData" border>
-          <vxe-table-column field="label1" title="参数"></vxe-table-column>
-          <vxe-table-column field="value1" title="值"></vxe-table-column>
-          <vxe-table-column field="label2" title="参数"></vxe-table-column>
-          <vxe-table-column field="value2" title="值"></vxe-table-column>
-        </vxe-table>
-        <div slot="footer" class="dialog-footer">
-          <el-button
-            @click="dialogFormVisible = false"
-            size="medium"
-            type="primary"
-            >确 定</el-button
-          >
+        <div class="block">
+          <div class="radio">
+            {{ $t("register.dialog.order")[0] }}
+            <el-radio-group v-model="reverse">
+              <el-radio :label="true">{{
+                $t("register.dialog.order")[1]
+              }}</el-radio>
+              <el-radio :label="false">{{
+                $t("register.dialog.order")[2]
+              }}</el-radio>
+            </el-radio-group>
+          </div>
+
+          <el-timeline :reverse="reverse">
+            <el-timeline-item
+              v-for="(activity, index) in activities"
+              :key="index"
+              :timestamp="activity.timestamp"
+              color="#409EFF"
+            >
+              [ {{activity.UserAddress}} ]{{activity.Msg}}
+            </el-timeline-item>
+          </el-timeline>
         </div>
-      </el-dialog>
-      <!-- 详情Dialog结束 -->
+      </Drawer>
+      <!-- 详情结束 -->
     </el-card>
   </div>
 </template>
@@ -275,39 +280,34 @@ let moment = require('moment')
 export default {
   data () {
     return {
+      isShow: true,
       searchForm: {
-        AutoSystemID: '',
         Start: '',
         Stop: '',
-        LikeType: '',
-        LikeMessage: '',
         page: 1,
-        limit: 10
+        limit: 10,
+        UserSystemID: '',
+        HostAddress: ''
       },
+      value: '',
+      userList: '',
       tableData: [],
       count: 0,
       customColumns: [],
-      isShow: true,
       fileName: 'export',
       loading: false,
-      dialogFormVisible: false,
       options: [],
-      value: '',
-      detailData: []
+      value4: false,
+      activities: '',
+      pStyle: {
+        fontSize: '14px',
+        color: 'rgba(0,0,0,0.85)',
+        lineHeight: '24px',
+        display: 'block',
+        marginBottom: '16px'
+      },
+      reverse: false
     }
-  },
-  computed: {
-    ...mapState('table', ['pageSize'])
-  },
-  created () {
-    this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
-    this.searchForm.limit = this.pageSize[0]
-    var today = moment()
-      .subtract(0, 'days')
-      .format('YYYY-MM-DD')
-    this.value = [today, today]
-    this.getUserType()
-    this.getData()
   },
   methods: {
     // 每页显示多少条
@@ -356,13 +356,33 @@ export default {
     formatJson (filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => v[j]))
     },
-
-    // 获取日报信息列表
+    getUserList () {
+      return new Promise((resolve, reject) => {
+        var AutoSystemID = localStorage.getItem('AutoSystemID')
+        this.$axios
+          .get(`/api/Users/GetUserNames?AutoSystemID=${AutoSystemID}`)
+          .then(res => {
+            if (res.status === 200) {
+              if (res.data.code === 0) {
+                console.log(res.data.data)
+                this.userList = res.data.data
+                this.searchForm.UserSystemID = this.userList[0].SystemID
+                resolve(res.data.data)
+              } else {
+                resolve()
+              }
+            }
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     getData () {
       this.loading = true
       this.searchForm.Start = moment(this.value[0]).format('YYYY-MM-DD')
       this.searchForm.Stop = moment(this.value[1]).format('YYYY-MM-DD')
-      var url = '/api/Log/GetSysLogList'
+      var url = '/api/Users/GetUserLogins'
       this.$axios
         .get(url, { params: this.searchForm })
         .then(res => {
@@ -378,15 +398,23 @@ export default {
           console.error(err)
         })
     },
-
-    // 获取类型列表
-    getUserType () {
-      var url = '/api/Log/GetSysType'
+    toDetail (row) {
+      this.value4 = true
+      var id = row.AutoSystemID
+      this.activities = []
       this.$axios
-        .get(`${url}?AutoSystemID=${this.searchForm.AutoSystemID}`)
+        .get(`/api/Users/GetUserOperatingRecords?AutoSystemID=${this.searchForm.AutoSystemID}&ORASystemID=${id}`)
         .then(res => {
           if (res.data.code === 0) {
-            this.options = res.data.data
+            console.log(res.data.data)
+            let data = res.data.data
+            data.map(item => {
+              this.activities.push({
+                timestamp: item.OperTime,
+                UserAddress: item.UserAddress,
+                Msg: item.Msg
+              })
+            })
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
@@ -394,99 +422,26 @@ export default {
         .catch(err => {
           console.error(err)
         })
-    },
-
-    // 切换时间
-    goOtherDay (time) {
-      var num
-      switch (time) {
-        case 'today':
-          num = moment()
-            .subtract(0, 'days')
-            .format('YYYY-MM-DD')
-          break
-        case 'two':
-          num = moment()
-            .subtract(2, 'days')
-            .format('YYYY-MM-DD')
-          console.log(num)
-          break
-        case 'week':
-          num = moment()
-            .subtract(1, 'weeks')
-            .format('YYYY-MM-DD')
-          break
-        case 'month':
-          num = moment()
-            .subtract(1, 'months')
-            .format('YYYY-MM-DD')
-          break
-      }
-      this.value = [num, new Date()]
     }
+  },
+  created () {
+    this.searchForm.AutoSystemID = localStorage.getItem('AutoSystemID')
+    this.searchForm.limit = this.pageSize[0]
+    var today = moment()
+      .subtract(0, 'days')
+      .format('YYYY-MM-DD')
+    this.value = [today, today]
+    this.getUserList().then(res => {
+      return this.getData()
+    })
+  },
+  computed: {
+    ...mapState('table', ['pageSize'])
   }
 }
 </script>
 
 <style scoped>
-.menu-btn {
-  position: relative;
-  /* width: 25px;
-  height: 25px; */
-  float: right;
-}
-
-.button-left {
-  float: left;
-}
-
-.menu-btn:hover + .menu-wrapper {
-  display: block;
-}
-.menu-wrapper:hover {
-  display: block;
-}
-.table-oper {
-  position: relative;
-}
-
-.menu-wrapper {
-  display: none;
-  position: absolute;
-  width: 150px;
-  top: 16px;
-  right: 0;
-  z-index: 9;
-  background-color: #fff;
-  font-size: 14px;
-  padding: 4px 10px;
-  user-select: none;
-  border: 1px solid #e8eaec;
-  text-align: left;
-}
-
-.checkbox-item {
-  display: block;
-  margin: 4px 0;
-}
-
-.icon-menu {
-  width: 16px;
-  height: 0px;
-  display: inline-block;
-  margin-bottom: 16px;
-  box-shadow: 0 6px 0 2px #606266, 0 0 0 2px #606266, 0 12px 0 2px #606266;
-}
-
-.table-oper .el-button {
-  padding: 8px 10px;
-  margin-left: 5px;
-}
-
-.menu-btn:focus,
-.menu-btn:active {
-  color: #606266;
-  border-color: #dcdfe6;
-  background-color: #fff;
-}
-</style>
+ul {
+  margin-top: 20px;
+}</style>

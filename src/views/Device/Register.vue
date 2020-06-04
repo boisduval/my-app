@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>注册流水列表查询</span>
+            <span>{{ $t("register.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,26 +14,26 @@
             label-width="100px"
             label-position="right"
           >
-            <el-form-item label="范围选择:">
+            <el-form-item :label="$t('register.formLabel')[0]">
               <el-date-picker
                 v-model="value"
                 type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('base.datePicker.separator')"
+                :start-placeholder="$t('base.datePicker.start')"
+                :end-placeholder="$t('base.datePicker.end')"
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="设备编码:">
+            <el-form-item :label="$t('register.formLabel')[1]">
               <el-input
                 v-model="searchForm.IdentifyNumber"
-                placeholder="请输入设备编码"
+                :placeholder="$t('register.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('register.formLabel')[2]">
               <el-input
                 v-model="searchForm.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('register.placeholder')[2]"
               ></el-input>
             </el-form-item>
             <el-form-item>
@@ -43,7 +43,7 @@
                   searchForm.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
               <el-button
                 type="primary"
@@ -51,28 +51,28 @@
                 size="mini"
                 style="margin-left:20px;"
                 @click="goOtherDay('today')"
-                >当天</el-button
+                >{{ $t("base.dateGroup.today") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('two')"
-                >前两天</el-button
+                >{{ $t("base.dateGroup.twoDays") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('week')"
-                >前一周</el-button
+                >{{ $t("base.dateGroup.week") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('month')"
-                >前一月</el-button
+                >{{ $t("base.dateGroup.month") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -84,7 +84,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>注册流水</span>
+        <span>{{ $t("register.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -96,7 +96,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -105,7 +105,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -122,20 +122,28 @@
             >
           </template>
         </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -162,36 +170,57 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('register.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="SystemID"
-          title="系统ID"
+          :title="$t('register.tableLabel')[1]"
           sortable
           width="320"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="DeviceID"
-          title="设备唯一识别号"
+          :title="$t('register.tableLabel')[2]"
           sortable
           width="320"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="Text" title="名称" sortable width="320">
+        <vxe-table-column
+          field="Text"
+          :title="$t('register.tableLabel')[3]"
+          sortable
+          width="320"
+          show-overflow
+          show-header-overflow
+        >
         </vxe-table-column>
         <vxe-table-column
           field="RegistrationTime"
-          title="最新注册时间"
+          :title="$t('register.tableLabel')[4]"
           sortable
           width="320"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="250" fixed="right">
+        <vxe-table-column
+          :title="$t('register.tableLabel')[5]"
+          width="250"
+          fixed="right"
+        >
           <template v-slot="{ row }">
             <el-button plain size="small" @click="toDetail(row)">
-              <i class="el-icon-info">详情</i>
+              <i class="el-icon-info">{{ $t("register.operation")[0] }}</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -215,16 +244,20 @@
       <Drawer
         :closable="false"
         v-model="value4"
-        title="详细信息"
+        :title="$t('register.dialog.title')"
         draggable
         width="30"
       >
         <div class="block">
           <div class="radio">
-            排序：
+            {{ $t("register.dialog.order")[0] }}
             <el-radio-group v-model="reverse">
-              <el-radio :label="true">正序</el-radio>
-              <el-radio :label="false">倒序</el-radio>
+              <el-radio :label="true">{{
+                $t("register.dialog.order")[1]
+              }}</el-radio>
+              <el-radio :label="false">{{
+                $t("register.dialog.order")[2]
+              }}</el-radio>
             </el-radio-group>
           </div>
 
@@ -235,8 +268,10 @@
               :timestamp="activity.timestamp"
               :color="activity.color"
             >
-              序号：{{ activity.index }}<br/>
-              类型：{{ activity.id }}&nbsp;[{{ activity.type}}]
+              {{ $t("register.dialog.label")[0] }}{{ activity.index }}<br />
+              {{ $t("register.dialog.label")[1] }}{{ activity.id }}&nbsp;[{{
+                activity.type
+              }}]
             </el-timeline-item>
           </el-timeline>
         </div>
@@ -266,7 +301,7 @@ export default {
       count: 0,
       customColumns: [],
       isShow: true,
-      fileName: '注册流水',
+      fileName: 'export',
       loading: false,
       dialogFormVisible: false,
       value: '',
@@ -336,7 +371,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {
@@ -370,10 +405,12 @@ export default {
       this.activities = []
       var url = '/api/Devices/GetDevicesRegisterInfoListing'
       this.$axios
-        .get(url, { params: {
-          AutoSystemID: this.searchForm.AutoSystemID,
-          IdentifyNumber: row.ICCID
-        } })
+        .get(url, {
+          params: {
+            AutoSystemID: this.searchForm.AutoSystemID,
+            IdentifyNumber: row.ICCID
+          }
+        })
         .then(res => {
           if (res.data.code === 0) {
             let data = res.data.data

@@ -1601,6 +1601,10 @@ export default {
     state1: [
       '使能',
       '禁止'
+    ],
+    state2: [
+      '开启',
+      '关闭'
     ]
   },
   tariff: {
@@ -1740,22 +1744,332 @@ export default {
   },
   pcsSettings: {
     operation: [
-      '同步时间'
+      'synchronization time'
     ],
     confirm: {
-      tip: '确定要同步时间吗',
-      title: '提示',
-      yes: '确定',
-      no: '取消',
-      canceled: '已取消'
+      tip: 'Are you sure you want to synchronize',
+      title: 'Confirm',
+      yes: 'OK',
+      no: 'Cancel',
+      canceled: 'Canceled'
     }
   },
   pcsEarnings: {
     formLabel: [
-      '范围选择',
-      '设备名称',
-      '设备Bank'
+      'Range',
+      'Device name',
+      'PCS'
     ],
-    title: '异常总览'
+    title: 'Earnings overview'
+  },
+  onlineDevice: {
+    tabs: [
+      'online device',
+      'online Socket'
+    ],
+    tableLabel: [
+      'No.',
+      'device ID',
+      'device name',
+      'remote endpoint',
+      'local endpoint',
+      'device registration type',
+      'latest device registration time'
+    ],
+    tableLabel1: [
+      'No.',
+      'local summary point of socket connection',
+      'socket remote endpoint',
+      'total data sent',
+      'total data received',
+      'number of packets sent',
+      'number of packets received',
+      'packet loss rate',
+      'time the connection was established',
+      'last update time of received data'
+    ]
+  },
+  preBatteryParams: {
+    unit: [
+      'Number of cores in cluster 1',
+      ''
+    ],
+    label: [
+      'Preset the number of battery packs',
+      'Preset the number of 1 battery pack',
+      'Preset the number of 2 battery pack'
+    ]
+  },
+  realtimeData: {
+    tableLabel: [
+      'No.',
+      'ICCID',
+      'device ID',
+      'device name',
+      'device administrator',
+      'registration time',
+      'operation'
+    ],
+    listTitle: 'device management',
+    operation: [
+      'data display'
+    ],
+    formLabel: [
+      'device name',
+      'identification number',
+      'data type',
+      'original data'
+    ],
+    tableLabel1: [
+      'starting address',
+      'Col 1',
+      'Col 2',
+      'Col 3',
+      'Col 4',
+      'Col 5',
+      'Col 6',
+      'Col 7',
+      'Col 8',
+      'Col 9',
+      'Col 10'
+    ]
+  },
+  register: {
+    searchTitle: 'Register turnover list query',
+    listTitle: 'Register turnover',
+    formLabel: [
+      'Range',
+      'Device code',
+      'ICCID'
+    ],
+    placeholder: [
+      '',
+      'Please enter the device code',
+      'Please enter the ICCID'
+    ],
+    tableLabel: [
+      'No.',
+      'system ID',
+      'device unique identification number',
+      'name',
+      'latest registration time',
+      'operation'
+    ],
+    operation: [
+      'details'
+    ],
+    dialog: {
+      title: 'detailed information',
+      order: [
+        'sort:',
+        'positive sequence',
+        'reverse order'
+      ],
+      label: [
+        'No. ',
+        'Type：'
+      ]
+    }
+  },
+  selfInspection: {
+    operation: [
+      'Called measurement'
+    ],
+    tip: 'Determine the call test user',
+    title: 'Comfirm',
+    yes: 'OK',
+    no: 'Cancel',
+    cancel: 'Call has been cancelled'
+  },
+  serialParams: {
+    label: [
+      'data bits',
+      'stop bit',
+      'parity bit'
+    ]
+  },
+  historyMonitor: {
+    label: 'Start time',
+    unit: 'h'
+  },
+  cpuHistory: [
+    'processor CPU time',
+    'CPU privilege time',
+    'CPU interrupt time',
+    'CPU DPC time'
+  ],
+  diskHistory: [
+    'read hard disk speed',
+    'write hard disk speed',
+    'average disk read time',
+    'average disk write time',
+    'hard disk queue length',
+    'disk time'
+  ],
+  memoryHistory: [
+    'available memory',
+    'general memory',
+    'memory usage ratio',
+    'memory cache'
+  ],
+  networkHistory: [
+    'network traffic sending',
+    'network traffic reception'
+  ],
+  othersHistory: [
+    'memory pool paging',
+    'memory pool is not paged',
+    'pagefile',
+    'content switching'
+  ],
+  systemHistory: [
+    'number of system handles',
+    'number of system threads',
+    'system call',
+    'system queue length'
+  ],
+  exception: {
+    searchTitle: 'Exception log list query',
+    listTitle: 'abnormal log',
+    formLabel: [
+      'Range',
+      'Exception name',
+      'Exception information'
+    ],
+    placeholder: [
+      '',
+      'please enter an exception name',
+      'please enter exception information'
+    ],
+    tableLabel: [
+      'No.',
+      'exception name',
+      'time of occurrence',
+      'exception method',
+      'exception code',
+      'exception information',
+      'record time',
+      'operation'
+    ],
+    operation: [
+      'details'
+    ],
+    dialog: {
+      title: 'detailed information',
+      label: [
+        'abnormal system',
+        'object name',
+        'exception link',
+        'representation',
+        'exception method',
+        'exception message',
+        'exception code',
+        'time of occurrence',
+        'record time'
+      ]
+    }
+  },
+  hardware: {
+    searchTitle: 'Hardware log list query',
+    listTitle: 'Hardware log',
+    formLabel: [
+      'Range',
+      'Log type',
+      'Log information'
+    ],
+    placeholder: [
+      '',
+      '',
+      'Please enter log information'
+    ],
+    tableLabel: [
+      'No.',
+      'log type',
+      'terminal time',
+      'log information',
+      'time of occurrence',
+      'record time'
+    ],
+    dialog: {
+      title: 'user log',
+      unit: [
+        'parameters',
+        'value'
+      ]
+    }
+  },
+  systemLog: {
+    searchTitle: 'System log list query',
+    listTitle: 'system log',
+    tableLabel: [
+      'No.',
+      'log type',
+      'log information',
+      'time of occurrence',
+      'record time',
+      'log parameters'
+    ]
+  },
+  userlog: {
+    searchTitle: 'User log list query',
+    listTitle: 'user log',
+    tableLabel: [
+      'No.',
+      'log type',
+      'login sequence number',
+      'login address',
+      'native IP',
+      'log information',
+      'time of occurrence',
+      'operation'
+    ],
+    operation: [
+      'Details'
+    ],
+    dialog: {
+      title: 'Log details',
+      label: [
+        'log type',
+        'login sequence number',
+        'Internet address',
+        'intranet address',
+        'client address',
+        'client territory',
+        'host name',
+        'language type',
+        'browser type',
+        'browser version',
+        'server address',
+        'start time',
+        'end time',
+        'record time'
+      ]
+    }
+  },
+  loginLog: {
+    searchTitle: 'Search',
+    listTitle: 'Login record',
+    searchForm: {
+      label: [
+        'Range',
+        'Select',
+        'IP address'
+      ]
+    },
+    tableLabel: [
+      'No.',
+      'Account',
+      'Name',
+      'Region',
+      'IP address',
+      'Census register',
+      'OS',
+      'Browser',
+      'Logon time',
+      'Operation'
+    ],
+    operation: [
+      'Record'
+    ]
   }
 }

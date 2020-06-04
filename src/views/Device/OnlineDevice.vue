@@ -1,12 +1,14 @@
 <template>
   <div>
     <el-card class="box-card">
-      <div slot="header" class="clearfix">
+      <!-- <div slot="header" class="clearfix">
         <span>在线Socket</span>
-      </div>
+      </div> -->
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="在线设备" name="onlineDevice"> </el-tab-pane>
-        <el-tab-pane label="在线Socket" name="onlineSocket"> </el-tab-pane>
+        <el-tab-pane :label="$t('onlineDevice.tabs')[0]" name="onlineDevice">
+        </el-tab-pane>
+        <el-tab-pane :label="$t('onlineDevice.tabs')[1]" name="onlineSocket">
+        </el-tab-pane>
       </el-tabs>
       <div v-show="activeName === 'onlineDevice'">
         <!-- 表格操作栏开始 -->
@@ -18,7 +20,7 @@
             class="button-left"
           >
             <i class="el-icon-refresh-right"></i>
-            {{$t('base.refresh')}}
+            {{ $t("base.refresh") }}
           </el-button>
           <el-button class="menu-btn">
             <i class="fa fa-list"></i>
@@ -35,24 +37,37 @@
               >
             </template>
           </div>
-          <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
-          <i class="fa fa-download"></i>
-        </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
-          <i class="fa fa-print"></i>
-        </el-button>
-        <!-- 导出操作开始 -->
-        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
-          <ul id="export">
-            <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
-            </li>
-            <li @click="exportExcel">
-              {{$t('base.export.excel')}}
-            </li>
-          </ul>
-        </el-popover>
-        <!-- 导出操作结束 -->
+          <el-button
+            class="menu-btn"
+            :title="$t('base.export.title')"
+            v-popover:export
+          >
+            <i class="fa fa-download"></i>
+          </el-button>
+          <el-button
+            class="menu-btn"
+            @click="printEvent"
+            :title="$t('base.export.print')"
+          >
+            <i class="fa fa-print"></i>
+          </el-button>
+          <!-- 导出操作开始 -->
+          <el-popover
+            ref="export"
+            placement="bottom"
+            width="100"
+            trigger="hover"
+          >
+            <ul id="export">
+              <li @click="exportDataEvent">
+                {{ $t("base.export.csv") }}
+              </li>
+              <li @click="exportExcel">
+                {{ $t("base.export.excel") }}
+              </li>
+            </ul>
+          </el-popover>
+          <!-- 导出操作结束 -->
         </div>
         <!-- 表格操作栏结束 -->
 
@@ -76,52 +91,62 @@
             width="50"
             fixed="left"
           ></vxe-table-column>
-          <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+          <vxe-table-column
+            type="seq"
+            width="50"
+            :title="$t('onlineDevice.tableLabel')[0]"
+            fixed="left"
+          >
           </vxe-table-column>
           <vxe-table-column
             field="DeviceID"
-            title="设备ID"
+            :title="$t('onlineDevice.tableLabel')[1]"
             width="350"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="Text"
-            title="设备名称"
+            :title="$t('onlineDevice.tableLabel')[2]"
             width="200"
             show-overflow
             sortable
-            align='left'
+            align="left"
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="RemoteEndPoint"
-            title="远程终结点"
+            :title="$t('onlineDevice.tableLabel')[3]"
             width="250"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="LocalEndPoint"
-            title="本地终结点"
+            :title="$t('onlineDevice.tableLabel')[4]"
             width="250"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="DType"
-            title="设备注册类型"
+            :title="$t('onlineDevice.tableLabel')[5]"
             width="180"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="RegistrationTime"
-            title="设备最新注册时间"
+            :title="$t('onlineDevice.tableLabel')[6]"
             show-header-overflow
             sortable
             show-overflow
@@ -152,7 +177,7 @@
             class="button-left"
           >
             <i class="el-icon-refresh-right"></i>
-            {{$t('base.refresh')}}
+            {{ $t("base.refresh") }}
           </el-button>
           <el-button class="menu-btn">
             <i class="fa fa-list"></i>
@@ -170,19 +195,19 @@
             </template>
           </div>
           <el-button
-          class="menu-btn"
-          :title="$t('base.export.title')"
-          v-popover:export
-        >
-          <i class="fa fa-download"></i>
-        </el-button>
-        <el-button
-          class="menu-btn"
-          @click="printEvent"
-          :title="$t('base.export.print')"
-        >
-          <i class="fa fa-print"></i>
-        </el-button>
+            class="menu-btn"
+            :title="$t('base.export.title')"
+            v-popover:export
+          >
+            <i class="fa fa-download"></i>
+          </el-button>
+          <el-button
+            class="menu-btn"
+            @click="printEvent"
+            :title="$t('base.export.print')"
+          >
+            <i class="fa fa-print"></i>
+          </el-button>
           <!-- 导出操作开始 -->
           <el-popover
             ref="export1"
@@ -191,13 +216,13 @@
             trigger="hover"
           >
             <ul id="export">
-            <li @click="exportDataEvent">
-              {{ $t("base.export.csv") }}
-            </li>
-            <li @click="exportExcel">
-              {{ $t("base.export.excel") }}
-            </li>
-          </ul>
+              <li @click="exportDataEvent">
+                {{ $t("base.export.csv") }}
+              </li>
+              <li @click="exportExcel">
+                {{ $t("base.export.excel") }}
+              </li>
+            </ul>
           </el-popover>
           <!-- 导出操作结束 -->
         </div>
@@ -222,83 +247,97 @@
             width="50"
             fixed="left"
           ></vxe-table-column>
-          <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+          <vxe-table-column
+            type="seq"
+            width="50"
+            :title="$t('onlineDevice.tableLabel1')[0]"
+            fixed="left"
+          >
           </vxe-table-column>
           <vxe-table-column
             field="LocdEndPoint"
-            title="Socket连接的本地总结点"
+            :title="$t('onlineDevice.tableLabel1')[1]"
             width="200"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="RemoteEndPoint"
-            title="Socket远端终结点"
+            :title="$t('onlineDevice.tableLabel1')[2]"
             width="200"
             show-overflow
+            show-header-overflow
             sortable
           >
           </vxe-table-column>
           <vxe-table-column
             field="SendByte"
-            title="发送的总数据量"
+            :title="$t('onlineDevice.tableLabel1')[3]"
             width="200"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="ReceiveByte"
-            title="接收的总数据量"
+            :title="$t('onlineDevice.tableLabel1')[4]"
             width="180"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="SendNumber"
-            title="发送数据包的个数"
+            :title="$t('onlineDevice.tableLabel1')[5]"
             width="180"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="ReceiveNumber"
-            title="接收数据包的个数"
+            :title="$t('onlineDevice.tableLabel1')[6]"
             width="180"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="PacketLossProbability"
-            title="丢包率"
+            :title="$t('onlineDevice.tableLabel1')[7]"
             width="180"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="ConnectTime"
-            title="建立连接的时间"
+            :title="$t('onlineDevice.tableLabel1')[8]"
             width="260"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
           <vxe-table-column
             field="UpdataTime"
-            title="收到数据最后更新时间"
+            :title="$t('onlineDevice.tableLabel1')[9]"
             width="260"
             sortable
             show-overflow
+            show-header-overflow
           >
           </vxe-table-column>
         </vxe-table>
         <!-- 表格结束 -->
-         <!-- 分页开始 -->
+        <!-- 分页开始 -->
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"

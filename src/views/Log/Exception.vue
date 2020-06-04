@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>异常日志列表查询</span>
+            <span>{{ $t("exception.searchTitle") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,26 +14,26 @@
             label-width="80px"
             label-position="right"
           >
-            <el-form-item label="范围选择:">
+            <el-form-item :label="$t('exception.formLabel')[0]">
               <el-date-picker
                 v-model="value"
                 type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('base.datePicker.separator')"
+                :start-placeholder="$t('base.datePicker.start')"
+                :end-placeholder="$t('base.datePicker.end')"
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="异常名称:">
+            <el-form-item :label="$t('exception.formLabel')[1]">
               <el-input
                 v-model="searchForm.LikeType"
-                placeholder="请输入异常名称"
+                :placeholder="$t('exception.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="异常信息:">
+            <el-form-item :label="$t('exception.formLabel')[2]">
               <el-input
                 v-model="searchForm.LikeMessage"
-                placeholder="请输入异常信息"
+                :placeholder="$t('exception.placeholder')[2]"
               ></el-input>
             </el-form-item>
             <el-form-item>
@@ -43,7 +43,7 @@
                   searchForm.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
               <el-button
                 type="primary"
@@ -51,28 +51,28 @@
                 size="mini"
                 style="margin-left:20px;"
                 @click="goOtherDay('today')"
-                >当天</el-button
+                >{{ $t("base.dateGroup.today") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('two')"
-                >前两天</el-button
+                >{{ $t("base.dateGroup.twoDays") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('week')"
-                >前一周</el-button
+                >{{ $t("base.dateGroup.week") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('month')"
-                >前一月</el-button
+                >{{ $t("base.dateGroup.month") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -84,7 +84,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>异常日志</span>
+        <span>{{ $t("exception.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -96,7 +96,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -105,7 +105,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -122,20 +122,28 @@
             >
           </template>
         </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -162,57 +170,74 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column
+          type="seq"
+          width="50"
+          :title="$t('exception.tableLabel')[0]"
+          fixed="left"
+        >
         </vxe-table-column>
         <vxe-table-column
           field="ExcName"
-          title="异常名称"
+          :title="$t('exception.tableLabel')[1]"
           sortable
           width="120"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="RecordingTime"
-          title="发生时间"
+          :title="$t('exception.tableLabel')[2]"
           sortable
           width="180"
           show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="TargetSite"
-          title="异常方法"
+          :title="$t('exception.tableLabel')[3]"
           show-overflow
           width="150"
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="ExcResult"
-          title="异常编码"
+          :title="$t('exception.tableLabel')[4]"
           sortable
           width="120"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
         <vxe-table-column
           field="Msg"
-          title="异常信息"
+          :title="$t('exception.tableLabel')[5]"
           show-overflow
+          show-header-overflow
           width="615"
           align="left"
         >
         </vxe-table-column>
         <vxe-table-column
           field="WriteTime"
-          title="记录时间"
+          :title="$t('exception.tableLabel')[6]"
           sortable
           width="200"
+          show-overflow
+          show-header-overflow
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right">
+        <vxe-table-column
+          :title="$t('exception.tableLabel')[7]"
+          width="200"
+          fixed="right"
+        >
           <template v-slot="{ row }">
             <el-button plain size="small" @click="toDetail(row)">
-              <i class="el-icon-info">详情</i>
+              <i class="el-icon-info">{{$t('exception.operation')[0]}}</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -235,50 +260,49 @@
       <Drawer
         :closable="false"
         v-model="value4"
-        title="详细信息"
+        :title="$t('exception.dialog.title')"
         draggable
         width="50"
       >
-        <p :style="pStyle">异常系统</p>
+        <p :style="pStyle">{{$t('exception.dialog.label')[0]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.SystemName }}
         </div>
         <Divider />
-        <p :style="pStyle">对象名称</p>
+        <p :style="pStyle">{{$t('exception.dialog.label')[1]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Source }}
         </div>
         <Divider />
-        <p :style="pStyle">异常链接</p>
+        <p :style="pStyle">{{$t('exception.dialog.label')[2]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.HelpLink }}
         </div>
         <Divider />
-        <p :style="pStyle">表示形式</p>
-        <div class="demo-drawer-profile" v-html="activeItem.StackTrace">
-        </div>
+        <p :style="pStyle">{{$t('exception.dialog.label')[3]}}</p>
+        <div class="demo-drawer-profile" v-html="activeItem.StackTrace"></div>
         <Divider />
-        <p :style="pStyle">异常方法</p>
+        <p :style="pStyle">{{$t('exception.dialog.label')[4]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.TargetSite }}
         </div>
         <Divider />
-        <p :style="pStyle">异常消息</p>
+        <p :style="pStyle">{{$t('exception.dialog.label')[5]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Message }}
         </div>
         <Divider />
-        <p :style="pStyle">异常编码</p>
+        <p :style="pStyle">{{$t('exception.dialog.label')[6]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.HResult }}
         </div>
         <Divider />
-        <p :style="pStyle">发生时间</p>
+        <p :style="pStyle">{{$t('exception.dialog.label')[7]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.WriteTime }}
         </div>
         <Divider />
-        <p :style="pStyle">记录时间</p>
+        <p :style="pStyle">{{$t('exception.dialog.label')[8]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.RecordingTime }}
         </div>
@@ -307,7 +331,7 @@ export default {
       count: 0,
       customColumns: [],
       isShow: true,
-      fileName: '日志信息',
+      fileName: 'export',
       loading: false,
       dialogFormVisible: false,
       value: '',
@@ -376,7 +400,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {

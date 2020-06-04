@@ -1,14 +1,28 @@
 <template>
   <div>
     <el-form style="margin-top:10px">
-      <el-form-item label="预设置电池组数量" label-width="150px" style="width:25%">
-        <el-input :value="data.pRE_SET_NUMBER_OF_BATTERY_PACKS" :readonly="true"></el-input>
+      <el-form-item
+        :label="$t('preBatteryParams.label')[0]"
+        label-width="150px"
+        style="width:25%"
+      >
+        <el-input
+          :value="data.pRE_SET_NUMBER_OF_BATTERY_PACKS"
+          :readonly="true"
+        ></el-input>
       </el-form-item>
     </el-form>
     <Divider />
     <el-form>
-      <el-form-item label="预设置电池组1簇数量" label-width="150px" style="width:25%">
-        <el-input :value="data.pRE_SET_NUMBER_OF_BATTERY_BANK_1" :readonly="true"></el-input>
+      <el-form-item
+        :label="$t('preBatteryParams.label')[1]"
+        label-width="150px"
+        style="width:25%"
+      >
+        <el-input
+          :value="data.pRE_SET_NUMBER_OF_BATTERY_BANK_1"
+          :readonly="true"
+        ></el-input>
       </el-form-item>
       <el-col
         :span="6"
@@ -16,15 +30,29 @@
         :key="index"
         :index="index"
       >
-          <el-form-item :label="'第'+(index+1)+'簇电芯数量'" label-width="150px">
-            <el-input :value="item" :readonly="true"></el-input>
-          </el-form-item>
+        <el-form-item
+          :label="
+            $t('preBatteryParams.unit')[0] +
+              (index + 1) +
+              $t('preBatteryParams.unit')[1]
+          "
+          label-width="150px"
+        >
+          <el-input :value="item" :readonly="true"></el-input>
+        </el-form-item>
       </el-col>
     </el-form>
     <Divider />
     <el-form>
-      <el-form-item label="预设置电池组2簇数量" label-width="150px" style="width:25%">
-        <el-input :value="data.pRE_SET_NUMBER_OF_BATTERY_BANK_2" :readonly="true"></el-input>
+      <el-form-item
+        :label="$t('preBatteryParams.label')[2]"
+        label-width="150px"
+        style="width:25%"
+      >
+        <el-input
+          :value="data.pRE_SET_NUMBER_OF_BATTERY_BANK_2"
+          :readonly="true"
+        ></el-input>
       </el-form-item>
       <el-col
         :span="6"
@@ -32,9 +60,16 @@
         :key="index"
         :index="index"
       >
-          <el-form-item :label="'第'+(index+1)+'簇电芯数量'" label-width="150px">
-            <el-input :value="item" :readonly="true"></el-input>
-          </el-form-item>
+        <el-form-item
+          :label="
+            $t('preBatteryParams.unit')[0] +
+              (index + 1) +
+              $t('preBatteryParams.unit')[1]
+          "
+          label-width="150px"
+        >
+          <el-input :value="item" :readonly="true"></el-input>
+        </el-form-item>
       </el-col>
     </el-form>
   </div>
@@ -77,8 +112,34 @@ export default {
               pRE_SET_NUMBER_OF_BATTERY_PACKS: '',
               pRE_SET_NUMBER_OF_BATTERY_BANK_1: '',
               pRE_SET_NUMBER_OF_BATTERY_BANK_2: '',
-              nUMBER_OF_12_TUFTS_IN_BANK_1: ['', '', '', '', '', '', '', '', '', '', '', ''],
-              nUMBER_OF_12_TUFTS_IN_BANK_2: ['', '', '', '', '', '', '', '', '', '', '', '']
+              nUMBER_OF_12_TUFTS_IN_BANK_1: [
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                ''
+              ],
+              nUMBER_OF_12_TUFTS_IN_BANK_2: [
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                ''
+              ]
             }
           }
         })

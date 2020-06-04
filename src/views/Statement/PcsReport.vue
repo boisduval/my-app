@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>查询</span>
+            <span>{{$t('base.searchbtn')}}</span>
           </div>
           <el-form
             :inline="true"
@@ -13,19 +13,19 @@
             class="demo-form-inline"
             label-position="right"
           >
-            <el-form-item label="范围选择:" label-width="80px">
+            <el-form-item :label="$t('pcsEarnings.formLabel')[0]" label-width="80px">
               <el-date-picker
                 v-model="value"
                 type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('base.datePicker.separator')"
+                :start-placeholder="$t('base.datePicker.start')"
+                :end-placeholder="$t('base.datePicker.end')"
                 :clearable="false"
                 @change="getData"
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="设备名称:" label-width="80px">
+            <el-form-item :label="$t('pcsEarnings.formLabel')[1]" label-width="80px">
               <el-select v-model="searchForm.DeviceSystemID" @change="getPcsList">
                 <el-option
                   v-for="(item, index) in options"
@@ -35,7 +35,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="PCS" label-width="80px">
+            <el-form-item :label="$t('pcsEarnings.formLabel')[2]" label-width="80px">
               <el-select v-model="searchForm.PCSIndex" @change="getData">
                 <el-option v-for="(item, index) in pcsList" :key="index" :label="item.unit" :value="item.value"></el-option>
               </el-select>
@@ -47,21 +47,21 @@
                 size="mini"
                 style="margin-left:20px;"
                 @click="goOtherDay('yesterday')"
-                >昨天</el-button
+                >{{$t('base.dateGroup.yesterday')}}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('week')"
-                >近一周</el-button
+                >{{$t('base.dateGroup.week')}}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('month')"
-                >近一月</el-button
+                >{{$t('base.dateGroup.month')}}</el-button
               >
             </el-form-item>
           </el-form>
@@ -73,7 +73,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>PCS总览</span>
+        <span>{{$t('pcsEarnings.title')}}</span>
       </div>
       <div class="wrap-box flex-row" v-loading="loading">
           <div class="wrap">

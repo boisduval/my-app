@@ -740,6 +740,15 @@ const state = {
             DataIndex: '1000',
             Text: '登陆异常',
             Use: true
+          },
+          {
+            ID: '51',
+            MID: '637031848502576736',
+            Href: 'loginLog',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: '登陆记录',
+            Use: true
           }
         ]
       }

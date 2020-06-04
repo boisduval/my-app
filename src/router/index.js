@@ -615,6 +615,14 @@ const routes = [
         }
       },
       {
+        path: '/loginLog',
+        name: 'loginLog',
+        component: () => import(/* webpackChunkName: "LoginLog" */ '../views/UserManagement/LoginLog.vue'),
+        meta: {
+          keepAlive: false // 需要被缓存
+        }
+      },
+      {
         path: '/mailBox',
         name: 'mailBox',
         component: () => import(/* webpackChunkName: "mailBox" */ '../views/SystemTools/MailBox.vue'),

@@ -58,24 +58,26 @@ export default {
   },
   created () {
     this.AutoSystemID = localStorage.getItem('AutoSystemID')
-    this.getData()
-    this.interval = setInterval(() => {
-      console.log('ok')
+    this.$nextTick(() => {
       this.getData()
-    }, 3000)
+      this.interval = setInterval(() => {
+        console.log('ok')
+        this.getData()
+      }, 6000)
+    })
     this.$once('hook:beforeDestroy', () => {
       clearInterval(this.interval)
     })
   },
   methods: {
     getData () {
-      this.DISKRead = []
-      this.DISKAverageTimeRead = []
-      this.DISKAverageTimeWrite = []
-      this.DISKWrite = []
-      this.DISCQueueLengh = []
-      this.DISKTime = []
-      this.SamplingTime = []
+      // this.DISKRead = []
+      // this.DISKAverageTimeRead = []
+      // this.DISKAverageTimeWrite = []
+      // this.DISKWrite = []
+      // this.DISCQueueLengh = []
+      // this.DISKTime = []
+      // this.SamplingTime = []
       var url = '/api/Monitor/GetSystemMonitorInfo'
       this.$axios
         .get(url, {

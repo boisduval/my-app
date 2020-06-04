@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>设备日报表列表查询</span>
+            <span>{{$t('userlog.searchTitle')}}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,17 +14,17 @@
             label-width="80px"
             label-position="right"
           >
-            <el-form-item label="范围选择:">
+            <el-form-item :label="$t('hardware.formLabel')[0]">
               <el-date-picker
                 v-model="value"
                 type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :range-separator="$t('base.datePicker.separator')"
+                :start-placeholder="$t('base.datePicker.start')"
+                :end-placeholder="$t('base.datePicker.end')"
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="日志类型:">
+            <el-form-item :label="$t('hardware.formLabel')[1]">
               <el-select v-model="searchForm.LikeType" clearable>
                 <el-option
                   v-for="(item, index) in options"
@@ -34,10 +34,10 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="日志信息:">
+            <el-form-item :label="$t('hardware.formLabel')[2]">
               <el-input
                 v-model="searchForm.LikeMessage"
-                placeholder="请输入日志信息"
+                :placeholder="$t('hardware.placeholder')[2]"
               ></el-input>
             </el-form-item>
             <el-form-item>
@@ -47,7 +47,7 @@
                   searchForm.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
               <el-button
                 type="primary"
@@ -55,28 +55,28 @@
                 size="mini"
                 style="margin-left:20px;"
                 @click="goOtherDay('today')"
-                >当天</el-button
+                >{{ $t("base.dateGroup.today") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('two')"
-                >前两天</el-button
+                >{{ $t("base.dateGroup.twoDays") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('week')"
-                >前一周</el-button
+                >{{ $t("base.dateGroup.week") }}</el-button
               >
               <el-button
                 type="primary"
                 plain
                 size="mini"
                 @click="goOtherDay('month')"
-                >前一月</el-button
+                >{{ $t("base.dateGroup.month") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -88,7 +88,7 @@
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备日报表</span>
+        <span>{{$t('userlog.listTitle')}}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -100,7 +100,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -109,7 +109,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -166,30 +166,30 @@
           width="50"
           fixed="left"
         ></vxe-table-column>
-        <vxe-table-column type="seq" width="50" title="序号" fixed="left">
+        <vxe-table-column type="seq" width="50" :title="$t('userlog.tableLabel')[0]" fixed="left">
         </vxe-table-column>
         <vxe-table-column
           field="Type"
-          title="日志类型"
+          :title="$t('userlog.tableLabel')[1]"
           sortable
           width="150"
           show-overflow
         >
         </vxe-table-column>
-        <vxe-table-column field="Index" title="登录序号" width="150">
+        <vxe-table-column field="Index" :title="$t('userlog.tableLabel')[2]" width="150">
         </vxe-table-column>
         <vxe-table-column
           field="LogAddress"
-          title="登录地址"
+          :title="$t('userlog.tableLabel')[3]"
           sortable
           width="200"
         >
         </vxe-table-column>
-        <vxe-table-column field="LogIP" title="本机IP" sortable width="200">
+        <vxe-table-column field="LogIP" :title="$t('userlog.tableLabel')[4]" sortable width="200">
         </vxe-table-column>
         <vxe-table-column
           field="Msg"
-          title="日志信息"
+          :title="$t('userlog.tableLabel')[5]"
           sortable
           width="450"
           align="left"
@@ -198,15 +198,15 @@
         </vxe-table-column>
         <vxe-table-column
           field="RecordingTime"
-          title="发生时间"
+          :title="$t('userlog.tableLabel')[6]"
           sortable
           width="180"
         >
         </vxe-table-column>
-        <vxe-table-column title="操作" width="200" fixed="right">
+        <vxe-table-column :title="$t('userlog.tableLabel')[7]" width="200" fixed="right">
           <template v-slot="{ row }">
             <el-button plain size="small" @click="toDetail(row)">
-              <i class="el-icon-info">详情</i>
+              <i class="el-icon-info">{{$t('userlog.operation')[0]}}</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -229,76 +229,76 @@
       <Drawer
         :closable="false"
         v-model="value4"
-        title="日志详情"
+        :title="$t('userlog.dialog.title')"
         draggable
         width="30"
       >
-        <p :style="pStyle">日志类型</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[0]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.LogType }}
         </div>
         <Divider />
-        <p :style="pStyle">登录序号</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[1]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.LogIndex }}
         </div>
         <Divider />
-        <p :style="pStyle">外网地址</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[2]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.LogIP }}
         </div>
         <Divider />
-        <p :style="pStyle">内网地址</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[3]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.logHostIP }}
         </div>
         <Divider />
-        <p :style="pStyle">客户端地址</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[4]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.RemoteIP }}
         </div>
         <Divider />
-        <p :style="pStyle">客户端属地</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[5]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.ComputerLocation }}
         </div>
         <Divider />
-        <p :style="pStyle">主机名称</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[6]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.UserHostName }}
         </div>
         <Divider />
-        <p :style="pStyle">语言类型</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[7]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.UserLanguage }}
         </div>
         <Divider />
-        <p :style="pStyle">浏览器类型</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[8]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.Browser }}
         </div>
         <Divider />
-        <p :style="pStyle">浏览器版本</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[9]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.BrowserVersion }}
         </div>
         <Divider />
-        <p :style="pStyle">服务器地址</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[10]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.HttpForwardedAddress }}
         </div>
         <Divider />
-        <p :style="pStyle">开始时间</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[11]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.StartTime }}
         </div>
         <Divider />
-        <p :style="pStyle">结束时间</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[12]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.StopTime }}
         </div>
         <Divider />
-        <p :style="pStyle">记录时间</p>
+        <p :style="pStyle">{{$t('userlog.dialog.label')[13]}}</p>
         <div class="demo-drawer-profile">
           {{ activeItem.RecordingTime }}
         </div>
@@ -327,7 +327,7 @@ export default {
       count: 0,
       customColumns: [],
       isShow: true,
-      fileName: '日志信息',
+      fileName: 'export',
       loading: false,
       options: [],
       value: '',
@@ -396,7 +396,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {

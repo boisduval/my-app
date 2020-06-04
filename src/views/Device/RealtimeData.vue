@@ -5,7 +5,7 @@
       <div style="box-sizing:border-box;" v-show="isShow">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>模糊查询</span>
+            <span>{{ $t("base.search") }}</span>
           </div>
           <el-form
             :inline="true"
@@ -14,28 +14,28 @@
             label-width="90px"
             label-position="right"
           >
-            <el-form-item label="ICCID编号:">
+            <el-form-item :label="$t('deviceInfo.searchForm.label')[0]">
               <el-input
                 v-model="formInline.ICCID"
-                placeholder="请输入ICCID编号"
+                :placeholder="$t('deviceInfo.searchForm.placeholder')[0]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备编号:">
+            <el-form-item :label="$t('deviceInfo.searchForm.label')[1]">
               <el-input
                 v-model="formInline.IDS"
-                placeholder="请输入设备编号"
+                :placeholder="$t('deviceInfo.searchForm.placeholder')[1]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="VIN编码:">
+            <el-form-item :label="$t('deviceInfo.searchForm.label')[2]">
               <el-input
                 v-model="formInline.VIN"
-                placeholder="请输入VIN编码"
+                :placeholder="$t('deviceInfo.searchForm.placeholder')[2]"
               ></el-input>
             </el-form-item>
-            <el-form-item label="设备名称:">
+            <el-form-item :label="$t('deviceInfo.searchForm.label')[3]">
               <el-input
                 v-model="formInline.Name"
-                placeholder="请输入设备名称"
+                :placeholder="$t('deviceInfo.searchForm.placeholder')[3]"
               ></el-input>
             </el-form-item>
             <!-- <br> -->
@@ -46,7 +46,7 @@
                   formInline.page = 1;
                   getData();
                 "
-                >查询</el-button
+                >{{ $t("base.searchbtn") }}</el-button
               >
             </el-form-item>
           </el-form>
@@ -57,7 +57,7 @@
     <!-- 表单结束 -->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>设备管理</span>
+        <span>{{ $t("realtimeData.listTitle") }}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
@@ -69,7 +69,7 @@
           class="button-left"
         >
           <i class="el-icon-refresh-right"></i>
-          刷新
+          {{ $t("base.refresh") }}
         </el-button>
         <el-button
           type="primary"
@@ -78,7 +78,7 @@
           @click="isShow = !isShow"
         >
           <i class="el-icon-search"></i>
-          模糊查询
+          {{ $t("base.search") }}
         </el-button>
         <el-button class="menu-btn">
           <i class="fa fa-list"></i>
@@ -95,20 +95,28 @@
             >
           </template>
         </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
+        <el-button
+          class="menu-btn"
+          :title="$t('base.export.title')"
+          v-popover:export
+        >
           <i class="fa fa-download"></i>
         </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
+        <el-button
+          class="menu-btn"
+          @click="printEvent"
+          :title="$t('base.export.print')"
+        >
           <i class="fa fa-print"></i>
         </el-button>
         <!-- 导出操作开始 -->
         <el-popover ref="export" placement="bottom" width="100" trigger="hover">
           <ul id="export">
             <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
+              {{ $t("base.export.csv") }}
             </li>
             <li @click="exportExcel">
-              {{$t('base.export.excel')}}
+              {{ $t("base.export.excel") }}
             </li>
           </ul>
         </el-popover>
@@ -138,14 +146,14 @@
         <vxe-table-column
           type="seq"
           width="50"
-          title="序号"
+          :title="$t('realtimeData.tableLabel')[0]"
           fixed="left"
           align="center"
         >
         </vxe-table-column>
         <vxe-table-column
           field="DICCID"
-          title="ICCID"
+          :title="$t('realtimeData.tableLabel')[1]"
           sortable
           width="300"
           show-overflow
@@ -154,7 +162,7 @@
         </vxe-table-column>
         <vxe-table-column
           field="DIDS"
-          title="设备ID"
+          :title="$t('realtimeData.tableLabel')[2]"
           sortable
           width="300"
           show-overflow
@@ -163,7 +171,7 @@
         </vxe-table-column>
         <vxe-table-column
           field="DName"
-          title="设备名称"
+          :title="$t('realtimeData.tableLabel')[3]"
           sortable
           width="200"
           show-overflow
@@ -172,7 +180,7 @@
         </vxe-table-column>
         <vxe-table-column
           field="DManageMentUserName"
-          title="设备管理员"
+          :title="$t('realtimeData.tableLabel')[4]"
           sortable
           width="200"
           show-overflow
@@ -181,7 +189,7 @@
         </vxe-table-column>
         <vxe-table-column
           field="DTime"
-          title="登记时间"
+          :title="$t('realtimeData.tableLabel')[5]"
           width="250"
           sortable
           show-overflow
@@ -189,7 +197,7 @@
         >
         </vxe-table-column>
         <vxe-table-column
-          title="操作"
+          :title="$t('realtimeData.tableLabel')[6]"
           align="center"
           width="250"
           show-overflow
@@ -197,7 +205,9 @@
         >
           <template v-slot="{ row }">
             <el-button plain size="small" @click="showDialog(row)">
-              <i class="el-icon-info">显示数据</i>
+              <i class="el-icon-info">{{
+                $t("realtimeData.operation")[0]
+              }}</i>
             </el-button>
           </template>
         </vxe-table-column>
@@ -218,24 +228,29 @@
 
       <!-- 数据表单开始 -->
       <el-dialog
-        title="显示数据"
+        :title="$t('realtimeData.operation')[0]"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
         width="70%"
       >
         <el-form :model="form" style="position:relative">
           <Spin v-if="spinShow1" fix></Spin>
-          <el-form-item label="设备名称" :label-width="formLabelWidth">
-            <el-input
-              v-model="dname"
-              autocomplete="off"
-              readonly
-            ></el-input>
+          <el-form-item
+            :label="$t('realtimeData.formLabel')[0]"
+            :label-width="formLabelWidth"
+          >
+            <el-input v-model="dname" autocomplete="off" readonly></el-input>
           </el-form-item>
-          <el-form-item label="识别号码" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('realtimeData.formLabel')[1]"
+            :label-width="formLabelWidth"
+          >
             <el-input readonly v-model="deviceid" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="数据类型" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('realtimeData.formLabel')[2]"
+            :label-width="formLabelWidth"
+          >
             <el-select v-model="form.ConfigType" @change="getConfig">
               <el-option
                 v-for="(item, index) in list"
@@ -245,7 +260,10 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="原始数据" :label-width="formLabelWidth">
+          <el-form-item
+            :label="$t('realtimeData.formLabel')[3]"
+            :label-width="formLabelWidth"
+          >
             <vxe-table
               height="300px"
               :data="tableData1"
@@ -253,35 +271,73 @@
               :customs.sync="customColumns1"
               style="width: 100%"
             >
-              <vxe-table-column field="RowIndex" title="起始地址">
+              <vxe-table-column
+                field="RowIndex"
+                :title="$t('realtimeData.tableLabel1')[0]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell0" title="第一列">
+              <vxe-table-column
+                field="Cell0"
+                :title="$t('realtimeData.tableLabel1')[1]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell1" title="第二列">
+              <vxe-table-column
+                field="Cell1"
+                :title="$t('realtimeData.tableLabel1')[2]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell2" title="第三列">
+              <vxe-table-column
+                field="Cell2"
+                :title="$t('realtimeData.tableLabel1')[3]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell3" title="第四列">
+              <vxe-table-column
+                field="Cell3"
+                :title="$t('realtimeData.tableLabel1')[4]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell4" title="第五列">
+              <vxe-table-column
+                field="Cell4"
+                :title="$t('realtimeData.tableLabel1')[5]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell5" title="第六列">
+              <vxe-table-column
+                field="Cell5"
+                :title="$t('realtimeData.tableLabel1')[6]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell6" title="第七列">
+              <vxe-table-column
+                field="Cell6"
+                :title="$t('realtimeData.tableLabel1')[7]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell7" title="第八列">
+              <vxe-table-column
+                field="Cell7"
+                :title="$t('realtimeData.tableLabel1')[8]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell8" title="第九列">
+              <vxe-table-column
+                field="Cell8"
+                :title="$t('realtimeData.tableLabel1')[9]"
+              >
               </vxe-table-column>
-              <vxe-table-column field="Cell9" title="第十列">
+              <vxe-table-column
+                field="Cell9"
+                :title="$t('realtimeData.tableLabel1')[10]"
+              >
               </vxe-table-column>
             </vxe-table>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" :disabled="spinShow1" @click="exportExcel1"
-            >下 载</el-button
+          <el-button @click="dialogFormVisible = false">{{
+            $t("base.cancel")
+          }}</el-button>
+          <el-button
+            type="primary"
+            :disabled="spinShow1"
+            @click="exportExcel1"
+            >{{ $t("base.download") }}</el-button
           >
         </div>
       </el-dialog>
@@ -370,7 +426,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     // 导出excel
@@ -391,7 +447,7 @@ export default {
         // 上面的index、nickName、name是tableData里对象的属性
         const list = this.tableData1 // 把data里的tableData存到list
         const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}表`)
+        export_json_to_excel(tHeader, data, `${this.fileName}`)
       })
     },
     formatJson (filterVal, jsonData) {

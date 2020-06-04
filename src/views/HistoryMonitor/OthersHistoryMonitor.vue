@@ -2,23 +2,22 @@
   <div>
     <el-card class="box-card">
       <el-form inline>
-        <el-form-item label="起始时间">
+        <el-form-item :label="$t('historyMonitor.label')">
           <el-date-picker
             v-model="value1"
             type="datetime"
-            placeholder="选择日期时间"
             :clearable="false"
             @change="setSearchTime"
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item label=" " label-width="60px">
+        <el-form-item label=" " label-width="30px">
           <el-radio-group v-model="time" size="mini" @change="setSearchTime">
-            <el-radio-button label="1">1小时</el-radio-button>
-            <el-radio-button label="6">6小时</el-radio-button>
-            <el-radio-button label="12">12小时</el-radio-button>
-            <el-radio-button label="24">24小时</el-radio-button>
-            <el-radio-button label="48">48小时</el-radio-button>
+            <el-radio-button label="1">1{{$t('historyMonitor.unit')}}</el-radio-button>
+            <el-radio-button label="6">6{{$t('historyMonitor.unit')}}</el-radio-button>
+            <el-radio-button label="12">12{{$t('historyMonitor.unit')}}</el-radio-button>
+            <el-radio-button label="24">24{{$t('historyMonitor.unit')}}</el-radio-button>
+            <el-radio-button label="48">48{{$t('historyMonitor.unit')}}</el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -163,7 +162,7 @@ export default {
           }
         ],
         title: {
-          text: '内存池分页'
+          text: this.$t('othersHistory')[0]
         },
         toolbox: {
           feature: {
@@ -181,7 +180,7 @@ export default {
         },
         series: [
           {
-            name: '内存池分页',
+            name: this.$t('othersHistory')[0],
             type: 'line',
             data: this.MEMPoolPaged,
             itemStyle: {
@@ -219,7 +218,7 @@ export default {
           }
         ],
         title: {
-          text: '内存池未分页'
+          text: this.$t('othersHistory')[1]
         },
         toolbox: {
           feature: {
@@ -237,7 +236,7 @@ export default {
         },
         series: [
           {
-            name: '内存池未分页',
+            name: this.$t('othersHistory')[1],
             type: 'line',
             data: this.MEMPoolNonPaged,
             itemStyle: {
@@ -275,7 +274,7 @@ export default {
           }
         ],
         title: {
-          text: '页面文件'
+          text: this.$t('othersHistory')[2]
         },
         toolbox: {
           feature: {
@@ -293,7 +292,7 @@ export default {
         },
         series: [
           {
-            name: '页面文件',
+            name: this.$t('othersHistory')[2],
             type: 'line',
             data: this.PageFile,
             itemStyle: {
@@ -331,7 +330,7 @@ export default {
           }
         ],
         title: {
-          text: '内容切换'
+          text: this.$t('othersHistory')[3]
         },
         toolbox: {
           feature: {
@@ -349,7 +348,7 @@ export default {
         },
         series: [
           {
-            name: '内容切换',
+            name: this.$t('othersHistory')[3],
             type: 'line',
             data: this.CONTENTSwitches,
             itemStyle: {

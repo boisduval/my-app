@@ -537,18 +537,22 @@ export default {
     handleSuccess (response, file, fileList) {
       // this.$message.success(response.msg)
       // this.dialogFormVisible = false
-      var timer
-      this.show = false
-      this.num = 5
-      timer = setInterval(() => {
-        if (this.num >= 1) {
-          this.num--
-        } else {
-          clearInterval(timer)
-          this.successCallback(response.callback)
-          this.successTipShow = true
-        }
-      }, 1000)
+      if (response.code === 0) {
+        var timer
+        this.show = false
+        this.num = 20
+        timer = setInterval(() => {
+          if (this.num >= 1) {
+            this.num--
+          } else {
+            clearInterval(timer)
+            this.successCallback(response.callback)
+            this.successTipShow = true
+          }
+        }, 1000)
+      } else {
+        this.$message.warning(response.msg)
+      }
     },
     handleError (response, file, fileList) {
       this.form = {}

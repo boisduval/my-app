@@ -126,10 +126,10 @@ export default {
             let data = res.data.data
             this.setData()
             this.state[0].value = data.oN_OFF_SETTING ? this.$t('controlStatus.state')[0] : this.$t('controlStatus.state')[1]
-            this.state[1].value = data.aUTOMATIC_MODE_SWITCHING ? this.$t('controlStatus.state')[0] : this.$t('controlStatus.state')[1]
+            this.state[1].value = data.aUTOMATIC_MODE_SWITCHING ? this.$t('controlStatus.state2')[0] : this.$t('controlStatus.state2')[1]
             this.state[2].value = data.aCTIVE_ISLAND_ENABLE ? this.$t('controlStatus.state1')[0] : this.$t('controlStatus.state1')[1]
-            this.state[3].value = data.pLANNED_CURVE_OPERATION ? this.$t('controlStatus.state')[0] : this.$t('controlStatus.state')[1]
-            this.state[4].value = data.mPPT_PATTERN ? this.$t('controlStatus.state')[0] : this.$t('controlStatus.state')[1]
+            this.state[3].value = data.pLANNED_CURVE_OPERATION ? this.$t('controlStatus.state2')[0] : this.$t('controlStatus.state2')[1]
+            this.state[4].value = data.mPPT_PATTERN ? this.$t('controlStatus.state2')[0] : this.$t('controlStatus.state2')[1]
             this.state1[0].value = data.pOWER_FACTOR.toString()
             this.state1[1].value = data.rEACTIVE_POWER_SETTING.toString()
             this.state1[2].value = data.mANUAL_AND_OFF_GRID_MODE.toString()

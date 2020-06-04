@@ -46,22 +46,24 @@ export default {
   },
   created () {
     this.AutoSystemID = localStorage.getItem('AutoSystemID')
-    this.getData()
-    this.interval = setInterval(() => {
-      console.log('ok')
+    this.$nextTick(() => {
       this.getData()
-    }, 3000)
+      this.interval = setInterval(() => {
+        console.log('ok')
+        this.getData()
+      }, 6000)
+    })
     this.$once('hook:beforeDestroy', () => {
       clearInterval(this.interval)
     })
   },
   methods: {
     getData () {
-      this.CPUDPCTime = []
-      this.CPUInterruptTime = []
-      this.CPUPrivilegedTime = []
-      this.CPUProcessorTime = []
-      this.SamplingTime = []
+      // this.CPUDPCTime = []
+      // this.CPUInterruptTime = []
+      // this.CPUPrivilegedTime = []
+      // this.CPUProcessorTime = []
+      // this.SamplingTime = []
       var url = '/api/Monitor/GetSystemMonitorInfo'
       this.$axios
         .get(url, {
