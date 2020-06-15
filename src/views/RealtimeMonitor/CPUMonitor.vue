@@ -41,7 +41,16 @@ export default {
       SamplingTime: [],
       interval: '',
       myChart: '',
-      myChart1: ''
+      myChart1: '',
+      myData: [
+        [{
+          name: 'Sun Nov 23 1997 00:00:00 GMT+0800 (中国标准时间)',
+          value: [
+            '11:53',
+            987
+          ]
+        }]
+      ]
     }
   },
   created () {
@@ -49,7 +58,6 @@ export default {
     this.$nextTick(() => {
       this.getData()
       this.interval = setInterval(() => {
-        console.log('ok')
         this.getData()
       }, 6000)
     })
@@ -87,16 +95,41 @@ export default {
 
     // 处理数据
     setData () {
+      // this.data.forEach((el, index) => {
+      //   for (const key in el) {
+      //     if (el.hasOwnProperty(key) && this.hasOwnProperty(key)) {
+      //       if (key === 'SamplingTime') {
+      //         var time = el[key].split('.')[0]
+      //         // time = time.replace('T', '\n')
+      //         time = time.split('T')[1]
+      //         this[key].push(time)
+      //       } else {
+      //         this[key].push(el[key])
+      //       }
+      //     }
+      //   }
+      // })
+      if (this.CPUDPCTime.length > 65) {
+        for (const key in this.data[0]) {
+          if (this.hasOwnProperty(key)) {
+            for (var i = 0; i < 6; i++) {
+              this[key].shift()
+            }
+          }
+        }
+      }
       this.data.forEach((el, index) => {
         for (const key in el) {
           if (el.hasOwnProperty(key) && this.hasOwnProperty(key)) {
             if (key === 'SamplingTime') {
-              var time = el[key].split('.')[0]
-              // time = time.replace('T', '\n')
-              time = time.split('T')[1]
-              this[key].push(time)
             } else {
-              this[key].push(el[key])
+              this[key].push({
+                name: '',
+                value: []
+              })
+              var num = this[key].length - 1
+              this[key][num].name = new Date(el.SamplingTime)
+              this[key][num].value = [new Date(el.SamplingTime), el[key]]
             }
           }
         }
@@ -108,24 +141,11 @@ export default {
       var myChart = this.$echarts.init(document.getElementById('myChart'))
       myChart.setOption({
         tooltip: {
-          trigger: 'axis',
-          formatter (value) {
-            let str = value[0].name + '<br/>'
-            value.forEach(item => {
-              str +=
-                item.marker +
-                item.seriesName +
-                ': ' +
-                item.data +
-                '%' +
-                '<br/>'
-            })
-            return str
-          }
+          trigger: 'axis'
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -138,15 +158,20 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
+          type: 'time',
           boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          }
         },
         yAxis: {
           type: 'value',
           boundaryGap: [0, '100%'],
           axisLabel: {
             formatter: '{value} (%)'
+          },
+          splitLine: {
+            show: false
           }
         },
         series: [
@@ -157,7 +182,8 @@ export default {
             smooth: true,
             itemStyle: {
               color: '#7CB5EC'
-            }
+            },
+            symbol: 'none'
           }
         ],
         animationEasing: 'bounceInOut'
@@ -167,24 +193,11 @@ export default {
       var myChart1 = this.$echarts.init(document.getElementById('myChart1'))
       myChart1.setOption({
         tooltip: {
-          trigger: 'axis',
-          formatter (value) {
-            let str = value[0].name + '<br/>'
-            value.forEach(item => {
-              str +=
-                item.marker +
-                item.seriesName +
-                ': ' +
-                item.data +
-                '%' +
-                '<br/>'
-            })
-            return str
-          }
+          trigger: 'axis'
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -197,11 +210,16 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          },
+          type: 'time',
+          boundaryGap: false
         },
         yAxis: {
+          splitLine: {
+            show: false
+          },
           type: 'value',
           boundaryGap: [0, '100%'],
           axisLabel: {
@@ -216,7 +234,8 @@ export default {
             smooth: true,
             itemStyle: {
               color: '#FF9655'
-            }
+            },
+            symbol: 'none'
           }
         ],
         animationEasing: 'bounceInOut'
@@ -226,24 +245,11 @@ export default {
       var myChart2 = this.$echarts.init(document.getElementById('myChart2'))
       myChart2.setOption({
         tooltip: {
-          trigger: 'axis',
-          formatter (value) {
-            let str = value[0].name + '<br/>'
-            value.forEach(item => {
-              str +=
-                item.marker +
-                item.seriesName +
-                ': ' +
-                item.data +
-                '%' +
-                '<br/>'
-            })
-            return str
-          }
+          trigger: 'axis'
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -256,11 +262,16 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          },
+          type: 'time',
+          boundaryGap: false
         },
         yAxis: {
+          splitLine: {
+            show: false
+          },
           type: 'value',
           boundaryGap: [0, '100%'],
           axisLabel: {
@@ -275,7 +286,8 @@ export default {
             smooth: true,
             itemStyle: {
               color: '#69F9C4'
-            }
+            },
+            symbol: 'none'
           }
         ],
         animationEasing: 'bounceInOut'
@@ -285,24 +297,11 @@ export default {
       var myChart3 = this.$echarts.init(document.getElementById('myChart3'))
       myChart3.setOption({
         tooltip: {
-          trigger: 'axis',
-          formatter (value) {
-            let str = value[0].name + '<br/>'
-            value.forEach(item => {
-              str +=
-                item.marker +
-                item.seriesName +
-                ': ' +
-                item.data +
-                '%' +
-                '<br/>'
-            })
-            return str
-          }
+          trigger: 'axis'
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -315,11 +314,16 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
+          type: 'time',
           boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          }
         },
         yAxis: {
+          splitLine: {
+            show: false
+          },
           type: 'value',
           boundaryGap: [0, '100%'],
           axisLabel: {
@@ -334,7 +338,8 @@ export default {
             smooth: true,
             itemStyle: {
               color: '#d48265'
-            }
+            },
+            symbol: 'none'
           }
         ],
         animationEasing: 'bounceInOut'

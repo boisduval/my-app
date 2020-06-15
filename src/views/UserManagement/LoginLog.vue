@@ -49,6 +49,35 @@
                 "
                 >{{ $t("base.searchbtn") }}</el-button
               >
+              <el-button
+                type="primary"
+                plain
+                size="mini"
+                style="margin-left:20px;"
+                @click="goOtherDay('today')"
+                >{{ $t("base.dateGroup.today") }}</el-button
+              >
+              <el-button
+                type="primary"
+                plain
+                size="mini"
+                @click="goOtherDay('two')"
+                >{{ $t("base.dateGroup.twoDays") }}</el-button
+              >
+              <el-button
+                type="primary"
+                plain
+                size="mini"
+                @click="goOtherDay('week')"
+                >{{ $t("base.dateGroup.week") }}</el-button
+              >
+              <el-button
+                type="primary"
+                plain
+                size="mini"
+                @click="goOtherDay('month')"
+                >{{ $t("base.dateGroup.month") }}</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -392,6 +421,7 @@ export default {
             this.loading = false
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
+            this.loading = false
           }
         })
         .catch(err => {
@@ -422,6 +452,34 @@ export default {
         .catch(err => {
           console.error(err)
         })
+    },
+    // 切换时间
+    goOtherDay (time) {
+      var num
+      switch (time) {
+        case 'today':
+          num = moment()
+            .subtract(0, 'days')
+            .format('YYYY-MM-DD')
+          break
+        case 'two':
+          num = moment()
+            .subtract(2, 'days')
+            .format('YYYY-MM-DD')
+          console.log(num)
+          break
+        case 'week':
+          num = moment()
+            .subtract(1, 'weeks')
+            .format('YYYY-MM-DD')
+          break
+        case 'month':
+          num = moment()
+            .subtract(1, 'months')
+            .format('YYYY-MM-DD')
+          break
+      }
+      this.value = [num, new Date()]
     }
   },
   created () {

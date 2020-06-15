@@ -6,7 +6,8 @@ import { Message } from 'element-ui'
 
 // axios默认配置
 axios.defaults.timeout = 10000 // 超时时间
-axios.defaults.baseURL = 'http://sf28090049.wicp.vip:8082/conn' // 默认地址
+axios.defaults.baseURL = 'http://sf28090049.wicp.vip:18080/conn' // 默认地址
+// axios.defaults.baseURL = 'http://sf28090049.wicp.vip:8082/conn' // 默认地址
 // axios.defaults.headers.common['Language'] = val
 // axios.defaults.baseURL = 'http://60.186.197.171:8081'
 axios.interceptors.request.use(

@@ -77,7 +77,10 @@ export default {
       xAxis: [],
       yAxis: [],
       seriesData: [],
-      infoApi: '/api/Chart/GetBatterySingleSOCInformationBar3DCharts'
+      infoApi: '/api/Chart/GetBatterySingleSOCInformationBar3DCharts',
+      max: '',
+      min: '',
+      color: ''
     }
   },
   computed: {
@@ -140,6 +143,9 @@ export default {
             this.yAxis = res.data.data.xAxis3D
             this.xAxis = res.data.data.yAxis3D
             this.seriesData = res.data.data.seriesdata
+            this.max = res.data.data.max
+            this.min = res.data.data.min
+            this.color = res.data.data.color
             this.getEcharts()
           } else if (res.data.code === 1) {
             this.$message.error(res.data.msg)
@@ -157,23 +163,12 @@ export default {
     getEcharts () {
       let myChart = this.$echarts.init(document.getElementById('myChart'))
       myChart.setOption({
-        tooltip: {},
+        tooltip: {
+        },
         visualMap: {
-          max: 20,
+          max: 20000,
           inRange: {
-            color: [
-              '#313695',
-              '#4575b4',
-              '#74add1',
-              '#abd9e9',
-              '#e0f3f8',
-              '#ffffbf',
-              '#fee090',
-              '#fdae61',
-              '#f46d43',
-              '#d73027',
-              '#a50026'
-            ]
+            color: this.color
           }
         },
         xAxis3D: {
@@ -185,7 +180,9 @@ export default {
           data: this.yAxis
         },
         zAxis3D: {
-          type: 'value'
+          type: 'value',
+          max: this.max,
+          min: this.min
         },
         grid3D: {
           boxWidth: 200,
@@ -203,36 +200,57 @@ export default {
             }
           }
         },
+        dataset: {
+          dimensions: [
+            'Rack',
+            'Cell',
+            'Value'
+          ],
+          source: this.seriesData
+        },
         series: [
           {
             type: 'bar3D',
-            data: this.seriesData.map(function (item) {
-              return {
-                value: [item[1], item[0], item[2]]
-              }
-            }),
+            // symbolSize: symbolSize,
             shading: 'lambert',
-
-            label: {
-              textStyle: {
-                fontSize: 16,
-                borderWidth: 1
-              }
-            },
-
-            emphasis: {
-              label: {
-                textStyle: {
-                  fontSize: 20,
-                  color: '#900'
-                }
-              },
-              itemStyle: {
-                color: '#900'
-              }
+            encode: {
+              x: 'Cell',
+              y: 'Rack',
+              z: 'Value',
+              tooltip: [0, 1, 2]
             }
           }
         ]
+        // series: [
+        //   {
+        //     type: 'bar3D',
+        //     data: this.seriesData.map(function (item) {
+        //       return {
+        //         value: [item[1], item[0], item[2]]
+        //       }
+        //     }),
+        //     shading: 'lambert',
+
+        //     label: {
+        //       textStyle: {
+        //         fontSize: 16,
+        //         borderWidth: 1
+        //       }
+        //     },
+
+        //     emphasis: {
+        //       label: {
+        //         textStyle: {
+        //           fontSize: 20,
+        //           color: '#900'
+        //         }
+        //       },
+        //       itemStyle: {
+        //         color: '#900'
+        //       }
+        //     }
+        //   }
+        // ]
       })
       setTimeout(function () {
         window.onresize = function () {

@@ -263,7 +263,7 @@ export default {
             this.bATTERY_FIRST_ALARM_MESSAGE = []
             this.bATTERY_SECONDARY_ALARM_MESSAGE = []
             this.activeArray = []
-            this.$message.warning(res.data.msg)
+            // this.$message.warning(res.data.msg)
           }
           this.loading = false
         })

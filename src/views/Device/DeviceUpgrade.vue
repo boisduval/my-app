@@ -281,7 +281,7 @@
             <el-form-item :label-width="formLabelWidth">
               <el-upload
                 class="upload-demo"
-                action="http://sf28090049.wicp.vip:8082/conn/api/File/GetDMSCBootLoader"
+                :action="baseURL + '/api/File/GetDMSCBootLoader'"
                 :file-list="fileList"
                 :auto-upload="false"
                 :show-file-list="false"
@@ -412,7 +412,8 @@ export default {
       show: true,
       successTip: '',
       upgradeTarget: '',
-      successTipShow: false
+      successTipShow: false,
+      baseURL: this.GLOBAL.baseURL
     }
   },
   methods: {

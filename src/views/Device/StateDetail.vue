@@ -93,16 +93,16 @@ export default {
       activeName: 'fan',
       list: [
         {
-          label: '充电接触器状态',
-          tag: '充电线路',
+          label: '总正接触器状态',
+          tag: '总正接触器状态',
           name: 'charger',
           data: [],
           description: '接触器状态'
         },
         {
-          label: '放电接触器状态',
+          label: '总负接触器状态',
           name: 'discharger',
-          tag: '放电线路',
+          tag: '总负接触器状态',
           data: [],
           description: '接触器状态'
         },
@@ -144,9 +144,9 @@ export default {
       ],
       bank: '0',
       infoApi: '/api/Chart/GetBatteryBankCTRLParaCharts',
-      cHARGING_CONTACTOR_STATUS: '',
+      tOTAL_POSITIVE_CONTACTOR_STATUS: '',
       sTATE_OF_THE_FAN: '',
-      dISCHARGE_CONTACTOR_STATUS: '',
+      tOTAL_NEGATIVE_CONTACTOR_STATUS: '',
       pRECHARGE_STATE: '',
       pCS_FAULT_RECOVERY: '',
       hEATING_SWITCH: '',
@@ -219,18 +219,18 @@ export default {
           if (res.data.code === 1) {
             this.$message.error(res.data.msg)
           }
-          this.cHARGING_CONTACTOR_STATUS =
-            res.data.data.cHARGING_CONTACTOR_STATUS
+          this.tOTAL_POSITIVE_CONTACTOR_STATUS =
+            res.data.data.tOTAL_POSITIVE_CONTACTOR_STATUS
           this.sTATE_OF_THE_FAN = res.data.data.sTATE_OF_THE_FAN
           this.pRECHARGE_STATE = res.data.data.pRECHARGE_STATE
-          this.dISCHARGE_CONTACTOR_STATUS = res.data.data.dISCHARGE_CONTACTOR_STATUS
+          this.tOTAL_NEGATIVE_CONTACTOR_STATUS = res.data.data.tOTAL_NEGATIVE_CONTACTOR_STATUS
           this.pCS_FAULT_RECOVERY = res.data.data.pCS_FAULT_RECOVERY
           this.hEATING_SWITCH = res.data.data.hEATING_SWITCH
           this.dRY_NODE_OUTPUT_1 = res.data.data.dRY_NODE_OUTPUT_1
           this.dRY_NODE_OUTPUT_2 = res.data.data.dRY_NODE_OUTPUT_2
           console.log(res.data.data)
-          for (var key in this.cHARGING_CONTACTOR_STATUS) {
-            if (this.cHARGING_CONTACTOR_STATUS[key]) {
+          for (var key in this.sTATE_OF_THE_FAN) {
+            if (this.sTATE_OF_THE_FAN[key]) {
               this.fan.push({
                 src: require('@/assets/img/Device/fanstart.gif'),
                 type: 'success',
@@ -246,8 +246,8 @@ export default {
           }
 
           // eslint-disable-next-line
-          for (var key in this.sTATE_OF_THE_FAN) {
-            if (this.sTATE_OF_THE_FAN[key]) {
+          for (var key in this.tOTAL_POSITIVE_CONTACTOR_STATUS) {
+            if (this.tOTAL_POSITIVE_CONTACTOR_STATUS[key]) {
               this.charger.push({
                 src: require('@/assets/img/Device/chargeon.png')
               })
@@ -259,8 +259,8 @@ export default {
           }
 
           // eslint-disable-next-line
-          for (var key in this.dISCHARGE_CONTACTOR_STATUS) {
-            if (this.dISCHARGE_CONTACTOR_STATUS[key]) {
+          for (var key in this.tOTAL_NEGATIVE_CONTACTOR_STATUS) {
+            if (this.tOTAL_NEGATIVE_CONTACTOR_STATUS[key]) {
               this.discharger.push({
                 src: require('@/assets/img/Device/electricityon.png')
               })

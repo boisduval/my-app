@@ -28,6 +28,7 @@ import 'vxe-table/lib/index.css'
 import VXETablePluginExportXLSX from 'vxe-table-plugin-export-xlsx'
 import VXETablePluginElement from 'vxe-table-plugin-element'
 import echarts from 'echarts'
+import 'echarts-gl'
 // 引入柱状图
 import 'echarts/lib/chart/bar'
 // 引入提示框和标题组件
@@ -43,6 +44,9 @@ import BaiduMap from 'vue-baidu-map'
 // 组件
 import BorderLeft from './components/BorderLeft.vue'
 import BorderRight from './components/BorderRight.vue'
+
+import global_ from './components/Global'
+Vue.prototype.GLOBAL = global_
 
 Vue.config.productionTip = false
 Vue.use(ElementUI, {

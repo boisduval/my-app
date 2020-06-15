@@ -61,7 +61,6 @@ export default {
     this.$nextTick(() => {
       this.getData()
       this.interval = setInterval(() => {
-        console.log('ok')
         this.getData()
       }, 6000)
     })
@@ -101,16 +100,27 @@ export default {
 
     // 处理数据
     setData () {
+      if (this.DISKRead.length > 65) {
+        for (const key in this.data[0]) {
+          if (this.hasOwnProperty(key)) {
+            for (var i = 0; i < 6; i++) {
+              this[key].shift()
+            }
+          }
+        }
+      }
       this.data.forEach((el, index) => {
         for (const key in el) {
           if (el.hasOwnProperty(key) && this.hasOwnProperty(key)) {
             if (key === 'SamplingTime') {
-              var time = el[key].split('.')[0]
-              // time = time.replace('T', '\n')
-              time = time.split('T')[1]
-              this[key].push(time)
             } else {
-              this[key].push(el[key])
+              this[key].push({
+                name: '',
+                value: []
+              })
+              var num = this[key].length - 1
+              this[key][num].name = new Date(el.SamplingTime)
+              this[key][num].value = [new Date(el.SamplingTime), el[key]]
             }
           }
         }
@@ -126,7 +136,7 @@ export default {
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -139,16 +149,22 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
+          type: 'time',
           boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          }
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          splitLine: {
+            show: false
+          }
         },
         series: [
           {
+            symbol: 'none',
             name: '读硬盘速度',
             type: 'line',
             data: this.DISKRead,
@@ -168,7 +184,7 @@ export default {
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -181,16 +197,22 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
+          type: 'time',
           boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          }
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          splitLine: {
+            show: false
+          }
         },
         series: [
           {
+            symbol: 'none',
             name: '写硬盘速度',
             type: 'line',
             data: this.DISKWrite,
@@ -210,7 +232,7 @@ export default {
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -223,16 +245,22 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
+          type: 'time',
           boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          }
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          splitLine: {
+            show: false
+          }
         },
         series: [
           {
+            symbol: 'none',
             name: '磁盘平均读取时间',
             type: 'line',
             data: this.DISKAverageTimeRead,
@@ -252,7 +280,7 @@ export default {
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -265,16 +293,22 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
+          type: 'time',
           boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          }
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          splitLine: {
+            show: false
+          }
         },
         series: [
           {
+            symbol: 'none',
             name: '磁盘平均写入时间',
             type: 'line',
             data: this.DISKAverageTimeWrite,
@@ -294,7 +328,7 @@ export default {
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -307,16 +341,22 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
+          type: 'time',
           boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          }
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          splitLine: {
+            show: false
+          }
         },
         series: [
           {
+            symbol: 'none',
             name: '硬盘队列长度',
             type: 'line',
             data: this.DISCQueueLengh,
@@ -336,7 +376,7 @@ export default {
         },
         grid: {
           left: '3%',
-          right: '4%',
+          right: '8%',
           bottom: '3%',
           containLabel: true
         },
@@ -349,16 +389,22 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
+          type: 'time',
           boundaryGap: false,
-          data: this.SamplingTime
+          splitLine: {
+            show: false
+          }
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '100%']
+          boundaryGap: [0, '100%'],
+          splitLine: {
+            show: false
+          }
         },
         series: [
           {
+            symbol: 'none',
             name: '磁盘时间',
             type: 'line',
             data: this.DISKTime,

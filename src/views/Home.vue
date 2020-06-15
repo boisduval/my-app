@@ -223,7 +223,7 @@
       field="imgBase64"
       key="0"
       v-model="show"
-      url="http://sf28090049.wicp.vip:8082//conn/api/Users/UpdataUserICOO"
+      :url="baseURL + '/api/Users/UpdataUserICOO'"
       @crop-success="cropSuccess"
       @crop-upload-success="cropUploadSuccess"
       @crop-upload-fail="cropUploadFail"
@@ -340,7 +340,8 @@ export default {
         },
         theme: 'snow',
         placeholder: this.$t('home.feedback.tip')
-      }
+      },
+      baseURL: this.GLOBAL.baseURL
     }
   },
   components: {

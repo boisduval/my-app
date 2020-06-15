@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import returnCitySN from 'returnCitySN'
+// import returnCitySN from 'returnCitySN'
 import { mapState, mapMutations } from 'vuex'
 export default {
   computed: {
@@ -239,11 +239,14 @@ export default {
       this.data.ClientInfo.UserLanguage = this.temp1
     },
     getIPs (callback) {
-      var Remote = returnCitySN.cip
-      var Computer = returnCitySN.cname
-      this.data.ClientInfo.ComputerHostAddress = Remote
-      this.data.ClientInfo.RemoteAddress = Remote
-      this.data.ClientInfo.ComputerLocation = Computer
+      // var Remote = returnCitySN.cip
+      // var Computer = returnCitySN.cname
+      // this.data.ClientInfo.ComputerHostAddress = Remote
+      // this.data.ClientInfo.RemoteAddress = Remote
+      // this.data.ClientInfo.ComputerLocation = Computer
+      this.data.ClientInfo.ComputerHostAddress = '0.0.0.0'
+      this.data.ClientInfo.RemoteAddress = '0.0.0.0'
+      this.data.ClientInfo.ComputerLocation = ''
     },
     detectOS () {
       var sUserAgent = navigator.userAgent
@@ -351,13 +354,13 @@ export default {
   },
   created () {
     setTimeout(() => {
-      if (
-        returnCitySN === null ||
-        returnCitySN === '' ||
-        returnCitySN === undefined
-      ) {
-        this.$.getScript('http://pv.sohu.com/cityjson?ie=utf-8', function () {})
-      }
+      // if (
+      //   returnCitySN === null ||
+      //   returnCitySN === '' ||
+      //   returnCitySN === undefined
+      // ) {
+      //   this.$.getScript('http://pv.sohu.com/cityjson?ie=utf-8', function () {})
+      // }
       this.bro()
       this.getIPs()
       this.data.ClientInfo.Platform = this.detectOS()
