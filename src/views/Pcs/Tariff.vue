@@ -109,24 +109,12 @@ export default {
         list2: []
       },
       power: [],
-      tariff: [
-        {
-          list1: [],
-          list2: []
-        },
-        {
-          list1: [],
-          list2: []
-        },
-        {
-          list1: [],
-          list2: []
-        },
+      tariff: new Array([4]).fill(
         {
           list1: [],
           list2: []
         }
-      ]
+      )
     }
   },
   computed: {
@@ -190,7 +178,6 @@ export default {
             this.$message.success(res.data.msg)
             let data = res.data.data
             this.setData()
-            console.log(data)
             this.time.list1[0].value =
               data.sYSTEM_TIME_YEAR +
               '-' +
@@ -207,7 +194,7 @@ export default {
               data.nUMBER_OF_PLANNED_CURVE_PERIODS + ''
             data.pLANNED_CURVE_PERIOD.forEach((val, i) => {
               this.time.list2[i * 2].value = val.StartTime
-              this.time.list2[i * 2 + 1].value = val.SoptTime
+              this.time.list2[i * 2 + 1].value = val.StopTime
             })
             data.pLANNED_CURVE_ACTIVE_POWER.forEach((val, i) => {
               this.power[i * 2].value = val
@@ -219,25 +206,25 @@ export default {
             this.tariff[0].list1[1].value = data.tIP_WHEN_ELECTRICITY
             data.eLECTRICITY_PRICE_SETTING_PEAK_PERIOD.forEach((val, i) => {
               this.tariff[0].list2[i * 2].value = val.StartTime
-              this.tariff[0].list2[i * 2 + 1].value = val.SoptTime
+              this.tariff[0].list2[i * 2 + 1].value = val.StopTime
             })
             this.tariff[1].list1[0].value = data.nUMBER_OF_PEAK_HOURS
             this.tariff[1].list1[1].value = data.pEAK_ELECTRICITY
             data.eLECTRICITY_PRICE_SETTING_PEAK_HOUR_PERIOD.forEach((val, i) => {
               this.tariff[1].list2[i * 2].value = val.StartTime
-              this.tariff[1].list2[i * 2 + 1].value = val.SoptTime
+              this.tariff[1].list2[i * 2 + 1].value = val.StopTime
             })
             this.tariff[2].list1[0].value = data.nORMAL_TIME_QUANTITY
             this.tariff[2].list1[1].value = data.eLECTRICITY_AT_ORDINARY_TIMES
             data.eLECTRICITY_PRICE_SETTING_NORMAL_PERIOD.forEach((val, i) => {
               this.tariff[2].list2[i * 2].value = val.StartTime
-              this.tariff[2].list2[i * 2 + 1].value = val.SoptTime
+              this.tariff[2].list2[i * 2 + 1].value = val.StopTime
             })
             this.tariff[3].list1[0].value = data.qUANTITY_OF_VALLEY_TIME_PERIOD
             this.tariff[3].list1[1].value = data.tHE_VALLEY_OF_ELECTRICITY
             data.eLECTRICITY_PRICE_SETTING_VALLEY_TIME_PERIOD.forEach((val, i) => {
               this.tariff[3].list2[i * 2].value = val.StartTime
-              this.tariff[3].list2[i * 2 + 1].value = val.SoptTime
+              this.tariff[3].list2[i * 2 + 1].value = val.StopTime
             })
           } else {
             this.setData()
@@ -312,7 +299,6 @@ export default {
           })
         }
       }
-      console.log(this.tariff)
     }
   },
   watch: {

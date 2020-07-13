@@ -111,34 +111,8 @@ export default {
               bATTERY_NUMBER: '',
               bATTERY_PACK_1_CLUSTER: '',
               bATTERY_PACK_2_CLUSTER: '',
-              tHE_NUMBER_OF_12_CLUSTERS_OF_CELLS_IN_BATTERY_PACK_1: [
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                ''
-              ],
-              tHE_NUMBER_OF_12_CLUSTERS_OF_CELLS_IN_BATTERY_PACK_2: [
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                ''
-              ]
+              tHE_NUMBER_OF_12_CLUSTERS_OF_CELLS_IN_BATTERY_PACK_1: new Array([12]).fill(''),
+              tHE_NUMBER_OF_12_CLUSTERS_OF_CELLS_IN_BATTERY_PACK_2: new Array([12]).fill('')
             }
           }
         })

@@ -48,14 +48,15 @@
       </div>
     </el-collapse-transition>
     <!-- 表单结束 -->
-    <el-card class="box-card">
+    <el-card class="box-card visible">
       <div slot="header" class="clearfix">
         <span>设备管理</span>
       </div>
 
-      <!-- 表格操作栏开始 -->
-      <div class="table-oper">
-        <el-button
+      <!-- 表格开始 -->
+      <vxe-toolbar custom print export>
+          <template v-slot:buttons>
+            <el-button
           type="primary"
           size="small"
           @click="getData"
@@ -73,47 +74,12 @@
           <i class="el-icon-search"></i>
           模糊查询
         </el-button>
-        <el-button class="menu-btn">
-          <i class="fa fa-list"></i>
-        </el-button>
-        <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-        <el-button class="menu-btn" :title="$t('base.export.title')" v-popover:export>
-          <i class="fa fa-download"></i>
-        </el-button>
-        <el-button class="menu-btn" @click="printEvent" :title="$t('base.export.print')">
-          <i class="fa fa-print"></i>
-        </el-button>
-        <!-- 导出操作开始 -->
-        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
-          <ul id="export">
-            <li @click="exportDataEvent">
-              {{$t('base.export.csv')}}
-            </li>
-            <li @click="exportExcel">
-              {{$t('base.export.excel')}}
-            </li>
-          </ul>
-        </el-popover>
-        <!-- 导出操作结束 -->
-      </div>
-      <!-- 表格操作栏结束 -->
-
-      <!-- 表格开始 -->
+          </template>
+        </vxe-toolbar>
       <vxe-table
         :data="tableData"
         border
-        :customs.sync="customColumns"
+        :export-config="exportConfig"
         ref="xTable"
         v-loading="loading"
         element-loading-background="rgba(0, 0, 0, 0)"
@@ -159,7 +125,7 @@
           align="center"
         >
         </vxe-table-column>
-        <vxe-table-column field="DTime" title="登记时间" sortable show-header-overflow show-overflow>
+        <vxe-table-column field="DTime" title="登记时间" width="200" sortable show-header-overflow show-overflow>
         </vxe-table-column>
         <vxe-table-column title="操作" width="240" align="center">
           <template v-slot="{ row }">
@@ -207,16 +173,19 @@ export default {
         AutoSystemID: ''
       },
       tableData: [],
-      customColumns: [],
       isShow: true,
-      fileName: '设备信息',
       count: 0,
       loading: false,
       detail: [
         { label: '时间设置' }
       ],
       activeBatter: '',
-      bank: ''
+      bank: '',
+      exportConfig: {
+        filename: 'export',
+        sheetName: 'Sheet1',
+        types: ['csv', 'xlsx']
+      }
     }
   },
   methods: {
@@ -235,7 +204,6 @@ export default {
           }
           this.count = res.data.count
           this.loading = false
-          this.$refs.xTable.reloadCustoms([])
         })
         .catch(error => {
           console.log(error)
@@ -318,7 +286,6 @@ export default {
 }
 
 .box-card {
-  line-height: 10px;
   font-size: 15px;
   text-align: left;
   /* margin-bottom: 20px; */

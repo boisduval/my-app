@@ -12,5 +12,6 @@ module.exports = {
     ]
   },
   transpileDependencies: ['vuex-persist'],
-  publicPath: '/console/'
+  publicPath: '/console/',
+  outputDir: process.env.outputDir
 }

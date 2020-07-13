@@ -55,80 +55,38 @@
       </div>
     </el-collapse-transition>
     <!-- 表单结束 -->
-    <el-card class="box-card">
+    <el-card class="box-card visible">
       <div slot="header" class="clearfix">
         <span>{{ $t("deviceManage.listTitle") }}</span>
       </div>
 
-      <!-- 表格操作栏开始 -->
-      <div class="table-oper">
-        <el-button
-          type="primary"
-          size="small"
-          @click="getData"
-          class="button-left"
-        >
-          <i class="el-icon-refresh-right"></i>
-          {{ $t("base.refresh") }}
-        </el-button>
-        <el-button
-          type="primary"
-          size="small"
-          class="button-left"
-          @click="isShow = !isShow"
-        >
-          <i class="el-icon-search"></i>
-          {{ $t("base.search") }}
-        </el-button>
-        <el-button class="menu-btn">
-          <i class="fa fa-list"></i>
-        </el-button>
-        <div class="menu-wrapper">
-          <template v-for="(column, index) in customColumns">
-            <vxe-checkbox
-              v-if="column.property"
-              class="checkbox-item"
-              v-model="column.visible"
-              :key="index"
-              @change="$refs.xTable.refreshColumn()"
-              >{{ column.title }}</vxe-checkbox
-            >
-          </template>
-        </div>
-        <el-button
-          class="menu-btn"
-          :title="$t('base.export.title')"
-          v-popover:export
-        >
-          <i class="fa fa-download"></i>
-        </el-button>
-        <el-button
-          class="menu-btn"
-          @click="printEvent"
-          :title="$t('base.export.print')"
-        >
-          <i class="fa fa-print"></i>
-        </el-button>
-        <!-- 导出操作开始 -->
-        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
-          <ul id="export">
-            <li @click="exportDataEvent">
-              {{ $t("base.export.csv") }}
-            </li>
-            <li @click="exportExcel">
-              {{ $t("base.export.excel") }}
-            </li>
-          </ul>
-        </el-popover>
-        <!-- 导出操作结束 -->
-      </div>
-      <!-- 表格操作栏结束 -->
-
       <!-- 表格开始 -->
+      <vxe-toolbar custom print export>
+        <template v-slot:buttons>
+          <el-button
+            type="primary"
+            size="small"
+            @click="getData"
+            class="button-left"
+          >
+            <i class="el-icon-refresh-right"></i>
+            {{ $t("base.refresh") }}
+          </el-button>
+          <el-button
+            type="primary"
+            size="small"
+            class="button-left"
+            @click="isShow = !isShow"
+          >
+            <i class="el-icon-search"></i>
+            {{ $t("base.search") }}
+          </el-button>
+        </template>
+      </vxe-toolbar>
       <vxe-table
         :data="tableData"
         border
-        :customs.sync="customColumns"
+        :export-config="exportConfig"
         ref="xTable"
         v-loading="loading"
         element-loading-background="rgba(0, 0, 0, 0)"
@@ -249,11 +207,14 @@ export default {
         AutoSystemID: ''
       },
       tableData: [],
-      customColumns: [],
       isShow: true,
-      fileName: 'export',
       count: 0,
-      loading: false
+      loading: false,
+      exportConfig: {
+        filename: 'export',
+        sheetName: 'Sheet1',
+        types: ['csv', 'xlsx']
+      }
     }
   },
   methods: {
@@ -274,7 +235,6 @@ export default {
           }
           this.count = res.data.count
           this.loading = false
-          this.$refs.xTable.reloadCustoms([])
         })
         .catch(error => {
           console.log(error)
@@ -388,7 +348,6 @@ export default {
 }
 
 .box-card {
-  line-height: 10px;
   font-size: 15px;
   text-align: left;
   /* margin-bottom: 20px; */

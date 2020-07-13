@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="box-card">
+    <el-card class="box-card visible">
       <!-- <div slot="header" class="clearfix">
         <span>在线Socket</span>
       </div> -->
@@ -11,8 +11,10 @@
         </el-tab-pane>
       </el-tabs>
       <div v-show="activeName === 'onlineDevice'">
-        <!-- 表格操作栏开始 -->
-        <div class="table-oper">
+
+        <!-- 表格开始 -->
+        <vxe-toolbar custom print export>
+        <template v-slot:buttons>
           <el-button
             type="primary"
             size="small"
@@ -22,60 +24,12 @@
             <i class="el-icon-refresh-right"></i>
             {{ $t("base.refresh") }}
           </el-button>
-          <el-button class="menu-btn">
-            <i class="fa fa-list"></i>
-          </el-button>
-          <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-          <el-button
-            class="menu-btn"
-            :title="$t('base.export.title')"
-            v-popover:export
-          >
-            <i class="fa fa-download"></i>
-          </el-button>
-          <el-button
-            class="menu-btn"
-            @click="printEvent"
-            :title="$t('base.export.print')"
-          >
-            <i class="fa fa-print"></i>
-          </el-button>
-          <!-- 导出操作开始 -->
-          <el-popover
-            ref="export"
-            placement="bottom"
-            width="100"
-            trigger="hover"
-          >
-            <ul id="export">
-              <li @click="exportDataEvent">
-                {{ $t("base.export.csv") }}
-              </li>
-              <li @click="exportExcel">
-                {{ $t("base.export.excel") }}
-              </li>
-            </ul>
-          </el-popover>
-          <!-- 导出操作结束 -->
-        </div>
-        <!-- 表格操作栏结束 -->
-
-        <!-- 表格开始 -->
+        </template>
+      </vxe-toolbar>
         <vxe-table
           :data="tableData"
           border
-          :customs.sync="customColumns"
+          :export-config="exportConfig"
           ref="xTable"
           v-loading="loading"
           element-loading-background="rgba(0, 0, 0, 0)"
@@ -168,70 +122,25 @@
         <!-- 分页结束 -->
       </div>
       <div v-show="activeName === 'onlineSocket'">
-        <!-- 表格操作栏开始 -->
-        <div class="table-oper">
+
+        <!-- 表格开始 -->
+        <vxe-toolbar custom print export>
+        <template v-slot:buttons>
           <el-button
             type="primary"
             size="small"
-            @click="getSocketData"
+            @click="getDeviceData"
             class="button-left"
           >
             <i class="el-icon-refresh-right"></i>
             {{ $t("base.refresh") }}
           </el-button>
-          <el-button class="menu-btn">
-            <i class="fa fa-list"></i>
-          </el-button>
-          <div class="menu-wrapper">
-            <template v-for="(column, index) in customColumns1">
-              <vxe-checkbox
-                v-if="column.property"
-                class="checkbox-item"
-                v-model="column.visible"
-                :key="index"
-                @change="$refs.xTable1.refreshColumn()"
-                >{{ column.title }}</vxe-checkbox
-              >
-            </template>
-          </div>
-          <el-button
-            class="menu-btn"
-            :title="$t('base.export.title')"
-            v-popover:export
-          >
-            <i class="fa fa-download"></i>
-          </el-button>
-          <el-button
-            class="menu-btn"
-            @click="printEvent"
-            :title="$t('base.export.print')"
-          >
-            <i class="fa fa-print"></i>
-          </el-button>
-          <!-- 导出操作开始 -->
-          <el-popover
-            ref="export1"
-            placement="bottom"
-            width="100"
-            trigger="hover"
-          >
-            <ul id="export">
-              <li @click="exportDataEvent">
-                {{ $t("base.export.csv") }}
-              </li>
-              <li @click="exportExcel">
-                {{ $t("base.export.excel") }}
-              </li>
-            </ul>
-          </el-popover>
-          <!-- 导出操作结束 -->
-        </div>
-        <!-- 表格操作栏结束 -->
-        <!-- 表格开始 -->
+        </template>
+      </vxe-toolbar>
         <vxe-table
           :data="tableData1"
           border
-          :customs.sync="customColumns1"
+          :export-config="exportConfig"
           ref="xTable1"
           v-loading="loading"
           element-loading-background="rgba(0, 0, 0, 0)"
@@ -370,14 +279,16 @@ export default {
       tableData: [],
       tableData1: [],
       loading: false,
-      fileName: 'export',
-      customColumns: [],
-      customColumns1: [],
       count: 0,
       count1: 0,
       activeName: 'onlineDevice',
       listHead: [],
-      listFilter: []
+      listFilter: [],
+      exportConfig: {
+        filename: 'export',
+        sheetName: 'Sheet1',
+        types: ['csv', 'xlsx']
+      }
     }
   },
   computed: {
@@ -417,66 +328,6 @@ export default {
           this.getSocketData()
           break
       }
-    },
-
-    // 打印
-    printEvent () {
-      switch (this.activeName) {
-        case 'onlineDevice':
-          this.$refs.xTable.print()
-          break
-        case 'onlineSocket':
-          this.$refs.xTable1.print()
-          break
-      }
-    },
-
-    // 导出csv
-    exportDataEvent () {
-      switch (this.activeName) {
-        case 'onlineDevice':
-          this.$refs.xTable.exportData({ type: 'csv' })
-          break
-        case 'onlineSocket':
-          this.$refs.xTable1.exportData({ type: 'csv' })
-          break
-      }
-    },
-
-    // 导出excel
-    exportExcel () {
-      var customColumns
-      var tableData
-      switch (this.activeName) {
-        case 'onlineDevice':
-          customColumns = this.customColumns
-          tableData = this.tableData
-          break
-        case 'onlineSocket':
-          customColumns = this.customColumns1
-          tableData = this.tableData1
-      }
-      this.listHead = []
-      this.listFilter = []
-      for (var i = 2; i < customColumns.length; i++) {
-        if (customColumns[i].visible) {
-          this.listFilter.push(customColumns[i].property)
-          this.listHead.push(customColumns[i].title)
-        }
-      }
-      require.ensure([], () => {
-        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
-        const tHeader = this.listHead
-        // 上面设置Excel的表格第一行的标题
-        const filterVal = this.listFilter
-        // 上面的index、nickName、name是tableData里对象的属性
-        const list = tableData // 把data里的tableData存到list
-        const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}`)
-      })
-    },
-    formatJson (filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
     },
     getDeviceData () {
       this.loading = true

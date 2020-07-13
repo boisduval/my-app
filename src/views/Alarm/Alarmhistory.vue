@@ -86,80 +86,39 @@
     </el-collapse-transition>
     <!-- 表单结束 -->
 
-    <el-card class="box-card">
+    <el-card class="box-card visible">
       <div slot="header" class="clearfix">
         <span>{{ $t("alarmHistory.listTitle") }}</span>
       </div>
 
-      <!-- 表格操作栏开始 -->
-      <div class="table-oper">
-        <el-button
-          type="primary"
-          size="small"
-          @click="getData"
-          class="button-left"
-        >
-          <i class="el-icon-refresh-right"></i>
-          {{ $t("base.refresh") }}
-        </el-button>
-        <el-button
-          type="primary"
-          size="small"
-          class="button-left"
-          @click="isShow = !isShow"
-        >
-          <i class="el-icon-search"></i>
-          {{ $t("base.search") }}
-        </el-button>
-        <el-button class="menu-btn">
-          <i class="fa fa-list"></i>
-        </el-button>
-        <div class="menu-wrapper">
-          <template v-for="(column, index) in customColumns">
-            <vxe-checkbox
-              v-if="column.property"
-              class="checkbox-item"
-              v-model="column.visible"
-              :key="index"
-              @change="$refs.xTable.refreshColumn()"
-              >{{ column.title }}</vxe-checkbox
-            >
-          </template>
-        </div>
-        <el-button
-          class="menu-btn"
-          :title="$t('base.export.title')"
-          v-popover:export
-        >
-          <i class="fa fa-download"></i>
-        </el-button>
-        <el-button
-          class="menu-btn"
-          @click="printEvent"
-          :title="$t('base.export.print')"
-        >
-          <i class="fa fa-print"></i>
-        </el-button>
-        <!-- 导出操作开始 -->
-        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
-          <ul id="export">
-            <li @click="exportDataEvent">
-              {{ $t("base.export.csv") }}
-            </li>
-            <li @click="exportExcel">
-              {{ $t("base.export.excel") }}
-            </li>
-          </ul>
-        </el-popover>
-        <!-- 导出操作结束 -->
-      </div>
-      <!-- 表格操作栏结束 -->
-
       <!-- 表格开始 -->
+      <vxe-toolbar custom print export>
+        <template v-slot:buttons>
+          <el-button
+            type="primary"
+            size="small"
+            @click="getData"
+            class="button-left"
+          >
+            <i class="el-icon-refresh-right"></i>
+            {{ $t("base.refresh") }}
+          </el-button>
+          <el-button
+            type="primary"
+            size="small"
+            class="button-left"
+            @click="isShow = !isShow"
+          >
+            <i class="el-icon-search"></i>
+            {{ $t("base.search") }}
+          </el-button>
+        </template>
+      </vxe-toolbar>
+
       <vxe-table
         :data="tableData"
+        :export-config="exportConfig"
         border
-        :customs.sync="customColumns"
         ref="xTable"
         v-loading="loading"
         element-loading-background="rgba(0, 0, 0, 0)"
@@ -405,9 +364,7 @@ export default {
       },
       tableData: [],
       count: 0,
-      customColumns: [],
       isShow: true,
-      fileName: 'export',
       loading: false,
       dialogFormVisible: false,
       options: [
@@ -446,6 +403,11 @@ export default {
         lineHeight: '24px',
         display: 'block',
         marginBottom: '16px'
+      },
+      exportConfig: {
+        filename: 'export',
+        sheetName: 'Sheet1',
+        types: ['csv', 'xlsx']
       }
     }
   },
@@ -472,41 +434,6 @@ export default {
     handleCurrentChange (val) {
       this.searchForm.page = val
       this.getData()
-    },
-
-    // 打印
-    printEvent () {
-      this.$refs.xTable.print()
-    },
-
-    // 导出csv
-    exportDataEvent () {
-      this.$refs.xTable.exportData({ type: 'csv' })
-    },
-
-    // 导出excel
-    exportExcel () {
-      this.listHead = []
-      this.listFilter = []
-      for (var i = 2; i < this.customColumns.length; i++) {
-        if (this.customColumns[i].visible) {
-          this.listFilter.push(this.customColumns[i].property)
-          this.listHead.push(this.customColumns[i].title)
-        }
-      }
-      require.ensure([], () => {
-        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
-        const tHeader = this.listHead
-        // 上面设置Excel的表格第一行的标题
-        const filterVal = this.listFilter
-        // 上面的index、nickName、name是tableData里对象的属性
-        const list = this.tableData // 把data里的tableData存到list
-        const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}`)
-      })
-    },
-    formatJson (filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
     },
 
     // 获取日报信息列表

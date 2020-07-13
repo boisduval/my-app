@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-card class="box-card">
+    <el-card class="box-card visible">
       <div slot="header" class="clearfix">
         <span>菜单列表</span>
       </div>
       <!-- 表格操作栏开始 -->
       <!-- 表格操作栏结束 -->
-      <vxe-toolbar :data="tableData" :export="tableExport" custom class="table-oper">
+      <vxe-toolbar :data="tableData" print export custom class="table-oper">
         <template v-slot:buttons>
           <el-button
           type="primary"
@@ -21,7 +21,7 @@
           type="primary"
           size="small"
           class="button-left"
-          @click="$refs.xTree.setAllTreeExpansion(true)"
+          @click="$refs.xTree.setAllTreeExpand(true)"
         >
           <i class="el-icon-s-fold"></i>
           全部展开
@@ -59,12 +59,12 @@
           iconClose: 'fa fa-plus-circle'
         }"
         :data="treeData"
-        :customs.sync="customColumns"
         max-height="600px"
         v-loading="loading"
         element-loading-background="rgba(0, 0, 0, 0)"
         highlight-hover-row
         highlight-current-row
+        :export-config="exportConfig"
       >
         <vxe-table-column
           type="seq"
@@ -293,9 +293,7 @@ export default {
         AutoSystemID: ''
       },
       tableData: [],
-      customColumns: [],
       isShow: true,
-      fileName: '菜单信息',
       loading: false,
       dialogFormVisible: false,
       treeData: [],
@@ -327,11 +325,10 @@ export default {
         SOrder: ''
       },
       dialogFormEditChildVisible: false,
-      tableExport: {
-        // 默认选中类型
-        type: 'xlsx',
-        // 自定义类型
-        types: ['xlsx', 'csv']
+      exportConfig: {
+        filename: 'export',
+        sheetName: 'Sheet1',
+        types: ['csv', 'xlsx']
       }
     }
   },

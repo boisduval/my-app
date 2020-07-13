@@ -279,7 +279,7 @@ export default {
             this.top[2].data = data.TotalInstalledElectricity + ' Kwh'
             // this.top[3].data = data.CurrentTotalElectricQuantity + ' Kwh'
             this.top4 = data.CurrentTotalElectricQuantity + ' Kwh'
-            this.ControllerOnLineRate = data.ControllerOnLineRate
+            this.ControllerOnLineRate = data.TotalSOC
             this.device[0].num = data.InstalledNumberOfInverterEquipment
             this.device[1].num = data.InstalledQuantityOfFireFightingEquipment
             this.device[2].num = data.NumberOfControllersOnline

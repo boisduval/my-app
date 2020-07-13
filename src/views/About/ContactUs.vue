@@ -44,7 +44,7 @@
       </div>
       <div style="height:450px" v-if="data">
         <template>
-          <baidu-map class="bm-view" :center="center" :zoom="zoom" @ready="handler">
+          <baidu-map class="bm-view" :center="center" :zoom="zoom" @ready="handler" :mapStyle="mapStyle">
             <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
             <bm-marker :position="markerPoint" :dragging="true" @click="infoWindowOpen">
               <bm-info-window :show="show" @close="infoWindowClose" @open="infoWindowOpen">
@@ -92,7 +92,9 @@ export default {
   },
   methods: {
     handler ({ BMap, map }) {
-      console.log(BMap, map)
+      // let mapStyle = { style: 'dark' }
+      // map.setMapStyleV2(stylejson)
+      // console.log(BMap, map)
       this.center.lng = 120.11257
       this.center.lat = 30.310037
       this.zoom = 18

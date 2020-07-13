@@ -22,63 +22,22 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <el-card class="box-card">
+    <el-card class="box-card visible">
       <!-- 详细信息 -->
-      <!-- 表格操作栏开始 -->
-      <div class="table-oper">
-        <el-button
-          type="primary"
-          size="small"
-          @click="getData(paramsSC)"
-          class="button-left"
-        >
-          <i class="el-icon-refresh-right"></i>
-          {{ $t("base.searchbtn") }}
-        </el-button>
-        <el-button class="menu-btn">
-          <i class="fa fa-list"></i>
-        </el-button>
-        <div class="menu-wrapper">
-          <template v-for="(column, index) in customColumns">
-            <vxe-checkbox
-              v-if="column.property"
-              class="checkbox-item"
-              v-model="column.visible"
-              :key="index"
-              @change="$refs.xTable.refreshColumn()"
-              >{{ column.title }}</vxe-checkbox
-            >
-          </template>
-        </div>
-        <el-button
-          class="menu-btn"
-          :title="$t('base.export.title')"
-          v-popover:export
-        >
-          <i class="fa fa-download"></i>
-        </el-button>
-        <el-button
-          class="menu-btn"
-          @click="printEvent"
-          :title="$t('base.export.print')"
-        >
-          <i class="fa fa-print"></i>
-        </el-button>
-        <!-- 导出操作开始 -->
-        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
-          <ul id="export">
-            <li @click="exportDataEvent">
-              {{ $t("base.export.csv") }}
-            </li>
-            <li @click="exportExcel">
-              {{ $t("base.export.excel") }}
-            </li>
-          </ul>
-        </el-popover>
-        <!-- 导出操作结束 -->
-      </div>
-      <!-- 表格操作栏结束 -->
       <!-- 表格开始 -->
+      <vxe-toolbar custom print export>
+        <template v-slot:buttons>
+          <el-button
+            type="primary"
+            size="small"
+            @click="getData(paramsSC)"
+            class="button-left"
+          >
+            <i class="el-icon-refresh-right"></i>
+            {{ $t("base.searchbtn") }}
+          </el-button>
+        </template>
+      </vxe-toolbar>
       <vxe-table
         :data="mAIN_CONTROL_SELF_CHECK_STATUS"
         border
@@ -139,11 +98,14 @@ export default {
       activeName: 'firstAlarm',
       bank: '0',
       mAIN_CONTROL_SELF_CHECK_STATUS: [],
-      customColumns: [],
       loading: false,
       api: '/api/Devices/GetRegistrationEquipment',
       tableColumn: [],
-      fileName: 'export'
+      exportConfig: {
+        filename: 'export',
+        sheetName: 'Sheet1',
+        types: ['csv', 'xlsx']
+      }
     }
   },
   computed: {
@@ -173,40 +135,6 @@ export default {
     }
   },
   methods: {
-    // 打印
-    printEvent () {
-      this.$refs.xTable.print()
-    },
-
-    // 导出csv
-    exportDataEvent () {
-      this.$refs.xTable.exportData({ type: 'csv' })
-    },
-
-    // 导出excel
-    exportExcel () {
-      this.listHead = []
-      this.listFilter = []
-      for (var i = 2; i < this.customColumns.length; i++) {
-        if (this.customColumns[i].visible) {
-          this.listFilter.push(this.customColumns[i].property)
-          this.listHead.push(this.customColumns[i].title)
-        }
-      }
-      require.ensure([], () => {
-        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
-        const tHeader = this.listHead
-        // 上面设置Excel的表格第一行的标题
-        const filterVal = this.listFilter
-        // 上面的index、nickName、name是tableData里对象的属性
-        const list = this.tableData // 把data里的tableData存到list
-        const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}`)
-      })
-    },
-    formatJson (filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
-    },
     getData (params) {
       var AutoSystemID = localStorage.getItem('AutoSystemID')
       this.loading = true

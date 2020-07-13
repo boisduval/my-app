@@ -55,13 +55,13 @@
       </div>
     </el-collapse-transition>
     <!-- 表单结束 -->
-    <el-card class="box-card">
+    <el-card class="box-card visible">
       <div slot="header" class="clearfix">
         <span>{{$t('deviceParams.listTitle')}}</span>
       </div>
 
       <!-- 表格操作栏开始 -->
-      <div class="table-oper">
+      <!-- <div class="table-oper">
         <el-button
           type="primary"
           size="small"
@@ -98,6 +98,7 @@
         <el-button
           class="menu-btn"
           :title="$t('base.export.title')"
+          @click="exportExcel"
           v-popover:export
         >
           <i class="fa fa-download"></i>
@@ -109,28 +110,38 @@
         >
           <i class="fa fa-print"></i>
         </el-button>
-        <!-- 导出操作开始 -->
-        <el-popover ref="export" placement="bottom" width="100" trigger="hover">
-          <ul id="export">
-            <li @click="exportDataEvent">
-              {{ $t("base.export.csv") }}
-            </li>
-            <li @click="exportExcel">
-              {{ $t("base.export.excel") }}
-            </li>
-          </ul>
-        </el-popover>
-        <!-- 导出操作结束 -->
-      </div>
+      </div> -->
       <!-- 表格操作栏结束 -->
 
       <!-- 表格开始 -->
+      <vxe-toolbar custom print export>
+        <template v-slot:buttons>
+          <el-button
+            type="primary"
+            size="small"
+            @click="getData"
+            class="button-left"
+          >
+            <i class="el-icon-refresh-right"></i>
+            {{ $t("base.refresh") }}
+          </el-button>
+          <el-button
+            type="primary"
+            size="small"
+            class="button-left"
+            @click="isShow = !isShow"
+          >
+            <i class="el-icon-search"></i>
+            {{ $t("base.search") }}
+          </el-button>
+        </template>
+      </vxe-toolbar>
       <vxe-table
         :data="tableData"
         border
-        :customs.sync="customColumns"
         ref="xTable"
         v-loading="loading"
+        :export-config="exportConfig"
         element-loading-background="rgba(0, 0, 0, 0)"
         :edit-config="{ trigger: 'manual', mode: 'row' }"
         resizable
@@ -257,9 +268,13 @@ export default {
       tableData: [],
       customColumns: [],
       isShow: true,
-      fileName: 'export',
       count: 0,
-      loading: false
+      loading: false,
+      exportConfig: {
+        filename: 'export',
+        sheetName: 'Sheet1',
+        types: ['csv', 'xlsx']
+      }
     }
   },
   computed: {
@@ -281,7 +296,7 @@ export default {
           }
           this.count = res.data.count
           this.loading = false
-          this.$refs.xTable.reloadCustoms([])
+          // this.$refs.xTable.reloadCustoms([])
         })
         .catch(error => {
           console.log(error)
@@ -298,41 +313,6 @@ export default {
     handleCurrentChange (val) {
       this.searchForm.page = val
       this.getData()
-    },
-
-    // 打印
-    printEvent () {
-      this.$refs.xTable.print()
-    },
-
-    // 导出csv
-    exportDataEvent () {
-      this.$refs.xTable.exportData({ type: 'csv' })
-    },
-
-    // 导出excel
-    exportExcel () {
-      this.listHead = []
-      this.listFilter = []
-      for (var i = 2; i < this.customColumns.length; i++) {
-        if (this.customColumns[i].visible) {
-          this.listFilter.push(this.customColumns[i].property)
-          this.listHead.push(this.customColumns[i].title)
-        }
-      }
-      require.ensure([], () => {
-        const { export_json_to_excel } = require("@/excel/Export2Excel"); // eslint-disable-line
-        const tHeader = this.listHead
-        // 上面设置Excel的表格第一行的标题
-        const filterVal = this.listFilter
-        // 上面的index、nickName、name是tableData里对象的属性
-        const list = this.tableData // 把data里的tableData存到list
-        const data = this.formatJson(filterVal, list)
-        export_json_to_excel(tHeader, data, `${this.fileName}`)
-      })
-    },
-    formatJson (filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]))
     },
 
     // 更新系统时间
@@ -430,7 +410,7 @@ export default {
 }
 
 .box-card {
-  line-height: 10px;
+  /* line-height: 10px; */
   font-size: 15px;
   text-align: left;
   /* margin-bottom: 20px; */
