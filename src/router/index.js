@@ -887,6 +887,14 @@ const routes = [
         }
       },
       {
+        path: '/pcsControl',
+        name: 'pcsControl',
+        component: () => import(/* webpackChunkName: "PcsControl" */ '../views/Pcs/PcsControl.vue'),
+        meta: {
+          keepAlive: false // 不需要被缓存
+        }
+      },
+      {
         path: '/pcsRealtime',
         name: 'pcsRealtime',
         component: () => import(/* webpackChunkName: "PcsRealtime" */ '../views/Pcs/PcsRealtime.vue'),

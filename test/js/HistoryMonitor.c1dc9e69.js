@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["HistoryMonitor"],{e2df:function(t,e,n){"use strict";n.r(e);var r=function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",[n("el-col",{attrs:{span:12}},[n("div",{attrs:{id:"myCharts1"}})])],1)},s=[],a={},i=a,o=n("2877"),c=Object(o["a"])(i,r,s,!1,null,"444973ab",null);e["default"]=c.exports}}]);
+//# sourceMappingURL=HistoryMonitor.c1dc9e69.js.map

@@ -676,6 +676,15 @@ const state = {
           {
             ID: '21',
             MID: '10',
+            Href: 'pcsControl',
+            Class: 'J_menuItem',
+            DataIndex: '1000',
+            Text: 'PCS控制',
+            Use: true
+          },
+          {
+            ID: '21',
+            MID: '10',
             Href: 'pcsRealtime',
             Class: 'J_menuItem',
             DataIndex: '1000',

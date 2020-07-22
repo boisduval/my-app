@@ -1744,7 +1744,10 @@ export default {
   },
   pcsSettings: {
     operation: [
-      'synchronization time'
+      'synchronization time',
+      'Plan time',
+      'Power plan',
+      'Electricity price setting'
     ],
     confirm: {
       tip: 'Are you sure you want to synchronize',
@@ -1753,6 +1756,26 @@ export default {
       no: 'Cancel',
       canceled: 'Canceled'
     }
+  },
+  pcsControl: {
+    tableLabel: [
+      'No.',
+      'device ID',
+      'device name',
+      'registration time',
+      'automatic mode',
+      'On/off state',
+      'Grid off-grid',
+      '主动孤岛',
+      'Planning curve',
+      'MPPT mode',
+      'operation'
+    ],
+    operation: [
+      'power factor',
+      'reactive power',
+      'active power'
+    ]
   },
   pcsEarnings: {
     formLabel: [

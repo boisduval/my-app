@@ -1501,7 +1501,10 @@ export default {
   },
   pcsSettings: {
     operation: [
-      '同步时间'
+      '同步时间',
+      '计划时段',
+      '计划功率',
+      '电价设置'
     ],
     confirm: {
       tip: '确定要同步时间吗',
@@ -1518,6 +1521,26 @@ export default {
       'PCS'
     ],
     title: 'PCS收益总览'
+  },
+  pcsControl: {
+    tableLabel: [
+      '序号',
+      '设备ID',
+      '设备名称',
+      '登记时间',
+      '自动模式',
+      '开关机状态',
+      '并网离网',
+      '主动孤岛',
+      '计划曲线',
+      'MPPT模式',
+      '操作'
+    ],
+    operation: [
+      '功率因数',
+      '无功功率',
+      '有功功率'
+    ]
   },
   onlineDevice: {
     tabs: [
