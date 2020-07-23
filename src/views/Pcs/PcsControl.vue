@@ -396,7 +396,6 @@ export default {
         )
         .then(res => {
           if (res.data.data) {
-            console.log(res.data.data)
             this.tableData = res.data.data
           } else {
             this.tableData = []
@@ -422,7 +421,6 @@ export default {
     },
 
     operation (row, url, name) {
-      console.log(row, url)
       this.url = url
       this.editForm = {
         AutoSystemID: this.formInline.AutoSystemID,
@@ -439,7 +437,6 @@ export default {
     },
 
     editHttp () {
-      console.log(this.url)
       return new Promise((resolve, reject) => {
         this.$axios
           .post(`/api/Command/${this.url}`, this.editForm)
@@ -474,7 +471,6 @@ export default {
     },
 
     setStatus (status, row, url) {
-      console.log(status, row, url)
       return new Promise((resolve, reject) => {
         var AutoSystemID = this.formInline.AutoSystemID
         this.$axios
@@ -596,5 +592,8 @@ export default {
   color: #606266;
   border-color: #dcdfe6;
   background-color: #fff;
+}
+/deep/.el-dialog__header {
+  text-align: left;
 }
 </style>

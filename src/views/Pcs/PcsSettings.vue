@@ -302,7 +302,7 @@
       title="显示数据"
     >
       <div style="max-height:500px;overflow-y:auto;overflow-x:hidden">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName">
           <el-tab-pane
             :label="item1.label"
             :name="index + ''"
@@ -785,17 +785,6 @@ export default {
           } else {
             this.$message.warning(res.data.msg)
           }
-          switch (num) {
-            case 0:
-              this.dialogFormEditVisible = false
-              break
-            case 1:
-              this.dialogFormEditVisible1 = false
-              break
-            case 2:
-              this.dialogFormEditVisible2 = false
-              break
-          }
           this.editForm = {
             AutoSystemID: '',
             data: {
@@ -823,10 +812,17 @@ export default {
         .catch(err => {
           console.error(err)
         })
-    },
-
-    handleClick (tab, event) {
-      console.log(tab, event)
+      switch (num) {
+        case 0:
+          this.dialogFormEditVisible = false
+          break
+        case 1:
+          this.dialogFormEditVisible1 = false
+          break
+        case 2:
+          this.dialogFormEditVisible2 = false
+          break
+      }
     }
   },
   computed: {
@@ -923,5 +919,8 @@ export default {
 .wrap-item {
   display: flex;
   flex-wrap: wrap;
+}
+/deep/.el-dialog__header {
+  text-align: left;
 }
 </style>
