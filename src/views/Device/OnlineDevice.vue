@@ -129,7 +129,7 @@
           <el-button
             type="primary"
             size="small"
-            @click="getDeviceData"
+            @click="getSocketData"
             class="button-left"
           >
             <i class="el-icon-refresh-right"></i>
