@@ -208,8 +208,10 @@
             :label="item.label"
             v-for="(item, index) in time.list1"
             :key="index"
+            :prop="'list1.' + index + '.value'"
+            :rules="rules1.num"
           >
-            <el-input v-model="item.value"></el-input>
+            <el-input v-model.number="item.value"></el-input>
           </el-form-item>
           <div class="wrap-item">
             <div
@@ -217,7 +219,11 @@
               v-for="(item, index) in time.list2"
               :key="'list2' + index"
             >
-              <el-form-item :label="item.label">
+              <el-form-item
+                :label="item.label"
+                :prop="'list2.' + index + '.value'"
+                :rules="rules1.time"
+              >
                 <el-input v-model="item.value"></el-input>
               </el-form-item>
             </div>
@@ -257,11 +263,19 @@
       title="显示数据"
     >
       <div style="max-height:500px;overflow-y:auto;overflow-x:hidden">
-        <el-form label-width="150px" label-position="right" :model="time">
+        <el-form label-width="150px" label-position="right" :model="powerForm">
           <Spin v-if="spinShow1" fix></Spin>
           <div class="wrap-item">
-            <div style="width:50%" v-for="(item, index) in power" :key="index">
-              <el-form-item :label="item.label">
+            <div
+              style="width:50%"
+              v-for="(item, index) in powerForm.power"
+              :key="index"
+            >
+              <el-form-item
+                :label="item.label"
+                :prop="'power.' + index + '.value'"
+                :rules="rules1.float"
+              >
                 <el-input v-model="item.value"></el-input>
               </el-form-item>
             </div>
@@ -309,13 +323,26 @@
             v-for="(item1, index) in tariff"
             :key="index + ''"
           >
-            <el-form label-width="180px" style="margin-bottom:40px;">
+            <el-form
+              label-width="180px"
+              style="margin-bottom:40px;"
+              :model="item1"
+            >
               <el-form-item
-                :label="item.label"
-                v-for="(item, index) in item1.list1"
-                :key="index"
+                v-if="item1.list1[0]"
+                :label="item1.list1[0].label"
+                :rules="rules1.num1"
+                :prop="'list1.' + 0 + '.value'"
               >
-                <el-input v-model="item.value"></el-input>
+                <el-input v-model.number="item1.list1[0].value"></el-input>
+              </el-form-item>
+              <el-form-item
+                v-if="item1.list1[1]"
+                :label="item1.list1[1].label"
+                :rules="rules1.float1"
+                :prop="'list1.' + 1 + '.value'"
+              >
+                <el-input v-model="item1.list1[1].value"></el-input>
               </el-form-item>
               <div class="wrap-item">
                 <div
@@ -323,7 +350,11 @@
                   v-for="(item, index) in item1.list2"
                   :key="'list2' + index"
                 >
-                  <el-form-item :label="item.label">
+                  <el-form-item
+                    :label="item.label"
+                    :rules="rules1.time"
+                    :prop="'list2.' + index + '.value'"
+                  >
                     <el-input v-model="item.value"></el-input>
                   </el-form-item>
                 </div>
@@ -364,6 +395,44 @@
 import { mapState } from 'vuex'
 export default {
   data () {
+    var checkNum = (rule, value, callback) => {
+      if (!Number.isInteger(value) || value < 0 || value > 12) {
+        callback(new Error('请输入0~12的整数'))
+      } else {
+        callback()
+      }
+    }
+    var checkNum1 = (rule, value, callback) => {
+      if (!Number.isInteger(value) || value < 0 || value > 4) {
+        callback(new Error('请输入0~4的整数'))
+      } else {
+        callback()
+      }
+    }
+    var checkTime = (rule, value, callback) => {
+      var patt = /\b((0[0-9]:[0-5][0-9])|(1[0-9]:[0-5][0-9])|(2[0-3]:[0-5][0-9]))\b/
+      if (!patt.test(value)) {
+        callback(new Error('请输入正确的时间，如 00:00;有效范围 00:00~23:59'))
+      } else {
+        callback()
+      }
+    }
+    var checkFloat = (rule, value, callback) => {
+      var patt = /^-?(([1-9]\d*\.\d*)|(0\.\d*[1-9]\d*)|([1-9]\d*)|0)$/
+      if (!patt.test(value)) {
+        callback(new Error('请输入整数或小数，如 1.1'))
+      } else {
+        callback()
+      }
+    }
+    var checkFloat1 = (rule, value, callback) => {
+      var patt = /^(([1-9]\d*\.\d*)|(0\.\d*[1-9]\d*)|([1-9]\d*)|0)$/
+      if (!patt.test(value)) {
+        callback(new Error('请输入正整数或小数，如 1.1'))
+      } else {
+        callback()
+      }
+    }
     return {
       formInline: {
         page: 1,
@@ -404,9 +473,11 @@ export default {
         list2: []
       },
       power: [],
-      tariff: new Array(4).fill({
-        list1: [],
-        list2: []
+      tariff: new Array(4).fill().map(item => {
+        return {
+          list1: [],
+          list2: []
+        }
       }),
       activeName: '0',
       dialogFormEditVisible: false,
@@ -424,7 +495,39 @@ export default {
         'PCSConfigurationPlanTimeUse',
         'PCSConfigurationPlanTimeUse',
         'PCSConfigurationElectrovalenceUse'
-      ]
+      ],
+      rules1: {
+        num: [
+          {
+            validator: checkNum,
+            trigger: 'blur'
+          }
+        ],
+        num1: [
+          {
+            validator: checkNum1,
+            trigger: 'blur'
+          }
+        ],
+        time: [
+          {
+            validator: checkTime,
+            trigger: 'blur'
+          }
+        ],
+        float: [
+          {
+            validator: checkFloat,
+            trigger: 'blur'
+          }
+        ],
+        float1: [
+          {
+            validator: checkFloat1,
+            trigger: 'blur'
+          }
+        ]
+      }
     }
   },
   methods: {
@@ -531,8 +634,9 @@ export default {
             this.$message.success(res.data.msg)
             let data = res.data.data
             this.setData()
-            this.time.list1[0].value =
-              data.nUMBER_OF_PLANNED_CURVE_PERIODS + ''
+            this.time.list1[0].value = Number(
+              data.nUMBER_OF_PLANNED_CURVE_PERIODS
+            )
             data.pLANNED_CURVE_PERIOD.forEach((val, i) => {
               this.time.list2[i * 2].value = val.StartTime
               this.time.list2[i * 2 + 1].value = val.StopTime
@@ -801,7 +905,8 @@ export default {
 
     apply (num) {
       var url = '/api/Command/' + this.urlList1[num]
-      this.$axios.post(url, this.applyForm)
+      this.$axios
+        .post(url, this.applyForm)
         .then(res => {
           if (res.data.code === 0) {
             this.$message.success(res.data.msg)
@@ -826,7 +931,12 @@ export default {
     }
   },
   computed: {
-    ...mapState('table', ['pageSize'])
+    ...mapState('table', ['pageSize']),
+    powerForm () {
+      return {
+        power: this.power
+      }
+    }
   },
   created () {
     this.formInline.limit = this.pageSize[0]

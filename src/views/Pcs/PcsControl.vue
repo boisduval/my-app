@@ -307,6 +307,8 @@
             label-position="right"
             :model="editForm"
             style="position:relative"
+            :rules="rule"
+            v-if="url === 'PCSControlPowerFactor'"
           >
             <Spin v-if="spinShow" fix></Spin>
             <el-form-item label="设备ID">
@@ -315,7 +317,45 @@
                 readonly
               ></el-input>
             </el-form-item>
-            <el-form-item label="设定参数">
+            <el-form-item label="设定参数" prop="setting">
+              <el-input v-model="editForm.setting"></el-input>
+            </el-form-item>
+          </el-form>
+          <el-form
+            label-width="90px"
+            label-position="right"
+            :model="editForm"
+            style="position:relative"
+            :rules="rule1"
+            v-if="url === 'PCSControlReactivePower'"
+          >
+            <Spin v-if="spinShow" fix></Spin>
+            <el-form-item label="设备ID">
+              <el-input
+                v-model="editForm.data.IDS"
+                readonly
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="设定参数" prop="setting">
+              <el-input v-model="editForm.setting"></el-input>
+            </el-form-item>
+          </el-form>
+          <el-form
+            label-width="90px"
+            label-position="right"
+            :model="editForm"
+            style="position:relative"
+            :rules="rule2"
+            v-if="url === 'PCSControlActivePower'"
+          >
+            <Spin v-if="spinShow" fix></Spin>
+            <el-form-item label="设备ID">
+              <el-input
+                v-model="editForm.data.IDS"
+                readonly
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="设定参数" prop="setting">
               <el-input v-model="editForm.setting"></el-input>
             </el-form-item>
           </el-form>
@@ -343,6 +383,34 @@
 import { mapState } from 'vuex'
 export default {
   data () {
+    var checkNum = (rule, value, callback) => {
+      var patt = /^-?(([1-9]\d*\.\d*)|(0\.\d*[1-9]\d*)|([1-9]\d*)|0)$/
+      if (!patt.test(value)) {
+        callback(new Error('请输入整数或小数，如 0.1, 范围在-1~1'))
+      } else {
+        if (Number(value) < -1 || Number(value) > 1) {
+          callback(new Error('请输入整数或小数，如 0.1, 范围在-1~1'))
+        } else {
+          callback()
+        }
+      }
+    }
+    var checkNum1 = (rule, value, callback) => {
+      var patt = /^-?([1-9]\d*|0)$/
+      if (!patt.test(value)) {
+        callback(new Error('请输入整数, 如140'))
+      } else {
+        callback()
+      }
+    }
+    var checkNum2 = (rule, value, callback) => {
+      var patt = /^-?(([1-9]\d*\.\d)|(0\.\d)|([1-9]\d*)|0)$/
+      if (!patt.test(value)) {
+        callback(new Error('请输入整数或小数, 小数保留一位, 如140.1'))
+      } else {
+        callback()
+      }
+    }
     return {
       formInline: {
         page: 1,
@@ -383,7 +451,31 @@ export default {
         }
       },
       spinShow: false,
-      url: ''
+      url: '',
+      rule: {
+        setting: [
+          {
+            validator: checkNum,
+            trigger: 'blur'
+          }
+        ]
+      },
+      rule1: {
+        setting: [
+          {
+            validator: checkNum1,
+            trigger: 'blur'
+          }
+        ]
+      },
+      rule2: {
+        setting: [
+          {
+            validator: checkNum2,
+            trigger: 'blur'
+          }
+        ]
+      }
     }
   },
   methods: {
