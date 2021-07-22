@@ -43,7 +43,7 @@
     "vxe-table-plugin-element": "^1.5.13",
     "vxe-table-plugin-export-xlsx": "^1.1.0",
     "xe-utils": "^2.6.3",
-    "xlsx": "^0.15.3"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",
